@@ -6,7 +6,10 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "prebuild.prod": "node git.version.js",
+    "build:prod": "npm run prebuild.prod && ng build --configuration production",
+    "build:dev": "npm run prebuild.prod && ng build --configuration development"
   },
   "private": true,
   "dependencies": {
