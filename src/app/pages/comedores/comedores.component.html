@@ -1,0 +1,58 @@
+@if(loading){
+<nz-skeleton [nzActive]="true"></nz-skeleton>
+} @if(data$ | async; as data){
+<ul nz-list [nzDataSource]="data" nzBordered nzSize="large">
+  <nz-list-header>
+    <nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixButton">
+      <input
+        type="text"
+        nz-input
+        placeholder="Informe aqui um nome"
+        [(ngModel)]="comedoreNome"
+        (keydown.enter)="salvar()"
+      />
+    </nz-input-group>
+    <ng-template #suffixButton>
+      <button
+        nz-button
+        nzType="dashed"
+        nz-tooltip="Salvar"
+        nzSize="large"
+        (click)="salvar()"
+        [nzLoading]="loadingBtn"
+      >
+        <span nz-icon nzType="save" nzTheme="outline"></span>
+      </button>
+    </ng-template>
+  </nz-list-header>
+  <li nz-list-item *ngFor="let item of data" nzNoFlex>
+    <ul nz-list-item-actions>
+      <nz-list-item-action>
+        <button
+          nz-button
+          nzType="dashed"
+          nz-tooltip="Editar"
+          (click)="editar(item)"
+        >
+          <span nz-icon nzType="edit" nzTheme="outline"></span>
+        </button>
+      </nz-list-item-action>
+      <nz-list-item-action>
+        <button
+        nzDanger
+          nz-button
+          nzType="dashed"
+          nz-tooltip="Remover"
+          nz-popconfirm
+          nzPopconfirmTitle="Deseja remover esse registro?"
+          nzPopconfirmPlacement="bottom"
+          (nzOnConfirm)="remover(item)"
+        >
+          <span nz-icon nzType="delete" nzTheme="outline"></span>
+        </button>
+      </nz-list-item-action>
+    </ul>
+    {{ item.nome }}
+  </li>
+</ul>
+}

@@ -1,1 +1,100 @@
 /* You can add global styles to this file, and also import other style files */
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* You can add global styles to this file, and also import other style files */
+@mixin fx-border-box {
+    box-sizing: border-box;
+  }
+  
+  .fx-border-box {
+    box-sizing: border-box;
+  }
+  
+  .fx-d-flex {
+    @include fx-border-box;
+    display: flex;
+  }
+  
+  @mixin fx-flex($percentual) {
+    @include fx-border-box;
+    flex: 1 1 $percentual;
+    max-width: $percentual;
+  }
+  
+  .fx-row {
+    @extend .fx-d-flex;
+    flex-direction: row;
+  }
+  
+  .fx-column {
+    @extend .fx-d-flex;
+    flex-direction: column;
+  }
+  
+  .fx-flex {
+    @include fx-border-box;
+    //flex: 1 1 0%;
+    flex: 1 1 1e-9px;
+  }
+  
+  .fx-aic {
+    align-items: center;
+  }
+  
+  .hf {
+    height: 100%;
+  }
+  
+  .wf {
+    width: 100%;
+  }
+  
+  .pd-10 {
+    padding: 10px;
+  }
+  
+  .mg-5 {
+    margin: 5px;
+  }
+  
+  .pd-5 {
+    padding: 5px;
+  }
+  
+  .pdb-10 {
+    padding-bottom: 10px;
+  }
+  
+  .gap-5 {
+    gap: 5px;
+  }
+  
+  .gap-2 {
+    gap: 2px;
+  }
+  
+  .ovh {
+    overflow: hidden;
+  }
+  
+  .ova {
+    overflow: auto;
+  }
+  
+  /* Small devices (portrait tablets and large phones, 600px and up) */
+  @media only screen and (min-width: 600px) {
+  }
+  
+  /* Medium devices (landscape tablets, 768px and up) */
+  @media only screen and (min-width: 768px) {
+  }
+  
+  /* Large devices (laptops/desktops, 992px and up) */
+  @media only screen and (min-width: 992px) {
+  }
+  
+  /* Extra large devices (large laptops and desktops, 1200px and up) */
+  @media only screen and (min-width: 1200px) {
+  }
+  
