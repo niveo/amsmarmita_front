@@ -1,29 +1,34 @@
-<nz-layout class="layout">
-  <nz-layout class="right-layout">
-    <nz-header>
+<nz-layout>
+  <nz-header>
+    @if(!isMobile){
+    <button
+      nz-button
+      [nzGhost]="true"
+      nzType="dashed"
+      nzShape="circle"
+      routerLink="/"
+    >
+      <span nz-icon nzType="home"></span></button
+    >}
+
+    <div class="fx-flex"></div>
+    @if(isMobile){
+    <ng-container [ngTemplateOutlet]="tplMenu"></ng-container>
+    }
+  </nz-header>
+  <nz-content class="outer-content">
+    <nz-layout class="inner-layout">
       @if(!isMobile){
-      <button
-        nz-button
-        [nzGhost]="true"
-        nzType="dashed"
-        nzShape="circle"
-        routerLink="/"
-      >
-        <span nz-icon nzType="home"></span></button
-      >} @else {
-      <ng-container [ngTemplateOutlet]="tplMenu"></ng-container>
+      <nz-sider nzWidth="200px" nzTheme="light">
+        <ng-container [ngTemplateOutlet]="tplContentMenu"></ng-container>
+      </nz-sider>
       }
-      <div class="fx-flex"></div>
-    </nz-header>
-    <nz-content>
-      <div class="inner-content">
+      <nz-content class="inner-content">
         <router-outlet></router-outlet>
-      </div>
-    </nz-content>
-    <nz-footer>
-      <span versaosis></span>
-    </nz-footer>
-  </nz-layout>
+      </nz-content>
+    </nz-layout>
+    <nz-footer>Ant Design ©2020 Implement By Angular</nz-footer>
+  </nz-content>
 </nz-layout>
 
 <ng-template #tplMenu>
@@ -32,8 +37,36 @@
     [nzGhost]="true"
     nzType="dashed"
     nzShape="circle"
-    routerLink="/"
+    (click)="open()"
   >
     <span nz-icon nzType="menu"></span>
   </button>
+</ng-template>
+
+<nz-drawer
+  [nzClosable]="false"
+  [nzVisible]="visible"
+  [nzPlacement]="placement"
+  nzTitle="Basic Drawer"
+  (nzOnClose)="close()"
+  [nzFooter]="tplFooter"
+>
+  <ng-container *nzDrawerContent>
+    <ng-container [ngTemplateOutlet]="tplContentMenu"></ng-container>
+  </ng-container>
+</nz-drawer>
+
+<ng-template #tplFooter>
+  <button nz-button nzType="dashed" (click)="close()">
+    <span nz-icon nzType="menu-fold" nzTheme="outline"></span>
+  </button>
+</ng-template>
+
+<ng-template #tplContentMenu>
+  <ul nz-menu nzMode="inline" class="sider-menu">
+    <li nz-menu-item routerLink="comedores">
+      <span nz-icon nzType="user" nzTheme="outline"></span>
+      Comedores
+    </li>
+  </ul>
 </ng-template>

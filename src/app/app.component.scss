@@ -1,57 +1,49 @@
-.layout {
-    min-height: 100vh;
-  }
-  
-  nz-sider {
-    overflow: auto;
-    height: 100%;
-    position: fixed;
-    left: 0;
-  }
-  
-  nz-header {
-    position: fixed;
-    width: 100%;
-    z-index: 1;
-    align-items: center;
-    box-sizing: border-box;
-    flex-direction: row;
-    display: flex;
-    gap: 8px;
-  }
-  
+.header-menu {
+  line-height: 64px;
+}
+
+.outer-content {
+  padding: 5px;
+}
+
+.inner-layout {
+  padding: 24px 0;
+  background: #fff;
+}
+
+.sider-menu {
+  height: 100%;
+}
+
+.inner-content {
+  padding: 0 24px;
+  min-height: 280px;
+}
+
+nz-footer {
+  text-align: center;
+}
+
+fa-icon {
+  padding-right: 10px;
+}
+
+.btn-menu {
+  width: 100%;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
   nz-content {
-    // padding: 0 50px;
-    margin-top: 64px;
+    padding: 0px; 
   }
-  
+  nz-layout {
+    overflow-x: hidden;
+  }
   .inner-content {
     padding: 5px;
-    min-height: 380px;
   }
-  
-  nz-footer {
-    text-align: center;
+  .ant-layout-header {
+    padding: 0 10px;
   }
-  
-  fa-icon {
-    padding-right: 10px;
-  }
-  
-  /* Extra small devices (phones, 600px and down) */
-  @media only screen and (max-width: 600px) {
-    nz-content {
-      padding: 0px;
-      margin-top: 64px;
-    }
-    nz-layout {
-      overflow-x: hidden;
-    }
-    .inner-content {
-      padding: 5px;
-    }
-    .ant-layout-header {
-      padding: 0 10px;
-    }
-  }
-  
+}

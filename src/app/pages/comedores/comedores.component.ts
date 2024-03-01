@@ -16,7 +16,7 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Comedor } from '../../model/comedor';
 import {
   MSG_EXCLUIR_SUCESSO,
-  MSG_REGISTRADO_SUCESSO,
+  MSG_ATUALIZADO_SUCESSO,
 } from 'src/app/common/constantes';
 
 @Component({
@@ -106,7 +106,7 @@ export class ComedoresComponent {
       .subscribe({
         next: (value) => {
           console.log(value);
-          this.notify.success('Registrado', MSG_REGISTRADO_SUCESSO);
+          this.notify.success('Atualização', MSG_ATUALIZADO_SUCESSO);
           this.carregar();
         },
       });

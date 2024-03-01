@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { isMobile } from './common/util';
+import { NzDrawerPlacement } from 'ng-zorro-antd/drawer';
+import { EventType, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +10,34 @@ import { isMobile } from './common/util';
 })
 export class AppComponent {
   isMobile = isMobile;
-  constructor() {}
+  visible = false;
+  isCollapsed = false;
+  placement: NzDrawerPlacement = 'right';
+  private readonly route = inject(Router);
+  constructor() {
+    if (isMobile) {
+      this.placement = 'left';
+    }
+    this.route.events.subscribe((event) => {
+      //console.log(event);
+      if (
+        [EventType.ActivationEnd, EventType.NavigationSkipped].includes(
+          event.type
+        )
+      ) {
+        this.visible = false;
+      }
+    }); 
+  }
+  open() {
+    this.visible = true;
+  }
+
+  close() {
+    this.visible = false;
+  }
+
+  openView(view: string) {
+    this.route.navigate([view]);
+  }
 }
