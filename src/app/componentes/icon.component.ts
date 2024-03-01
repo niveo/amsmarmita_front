@@ -1,4 +1,10 @@
-import { Component, Input, booleanAttribute } from '@angular/core';
+import {
+  Component,
+  HostBinding,
+  Input,
+  ViewEncapsulation,
+  booleanAttribute,
+} from '@angular/core';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 export type TooltipPlacement =
@@ -19,7 +25,6 @@ export type TooltipPlacement =
 @Component({
   selector: 'app-icon',
   template: ` <span
-    class="anticon material-symbols-outlined"
     [style.color]="nzDanger ? '#F44336' : 'none'"
     style="font-size: 16px;"
     nz-tooltip
@@ -29,9 +34,13 @@ export type TooltipPlacement =
     <ng-content></ng-content>
   </span>`,
   standalone: true,
+  encapsulation: ViewEncapsulation.Emulated,
   imports: [NzToolTipModule],
 })
 export class AmsIconComponent {
+  @HostBinding('class')
+  classHost = 'anticon material-symbols-outlined';
+
   @Input()
   nzTooltipTitle?: string;
 
