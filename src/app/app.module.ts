@@ -38,11 +38,19 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { AmsIconComponent } from './componentes/icon.component';
+import { GrupoService } from './services/grupo.service';
+import { GrupoComponent } from './pages/grupos/grupos.component';
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
 
 registerLocaleData(pt);
 
 @NgModule({
-  declarations: [AppComponent, ComedoresComponent, MarmitasComponent],
+  declarations: [
+    AppComponent,
+    ComedoresComponent,
+    MarmitasComponent,
+    GrupoComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -69,13 +77,15 @@ registerLocaleData(pt);
     NzCardModule,
     NzModalModule,
     NzGridModule,
-    NzDropDownModule
+    NzDropDownModule,
+    NzSwitchModule
   ],
   providers: [
     { provide: TOKEN_APP_CONFIG, useValue: environment },
     { provide: NZ_I18N, useValue: pt_BR },
     ComedoresService,
     MarmitaService,
+    GrupoService,
     { provide: DEFAULT_TIMEOUT, useValue: 30000 },
     {
       provide: HTTP_INTERCEPTORS,

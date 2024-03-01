@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ComedoresComponent } from './pages/comedores/comedores.component';
 import { MarmitasComponent } from './pages/marmitas/marmitas.component';
+import { GrupoComponent } from './pages/grupos/grupos.component';
 
 const routes: Routes = [
   {
@@ -11,6 +12,10 @@ const routes: Routes = [
   {
     path: 'marmitas',
     component: MarmitasComponent,
+  },
+  {
+    path: 'grupos',
+    component: GrupoComponent,
   },
 ];
 

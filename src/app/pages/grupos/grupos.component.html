@@ -1,0 +1,75 @@
+@if(loading){
+<nz-skeleton [nzActive]="true"></nz-skeleton>
+}
+
+<button
+  nz-button
+  nzType="primary"
+  style="margin-bottom: 10px"
+  (click)="isVisible = true"
+>
+  Nova Grupo
+</button>
+
+@if(data$ | async; as data){
+<nz-list nzItemLayout="horizontal" nzBordered nzSize="large">
+  <nz-list-item *ngFor="let item of data">
+    <nz-list-item-meta [nzDescription]="item.nome">
+      <nz-list-item-meta-title>
+        <h5>Principal: {{ item.principal ? "Sim" : "Não" }}</h5>
+      </nz-list-item-meta-title>
+    </nz-list-item-meta>
+
+    <ul nz-list-item-actions>
+      <nz-list-item-action>
+        <button
+          nz-button
+          nzType="dashed"
+          nz-tooltip="Editar"
+          (click)="editar(item)"
+        >
+          <span nz-icon nzType="edit" nzTheme="outline"></span>
+        </button>
+      </nz-list-item-action>
+      <nz-list-item-action>
+        <button
+          nzDanger
+          nz-button
+          nzType="dashed"
+          nz-tooltip="Remover"
+          nz-popconfirm
+          nzPopconfirmTitle="Deseja remover esse registro?"
+          nzPopconfirmPlacement="bottom"
+          (nzOnConfirm)="remover(item)"
+        >
+          <span nz-icon nzType="delete" nzTheme="outline"></span>
+        </button>
+      </nz-list-item-action>
+    </ul>
+  </nz-list-item>
+  <nz-list-empty *ngIf="data.length === 0"></nz-list-empty>
+</nz-list>
+}
+
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="Grupo"
+  (nzOnCancel)="isVisible = false"
+  (nzOnOk)="salvar()"
+>
+  <ng-container *nzModalContent>
+    <div class="fx-column gap-5">
+      <span>Nome</span>
+      <input
+        type="text"
+        nz-input
+        placeholder="Informe aqui um nome"
+        [(ngModel)]="grupoNome"
+        [maxLength]="25"
+        [max]="25"
+      />
+      <span>Principal</span>
+      <nz-switch [(ngModel)]="grupoPrincipal"></nz-switch>
+    </div>
+  </ng-container>
+</nz-modal>
