@@ -29,6 +29,7 @@ import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 
 import { IconsProviderUserModule } from './common/icons-provider-user.module';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
 
 registerLocaleData(pt);
 
@@ -53,7 +54,8 @@ registerLocaleData(pt);
     NzMessageModule,
     NzPopconfirmModule,
     NzDrawerModule,
-    NzLayoutModule
+    NzLayoutModule,
+    NzMenuModule
   ],
   providers: [
     { provide: TOKEN_APP_CONFIG, useValue: environment },
