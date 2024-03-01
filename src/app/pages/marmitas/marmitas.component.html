@@ -51,7 +51,7 @@
 <nz-modal
   [(nzVisible)]="isVisible"
   nzTitle="Marmita"
-  (nzOnCancel)="handleCancel()"
+  (nzOnCancel)="isVisible = false;"
   (nzOnOk)="salvar()"
 >
   <ng-container *nzModalContent>

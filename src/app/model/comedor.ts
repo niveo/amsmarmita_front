@@ -1,4 +1,4 @@
 export class Comedor {
-    _id?: string ;
-  nome?: string;
+  _id?: string;
+  nome?: string; 
 }

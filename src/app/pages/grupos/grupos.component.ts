@@ -5,8 +5,6 @@ import {
   catchError,
   finalize,
   iif,
-  isEmpty,
-  map,
   mergeMap,
   of,
 } from 'rxjs';
@@ -15,29 +13,27 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import {
   MSG_EXCLUIR_SUCESSO,
   MSG_ATUALIZADO_SUCESSO,
-  FORMATO_DATA,
 } from '../../common/constantes';
-import { MarmitaService } from '../../services/marmita.service';
-import { Marmita } from '../../model/marmita';
+import { GrupoService } from '../../services/grupo.service';
+import { Grupo } from '../../model/grupo';
 
 @Component({
-  selector: 'app-marmitas-component',
-  templateUrl: './marmitas.component.html',
-  styleUrl: './marmitas.component.scss',
+  selector: 'app-grupos-component',
+  templateUrl: './grupos.component.html',
 })
-export class MarmitasComponent {
-  private readonly comedoreService = inject(MarmitaService);
+export class GrupoComponent {
+  private readonly service = inject(GrupoService);
   private readonly notify = inject(NzNotificationService);
   protected readonly destroyRef = inject(DestroyRef);
   data$!: Observable<any[]>;
   loading = true;
+  loadingBtn = false;
+
+  grupoId?: string;
+  grupoNome?: string;
+  grupoPrincipal: boolean = false;
+
   isVisible = false;
-
-  dateFormat = FORMATO_DATA;
-
-  marmitaId?: string;
-  marmitaLancamento?: Date;
-  marmitaObservacao?: string;
 
   ngOnInit() {
     this.carregar();
@@ -45,7 +41,7 @@ export class MarmitasComponent {
 
   private carregar() {
     this.loading = true;
-    this.data$ = this.comedoreService
+    this.data$ = this.service
       .getAll()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .pipe(
@@ -57,20 +53,20 @@ export class MarmitasComponent {
       .pipe(finalize(() => (this.loading = false)));
   }
 
-  editar(item: Marmita) {
-    this.marmitaLancamento = item.lancamento;
-    this.marmitaObservacao = item.observacao;
-    this.marmitaId = item._id;
+  editar(item: Grupo) {
+    this.grupoNome = item.nome;
+    this.grupoPrincipal = item.principal;
+    this.grupoId = item._id;
     this.isVisible = true;
   }
 
-  remover(item: Marmita) {
-    this.loading = true;
-    this.comedoreService
+  remover(item: Grupo) {
+    this.loadingBtn = true;
+    this.service
       .delete(item._id!)
       .pipe(
         finalize(() => {
-          this.loading = false;
+          this.loadingBtn = false;
         })
       )
       .subscribe({
@@ -87,24 +83,17 @@ export class MarmitasComponent {
   }
 
   salvar() {
-    if (!this.marmitaLancamento) return;
+    if (!this.grupoNome) return;
 
-    this.loading = true;
+    this.loadingBtn = true;
 
-    return of(this.marmitaId!)
+    of(this.grupoId!)
       .pipe(
         mergeMap((value) =>
           iif(
             () => !value,
-            this.comedoreService.inlcluir(
-              this.marmitaLancamento!,
-              this.marmitaObservacao
-            ),
-            this.comedoreService.atualizar(
-              value,
-              this.marmitaLancamento!,
-              this.marmitaObservacao
-            )
+            this.service.inlcluir(this.grupoNome!, this.grupoPrincipal),
+            this.service.atualizar(value, this.grupoNome!, this.grupoPrincipal)
           )
         ),
         catchError((error: any) => {
@@ -113,11 +102,11 @@ export class MarmitasComponent {
           return EMPTY;
         }),
         finalize(() => {
-          this.loading = false;
+          this.loadingBtn = false;
+          this.grupoId = undefined;
+          this.grupoNome = undefined;
+          this.grupoPrincipal = false;
           this.isVisible = false;
-          this.marmitaLancamento = undefined;
-          this.marmitaObservacao = undefined;
-          this.marmitaId = undefined;
         })
       )
       .subscribe({
@@ -127,5 +116,5 @@ export class MarmitasComponent {
           this.carregar();
         },
       });
-  } 
+  }
 }
