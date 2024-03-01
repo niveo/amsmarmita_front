@@ -10,6 +10,8 @@
         placeholder="Informe aqui um nome"
         [(ngModel)]="comedoreNome"
         (keydown.enter)="salvar()"
+        [maxLength]="25"
+        [max]="25"
       />
     </nz-input-group>
     <ng-template #suffixButton>

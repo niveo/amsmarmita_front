@@ -22,6 +22,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     max-width: $percentual;
   }
   
+  .fx-flex30 {
+    @include fx-flex(30%);
+  }
+  
   .fx-row {
     @extend .fx-d-flex;
     flex-direction: row;
@@ -61,6 +65,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   .pd-5 {
     padding: 5px;
   }
+
+  .mg-5 {
+    margin: 5px;
+  }
+  
   
   .pdb-10 {
     padding-bottom: 10px;

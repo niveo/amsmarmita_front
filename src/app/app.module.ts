@@ -27,14 +27,22 @@ import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 
 import { IconsProviderUserModule } from './common/icons-provider-user.module';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { MarmitasComponent } from './pages/marmitas/marmitas.component';
+import { MarmitaService } from './services/marmita.service';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { AmsIconComponent } from './componentes/icon.component';
 
 registerLocaleData(pt);
 
 @NgModule({
-  declarations: [AppComponent, ComedoresComponent],
+  declarations: [AppComponent, ComedoresComponent, MarmitasComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -42,6 +50,7 @@ registerLocaleData(pt);
     HttpClientModule,
     BrowserAnimationsModule,
     NgTemplateOutlet,
+    AmsIconComponent,
 
     IconsProviderUserModule,
 
@@ -55,12 +64,18 @@ registerLocaleData(pt);
     NzPopconfirmModule,
     NzDrawerModule,
     NzLayoutModule,
-    NzMenuModule
+    NzMenuModule,
+    NzDatePickerModule,
+    NzCardModule,
+    NzModalModule,
+    NzGridModule,
+    NzDropDownModule
   ],
   providers: [
     { provide: TOKEN_APP_CONFIG, useValue: environment },
     { provide: NZ_I18N, useValue: pt_BR },
     ComedoresService,
+    MarmitaService,
     { provide: DEFAULT_TIMEOUT, useValue: 30000 },
     {
       provide: HTTP_INTERCEPTORS,
