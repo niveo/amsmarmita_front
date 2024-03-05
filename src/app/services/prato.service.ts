@@ -14,14 +14,43 @@ export class PratoService {
     return this.http.delete<any>('/pratos/' + id);
   }
 
-  atualizar(id: string, nome: string, grupoId: string) {
+  atualizar({
+    id,
+    nome,
+    grupoId,
+    composicoes = undefined,
+    observacao = undefined,
+  }: {
+    id: string;
+    nome: string;
+    grupoId: string;
+    composicoes?: string[];
+    observacao?: string;
+  }) {
     return this.http.put<any>('/pratos/' + id, {
       nome: nome,
       grupoId: grupoId,
+      composicoes: composicoes,
+      observacao: observacao,
     });
   }
 
-  inlcluir(nome: string, grupoId: string) {
-    return this.http.post<any>('/pratos', { nome: nome, grupoId: grupoId });
+  inlcluir({
+    nome,
+    grupoId,
+    composicoes = undefined,
+    observacao = undefined,
+  }: {
+    nome: string;
+    grupoId: string;
+    composicoes?: string[];
+    observacao?: string;
+  }) {
+    return this.http.post<any>('/pratos', {
+      nome: nome,
+      grupoId: grupoId,
+      composicoes: composicoes,
+      observacao: observacao,
+    });
   }
 }

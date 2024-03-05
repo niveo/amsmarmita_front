@@ -4,7 +4,7 @@
   nz-button
   nzType="primary"
   style="margin-bottom: 10px"
-  (click)="isVisible = true"
+  (click)="novoPrato()"
 >
   Novo Prato
 </button>
@@ -14,7 +14,13 @@
   <nz-collapse-panel [nzHeader]="tplTitulo" [nzExtra]="tplExtra">
     <nz-list nzItemLayout="horizontal" nzBordered nzSize="large">
       <nz-list-item *ngFor="let item of grupo.pratos">
-        {{ item.nome }}
+        <nz-list-item-meta [nzDescription]="item.nome">
+          <nz-list-item-meta-title>
+            @for( composicao of item.composicoes; track $index){
+            <nz-tag nzColor="magenta">{{ composicao }}</nz-tag>
+            }
+          </nz-list-item-meta-title>
+        </nz-list-item-meta>
 
         <ul nz-list-item-actions>
           <nz-list-item-action>
@@ -61,64 +67,13 @@
   <ng-template #tplExtra>
     <span
       nz-icon
-      nzType="plus"
+      nzType="plus-circle"
       nzTheme="outline"
       (click)="$event.stopPropagation(); novoPratoGrupo(grupo)"
     ></span>
   </ng-template>
   }
 </nz-collapse>
-
-<nz-modal
-  [(nzVisible)]="isVisible"
-  nzTitle="Prato"
-  (nzOnCancel)="isVisible = false"
-  (nzOnOk)="salvar()"
->
-  <ng-container *nzModalContent>
-    <form nz-form [formGroup]="validateForm" nzLayout="vertical">
-      <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>Nome</nz-form-label>
-        <nz-form-control
-          [nzSm]="16"
-          [nzXs]="24"
-          nzErrorTip="Por favor informe aqui o nome do prato!"
-        >
-          <nz-input-group>
-            <input
-              type="text"
-              nz-input
-              formControlName="nome"
-              placeholder="Informe aqui o nome do prato"
-            />
-          </nz-input-group>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSpan]="5" nzRequired>Grupo</nz-form-label>
-        <nz-form-control
-          [nzSpan]="12"
-          nzErrorTip="Por favor informe um grupo do prato!"
-        >
-          <nz-select
-            formControlName="grupo"
-            placeholder="Informe aqui o grupo do prato"
-          >
-            @for(g of grupos; track g._id){
-            <nz-option nzCustomContent [nzValue]="g._id" [nzLabel]="g.nome!">
-              <ng-container
-                *ngTemplateOutlet="tplPrincipal; context: { $implicit: g }"
-              ></ng-container>
-              {{ g.nome }}
-            </nz-option>
-            }
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
-    </form>
-  </ng-container>
-</nz-modal>
 
 <ng-template #tplPrincipal let-grupo>
   <nz-badge [nzStatus]="grupo.principal ? 'success' : 'default'"></nz-badge>
