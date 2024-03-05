@@ -26,6 +26,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { validarFormulario } from '../../common/util';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { PratosFormComponent } from './pratos-form.component';
 
 @Component({
   selector: 'app-pratos-component',
@@ -37,6 +39,7 @@ export class PratoComponent {
   private readonly notify = inject(NzNotificationService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly fb = inject(NonNullableFormBuilder);
+  private readonly nzModalService = inject(NzModalService);
 
   data$!: Observable<any[]>;
   loading = true;
@@ -46,13 +49,15 @@ export class PratoComponent {
     _id: FormControl<string>;
     nome: FormControl<string>;
     grupo: FormControl<string>;
+    composicoes: FormControl<string[]>;
+    observacao: FormControl<string>;
   }> = this.fb.group({
     _id: [''],
     nome: ['', [Validators.required]],
     grupo: ['', [Validators.required]],
+    composicoes: [['']],
+    observacao: [''],
   });
-
-  isVisible = false;
 
   grupos?: Grupo[];
 
@@ -88,14 +93,28 @@ export class PratoComponent {
       );
   }
 
+  novoPrato() {
+    this.validateForm.setValue({
+      _id: '',
+      grupo: '',
+      nome: '',
+      composicoes: [],
+      observacao: '',
+    });
+
+    this.carregarModalEdicaoPrato();
+  }
+
   novoPratoGrupo(item: Grupo) {
-    console.log(item._id);
     this.validateForm.setValue({
       _id: '',
       grupo: item._id!,
       nome: '',
+      composicoes: [],
+      observacao: '',
     });
-    this.isVisible = true;
+
+    this.carregarModalEdicaoPrato();
   }
 
   editar(item: Prato) {
@@ -103,8 +122,23 @@ export class PratoComponent {
       _id: item._id || '',
       grupo: item.grupo!,
       nome: item.nome!,
+      composicoes: item.composicoes || [],
+      observacao: item.observacao || '',
     });
-    this.isVisible = true;
+    this.carregarModalEdicaoPrato();
+  }
+
+  carregarModalEdicaoPrato() {
+    this.nzModalService.create({
+      nzContent: PratosFormComponent,
+      nzData: {
+        grupos: this.grupos,
+        validateForm: this.validateForm,
+      },
+      nzOkText: 'Salvar',
+      nzOnOk: () =>
+        new Promise((resolve, reject) => this.salvar(resolve, reject)),
+    });
   }
 
   remover(item: Prato) {
@@ -129,9 +163,10 @@ export class PratoComponent {
       });
   }
 
-  salvar() {
+  salvar(resolve: (value: any) => void, reject: (error: any) => void) {
     if (!this.validateForm.valid) {
       validarFormulario(this.validateForm);
+      reject('Informe os campos necessários');
       return;
     }
 
@@ -144,13 +179,27 @@ export class PratoComponent {
         mergeMap((value) =>
           iif(
             () => !value,
-            this.service.inlcluir(data.nome!, data.grupo!),
-            this.service.atualizar(value!, data.nome!, data.grupo!)
+            this.service.inlcluir({
+              nome: data.nome!,
+              grupoId: data.grupo!,
+              composicoes: data.composicoes,
+              observacao: data.observacao,
+            }),
+            this.service.atualizar({
+              id: value!,
+              nome: data.nome!,
+              grupoId: data.grupo!,
+              composicoes: data.composicoes,
+              observacao: data.observacao,
+            })
           )
         ),
         catchError((error: any) => {
           console.error(error);
           this.notify.error('Erro', error.message);
+
+          reject(error);
+
           return EMPTY;
         }),
         finalize(() => {
@@ -160,9 +209,11 @@ export class PratoComponent {
             _id: '',
             nome: '',
             grupo: '',
+            composicoes: [],
+            observacao: '',
           });
 
-          this.isVisible = false;
+          resolve(true);
         })
       )
       .subscribe({

@@ -31,6 +31,7 @@ import {
   CoffeeOutline,
   GroupOutline,
   PlusCircleFill,
+  TagOutline
 } from '@ant-design/icons-angular/icons';
 
 const icons = [
@@ -63,6 +64,7 @@ const icons = [
   CoffeeOutline,
   GroupOutline,
   PlusCircleFill,
+  TagOutline
 ];
 
 @NgModule({

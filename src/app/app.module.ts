@@ -47,6 +47,9 @@ import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { PratosFormComponent } from './pages/pratos/pratos-form.component';
+import { NzTagModule } from 'ng-zorro-antd/tag';
+import { PratosFormComposicaoComponent } from './pages/pratos/pratos-form-composicao.component';
 
 registerLocaleData(pt);
 
@@ -56,7 +59,9 @@ registerLocaleData(pt);
     ComedoresComponent,
     MarmitasComponent,
     GrupoComponent,
-    PratoComponent
+    PratoComponent,
+    PratosFormComponent,
+    PratosFormComposicaoComponent,
   ],
   imports: [
     BrowserModule,
@@ -90,7 +95,8 @@ registerLocaleData(pt);
     NzCollapseModule,
     NzBadgeModule,
     NzFormModule,
-    NzSelectModule
+    NzSelectModule,
+    NzTagModule,
   ],
   providers: [
     { provide: TOKEN_APP_CONFIG, useValue: environment },
