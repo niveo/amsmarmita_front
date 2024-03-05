@@ -7,7 +7,7 @@ import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { pt_BR } from 'ng-zorro-antd/i18n';
 import { NgTemplateOutlet, registerLocaleData } from '@angular/common';
 import pt from '@angular/common/locales/pt';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ComedoresService } from './services/comedores.service';
@@ -41,6 +41,12 @@ import { AmsIconComponent } from './componentes/icon.component';
 import { GrupoService } from './services/grupo.service';
 import { GrupoComponent } from './pages/grupos/grupos.component';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { PratoService } from './services/prato.service';
+import { PratoComponent } from './pages/pratos/pratos.component';
+import { NzCollapseModule } from 'ng-zorro-antd/collapse';
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 registerLocaleData(pt);
 
@@ -50,11 +56,13 @@ registerLocaleData(pt);
     ComedoresComponent,
     MarmitasComponent,
     GrupoComponent,
+    PratoComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
     NgTemplateOutlet,
@@ -78,7 +86,11 @@ registerLocaleData(pt);
     NzModalModule,
     NzGridModule,
     NzDropDownModule,
-    NzSwitchModule
+    NzSwitchModule,
+    NzCollapseModule,
+    NzBadgeModule,
+    NzFormModule,
+    NzSelectModule
   ],
   providers: [
     { provide: TOKEN_APP_CONFIG, useValue: environment },
@@ -86,6 +98,7 @@ registerLocaleData(pt);
     ComedoresService,
     MarmitaService,
     GrupoService,
+    PratoService,
     { provide: DEFAULT_TIMEOUT, useValue: 30000 },
     {
       provide: HTTP_INTERCEPTORS,

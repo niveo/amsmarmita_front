@@ -29,7 +29,8 @@ import {
   CloseCircleFill,
   SearchOutline,
   CoffeeOutline,
-  GroupOutline
+  GroupOutline,
+  PlusCircleFill,
 } from '@ant-design/icons-angular/icons';
 
 const icons = [
@@ -60,7 +61,8 @@ const icons = [
   CloseCircleFill,
   SearchOutline,
   CoffeeOutline,
-  GroupOutline
+  GroupOutline,
+  PlusCircleFill,
 ];
 
 @NgModule({
