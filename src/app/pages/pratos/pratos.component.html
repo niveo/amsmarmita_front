@@ -14,12 +14,16 @@
   <nz-collapse-panel [nzHeader]="tplTitulo" [nzExtra]="tplExtra">
     <nz-list nzItemLayout="horizontal" nzBordered nzSize="large">
       <nz-list-item *ngFor="let item of grupo.pratos">
-        <nz-list-item-meta [nzDescription]="item.nome">
+        <nz-list-item-meta>
           <nz-list-item-meta-title>
+            {{ item.nome }}
+          </nz-list-item-meta-title>
+
+          <nz-list-item-meta-description>
             @for( composicao of item.composicoes; track $index){
             <nz-tag nzColor="magenta">{{ composicao }}</nz-tag>
             }
-          </nz-list-item-meta-title>
+          </nz-list-item-meta-description>
         </nz-list-item-meta>
 
         <ul nz-list-item-actions>
@@ -28,6 +32,7 @@
               nz-button
               nzType="dashed"
               nz-tooltip="Editar"
+              nzSize="small"
               (click)="editar(item)"
             >
               <span nz-icon nzType="edit" nzTheme="outline"></span>
@@ -37,6 +42,7 @@
             <button
               nzDanger
               nz-button
+              nzSize="small"
               nzType="dashed"
               nz-tooltip="Remover"
               nz-popconfirm
