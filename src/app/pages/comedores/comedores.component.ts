@@ -1,4 +1,12 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  EventEmitter,
+  Input,
+  Output,
+  booleanAttribute,
+  inject,
+} from '@angular/core';
 import {
   EMPTY,
   Observable,
@@ -32,6 +40,12 @@ export class ComedoresComponent {
   loadingBtn = false;
   comedoreId?: string;
   comedoreNome?: string;
+
+  @Input({ transform: booleanAttribute })
+  tipoSelecao = false;
+
+  @Output()
+  eventComedorTipoSelecao = new EventEmitter<string>();
 
   ngOnInit() {
     this.carregar();
@@ -110,5 +124,9 @@ export class ComedoresComponent {
           this.carregar();
         },
       });
+  }
+
+  selecionarComedor(comedor: Comedor) {
+    this.eventComedorTipoSelecao.emit(comedor._id);
   }
 }

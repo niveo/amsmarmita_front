@@ -4,6 +4,7 @@ import { ComedoresComponent } from './pages/comedores/comedores.component';
 import { MarmitasComponent } from './pages/marmitas/marmitas.component';
 import { GrupoComponent } from './pages/grupos/grupos.component';
 import { PratoComponent } from './pages/pratos/pratos.component';
+import { MarmitasPedidosComponent } from './pages/marmitas/marmitas-pedidos.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path: 'pratos',
     component: PratoComponent,
+  },
+  {
+    path: 'pedido',
+    component: MarmitasPedidosComponent,
   },
 ];
 

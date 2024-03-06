@@ -51,6 +51,8 @@ import { PratosFormComponent } from './pages/pratos/pratos-form.component';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { PratosFormComposicaoComponent } from './pages/pratos/pratos-form-composicao.component';
 import { GrupoPrincipalComponent } from './componentes/grupo-principal.component';
+import { MarmitasComedoresComponent } from './pages/marmitas/marmitas-comedores.component';
+import { MarmitasPedidosComponent } from './pages/marmitas/marmitas-pedidos.component';
 
 registerLocaleData(pt);
 
@@ -63,6 +65,8 @@ registerLocaleData(pt);
     PratoComponent,
     PratosFormComponent,
     PratosFormComposicaoComponent,
+    MarmitasComedoresComponent,
+    MarmitasPedidosComponent,
   ],
   imports: [
     BrowserModule,
