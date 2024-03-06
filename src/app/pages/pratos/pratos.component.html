@@ -1,0 +1,88 @@
+<nz-skeleton [nzActive]="true" [nzLoading]="loading"></nz-skeleton>
+@if(!loading){
+<button
+  nz-button
+  nzType="primary"
+  style="margin-bottom: 10px"
+  (click)="novoPrato()"
+>
+  Novo Prato
+</button>
+}
+
+<nz-collapse>
+  @for (grupo of data$ | async; track grupo._id) {
+  <nz-collapse-panel [nzHeader]="tplTitulo" [nzExtra]="tplExtra">
+    <nz-list nzItemLayout="horizontal" nzBordered nzSize="large">
+      <nz-list-item *ngFor="let item of grupo.pratos">
+        <nz-list-item-meta>
+          <nz-list-item-meta-title>
+            {{ item.nome }}
+          </nz-list-item-meta-title>
+
+          <nz-list-item-meta-description>
+            @for( composicao of item.composicoes; track $index){
+            <nz-tag nzColor="magenta">{{ composicao }}</nz-tag>
+            }
+          </nz-list-item-meta-description>
+        </nz-list-item-meta>
+
+        <ul nz-list-item-actions>
+          <nz-list-item-action>
+            <button
+              nz-button
+              nzType="dashed"
+              nz-tooltip
+              nzTooltipTitle="Editar"
+              nzSize="small"
+              (click)="editar(item)"
+            >
+              <span nz-icon nzType="edit" nzTheme="outline"></span>
+            </button>
+          </nz-list-item-action>
+          <nz-list-item-action>
+            <button
+              nzDanger
+              nz-button
+              nzSize="small"
+              nzType="dashed"
+              nz-tooltip
+              nzTooltipTitle="Remover"
+              nz-popconfirm
+              nzPopconfirmTitle="Deseja remover esse registro?"
+              nzPopconfirmPlacement="bottom"
+              (nzOnConfirm)="remover(item)"
+            >
+              <span nz-icon nzType="delete" nzTheme="outline"></span>
+            </button>
+          </nz-list-item-action>
+        </ul>
+      </nz-list-item>
+    </nz-list>
+  </nz-collapse-panel>
+  <ng-template #tplTitulo>
+    <div class="fx-row wf" style="margin-right: 10px">
+      <div class="fx-flex fx-row">
+        <app-grupo-principal-component [principal]="grupo.principal" />
+        <div class="fx-column">
+          <span>{{ grupo.nome }}</span>
+          @if(grupo.observacao){
+          <span class="lbl-observacao">{{ grupo.observacao }}</span>
+          }
+        </div>
+      </div>
+      @if(grupo.pratos.length){
+      {{ grupo.pratos.length }}
+      }
+    </div>
+  </ng-template>
+  <ng-template #tplExtra>
+    <span
+      nz-icon
+      nzType="plus-circle"
+      nzTheme="outline"
+      (click)="$event.stopPropagation(); novoPratoGrupo(grupo)"
+    ></span>
+  </ng-template>
+  }
+</nz-collapse>
