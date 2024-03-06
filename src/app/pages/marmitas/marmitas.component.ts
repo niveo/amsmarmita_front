@@ -19,6 +19,8 @@ import {
 } from '../../common/constantes';
 import { MarmitaService } from '../../services/marmita.service';
 import { Marmita } from '../../model/marmita';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { MarmitasComedoresComponent } from './marmitas-comedores.component';
 
 @Component({
   selector: 'app-marmitas-component',
@@ -28,7 +30,9 @@ import { Marmita } from '../../model/marmita';
 export class MarmitasComponent {
   private readonly comedoreService = inject(MarmitaService);
   private readonly notify = inject(NzNotificationService);
-  protected readonly destroyRef = inject(DestroyRef);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly nzModalService = inject(NzModalService);
+
   data$!: Observable<any[]>;
   loading = true;
   isVisible = false;
@@ -127,5 +131,16 @@ export class MarmitasComponent {
           this.carregar();
         },
       });
-  } 
+  }
+
+  visualizarComedores(marmita: Marmita) {
+    this.nzModalService.create({
+      nzTitle: ' ',
+      nzContent: MarmitasComedoresComponent,
+      nzFooter: null,
+      nzData: {
+        marmitaId: marmita._id,
+      },
+    });
+  }
 }
