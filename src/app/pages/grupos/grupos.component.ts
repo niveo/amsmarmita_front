@@ -16,6 +16,8 @@ import {
 } from '../../common/constantes';
 import { GrupoService } from '../../services/grupo.service';
 import { Grupo } from '../../model/grupo';
+import { FormControl, FormGroup, NonNullableFormBuilder } from '@angular/forms';
+import { getFormValidacoes, validarFormulario } from 'src/app/common/util';
 
 @Component({
   selector: 'app-grupos-component',
@@ -25,13 +27,23 @@ export class GrupoComponent {
   private readonly service = inject(GrupoService);
   private readonly notify = inject(NzNotificationService);
   protected readonly destroyRef = inject(DestroyRef);
+  private readonly fb = inject(NonNullableFormBuilder);
+
   data$!: Observable<any[]>;
   loading = true;
   loadingBtn = false;
 
-  grupoId?: string;
-  grupoNome?: string;
-  grupoPrincipal: boolean = false;
+  validateForm: FormGroup<{
+    _id: FormControl<string>;
+    nome: FormControl<string>;
+    principal: FormControl<boolean>;
+    observacao: FormControl<string>;
+  }> = this.fb.group({
+    _id: [''],
+    nome: ['', getFormValidacoes(50)],
+    principal: [false, getFormValidacoes(100)],
+    observacao: [''],
+  });
 
   isVisible = false;
 
@@ -54,9 +66,12 @@ export class GrupoComponent {
   }
 
   editar(item: Grupo) {
-    this.grupoNome = item.nome;
-    this.grupoPrincipal = item.principal;
-    this.grupoId = item._id;
+    this.validateForm.setValue({
+      _id: item._id,
+      nome: item.nome!,
+      principal: item.principal,
+      observacao: item.observacao || '',
+    });
     this.isVisible = true;
   }
 
@@ -83,17 +98,31 @@ export class GrupoComponent {
   }
 
   salvar() {
-    if (!this.grupoNome) return;
+    if (!this.validateForm.valid) {
+      validarFormulario(this.validateForm);
+      return;
+    }
 
     this.loadingBtn = true;
 
-    of(this.grupoId!)
+    const data = this.validateForm.value;
+
+    of(this.validateForm.value._id)
       .pipe(
         mergeMap((value) =>
           iif(
             () => !value,
-            this.service.inlcluir(this.grupoNome!, this.grupoPrincipal),
-            this.service.atualizar(value, this.grupoNome!, this.grupoPrincipal)
+            this.service.inlcluir({
+              nome: data.nome!,
+              principal: data.principal!,
+              observacao: data.observacao,
+            }),
+            this.service.atualizar({
+              id: value!,
+              nome: data.nome!,
+              principal: data.principal!,
+              observacao: data.observacao,
+            })
           )
         ),
         catchError((error: any) => {
@@ -103,9 +132,14 @@ export class GrupoComponent {
         }),
         finalize(() => {
           this.loadingBtn = false;
-          this.grupoId = undefined;
-          this.grupoNome = undefined;
-          this.grupoPrincipal = false;
+
+          this.validateForm.setValue({
+            _id: '',
+            nome: '',
+            principal: false,
+            observacao: '',
+          });
+
           this.isVisible = false;
         })
       )

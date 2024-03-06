@@ -14,11 +14,37 @@ export class GrupoService {
     return this.http.delete<any>('/grupos/' + id);
   }
 
-  atualizar(id: string, nome: string, principal: boolean) {
-    return this.http.put<any>('/grupos/' + id, { nome: nome, principal: principal });
+  atualizar({
+    id,
+    nome,
+    principal,
+    observacao,
+  }: {
+    id: string;
+    nome: string;
+    principal: boolean;
+    observacao?: string;
+  }) {
+    return this.http.put<any>('/grupos/' + id, {
+      nome: nome,
+      principal: principal,
+      observacao: observacao,
+    });
   }
 
-  inlcluir(nome: string, principal: boolean) {
-    return this.http.post<any>('/grupos', { nome: nome, principal: principal });
+  inlcluir({
+    nome,
+    principal,
+    observacao,
+  }: {
+    nome: string;
+    principal: boolean;
+    observacao?: string;
+  }) {
+    return this.http.post<any>('/grupos', {
+      nome: nome,
+      principal: principal,
+      observacao: observacao,
+    });
   }
 }

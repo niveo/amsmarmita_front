@@ -1,6 +1,6 @@
 export class Grupo {
-    _id?: string;
-    nome?: string;
-    principal = false;
-  }
-  
+  _id!: string;
+  nome!: string;
+  principal = false;
+  observacao?: string;
+}
