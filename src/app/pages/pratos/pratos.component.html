@@ -1,5 +1,5 @@
 <nz-skeleton [nzActive]="true" [nzLoading]="loading"></nz-skeleton>
-
+@if(!loading){
 <button
   nz-button
   nzType="primary"
@@ -8,6 +8,7 @@
 >
   Novo Prato
 </button>
+}
 
 <nz-collapse>
   @for (grupo of data$ | async; track grupo._id) {
@@ -31,7 +32,8 @@
             <button
               nz-button
               nzType="dashed"
-              nz-tooltip="Editar"
+              nz-tooltip
+              nzTooltipTitle="Editar"
               nzSize="small"
               (click)="editar(item)"
             >
@@ -44,7 +46,8 @@
               nz-button
               nzSize="small"
               nzType="dashed"
-              nz-tooltip="Remover"
+              nz-tooltip
+              nzTooltipTitle="Remover"
               nz-popconfirm
               nzPopconfirmTitle="Deseja remover esse registro?"
               nzPopconfirmPlacement="bottom"
@@ -60,9 +63,7 @@
   <ng-template #tplTitulo>
     <div class="fx-row wf" style="margin-right: 10px">
       <div class="fx-flex">
-        <ng-container
-          *ngTemplateOutlet="tplPrincipal; context: { $implicit: grupo }"
-        ></ng-container>
+        <app-grupo-principal-component [principal]="grupo.principal" />
         {{ grupo.nome }}
       </div>
       @if(grupo.pratos.length){
@@ -80,7 +81,3 @@
   </ng-template>
   }
 </nz-collapse>
-
-<ng-template #tplPrincipal let-grupo>
-  <nz-badge [nzStatus]="grupo.principal ? 'success' : 'default'"></nz-badge>
-</ng-template>

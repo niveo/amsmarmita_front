@@ -31,9 +31,7 @@
       >
         @for(g of grupos; track g._id){
         <nz-option nzCustomContent [nzValue]="g._id" [nzLabel]="g.nome!">
-          <ng-container
-            *ngTemplateOutlet="tplPrincipal; context: { $implicit: g }"
-          ></ng-container>
+          <app-grupo-principal-component [principal]="g.principal" />
           {{ g.nome }}
         </nz-option>
         }
@@ -49,18 +47,19 @@
         nz-input
         formControlName="observacao"
         placeholder="Informe aqui uma observação"
-        [maxLength]="100" 
+        [maxLength]="100"
       ></textarea>
     </nz-form-control>
   </nz-form-item>
 
-  <span nz-icon nzType="tags" nzTheme="outline" style="margin-right: 5px;"></span>
+  <span
+    nz-icon
+    nzType="tags"
+    nzTheme="outline"
+    style="margin-right: 5px"
+  ></span>
   <app-pratos-form-composicao-component
     [composicoes]="validateForm.value.composicoes"
     (eventAtualizarComposicao)="atualizarComposicao($event)"
   />
 </form>
-
-<ng-template #tplPrincipal let-grupo>
-  <nz-badge [nzStatus]="grupo.principal ? 'success' : 'default'"></nz-badge>
-</ng-template>

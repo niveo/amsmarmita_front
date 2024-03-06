@@ -50,6 +50,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { PratosFormComponent } from './pages/pratos/pratos-form.component';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { PratosFormComposicaoComponent } from './pages/pratos/pratos-form-composicao.component';
+import { GrupoPrincipalComponent } from './componentes/grupo-principal.component';
 
 registerLocaleData(pt);
 
@@ -72,6 +73,7 @@ registerLocaleData(pt);
     BrowserAnimationsModule,
     NgTemplateOutlet,
     AmsIconComponent,
+    GrupoPrincipalComponent,
 
     IconsProviderUserModule,
 

@@ -1,6 +1,5 @@
-@if(loading){
-<nz-skeleton [nzActive]="true"></nz-skeleton>
-} @if(data$ | async; as data){
+<nz-skeleton [nzActive]="true" [nzLoading]="loading"></nz-skeleton>
+@if(data$ | async; as data){
 <ul nz-list [nzDataSource]="data" nzBordered nzSize="large">
   <nz-list-header>
     <nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixButton">
@@ -18,7 +17,8 @@
       <button
         nz-button
         nzType="dashed"
-        nz-tooltip="Salvar"
+        nz-tooltip
+        nzTooltipTitle="Salvar"
         nzSize="large"
         (click)="salvar()"
         [nzLoading]="loadingBtn"
@@ -34,7 +34,8 @@
           nz-button
           nzSize="small"
           nzType="dashed"
-          nz-tooltip="Editar"
+          nz-tooltip
+          nzTooltipTitle="Editar"
           (click)="editar(item)"
         >
           <span nz-icon nzType="edit" nzTheme="outline"></span>
@@ -46,7 +47,8 @@
           nz-button
           nzSize="small"
           nzType="dashed"
-          nz-tooltip="Remover"
+          nz-tooltip
+          nzTooltipTitle="Remover"
           nz-popconfirm
           nzPopconfirmTitle="Deseja remover esse registro?"
           nzPopconfirmPlacement="bottom"
