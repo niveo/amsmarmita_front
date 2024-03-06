@@ -25,13 +25,22 @@ import {
   NonNullableFormBuilder,
   Validators,
 } from '@angular/forms';
-import { validarFormulario } from '../../common/util';
+import { getFormValidacoes, validarFormulario } from '../../common/util';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { PratosFormComponent } from './pratos-form.component';
 
 @Component({
   selector: 'app-pratos-component',
   templateUrl: './pratos.component.html',
+  styles: [
+    `
+      .lbl-observacao {
+        color: rgba(0, 0, 0, 0.45);
+        font-size: 14px;
+        line-height: 1.5715;
+      }
+    `,
+  ],
 })
 export class PratoComponent {
   private readonly service = inject(PratoService);
@@ -53,10 +62,10 @@ export class PratoComponent {
     observacao: FormControl<string>;
   }> = this.fb.group({
     _id: [''],
-    nome: ['', [Validators.required]],
+    nome: ['', getFormValidacoes(50)],
     grupo: ['', [Validators.required]],
     composicoes: [['']],
-    observacao: [''],
+    observacao: ['', getFormValidacoes(100)],
   });
 
   grupos?: Grupo[];

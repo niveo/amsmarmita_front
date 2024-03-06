@@ -62,9 +62,14 @@
   </nz-collapse-panel>
   <ng-template #tplTitulo>
     <div class="fx-row wf" style="margin-right: 10px">
-      <div class="fx-flex">
+      <div class="fx-flex fx-row">
         <app-grupo-principal-component [principal]="grupo.principal" />
-        {{ grupo.nome }}
+        <div class="fx-column">
+          <span>{{ grupo.nome }}</span>
+          @if(grupo.observacao){
+          <span class="lbl-observacao">{{ grupo.observacao }}</span>
+          }
+        </div>
       </div>
       @if(grupo.pratos.length){
       {{ grupo.pratos.length }}
