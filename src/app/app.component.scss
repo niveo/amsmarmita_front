@@ -1,23 +1,17 @@
+.layout {
+  min-height: 100vh;
+}
+
 .header-menu {
   line-height: 64px;
 }
 
-.outer-content {
-  padding: 5px;
-}
+ 
 
-.inner-layout {
-  padding: 24px 0;
-  background: #fff;
-}
-
-.sider-menu {
-  height: 100%;
-}
-
-.inner-content {
-  padding: 0 24px;
-  min-height: 280px;
+nz-header {
+  position: fixed;
+  width: 100%;
+  z-index: 1;
 }
 
 nz-footer {
@@ -28,14 +22,31 @@ fa-icon {
   padding-right: 10px;
 }
 
+nz-sider {
+  margin-top: 40px;
+}
+
 .btn-menu {
   width: 100%;
+}
+
+.inner-content {
+  background: #fff;
+  margin-left: 10px;
+  padding: 10px;
+  min-height: 380px;
+  margin-top: 40px;
+}
+
+.outer-content {
+  padding: 0 40px;
+  margin-top: 40px;
 }
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
   nz-content {
-    padding: 0px; 
+    padding: 0;
   }
   nz-layout {
     overflow-x: hidden;
@@ -45,5 +56,8 @@ fa-icon {
   }
   .ant-layout-header {
     padding: 0 10px;
+  }
+  .outer-content {
+    padding: 0;
   }
 }
