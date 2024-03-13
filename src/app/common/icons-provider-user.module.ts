@@ -32,7 +32,8 @@ import {
   GroupOutline,
   PlusCircleFill,
   TagOutline,
-  SelectOutline
+  SelectOutline,
+  CopyFill
 } from '@ant-design/icons-angular/icons';
 
 const icons = [
@@ -66,7 +67,8 @@ const icons = [
   GroupOutline,
   PlusCircleFill,
   TagOutline,
-  SelectOutline
+  SelectOutline,
+  CopyFill
 ];
 
 @NgModule({

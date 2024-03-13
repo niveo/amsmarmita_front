@@ -50,7 +50,7 @@ export class ComedoresComponent {
   ngOnInit() {
     this.carregar();
   }
-
+  
   private carregar() {
     this.loading = true;
     this.data$ = this.comedoreService

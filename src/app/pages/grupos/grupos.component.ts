@@ -16,7 +16,12 @@ import {
 } from '../../common/constantes';
 import { GrupoService } from '../../services/grupo.service';
 import { Grupo } from '../../model/grupo';
-import { FormControl, FormGroup, NonNullableFormBuilder } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  NonNullableFormBuilder,
+  Validators,
+} from '@angular/forms';
 import { getFormValidacoes, validarFormulario } from 'src/app/common/util';
 
 @Component({
@@ -40,8 +45,8 @@ export class GrupoComponent {
     observacao: FormControl<string>;
   }> = this.fb.group({
     _id: [''],
-    nome: ['', getFormValidacoes(50)],
-    principal: [false, getFormValidacoes(100)],
+    nome: ['', [Validators.required, ...getFormValidacoes(50)]],
+    principal: [false, Validators.required],
     observacao: [''],
   });
 
