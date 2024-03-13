@@ -13,7 +13,6 @@ export const validarFormulario = (validateForm: any) => {
 
 
 export const getFormValidacoes = (max: number) => [
-  Validators.required,
   Validators.maxLength(max),
   Validators.max(max),
 ];

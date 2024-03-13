@@ -42,6 +42,21 @@
           </nz-list-item-action>
           <nz-list-item-action>
             <button
+              nz-button
+              nzSize="small"
+              nzType="dashed"
+              nz-tooltip
+              nzTooltipTitle="Duplicar"
+              nz-popconfirm
+              nzPopconfirmTitle="Deseja duplicar esse registro?"
+              nzPopconfirmPlacement="bottom"
+              (nzOnConfirm)="duplicar(item)"
+            >
+              <span nz-icon nzType="copy" nzTheme="outline"></span>
+            </button>
+          </nz-list-item-action>
+          <nz-list-item-action>
+            <button
               nzDanger
               nz-button
               nzSize="small"
@@ -65,7 +80,7 @@
       <div class="fx-flex fx-row">
         <app-grupo-principal-component [principal]="grupo.principal" />
         <div class="fx-column">
-          <span style="font-weight: bold;">{{ grupo.nome }}</span>
+          <span style="font-weight: bold">{{ grupo.nome }}</span>
           @if(grupo.observacao){
           <span class="lbl-observacao">{{ grupo.observacao }}</span>
           }
