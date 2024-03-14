@@ -32,6 +32,7 @@ import { PratosFormComponent } from './pratos-form.component';
 @Component({
   selector: 'app-pratos-component',
   templateUrl: './pratos.component.html',
+  styleUrl: './pratos.component.scss',
   styles: [
     `
       .lbl-observacao {

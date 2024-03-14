@@ -1,50 +1,67 @@
 <nz-skeleton [nzActive]="true" [nzLoading]="loading"></nz-skeleton>
-@if(!loading){
-<button
-  nz-button
-  nzType="primary"
-  style="margin-bottom: 10px"
-  (click)="novoPrato()"
->
-  Novo Prato
-</button>
+@if (!loading) {
+  <button
+    nz-button
+    nzType="primary"
+    style="margin-bottom: 10px"
+    (click)="novoPrato()"
+  >
+    Novo Prato
+  </button>
 }
 
-<nz-collapse>
+<nz-collapse nzGhost>
   @for (grupo of data$ | async; track grupo._id) {
-  <nz-collapse-panel [nzHeader]="tplTitulo" [nzExtra]="tplExtra">
-    <nz-list nzItemLayout="horizontal" nzBordered nzSize="large">
-      <nz-list-item *ngFor="let item of grupo.pratos">
-        <nz-list-item-meta>
-          <nz-list-item-meta-title>
-            {{ item.nome }}
-          </nz-list-item-meta-title>
+    <nz-collapse-panel
+      [nzHeader]="tplTitulo"
+      [nzShowArrow]="false"
+      style="border-bottom: 1px solid #e0e0e0"
+    >
+      @for (item of grupo.pratos; track item._id) {
+        <nz-card
+          nzHoverable
+          [nzTitle]="item.nome"
+          style="width: 100%; margin-bottom: 5px"
+          [nzActions]="[tplEdit, tplCopy, tplDelete]"
+          [nzBodyStyle]="{
+            padding: (item.composicoes?.length === 0 && !item.observacao) ? '0px' : '10px'
+          }"
+        >
+          <nz-card-meta [nzDescription]="item.observacao"> </nz-card-meta>
 
-          <nz-list-item-meta-description>
-            @for( composicao of item.composicoes; track $index){
-            <nz-tag nzColor="magenta">{{ composicao }}</nz-tag>
+          @if (item.composicoes?.length > 0) {
+            @for (composicao of item.composicoes; track $index) {
+              <nz-tag nzColor="magenta">{{ composicao }}</nz-tag>
             }
-          </nz-list-item-meta-description>
-        </nz-list-item-meta>
-
-        <ul nz-list-item-actions>
-          <nz-list-item-action>
+          }
+        </nz-card>
+        <ng-template #tplEdit>
+          <app-icon (click)="editar(item)">edit</app-icon>
+        </ng-template>
+        <ng-template #tplCopy>
+          <app-icon
+            nz-popconfirm
+            nzPopconfirmTitle="Deseja duplicar esse registro?"
+            nzPopconfirmPlacement="bottom"
+            (nzOnConfirm)="duplicar(item)"
+            >content_copy</app-icon
+          >
+        </ng-template>
+        <ng-template #tplDelete>
+          <app-icon
+            nzDanger
+            nz-popconfirm
+            nzPopconfirmTitle="Deseja remover esse registro?"
+            nzPopconfirmPlacement="bottom"
+            (nzOnConfirm)="remover(item)"
+            >delete</app-icon
+          >
+        </ng-template>
+        <ng-template #contentTemplate>
+          <div>
             <button
               nz-button
-              nzType="dashed"
-              nz-tooltip
-              nzTooltipTitle="Editar"
-              nzSize="small"
-              (click)="editar(item)"
-            >
-              <span nz-icon nzType="edit" nzTheme="outline"></span>
-            </button>
-          </nz-list-item-action>
-          <nz-list-item-action>
-            <button
-              nz-button
-              nzSize="small"
-              nzType="dashed"
+              nzType="default"
               nz-tooltip
               nzTooltipTitle="Duplicar"
               nz-popconfirm
@@ -54,13 +71,11 @@
             >
               <span nz-icon nzType="copy" nzTheme="outline"></span>
             </button>
-          </nz-list-item-action>
-          <nz-list-item-action>
+
             <button
               nzDanger
               nz-button
-              nzSize="small"
-              nzType="dashed"
+              nzType="default"
               nz-tooltip
               nzTooltipTitle="Remover"
               nz-popconfirm
@@ -70,34 +85,31 @@
             >
               <span nz-icon nzType="delete" nzTheme="outline"></span>
             </button>
-          </nz-list-item-action>
-        </ul>
-      </nz-list-item>
-    </nz-list>
-  </nz-collapse-panel>
-  <ng-template #tplTitulo>
-    <div class="fx-row wf" style="margin-right: 10px">
-      <div class="fx-flex fx-row">
-        <app-grupo-principal-component [principal]="grupo.principal" />
-        <div class="fx-column">
-          <span style="font-weight: bold">{{ grupo.nome }}</span>
-          @if(grupo.observacao){
-          <span class="lbl-observacao">{{ grupo.observacao }}</span>
-          }
+          </div>
+        </ng-template>
+      }
+    </nz-collapse-panel>
+
+    <ng-template #tplTitulo>
+      <div class="fx-row wf" style="margin-right: 10px">
+        <div class="fx-flex fx-row">
+          <app-grupo-principal-component [principal]="grupo.principal" />
+          <div class="fx-column">
+            <span style="font-weight: bold">{{ grupo.nome }}</span>
+            @if (grupo.observacao) {
+              <span class="lbl-observacao">{{ grupo.observacao }}</span>
+            }
+          </div>
         </div>
       </div>
-      @if(grupo.pratos.length){
-      {{ grupo.pratos.length }}
-      }
-    </div>
-  </ng-template>
-  <ng-template #tplExtra>
-    <span
-      nz-icon
-      nzType="plus-circle"
-      nzTheme="outline"
-      (click)="$event.stopPropagation(); novoPratoGrupo(grupo)"
-    ></span>
-  </ng-template>
+    </ng-template>
+    <ng-template #tplExtra>
+      <span
+        nz-icon
+        nzType="plus-circle"
+        nzTheme="outline"
+        (click)="$event.stopPropagation(); novoPratoGrupo(grupo)"
+      ></span>
+    </ng-template>
   }
 </nz-collapse>
