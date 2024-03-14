@@ -1,5 +1,12 @@
 <nz-skeleton [nzActive]="true" [nzLoading]="loading"></nz-skeleton>
-@if (!loading) {
+@if (!loading && !tipoSelecao) {
+  <button
+    nz-button
+    nzType="primary"
+    style="margin-bottom: 10px"
+    (click)="novoPrato()"
+    nz-tooltip="Atualizar Pratos"
+  ></button>
   <button
     nz-button
     nzType="primary"
@@ -19,15 +26,22 @@
     >
       @for (item of grupo.pratos; track item._id) {
         <nz-card
-          nzHoverable
           [nzTitle]="item.nome"
           style="width: 100%; margin-bottom: 5px"
-          [nzActions]="[tplEdit, tplCopy, tplDelete]"
+          [nzActions]="
+            tipoSelecao
+              ? tipoSelecaoPratoActions
+              : [tplEdit, tplCopy, tplDelete]
+          "
           [nzBodyStyle]="{
-            padding: (item.composicoes?.length === 0 && !item.observacao) ? '0px' : '10px'
+            padding:
+              item.composicoes?.length === 0 && !item.observacao
+                ? '0px'
+                : '10px'
           }"
         >
-          <nz-card-meta [nzDescription]="item.observacao"> </nz-card-meta>
+          <nz-card-meta [nzTitle]="item._id" [nzDescription]="item.observacao">
+          </nz-card-meta>
 
           @if (item.composicoes?.length > 0) {
             @for (composicao of item.composicoes; track $index) {

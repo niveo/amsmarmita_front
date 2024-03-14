@@ -1,14 +1,18 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  Input,
+  booleanAttribute,
+  inject,
+} from '@angular/core';
 import {
   EMPTY,
   Observable,
   catchError,
   finalize,
   iif,
-  map,
   mergeMap,
   of,
-  combineLatest,
 } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
@@ -28,6 +32,7 @@ import {
 import { getFormValidacoes, validarFormulario } from '../../common/util';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { PratosFormComponent } from './pratos-form.component';
+import { PratoStore } from '../../stores/prato.store';
 
 @Component({
   selector: 'app-pratos-component',
@@ -51,9 +56,16 @@ export class PratoComponent {
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly nzModalService = inject(NzModalService);
 
+  private readonly pratoStore = inject(PratoStore);
+
+  @Input({ transform: booleanAttribute })
+  tipoSelecao = false;
+
+  @Input()
+  tipoSelecaoPratoActions: any;
+
   data$!: Observable<any[]>;
   loading = true;
-  loadingBtn = false;
 
   validateForm: FormGroup<{
     _id: FormControl<string>;
@@ -69,38 +81,12 @@ export class PratoComponent {
     observacao: ['', getFormValidacoes(100)],
   });
 
-  grupos?: Grupo[];
+  constructor() {
+    this.pratoStore.loading$
+      .pipe(takeUntilDestroyed())
+      .subscribe((loading) => (this.loading = loading));
 
-  ngOnInit() {
-    this.carregar();
-  }
-
-  private carregar() {
-    this.loading = true;
-
-    this.data$ = combineLatest([
-      this.grupoService.getAll(),
-      (this.data$ = this.service.getAll()),
-    ])
-      .pipe(finalize(() => (this.loading = false)))
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .pipe(
-        catchError((error: any) => {
-          this.notify.error('Erro', error.message);
-          return EMPTY;
-        })
-      )
-      .pipe(
-        map((mp) => {
-          this.grupos = mp[0];
-          return mp[0].map((n) => {
-            return {
-              ...n,
-              pratos: mp[1].filter((f) => f.grupo === n._id),
-            };
-          });
-        })
-      );
+    this.data$ = this.pratoStore.data$; 
   }
 
   novoPrato() {
@@ -142,7 +128,6 @@ export class PratoComponent {
     this.nzModalService.create({
       nzContent: PratosFormComponent,
       nzData: {
-        grupos: this.grupos,
         validateForm: this.validateForm,
       },
       nzOkText: 'Salvar',
@@ -152,47 +137,11 @@ export class PratoComponent {
   }
 
   remover(item: Prato) {
-    this.loadingBtn = true;
-    this.service
-      .delete(item._id!)
-      .pipe(
-        finalize(() => {
-          this.loadingBtn = false;
-        })
-      )
-      .subscribe({
-        error: (error) => {
-          console.error(error);
-          this.notify.error('Erro', error.message);
-        },
-        next: (value) => {
-          console.log(value);
-          this.notify.success('Remoção', MSG_EXCLUIR_SUCESSO);
-          this.carregar();
-        },
-      });
+    this.pratoStore.remover(item);
   }
 
   duplicar(item: Prato) {
-    this.loadingBtn = true;
-    this.service
-      .duplicar(item._id!!)
-      .pipe(
-        catchError((error: any) => {
-          console.error(error);
-          this.notify.error('Erro', error.message);
-          return EMPTY;
-        }),
-        finalize(() => {
-          this.loadingBtn = false;
-        })
-      )
-      .subscribe({
-        next: () => {
-          this.notify.success('Atualização', MSG_ATUALIZADO_SUCESSO);
-          this.carregar();
-        },
-      });
+    this.pratoStore.duplicar(item);
   }
 
   salvar(resolve: (value: any) => void, reject: (error: any) => void) {
@@ -202,57 +151,21 @@ export class PratoComponent {
       return;
     }
 
-    this.loadingBtn = true;
-
     const data = this.validateForm.value;
 
-    of(this.validateForm.value._id)
-      .pipe(
-        mergeMap((value) =>
-          iif(
-            () => !value,
-            this.service.inlcluir({
-              nome: data.nome!,
-              grupoId: data.grupo!,
-              composicoes: data.composicoes,
-              observacao: data.observacao,
-            }),
-            this.service.atualizar({
-              id: value!,
-              nome: data.nome!,
-              grupoId: data.grupo!,
-              composicoes: data.composicoes,
-              observacao: data.observacao,
-            })
-          )
-        ),
-        catchError((error: any) => {
-          console.error(error);
-          this.notify.error('Erro', error.message);
-
-          reject(error);
-
-          return EMPTY;
-        }),
-        finalize(() => {
-          this.loadingBtn = false;
-
-          this.validateForm.setValue({
-            _id: '',
-            nome: '',
-            grupo: '',
-            composicoes: [],
-            observacao: '',
-          });
-
-          resolve(true);
-        })
-      )
-      .subscribe({
-        next: () => {
-          this.notify.success('Atualização', MSG_ATUALIZADO_SUCESSO);
-          this.carregar();
-        },
-      });
+    this.pratoStore.salvar(
+      data,
+      (value) => {
+        this.validateForm.setValue({
+          _id: '',
+          nome: '',
+          grupo: '',
+          composicoes: [],
+          observacao: '',
+        });
+        resolve(value);
+      },
+      reject,
+    );
   }
 }

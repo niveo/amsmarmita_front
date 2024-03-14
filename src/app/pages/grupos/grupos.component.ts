@@ -52,22 +52,10 @@ export class GrupoComponent {
 
   isVisible = false;
 
-  ngOnInit() {
-    this.carregar();
-  }
-
-  private carregar() {
-    this.loading = true;
-    this.data$ = this.service
-      .getAll()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .pipe(
-        catchError((error: any) => {
-          this.notify.error('Erro', error.message);
-          return EMPTY;
-        })
-      )
-      .pipe(finalize(() => (this.loading = false)));
+  constructor() {
+    this.data$ = this.service.data$;
+    this.service.data$.pipe(takeUntilDestroyed(this.destroyRef));
+    this.service.data$.subscribe(() => (this.loading = false));
   }
 
   editar(item: Grupo) {
@@ -87,7 +75,7 @@ export class GrupoComponent {
       .pipe(
         finalize(() => {
           this.loadingBtn = false;
-        })
+        }),
       )
       .subscribe({
         error: (error) => {
@@ -97,7 +85,7 @@ export class GrupoComponent {
         next: (value) => {
           console.log(value);
           this.notify.success('Remoção', MSG_EXCLUIR_SUCESSO);
-          this.carregar();
+ 
         },
       });
   }
@@ -127,8 +115,8 @@ export class GrupoComponent {
               nome: data.nome!,
               principal: data.principal!,
               observacao: data.observacao,
-            })
-          )
+            }),
+          ),
         ),
         catchError((error: any) => {
           console.error(error);
@@ -146,13 +134,13 @@ export class GrupoComponent {
           });
 
           this.isVisible = false;
-        })
+        }),
       )
       .subscribe({
         next: (value) => {
           console.log(value);
           this.notify.success('Atualização', MSG_ATUALIZADO_SUCESSO);
-          this.carregar();
+ 
         },
       });
   }

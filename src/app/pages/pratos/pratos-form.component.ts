@@ -18,9 +18,7 @@ export class PratosFormComponent implements OnInit {
 
   ngOnInit() {
     this.validateForm = this.nzModalData.validateForm;
-    this.grupoService
-      .getAll()
-      .subscribe((response) => (this.grupos = response));
+    this.grupoService.data$.subscribe((response) => (this.grupos = response));
   }
 
   atualizarComposicao(e: string[]) {
