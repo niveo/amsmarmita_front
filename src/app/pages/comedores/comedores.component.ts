@@ -127,6 +127,7 @@ export class ComedoresComponent {
   }
 
   selecionarComedor(comedor: Comedor) {
+    if(this.tipoSelecao)
     this.eventComedorTipoSelecao.emit(comedor._id);
   }
 }
