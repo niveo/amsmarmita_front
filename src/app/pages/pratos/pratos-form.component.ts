@@ -4,7 +4,7 @@ import {
   inject,
 } from '@angular/core';
 import { NZ_MODAL_DATA } from 'ng-zorro-antd/modal';
-import { Grupo } from 'src/app/model';
+import { Grupo } from '../../model';
 
 @Component({
   selector: 'app-pratos-form-component',

@@ -22,7 +22,7 @@ import {
   NonNullableFormBuilder,
   Validators,
 } from '@angular/forms';
-import { getFormValidacoes, validarFormulario } from 'src/app/common/util';
+import { getFormValidacoes, validarFormulario } from '../../common/util';
 
 @Component({
   selector: 'app-grupos-component',
