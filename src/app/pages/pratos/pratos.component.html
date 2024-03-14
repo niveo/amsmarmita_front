@@ -40,8 +40,7 @@
                 : '10px'
           }"
         >
-          <nz-card-meta [nzTitle]="item._id" [nzDescription]="item.observacao">
-          </nz-card-meta>
+          <nz-card-meta [nzDescription]="item.observacao"> </nz-card-meta>
 
           @if (item.composicoes?.length > 0) {
             @for (composicao of item.composicoes; track $index) {

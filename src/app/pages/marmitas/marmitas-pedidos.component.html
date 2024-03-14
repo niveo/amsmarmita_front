@@ -12,12 +12,16 @@
   <ng-container *nzDrawerContent>
     <app-pratos-component
       tipoSelecao
-      [tipoSelecaoPratoActions]="[tplAdicaoPrato]"
+      [tipoSelecaoPratoActions]="[tplAdicaoPrato, tplRemovePrato]"
     ></app-pratos-component>
   </ng-container>
 </nz-drawer>
 
 <ng-template #tplAdicaoPrato>
-  <span nz-icon nzType="check" nzTheme="outline"></span>
+  <app-icon>done</app-icon>
 </ng-template>
- 
+
+<!--Incluir se prato for vinculado-->
+<ng-template #tplRemovePrato>
+  <app-icon nzDanger>delete</app-icon>
+</ng-template>
