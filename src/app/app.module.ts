@@ -55,6 +55,7 @@ import { MarmitasComedoresComponent } from './pages/marmitas/marmitas-comedores.
 import { MarmitasPedidosComponent } from './pages/marmitas/marmitas-pedidos.component';
 import { Title } from '@angular/platform-browser';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
+import { PratoStore } from './stores/prato.store';
 
 registerLocaleData(pt);
 
@@ -113,7 +114,7 @@ registerLocaleData(pt);
     ComedoresService,
     MarmitaService,
     GrupoService,
-    PratoService,
+ 
     { provide: DEFAULT_TIMEOUT, useValue: 30000 },
     {
       provide: HTTP_INTERCEPTORS,

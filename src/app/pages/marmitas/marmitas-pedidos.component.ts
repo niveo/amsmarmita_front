@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { map, mergeMap } from 'rxjs';
+import { mergeMap } from 'rxjs';
 import { ComedoresService } from '../../services/comedores.service';
 
 @Component({
@@ -16,8 +16,17 @@ export class MarmitasPedidosComponent implements OnInit {
       .pipe(
         mergeMap(({ comedorId, marmitaId }) => {
           return this.comedoresService.getId(comedorId);
-        })
+        }),
       )
       .subscribe(console.log);
+  }
+
+  visible = false;
+  open(): void {
+    this.visible = true;
+  }
+
+  close(): void {
+    this.visible = false;
   }
 }
