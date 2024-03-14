@@ -135,9 +135,17 @@ export class MarmitasComponent {
 
   visualizarComedores(marmita: Marmita) {
     this.nzModalService.create({
-      nzTitle: ' ',
+      nzClosable: false,
       nzContent: MarmitasComedoresComponent,
-      nzFooter: null,
+
+      nzFooter: [
+        {
+          label: 'Sair',
+          onClick: function (componentInstance) {
+            componentInstance?.sair();
+          },
+        },
+      ],
       nzData: {
         marmitaId: marmita._id,
       },
