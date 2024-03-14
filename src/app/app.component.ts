@@ -18,7 +18,7 @@ export class AppComponent {
   private readonly route = inject(Router);
   constructor() {
     if (isMobile) {
-      this.placement = 'left';
+      this.placement = 'right';
     }
     this.route.events.subscribe((event) => {
       //console.log(event);
