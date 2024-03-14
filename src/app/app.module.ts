@@ -54,6 +54,7 @@ import { GrupoPrincipalComponent } from './componentes/grupo-principal.component
 import { MarmitasComedoresComponent } from './pages/marmitas/marmitas-comedores.component';
 import { MarmitasPedidosComponent } from './pages/marmitas/marmitas-pedidos.component';
 import { Title } from '@angular/platform-browser';
+import { NzPopoverModule } from 'ng-zorro-antd/popover';
 
 registerLocaleData(pt);
 
@@ -104,6 +105,7 @@ registerLocaleData(pt);
     NzFormModule,
     NzSelectModule,
     NzTagModule,
+    NzPopoverModule
   ],
   providers: [
     { provide: TOKEN_APP_CONFIG, useValue: environment },
