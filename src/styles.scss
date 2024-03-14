@@ -124,3 +124,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   background-size: 100%;
   transition: background 0s;
 }
+
+.ant-collapse-content > .ant-collapse-content-box {
+  padding: 5px !important;
+  background-color: #E0E0E0  !important;
+}
