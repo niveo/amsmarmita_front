@@ -62,7 +62,7 @@ export class PratoComponent {
     observacao: FormControl<string>;
   }> = this.fb.group({
     _id: [''],
-    nome: ['', getFormValidacoes(50)],
+    nome: ['', [Validators.required, ...getFormValidacoes(50)]],
     grupo: ['', [Validators.required]],
     composicoes: [['']],
     observacao: ['', getFormValidacoes(100)],
@@ -167,6 +167,28 @@ export class PratoComponent {
         next: (value) => {
           console.log(value);
           this.notify.success('Remoção', MSG_EXCLUIR_SUCESSO);
+          this.carregar();
+        },
+      });
+  }
+
+  duplicar(item: Prato) {
+    this.loadingBtn = true;
+    this.service
+      .duplicar(item._id!!)
+      .pipe(
+        catchError((error: any) => {
+          console.error(error);
+          this.notify.error('Erro', error.message);
+          return EMPTY;
+        }),
+        finalize(() => {
+          this.loadingBtn = false;
+        })
+      )
+      .subscribe({
+        next: () => {
+          this.notify.success('Atualização', MSG_ATUALIZADO_SUCESSO);
           this.carregar();
         },
       });
