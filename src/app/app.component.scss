@@ -1,3 +1,5 @@
+@import '../style-variables';
+
 .layout {
   min-height: 100vh;
 }
@@ -46,7 +48,6 @@ nz-sider {
 .logo {
   width: 150px;
   height: 45px;
-  background: rgba(255, 255, 255, 0.2);
   margin: 10px 0 10px 0 ;
   float: left;
 
@@ -56,6 +57,13 @@ nz-sider {
   flex-direction: column; 
   align-items: center;
   justify-content: center;
+
+  border: none;
+  border-radius: 2px;
+  
+  background-color: $ripple-color;
+  box-shadow: 0 0 4px #999;
+  outline: none;
 }
 
 .logo-title {

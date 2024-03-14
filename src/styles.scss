@@ -2,6 +2,8 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+@import 'style-variables';
+
 /* You can add global styles to this file, and also import other style files */
 @mixin fx-border-box {
     box-sizing: border-box;
@@ -106,4 +108,19 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   /* Extra large devices (large laptops and desktops, 1200px and up) */
   @media only screen and (min-width: 1200px) {
   }
+
+
   
+/* Ripple effect */
+.ripple {
+  background-position: center;
+  transition: background 0.8s;
+}
+.ripple:hover {
+  background: $ripple-color radial-gradient(circle, transparent 1%, $ripple-color 1%) center/15000%;
+}
+.ripple:active {
+  background-color: $ripple-color;
+  background-size: 100%;
+  transition: background 0s;
+}
