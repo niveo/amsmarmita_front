@@ -8,6 +8,11 @@ import { MarmitasPedidosComponent } from './pages/marmitas/marmitas-pedidos.comp
 
 const routes: Routes = [
   {
+    path: '', 
+    pathMatch: 'full',
+    redirectTo: 'marmitas'
+  },
+  {
     path: 'comedores',
     component: ComedoresComponent,
   },
