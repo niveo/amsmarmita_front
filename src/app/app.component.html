@@ -3,16 +3,16 @@
     <ng-container [ngTemplateOutlet]="tplLogo"></ng-container>
 
     <div class="fx-flex"></div>
-    @if(isMobile){
-    <ng-container [ngTemplateOutlet]="tplMenu"></ng-container>
+    @if (isMobile) {
+      <ng-container [ngTemplateOutlet]="tplMenu"></ng-container>
     }
   </nz-header>
   <nz-content class="outer-content">
     <nz-layout class="inner-layout">
-      @if(!isMobile){
-      <nz-sider nzWidth="200px" nzTheme="light">
-        <ng-container [ngTemplateOutlet]="tplContentMenu"></ng-container>
-      </nz-sider>
+      @if (!isMobile) {
+        <nz-sider nzWidth="200px" nzTheme="light">
+          <ng-container [ngTemplateOutlet]="tplContentMenu"></ng-container>
+        </nz-sider>
       }
       <nz-content class="inner-content">
         <router-outlet></router-outlet>
@@ -48,9 +48,11 @@
 </nz-drawer>
 
 <ng-template #tplFooter>
-  <button nz-button nzType="dashed" (click)="close()">
-    <span nz-icon nzType="menu-fold" nzTheme="outline"></span>
-  </button>
+  <div style="direction: rtl">
+    <button nz-button nzType="dashed" (click)="close()">
+      <span nz-icon nzType="menu-unfold" nzTheme="outline"></span>
+    </button>
+  </div>
 </ng-template>
 
 <ng-template #tplContentMenu>
@@ -71,7 +73,7 @@
           Grupos
         </li>
         <li nz-menu-item routerLink="pratos">
-          <span nz-icon nzType="smile" nzTheme="outline"></span>
+          <span nz-icon nzType="shop" nzTheme="outline"></span>
           Pratos
         </li>
       </ul>
@@ -81,7 +83,7 @@
 
 <ng-template #tplLogo let-item="itemc">
   <div class="logo ripple" [ngClass]="item" routerLink="/">
-    <span>{{config.titulo}}</span>
+    <span>{{ config.titulo }}</span>
   </div>
 </ng-template>
 
