@@ -1,18 +1,15 @@
-import {
-  Component, 
-  OnInit, 
-  inject,
-} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { NZ_MODAL_DATA } from 'ng-zorro-antd/modal';
 import { Grupo } from '../../model';
+import { GrupoService } from 'src/app/services/grupo.service';
 
 @Component({
   selector: 'app-pratos-form-component',
   templateUrl: './pratos-form.component.html',
 })
-export class PratosFormComponent implements OnInit { 
+export class PratosFormComponent implements OnInit {
   readonly nzModalData: any = inject(NZ_MODAL_DATA);
-
+  private readonly grupoService = inject(GrupoService);
   grupos?: Grupo[];
 
   validateForm: any;
@@ -21,7 +18,9 @@ export class PratosFormComponent implements OnInit {
 
   ngOnInit() {
     this.validateForm = this.nzModalData.validateForm;
-    this.grupos = this.nzModalData.grupos;
+    this.grupoService
+      .getAll()
+      .subscribe((response) => (this.grupos = response));
   }
 
   atualizarComposicao(e: string[]) {
