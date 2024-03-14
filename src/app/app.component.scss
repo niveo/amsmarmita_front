@@ -64,9 +64,7 @@ nz-sider {
   background-color: $ripple-color;
   box-shadow: 0 0 4px #999;
   outline: none;
-}
 
-.logo-title {
   color: white;
 }
 
@@ -78,9 +76,10 @@ nz-sider {
   nz-layout {
     overflow-x: hidden;
   }
-  .logo {
-    width: 100%;  
+ 
+  .logo-drawer {
     background: #001529;
+    width: 100%;  
   }
   .inner-content {
     padding: 5px;

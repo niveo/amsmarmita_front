@@ -53,6 +53,7 @@ import { PratosFormComposicaoComponent } from './pages/pratos/pratos-form-compos
 import { GrupoPrincipalComponent } from './componentes/grupo-principal.component';
 import { MarmitasComedoresComponent } from './pages/marmitas/marmitas-comedores.component';
 import { MarmitasPedidosComponent } from './pages/marmitas/marmitas-pedidos.component';
+import { Title } from '@angular/platform-browser';
 
 registerLocaleData(pt);
 
@@ -121,4 +122,8 @@ registerLocaleData(pt);
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private titleService: Title) {
+    this.titleService.setTitle(environment.titulo);
+  }
+}
