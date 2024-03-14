@@ -3,6 +3,7 @@ import { InjectionToken } from '@angular/core';
 export const DEFAULT_TIMEOUT = new InjectionToken<number>('defaultTimeout');
 
 export const TOKEN_APP_CONFIG = new InjectionToken<{
+  titulo: string,
   production: boolean;
   apiUri: string;
   versaoSistemaVersao: string;
