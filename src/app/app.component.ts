@@ -21,7 +21,7 @@ export class AppComponent {
     this.route.events.subscribe((event) => {
       //console.log(event);
       if (
-        [EventType.ActivationEnd, EventType.NavigationSkipped].includes(
+        [EventType.ActivationEnd, EventType.NavigationSkipped, EventType.NavigationEnd].includes(
           event.type
         )
       ) {

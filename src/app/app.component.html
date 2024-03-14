@@ -1,15 +1,8 @@
 <nz-layout class="layout">
   <nz-header>
     @if(!isMobile){
-    <button
-      nz-button
-      [nzGhost]="true"
-      nzType="dashed"
-      nzShape="circle"
-      routerLink="/"
-    >
-      <span nz-icon nzType="home"></span></button
-    >}
+    <ng-container [ngTemplateOutlet]="tplLogo"></ng-container>
+    }
 
     <div class="fx-flex"></div>
     @if(isMobile){
@@ -47,7 +40,7 @@
   [nzClosable]="false"
   [nzVisible]="visible"
   [nzPlacement]="placement"
-  nzTitle="Clube da Marmita"
+  [nzTitle]="tplLogo"
   (nzOnClose)="close()"
   [nzFooter]="tplFooter"
 >
@@ -75,14 +68,21 @@
 
     <li nz-submenu nzOpen nzIcon="user" nzTitle="Pratos">
       <ul>
-        <li nz-menu-item  routerLink="grupos">
+        <li nz-menu-item routerLink="grupos">
           <span nz-icon nzType="group" nzTheme="outline"></span>
           Grupos
         </li>
         <li nz-menu-item routerLink="pratos">
           <span nz-icon nzType="smile" nzTheme="outline"></span>
-          Pratos</li>
+          Pratos
+        </li>
       </ul>
     </li>
   </ul>
+</ng-template>
+
+<ng-template #tplLogo>
+  <div class="logo logo-title"  routerLink="/">
+    <span>Clube da Marmita</span>
+  </div>
 </ng-template>
