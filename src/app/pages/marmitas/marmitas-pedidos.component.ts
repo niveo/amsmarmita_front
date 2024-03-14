@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { mergeMap } from 'rxjs';
 import { ComedoresService } from '../../services/comedores.service';
+import { PedidoService } from '../../services/pedido.service';
 
 @Component({
   selector: 'app-marmitas-pedidos-component',
@@ -10,15 +11,17 @@ import { ComedoresService } from '../../services/comedores.service';
 export class MarmitasPedidosComponent implements OnInit {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly comedoresService = inject(ComedoresService);
+  private readonly pedidoService = inject(PedidoService);
 
   ngOnInit() {
     this.activatedRoute.params
       .pipe(
         mergeMap(({ comedorId, marmitaId }) => {
+          this.pedidoService.getMarmitaId(marmitaId, comedorId).subscribe(console.log);
           return this.comedoresService.getId(comedorId);
         }),
       )
-      .subscribe(console.log);
+      .subscribe();
   }
 
   visible = false;
