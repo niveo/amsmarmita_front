@@ -17,12 +17,12 @@
     <nz-card
       style="width: 100%"
       [nzTitle]="tplTitulo"
-      [nzActions]="[actionEdit, actionVisualizar, actionDelete]"
+      [nzActions]="[actionVisualizar, actionEdit, actionDelete]"
     >
       <p>{{ item.observacao }}</p>
     </nz-card>
     <ng-template #actionVisualizar>
-      <app-icon>launch</app-icon>
+      <app-icon (click)="visualizarComedores(item)">launch</app-icon>
     </ng-template>
 
     <ng-template #actionEdit>
@@ -51,7 +51,7 @@
 <nz-modal
   [(nzVisible)]="isVisible"
   nzTitle="Marmita"
-  (nzOnCancel)="isVisible = false;"
+  (nzOnCancel)="isVisible = false"
   (nzOnOk)="salvar()"
   nzOkText="Salvar"
 >

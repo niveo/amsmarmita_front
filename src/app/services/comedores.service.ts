@@ -10,6 +10,10 @@ export class ComedoresService {
     return this.http.get<Comedor[]>('/comedores');
   }
 
+  getId(id: string) {
+    return this.http.get<Comedor[]>('/comedores/' + id);
+  }
+
   delete(id: string) {
     return this.http.delete<any>('/comedores/' + id);
   }

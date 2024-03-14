@@ -53,4 +53,12 @@ export class PratoService {
       observacao: observacao,
     });
   }
+
+  duplicar(_id: string) {
+    return this.http.get<any>('/pratos/duplicar', {
+      params: {
+        id: _id,
+      },
+    });
+  }
 }
