@@ -4,5 +4,7 @@ export class Prato {
     grupo?: string;
     composicoes?: string[] = [];
     observacao?: string;
+
+    pedido: any
   }
   

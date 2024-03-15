@@ -25,12 +25,46 @@
       style="border-bottom: 1px solid #e0e0e0"
     >
       @for (item of grupo.pratos; track item._id) {
+        
+        <ng-template #tplPedidoAcao>
+          @if (!item.pedido) {
+            <span nz-icon nzType="check" nzTheme="outline"></span>
+          } @else {
+            <span
+              nz-icon
+              nzType="delete"
+              nzTheme="outline"
+              [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#F44336'"
+              nz-popconfirm
+              nzPopconfirmTitle="Deseja remover esse registro?"
+              nzPopconfirmPlacement="bottom"
+              (nzOnConfirm)="remover(item)"
+            ></span>
+          }
+        </ng-template>
+
+        <ng-template #tplPedidoQuantidade>
+          @if (item.pedido) {
+            <div
+              class="fx-row"
+              style="align-items: center; justify-content: center"
+            >
+              <span nz-icon nzType="shop" nzTheme="outline"></span> ({{
+                item.pedido?.quantidade
+              }})
+            </div>
+          }
+        </ng-template>
+
         <nz-card
           [nzTitle]="item.nome"
           style="width: 100%; margin-bottom: 5px"
           [nzActions]="
             tipoSelecao
-              ? tipoSelecaoPratoActions
+              ? item.pedido
+                ? [tplPedidoAcao, tplPedidoQuantidade]
+                : [tplPedidoAcao]
               : [tplEdit, tplCopy, tplDelete]
           "
           [nzBodyStyle]="{
@@ -49,26 +83,36 @@
           }
         </nz-card>
         <ng-template #tplEdit>
-          <app-icon (click)="editar(item)">edit</app-icon>
+          <span
+            nz-icon
+            nzType="edit"
+            nzTheme="outline"
+            (click)="editar(item)"
+          ></span>
         </ng-template>
         <ng-template #tplCopy>
-          <app-icon
+          <span
+            nz-icon
+            nzType="copy"
+            nzTheme="outline"
             nz-popconfirm
             nzPopconfirmTitle="Deseja duplicar esse registro?"
             nzPopconfirmPlacement="bottom"
             (nzOnConfirm)="duplicar(item)"
-            >content_copy</app-icon
-          >
+          ></span>
         </ng-template>
         <ng-template #tplDelete>
-          <app-icon
-            nzDanger
+          <span
+            nz-icon
+            nzType="delete"
+            nzTheme="outline"
+            [nzTheme]="'twotone'"
+            [nzTwotoneColor]="'#F44336'"
             nz-popconfirm
             nzPopconfirmTitle="Deseja remover esse registro?"
             nzPopconfirmPlacement="bottom"
             (nzOnConfirm)="remover(item)"
-            >delete</app-icon
-          >
+          ></span>
         </ng-template>
         <ng-template #contentTemplate>
           <div>

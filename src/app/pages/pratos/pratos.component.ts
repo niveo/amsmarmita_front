@@ -49,10 +49,6 @@ import { PratoStore } from '../../stores/prato.store';
   ],
 })
 export class PratoComponent {
-  private readonly service = inject(PratoService);
-  private readonly grupoService = inject(GrupoService);
-  private readonly notify = inject(NzNotificationService);
-  private readonly destroyRef = inject(DestroyRef);
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly nzModalService = inject(NzModalService);
 
@@ -60,9 +56,7 @@ export class PratoComponent {
 
   @Input({ transform: booleanAttribute })
   tipoSelecao = false;
-
-  @Input()
-  tipoSelecaoPratoActions: any;
+ 
 
   data$!: Observable<any[]>;
   loading = true;
@@ -86,7 +80,7 @@ export class PratoComponent {
       .pipe(takeUntilDestroyed())
       .subscribe((loading) => (this.loading = loading));
 
-    this.data$ = this.pratoStore.data$; 
+    this.data$ = this.pratoStore.data$;
   }
 
   novoPrato() {

@@ -1,8 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { mergeMap } from 'rxjs';
+import { map, mergeMap, Observable } from 'rxjs';
 import { ComedoresService } from '../../services/comedores.service';
 import { PedidoService } from '../../services/pedido.service';
+import { PratoStore } from '../../stores/prato.store';
 
 @Component({
   selector: 'app-marmitas-pedidos-component',
@@ -13,12 +14,19 @@ export class MarmitasPedidosComponent implements OnInit {
   private readonly comedoresService = inject(ComedoresService);
   private readonly pedidoService = inject(PedidoService);
 
+  private readonly pratoStore = inject(PratoStore);
+
+  data$!: Observable<any[]>;
+
   ngOnInit() {
     this.activatedRoute.params
       .pipe(
-        mergeMap(({ comedorId, marmitaId }) => {
-          this.pedidoService.getMarmitaId(marmitaId, comedorId).subscribe(console.log);
-          return this.comedoresService.getId(comedorId);
+        map(({ comedorId, marmitaId }) => {
+          this.data$ = this.pedidoService.getMarmitaId(marmitaId, comedorId);
+
+          /* this.data$.subscribe((response) => {
+            this.pratoStore.vincularPedidoPrato(response);
+          }); */
         }),
       )
       .subscribe();
