@@ -3,25 +3,22 @@
   <span nz-icon nzType="shop" nzTheme="outline"></span>
 </button>
 
+<div>
+  @for (item of data$ | async; track item) {
+    <div>
+      {{ item._id }}
+    </div>
+  }
+</div>
+
 <nz-drawer
   [nzClosable]="false"
   [nzVisible]="visible"
   [nzPlacement]="'bottom'"
   (nzOnClose)="close()"
+  nzHeight="75%"
 >
   <ng-container *nzDrawerContent>
-    <app-pratos-component
-      tipoSelecao
-      [tipoSelecaoPratoActions]="[tplAdicaoPrato, tplRemovePrato]"
-    ></app-pratos-component>
+    <app-pratos-component tipoSelecao></app-pratos-component>
   </ng-container>
 </nz-drawer>
-
-<ng-template #tplAdicaoPrato>
-  <app-icon>done</app-icon>
-</ng-template>
-
-<!--Incluir se prato for vinculado-->
-<ng-template #tplRemovePrato>
-  <app-icon nzDanger>delete</app-icon>
-</ng-template>

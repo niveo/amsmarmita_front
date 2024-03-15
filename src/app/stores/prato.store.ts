@@ -18,6 +18,7 @@ import {
   MSG_ATUALIZADO_SUCESSO,
   MSG_EXCLUIR_SUCESSO,
 } from '../common/constantes';
+import { skipNull } from '../common/rxjs.utils';
 
 @Injectable({
   providedIn: 'root',
@@ -35,6 +36,7 @@ export class PratoStore extends BaseStore {
   readonly data$ = this._dataSource.asObservable();
   private readonly grupoService = inject(GrupoService);
   private readonly service = inject(PratoService);
+  pedidoPratoVincular: any;
 
   constructor() {
     super();
@@ -50,14 +52,32 @@ export class PratoStore extends BaseStore {
           return this.service
             .getAll()
             .pipe(
-              map((m) =>
-                mp.map((n) => {
+              map((m) => {
+                return mp.map((n) => {
                   return {
                     ...n,
                     pratos: m.filter((f) => f.grupo === n._id),
                   };
-                }),
-              ),
+                });
+              }),
+            )
+            .pipe(
+              map((m) => {
+                if (this.pedidoPratoVincular) {
+                  this.pedidoPratoVincular.pratos.forEach((e: any) => {
+                    const grupo = m.find((f) => f._id === e.prato.grupo);
+                    const prato = grupo?.pratos.find(
+                      (f) => f._id === e.prato._id,
+                    );
+                    if (prato)
+                      prato['pedido'] = {
+                        id: e._id,
+                        quantidade: e.quantidade,
+                      };
+                  });
+                }
+                return m;
+              }),
             )
             .pipe(finalize(() => this.finalizarLoading()))
             .pipe(
@@ -175,5 +195,28 @@ export class PratoStore extends BaseStore {
 
   limparData() {
     this._dataSource.next([]);
+  }
+
+  vincularPedidoPrato(pedidoPratos: any) {
+    this.pedidoPratoVincular = pedidoPratos;
+    //this.carregar();
+    /*    console.log(this._dataSource.getValue());
+
+    this.data$.subscribe();
+    
+
+    pedidoPratos.pratos.forEach((e: Prato) => {
+  
+      console.log(e);
+      
+
+      const grupoIndex = this._dataSource
+        .getValue()
+        .findIndex((f) => f._id === e.grupo);
+
+      const grupo = this._dataSource.getValue()[grupoIndex];
+
+      console.log(grupo);
+    }); */
   }
 }
