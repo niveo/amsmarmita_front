@@ -53,6 +53,9 @@ import { PratosFormComposicaoComponent } from './pages/pratos/pratos-form-compos
 import { GrupoPrincipalComponent } from './componentes/grupo-principal.component';
 import { MarmitasComedoresComponent } from './pages/marmitas/marmitas-comedores.component';
 import { MarmitasPedidosComponent } from './pages/marmitas/marmitas-pedidos.component';
+import { Title } from '@angular/platform-browser';
+import { NzPopoverModule } from 'ng-zorro-antd/popover';
+import { PratoStore } from './stores/prato.store';
 
 registerLocaleData(pt);
 
@@ -103,6 +106,7 @@ registerLocaleData(pt);
     NzFormModule,
     NzSelectModule,
     NzTagModule,
+    NzPopoverModule
   ],
   providers: [
     { provide: TOKEN_APP_CONFIG, useValue: environment },
@@ -110,7 +114,7 @@ registerLocaleData(pt);
     ComedoresService,
     MarmitaService,
     GrupoService,
-    PratoService,
+ 
     { provide: DEFAULT_TIMEOUT, useValue: 30000 },
     {
       provide: HTTP_INTERCEPTORS,
@@ -121,4 +125,8 @@ registerLocaleData(pt);
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private titleService: Title) {
+    this.titleService.setTitle(environment.titulo);
+  }
+}

@@ -18,14 +18,14 @@ import {
   mergeMap,
   of,
 } from 'rxjs';
-import { ComedoresService } from 'src/app/services/comedores.service';
+import { ComedoresService } from '../../services/comedores.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Comedor } from '../../model/comedor';
 import {
   MSG_EXCLUIR_SUCESSO,
   MSG_ATUALIZADO_SUCESSO,
-} from 'src/app/common/constantes';
+} from '../../common/constantes';
 
 @Component({
   selector: 'app-comedores-component',
@@ -127,6 +127,7 @@ export class ComedoresComponent {
   }
 
   selecionarComedor(comedor: Comedor) {
+    if(this.tipoSelecao)
     this.eventComedorTipoSelecao.emit(comedor._id);
   }
 }

@@ -1,3 +1,5 @@
+@import '../style-variables';
+
 .layout {
   min-height: 100vh;
 }
@@ -43,6 +45,29 @@ nz-sider {
   margin-top: 40px;
 }
 
+.logo {
+  width: 150px;
+  height: 45px;
+  margin: 10px 0 10px 0 ;
+  float: left;
+
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 2px;
+  
+  //background-color: $ripple-color;
+  box-shadow: 0 0 4px #999;
+  outline: none;
+
+  color: white;
+}
+
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
   nz-content {
@@ -50,6 +75,11 @@ nz-sider {
   }
   nz-layout {
     overflow-x: hidden;
+  }
+ 
+  .logo-drawer {
+    background: #001529;
+    width: 100%;  
   }
   .inner-content {
     padding: 5px;
