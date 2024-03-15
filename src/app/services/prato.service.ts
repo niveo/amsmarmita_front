@@ -2,7 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Prato } from '../model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class PratoService {
   private readonly http = inject(HttpClient);
 
@@ -27,7 +29,7 @@ export class PratoService {
     composicoes?: string[];
     observacao?: string;
   }) {
-    return this.http.put<any>('/pratos/' + id, {
+    return this.http.put<Prato>('/pratos/' + id, {
       nome: nome,
       grupoId: grupoId,
       composicoes: composicoes,
@@ -46,7 +48,7 @@ export class PratoService {
     composicoes?: string[];
     observacao?: string;
   }) {
-    return this.http.post<any>('/pratos', {
+    return this.http.post<Prato>('/pratos', {
       nome: nome,
       grupoId: grupoId,
       composicoes: composicoes,

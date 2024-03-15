@@ -1,1 +1,24 @@
-EM DESENVOLVIMENTO
+<button nz-button nzType="primary" (click)="visible = true">
+  Carregar Pratos
+  <span nz-icon nzType="shop" nzTheme="outline"></span>
+</button>
+
+<div>
+  @for (item of data$ | async; track item) {
+    <div>
+      {{ item._id }}
+    </div>
+  }
+</div>
+
+<nz-drawer
+  [nzClosable]="false"
+  [nzVisible]="visible"
+  [nzPlacement]="'bottom'"
+  (nzOnClose)="close()"
+  nzHeight="75%"
+>
+  <ng-container *nzDrawerContent>
+    <app-pratos-component tipoSelecao></app-pratos-component>
+  </ng-container>
+</nz-drawer>

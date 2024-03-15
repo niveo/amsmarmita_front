@@ -24,4 +24,8 @@ export class MarmitasComedoresComponent {
     ]);
     this.#modal.close();
   }
+
+  sair(){
+    this.#modal.close();
+  }
 }
