@@ -16,7 +16,7 @@ export class PedidoService {
   }
 
   getMarmitaId(marmitaId: string, comedorId: string) {
-    return this.http.get<any[]>('/pedidos/marmitas', {
+    return this.http.get<any>('/pedidos/marmitas', {
       params: { comedorId: comedorId, marmitaId: marmitaId },
     });
   }

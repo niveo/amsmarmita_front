@@ -4,10 +4,12 @@
 </button>
 
 <div>
-  @for (item of data$ | async; track item) {
+  @if(data$ | async; as data){
+  @for (item of data.pratos; track item._id) {
     <div>
       {{ item._id }}
     </div>
+  }
   }
 </div>
 
