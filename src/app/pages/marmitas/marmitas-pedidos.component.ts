@@ -16,7 +16,7 @@ export class MarmitasPedidosComponent implements OnInit {
 
   private readonly pratoStore = inject(PratoStore);
 
-  data$!: Observable<any[]>;
+  data$!: Observable<any>;
 
   ngOnInit() {
     this.activatedRoute.params
