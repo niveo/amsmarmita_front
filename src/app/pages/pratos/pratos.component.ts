@@ -1,38 +1,26 @@
 import {
   Component,
-  DestroyRef,
+  EventEmitter,
   Input,
+  Output,
   booleanAttribute,
   inject,
 } from '@angular/core';
-import {
-  EMPTY,
-  Observable,
-  catchError,
-  finalize,
-  iif,
-  mergeMap,
-  of,
-} from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
-import {
-  MSG_EXCLUIR_SUCESSO,
-  MSG_ATUALIZADO_SUCESSO,
-} from '../../common/constantes';
-import { PratoService } from '../../services/prato.service';
-import { Grupo, Prato } from '../../model';
-import { GrupoService } from '../../services/grupo.service';
 import {
   FormControl,
   FormGroup,
   NonNullableFormBuilder,
   Validators,
 } from '@angular/forms';
-import { getFormValidacoes, validarFormulario } from '../../common/util';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { PratosFormComponent } from './pratos-form.component';
+import {
+  Observable,
+} from 'rxjs';
+import { getFormValidacoes, validarFormulario } from '../../common/util';
+import { Grupo, Prato } from '../../model';
 import { PratoStore } from '../../stores/prato.store';
+import { PratosFormComponent } from './pratos-form.component';
 
 @Component({
   selector: 'app-pratos-component',
@@ -51,12 +39,19 @@ import { PratoStore } from '../../stores/prato.store';
 export class PratoComponent {
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly nzModalService = inject(NzModalService);
-
   private readonly pratoStore = inject(PratoStore);
+
+  @Output()
+  eventIncluirPratoPedido = new EventEmitter<string>();
+
+  @Output()
+  eventRemoverPratoPedido = new EventEmitter<any>();
+
+  @Output()
+  eventEditarPratoPedido = new EventEmitter<any>();
 
   @Input({ transform: booleanAttribute })
   tipoSelecao = false;
- 
 
   data$!: Observable<any[]>;
   loading = true;
@@ -161,5 +156,17 @@ export class PratoComponent {
       },
       reject,
     );
+  }
+
+  incluirPratoPedido(prato: Prato) {
+    this.eventIncluirPratoPedido.emit(prato._id);
+  }
+
+  removerPratoPedido(prato: Prato) {
+    this.eventRemoverPratoPedido.emit({ pedidoId: prato.pedido._id, pratoId: prato._id });
+  }
+
+  editarPratoPedido(prato: Prato) {
+    this.eventEditarPratoPedido.emit({ pedidoId: prato.pedido._id, pratoId: prato._id });
   }
 }

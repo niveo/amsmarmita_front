@@ -21,6 +21,9 @@
   nzHeight="75%"
 >
   <ng-container *nzDrawerContent>
-    <app-pratos-component tipoSelecao></app-pratos-component>
+    <app-pratos-component tipoSelecao
+      (eventRemoverPratoPedido)="removerPratoPedido($event)"
+      (eventIncluirPratoPedido)="incluirPratoPedido($event)"
+      (eventEditarPratoPedido)="editarPratoPedido($event)"/>
   </ng-container>
 </nz-drawer>
