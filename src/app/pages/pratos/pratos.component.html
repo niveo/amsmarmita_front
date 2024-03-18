@@ -25,10 +25,11 @@
       style="border-bottom: 1px solid #e0e0e0"
     >
       @for (item of grupo.pratos; track item._id) {
-        
+
         <ng-template #tplPedidoAcao>
           @if (!item.pedido) {
-            <span nz-icon nzType="check" nzTheme="outline"></span>
+            <span nz-icon nzType="check" nzTheme="outline"
+                (click)="incluirPratoPedido(item)"></span>
           } @else {
             <span
               nz-icon
@@ -39,7 +40,7 @@
               nz-popconfirm
               nzPopconfirmTitle="Deseja remover esse registro?"
               nzPopconfirmPlacement="bottom"
-              (nzOnConfirm)="remover(item)"
+              (nzOnConfirm)="removerPratoPedido(item)"
             ></span>
           }
         </ng-template>
@@ -49,7 +50,7 @@
             <div
               class="fx-row"
               style="align-items: center; justify-content: center"
-            >
+              (click)="editarPratoPedido(item)">
               <span nz-icon nzType="shop" nzTheme="outline"></span> ({{
                 item.pedido?.quantidade
               }})

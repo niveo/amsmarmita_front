@@ -18,7 +18,6 @@ import {
   MSG_ATUALIZADO_SUCESSO,
   MSG_EXCLUIR_SUCESSO,
 } from '../common/constantes';
-import { skipNull } from '../common/rxjs.utils';
 
 @Injectable({
   providedIn: 'root',
@@ -199,24 +198,5 @@ export class PratoStore extends BaseStore {
 
   vincularPedidoPrato(pedidoPratos: any) {
     this.pedidoPratoVincular = pedidoPratos;
-    //this.carregar();
-    /*    console.log(this._dataSource.getValue());
-
-    this.data$.subscribe();
-    
-
-    pedidoPratos.pratos.forEach((e: Prato) => {
-  
-      console.log(e);
-      
-
-      const grupoIndex = this._dataSource
-        .getValue()
-        .findIndex((f) => f._id === e.grupo);
-
-      const grupo = this._dataSource.getValue()[grupoIndex];
-
-      console.log(grupo);
-    }); */
   }
 }
