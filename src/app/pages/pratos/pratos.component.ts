@@ -57,13 +57,13 @@ export class PratoComponent {
   loading = true;
 
   validateForm: FormGroup<{
-    _id: FormControl<string>;
+    id: FormControl<string>;
     nome: FormControl<string>;
     grupo: FormControl<string>;
     composicoes: FormControl<string[]>;
     observacao: FormControl<string>;
   }> = this.fb.group({
-    _id: [''],
+    id: [''],
     nome: ['', [Validators.required, ...getFormValidacoes(50)]],
     grupo: ['', [Validators.required]],
     composicoes: [['']],
@@ -80,7 +80,7 @@ export class PratoComponent {
 
   novoPrato() {
     this.validateForm.setValue({
-      _id: '',
+      id: '',
       grupo: '',
       nome: '',
       composicoes: [],
@@ -92,8 +92,8 @@ export class PratoComponent {
 
   novoPratoGrupo(item: Grupo) {
     this.validateForm.setValue({
-      _id: '',
-      grupo: item._id!,
+      id: '',
+      grupo: item.id!,
       nome: '',
       composicoes: [],
       observacao: '',
@@ -104,7 +104,7 @@ export class PratoComponent {
 
   editar(item: Prato) {
     this.validateForm.setValue({
-      _id: item._id || '',
+      id: item.id || '',
       grupo: item.grupo!,
       nome: item.nome!,
       composicoes: item.composicoes || [],
@@ -146,7 +146,7 @@ export class PratoComponent {
       data,
       (value) => {
         this.validateForm.setValue({
-          _id: '',
+          id: '',
           nome: '',
           grupo: '',
           composicoes: [],
@@ -159,14 +159,14 @@ export class PratoComponent {
   }
 
   incluirPratoPedido(prato: Prato) {
-    this.eventIncluirPratoPedido.emit(prato._id);
+    this.eventIncluirPratoPedido.emit(prato.id);
   }
 
   removerPratoPedido(prato: Prato) {
-    this.eventRemoverPratoPedido.emit({ pedidoId: prato.pedido._id, pratoId: prato._id });
+    this.eventRemoverPratoPedido.emit({ pedidoId: prato.pedido.id, pratoId: prato.id });
   }
 
   editarPratoPedido(prato: Prato) {
-    this.eventEditarPratoPedido.emit({ pedidoId: prato.pedido._id, pratoId: prato._id });
+    this.eventEditarPratoPedido.emit({ pedidoId: prato.pedido.id, pratoId: prato.id });
   }
 }

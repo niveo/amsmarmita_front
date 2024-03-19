@@ -18,13 +18,13 @@
 }
 
 <nz-collapse nzGhost>
-  @for (grupo of data$ | async; track grupo._id) {
+  @for (grupo of data$ | async; track grupo.id) {
     <nz-collapse-panel
       [nzHeader]="tplTitulo"
       [nzShowArrow]="false"
       style="border-bottom: 1px solid #e0e0e0"
     >
-      @for (item of grupo.pratos; track item._id) {
+      @for (item of grupo.pratos; track item.id) {
 
         <ng-template #tplPedidoAcao>
           @if (!item.pedido) {

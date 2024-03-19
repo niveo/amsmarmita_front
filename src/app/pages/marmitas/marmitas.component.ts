@@ -64,14 +64,14 @@ export class MarmitasComponent {
   editar(item: Marmita) {
     this.marmitaLancamento = item.lancamento;
     this.marmitaObservacao = item.observacao;
-    this.marmitaId = item._id;
+    this.marmitaId = item.id;
     this.isVisible = true;
   }
 
   remover(item: Marmita) {
     this.loading = true;
     this.comedoreService
-      .delete(item._id!)
+      .delete(item.id!)
       .pipe(
         finalize(() => {
           this.loading = false;
@@ -147,7 +147,7 @@ export class MarmitasComponent {
         },
       ],
       nzData: {
-        marmitaId: marmita._id,
+        marmitaId: marmita.id,
       },
     });
   }

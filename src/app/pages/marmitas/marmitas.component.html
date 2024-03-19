@@ -12,7 +12,7 @@
     Nova Marmita
   </button>
   <div class="content">
-    @for(item of data$ | async; track item._id){
+    @for(item of data$ | async; track item.id){
 
     <nz-card
       style="width: 100%"
