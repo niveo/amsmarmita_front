@@ -67,13 +67,13 @@ export class ComedoresComponent {
 
   editar(item: Comedor) {
     this.comedoreNome = item.nome;
-    this.comedoreId = item._id;
+    this.comedoreId = item.id;
   }
 
   remover(item: Comedor) {
     this.loadingBtn = true;
     this.comedoreService
-      .delete(item._id!)
+      .delete(item.id!)
       .pipe(
         finalize(() => {
           this.loadingBtn = false;
@@ -128,6 +128,6 @@ export class ComedoresComponent {
 
   selecionarComedor(comedor: Comedor) {
     if(this.tipoSelecao)
-    this.eventComedorTipoSelecao.emit(comedor._id);
+    this.eventComedorTipoSelecao.emit(comedor.id);
   }
 }

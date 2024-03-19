@@ -1,5 +1,5 @@
 export class Grupo {
-  _id!: string;
+  id!: string;
   nome!: string;
   principal = false;
   observacao?: string;

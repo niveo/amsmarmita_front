@@ -26,7 +26,7 @@ export class PratoStore extends BaseStore {
   private readonly _dataSource = new BehaviorSubject<
     {
       pratos: Prato[];
-      _id: string;
+      id: string;
       nome: string;
       principal: boolean;
       observacao?: string | undefined;
@@ -55,7 +55,7 @@ export class PratoStore extends BaseStore {
                 return mp.map((n) => {
                   return {
                     ...n,
-                    pratos: m.filter((f) => f.grupo === n._id),
+                    pratos: m.filter((f) => f.grupo === n.id),
                   };
                 });
               }),
@@ -64,13 +64,13 @@ export class PratoStore extends BaseStore {
               map((m) => {
                 if (this.pedidoPratoVincular) {
                   this.pedidoPratoVincular.pratos.forEach((e: any) => {
-                    const grupo = m.find((f) => f._id === e.prato.grupo);
+                    const grupo = m.find((f) => f.id === e.prato.grupo);
                     const prato = grupo?.pratos.find(
-                      (f) => f._id === e.prato._id,
+                      (f) => f.id === e.prato.id,
                     );
                     if (prato)
                       prato['pedido'] = {
-                        id: e._id,
+                        id: e.id,
                         quantidade: e.quantidade,
                       };
                   });
@@ -101,7 +101,7 @@ export class PratoStore extends BaseStore {
   }
 
   remover(item: Prato) {
-    this.service.delete(item._id!).subscribe({
+    this.service.delete(item.id!).subscribe({
       error: (error) => {
         console.error(error);
         this.notify.error('Erro', error.message);
@@ -116,7 +116,7 @@ export class PratoStore extends BaseStore {
 
   duplicar(item: Prato) {
     this.service
-      .duplicar(item._id!!)
+      .duplicar(item.id!!)
       .pipe(
         catchError((error: any) => {
           console.error(error);
@@ -137,7 +137,7 @@ export class PratoStore extends BaseStore {
     resolve: (value: any) => void,
     reject: (error: any) => void,
   ) {
-    of(data._id)
+    of(data.id)
       .pipe(
         mergeMap((value) =>
           iif(
@@ -173,10 +173,10 @@ export class PratoStore extends BaseStore {
         next: (response: Prato) => {
           const registros = this._dataSource.getValue();
 
-          const grupo = registros.find((f) => f._id === response.grupo);
+          const grupo = registros.find((f) => f.id === response.grupo);
 
           const pratoIndex = grupo!.pratos?.findIndex(
-            (f) => f._id === response._id,
+            (f) => f.id === response.id,
           );
 
           if (pratoIndex !== -1) {
