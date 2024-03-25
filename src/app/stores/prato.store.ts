@@ -15,6 +15,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { PratoService } from '../services/prato.service';
 import { Prato } from '../model';
 import {
+  LBL_ATUALIZACAO,
+  LBL_ERRO,
+  LBL_EXCLUSAO,
   MSG_ATUALIZADO_SUCESSO,
   MSG_EXCLUIR_SUCESSO,
 } from '../common/constantes';
@@ -70,7 +73,7 @@ export class PratoStore extends BaseStore {
                     );
                     if (prato)
                       prato['pedido'] = {
-                        id: e._id,
+                        _id: e._id,
                         quantidade: e.quantidade,
                       };
                   });
@@ -104,11 +107,11 @@ export class PratoStore extends BaseStore {
     this.service.delete(item._id!).subscribe({
       error: (error) => {
         console.error(error);
-        this.notify.error('Erro', error.message);
+        this.notify.error(LBL_ERRO, error.message);
       },
       next: (value) => {
         console.log(value);
-        this.notify.success('Remoção', MSG_EXCLUIR_SUCESSO);
+        this.notify.success(LBL_EXCLUSAO, MSG_EXCLUIR_SUCESSO);
         this.carregar();
       },
     });
@@ -120,13 +123,13 @@ export class PratoStore extends BaseStore {
       .pipe(
         catchError((error: any) => {
           console.error(error);
-          this.notify.error('Erro', error.message);
+          this.notify.error(LBL_ERRO, error.message);
           return EMPTY;
         }),
       )
       .subscribe({
         next: () => {
-          this.notify.success('Atualização', MSG_ATUALIZADO_SUCESSO);
+          this.notify.success(LBL_ATUALIZACAO, MSG_ATUALIZADO_SUCESSO);
           this.carregar();
         },
       });
@@ -159,7 +162,7 @@ export class PratoStore extends BaseStore {
         ),
         catchError((error: any) => {
           console.error(error);
-          this.notify.error('Erro', error.message);
+          this.notify.error(LBL_ERRO, error.message);
 
           reject(error);
 
@@ -187,7 +190,7 @@ export class PratoStore extends BaseStore {
 
           this._dataSource.next([...registros]);
 
-          this.notify.success('Atualização', MSG_ATUALIZADO_SUCESSO);
+          this.notify.success(LBL_ATUALIZACAO, MSG_ATUALIZADO_SUCESSO);
         },
       });
   }
@@ -198,5 +201,58 @@ export class PratoStore extends BaseStore {
 
   vincularPedidoPrato(pedidoPratos: any) {
     this.pedidoPratoVincular = pedidoPratos;
+  }
+
+  removerPratoPedido(value: { pratoId: string; grupoId: string }) {
+    const grupoIndex = this._dataSource.value.findIndex(
+      (f) => f._id === value.grupoId,
+    );
+    const pratoIndex = this._dataSource.value[grupoIndex].pratos.findIndex(
+      (f) => f._id === value.pratoId,
+    );
+
+    delete this._dataSource.value[grupoIndex].pratos[pratoIndex].pedido;
+
+    this._dataSource.next([...this._dataSource.value]);
+  }
+
+  atualizarQuantidadePratoPedido(value: {
+    pedidoPratoId: string;
+    pratoId: string;
+    grupoId: string;
+    quantidade: number;
+  }) {
+    const grupoIndex = this._dataSource.value.findIndex(
+      (f) => f._id === value.grupoId,
+    );
+    const pratoIndex = this._dataSource.value[grupoIndex].pratos.findIndex(
+      (f) => f._id === value.pratoId,
+    );
+
+    this._dataSource.value[grupoIndex].pratos[pratoIndex].pedido.quantidade =
+      value.quantidade;
+
+    this._dataSource.next([...this._dataSource.value]);
+  }
+
+  incluirPratoPedido(value: {
+    pedidoPratoId: string;
+    pratoId: string;
+    grupoId: string;
+    quantidade: number;
+  }) {
+    const grupoIndex = this._dataSource.value.findIndex(
+      (f) => f._id === value.grupoId,
+    );
+    const pratoIndex = this._dataSource.value[grupoIndex].pratos.findIndex(
+      (f) => f._id === value.pratoId,
+    );
+
+    this._dataSource.value[grupoIndex].pratos[pratoIndex]['pedido'] = {
+      _id: value.pedidoPratoId,
+      quantidade: value.quantidade,
+    };
+
+    this._dataSource.next([...this._dataSource.value]);
   }
 }

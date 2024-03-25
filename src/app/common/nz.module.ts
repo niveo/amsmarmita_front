@@ -22,6 +22,8 @@ import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { NzFlexModule } from 'ng-zorro-antd/flex';
 
 const COMPONENTES = [
   NzListModule,
@@ -46,7 +48,9 @@ const COMPONENTES = [
   NzFormModule,
   NzSelectModule,
   NzTagModule,
-  NzPopoverModule
+  NzPopoverModule,
+  NzRadioModule,
+  NzFlexModule
 ];
 
 @NgModule({

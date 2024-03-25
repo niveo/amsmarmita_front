@@ -14,9 +14,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import {
-  Observable,
-} from 'rxjs';
+import { Observable } from 'rxjs';
 import { getFormValidacoes, validarFormulario } from '../../common/util';
 import { Grupo, Prato } from '../../model';
 import { PratoStore } from '../../stores/prato.store';
@@ -42,13 +40,13 @@ export class PratoComponent {
   private readonly pratoStore = inject(PratoStore);
 
   @Output()
-  eventIncluirPratoPedido = new EventEmitter<string>();
+  eventIncluirPratoPedido = new EventEmitter<Prato>();
 
   @Output()
-  eventRemoverPratoPedido = new EventEmitter<any>();
+  eventRemoverPratoPedido = new EventEmitter<Prato>();
 
   @Output()
-  eventEditarPratoPedido = new EventEmitter<any>();
+  eventEditarPratoPedido = new EventEmitter<Prato>();
 
   @Input({ transform: booleanAttribute })
   tipoSelecao = false;
@@ -159,14 +157,30 @@ export class PratoComponent {
   }
 
   incluirPratoPedido(prato: Prato) {
-    this.eventIncluirPratoPedido.emit(prato._id);
+    //this.eventIncluirPratoPedido.emit(prato._id);
+    this.eventIncluirPratoPedido.emit(prato);
   }
 
   removerPratoPedido(prato: Prato) {
-    this.eventRemoverPratoPedido.emit({ pedidoId: prato.pedido._id, pratoId: prato._id });
+    console.log(prato);
+
+    /*  this.eventRemoverPratoPedido.emit({
+      pedidoPratoId: prato.pedido._id,
+      pratoId: prato._id,
+      grupoId: prato.grupo,
+    }); */
+
+    this.eventRemoverPratoPedido.emit(prato);
   }
 
   editarPratoPedido(prato: Prato) {
-    this.eventEditarPratoPedido.emit({ pedidoId: prato.pedido._id, pratoId: prato._id });
+    /*   this.eventEditarPratoPedido.emit({
+      pedidoPratoId: prato.pedido._id,
+      pratoId: prato._id,
+      grupoId: prato.grupo,
+      quantidade: prato.pedido.quantidade,
+    }); */
+
+    this.eventEditarPratoPedido.emit(prato);
   }
 }
