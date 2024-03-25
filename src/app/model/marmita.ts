@@ -1,5 +1,5 @@
 export class Marmita {
-  id?: string;
+  _id?: string;
   lancamento?: Date;
   observacao?: string;
 }

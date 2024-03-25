@@ -5,9 +5,9 @@
 
 <div>
   @if(data$ | async; as data){
-  @for (item of data.pratos; track item.id) {
+  @for (item of data.pratos; track item._id) {
     <div>
-      {{ item.id }}
+      {{ item._id }}
     </div>
   }
   }

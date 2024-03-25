@@ -5,8 +5,6 @@ import {
   catchError,
   finalize,
   iif,
-  isEmpty,
-  map,
   mergeMap,
   of,
 } from 'rxjs';
@@ -56,7 +54,7 @@ export class MarmitasComponent {
         catchError((error: any) => {
           this.notify.error('Erro', error.message);
           return EMPTY;
-        })
+        }),
       )
       .pipe(finalize(() => (this.loading = false)));
   }
@@ -64,18 +62,18 @@ export class MarmitasComponent {
   editar(item: Marmita) {
     this.marmitaLancamento = item.lancamento;
     this.marmitaObservacao = item.observacao;
-    this.marmitaId = item.id;
+    this.marmitaId = item._id;
     this.isVisible = true;
   }
 
   remover(item: Marmita) {
     this.loading = true;
     this.comedoreService
-      .delete(item.id!)
+      .delete(item._id!)
       .pipe(
         finalize(() => {
           this.loading = false;
-        })
+        }),
       )
       .subscribe({
         error: (error) => {
@@ -102,14 +100,14 @@ export class MarmitasComponent {
             () => !value,
             this.comedoreService.inlcluir(
               this.marmitaLancamento!,
-              this.marmitaObservacao
+              this.marmitaObservacao,
             ),
             this.comedoreService.atualizar(
               value,
               this.marmitaLancamento!,
-              this.marmitaObservacao
-            )
-          )
+              this.marmitaObservacao,
+            ),
+          ),
         ),
         catchError((error: any) => {
           console.error(error);
@@ -122,7 +120,7 @@ export class MarmitasComponent {
           this.marmitaLancamento = undefined;
           this.marmitaObservacao = undefined;
           this.marmitaId = undefined;
-        })
+        }),
       )
       .subscribe({
         next: (value) => {
@@ -147,7 +145,7 @@ export class MarmitasComponent {
         },
       ],
       nzData: {
-        marmitaId: marmita.id,
+        marmitaId: marmita._id,
       },
     });
   }

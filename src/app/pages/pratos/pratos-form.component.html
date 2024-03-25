@@ -29,8 +29,8 @@
         formControlName="grupo"
         placeholder="Informe aqui o grupo do prato"
       >
-        @for(g of grupos; track g.id){
-        <nz-option nzCustomContent [nzValue]="g.id" [nzLabel]="g.nome!">
+        @for(g of grupos; track g._id){
+        <nz-option nzCustomContent [nzValue]="g._id" [nzLabel]="g.nome!">
           <app-grupo-principal-component [principal]="g.principal" />
           {{ g.nome }}
         </nz-option>

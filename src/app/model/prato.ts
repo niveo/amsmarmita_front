@@ -1,5 +1,5 @@
 export class Prato {
-  id?: string;
+  _id?: string;
   nome?: string;
   grupo?: string;
   composicoes?: string[] = [];
