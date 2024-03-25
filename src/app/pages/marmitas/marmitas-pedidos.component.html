@@ -1,9 +1,16 @@
-<button nz-button nzType="primary" (click)="visible = true">
+<button
+  nz-button
+  nzType="primary"
+  (click)="visible = true"
+  [nzLoading]="loading"
+  style="width: 100%;"
+>
   Carregar Pratos
   <span nz-icon nzType="shop" nzTheme="outline"></span>
 </button>
 
 <div>
+  Carregar agora aqui a store pedido
   @if (data$ | async; as data) {
     @for (item of data.pratos; track item._id) {
       <div>

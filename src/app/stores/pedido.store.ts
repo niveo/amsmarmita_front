@@ -26,18 +26,22 @@ export class PedidoStore extends BaseStore {
   private pedidoId?: string;
 
   carregarRegistros(marmitaId: string, comedorId: string) {
-    this.pedidoService.getMarmitaId(marmitaId, comedorId).subscribe({
-      next: (response: any) => {
-        this.pedidoId = response.pedido._id;
+    this.iniciarLoading();
+    this.pedidoService
+      .getMarmitaId(marmitaId, comedorId)
+      .pipe(finalize(() => this.finalizarLoading()))
+      .subscribe({
+        next: (response: any) => {
+          this.pedidoId = response.pedido._id;
 
-        this.pratoStore.vincularPedidoPrato(response);
+          this.pratoStore.vincularPedidoPrato(response);
 
-        this._dataSource.next(response);
-      },
-      error: (response: any) => {
-        console.log(response);
-      },
-    });
+          this._dataSource.next(response);
+        },
+        error: (response: any) => {
+          console.log(response);
+        },
+      });
   }
 
   removerPratoPedido(value: {

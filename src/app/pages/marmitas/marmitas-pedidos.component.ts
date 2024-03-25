@@ -17,9 +17,11 @@ export class MarmitasPedidosComponent implements OnInit {
   private readonly modalService = inject(NzModalService);
 
   data$!: Observable<any>;
+  loading = false;
 
   constructor() {
     this.data$ = this.pedidoStore.data$;
+    this.pedidoStore.loading$.subscribe((loading) => (this.loading = loading));
   }
 
   ngOnInit() {
