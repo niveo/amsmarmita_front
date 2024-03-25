@@ -4,12 +4,12 @@
 </button>
 
 <div>
-  @if(data$ | async; as data){
-  @for (item of data.pratos; track item._id) {
-    <div>
-      {{ item._id }}
-    </div>
-  }
+  @if (data$ | async; as data) {
+    @for (item of data.pratos; track item._id) {
+      <div>
+        {{ item._id }}
+      </div>
+    }
   }
 </div>
 
@@ -21,9 +21,11 @@
   nzHeight="75%"
 >
   <ng-container *nzDrawerContent>
-    <app-pratos-component tipoSelecao
+    <app-pratos-component
+      tipoSelecao
       (eventRemoverPratoPedido)="removerPratoPedido($event)"
       (eventIncluirPratoPedido)="incluirPratoPedido($event)"
-      (eventEditarPratoPedido)="editarPratoPedido($event)"/>
+      (eventEditarPratoPedido)="editarPratoPedido($event)"
+    />
   </ng-container>
 </nz-drawer>

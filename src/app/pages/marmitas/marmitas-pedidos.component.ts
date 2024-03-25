@@ -2,6 +2,10 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { PedidoStore } from '../../stores/pedido.store';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { MarmitasPedidosQuantidadeComponent } from './marmitas-pedidos-quantidade.component';
+import { isEmpty } from '../../common/util';
+import { Prato } from '../../model';
 
 @Component({
   selector: 'app-marmitas-pedidos-component',
@@ -10,6 +14,7 @@ import { PedidoStore } from '../../stores/pedido.store';
 export class MarmitasPedidosComponent implements OnInit {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly pedidoStore = inject(PedidoStore);
+  private readonly modalService = inject(NzModalService);
 
   data$!: Observable<any>;
 
@@ -36,16 +41,57 @@ export class MarmitasPedidosComponent implements OnInit {
     this.visible = false;
   }
 
-  removerPratoPedido(value: { pedidoId: string; pratoId: string }) {
-    console.log(`Removendo prato pedido ${JSON.stringify(value)}`);
-    //this.pedidoStore.remover(L);
+  removerPratoPedido(prato: Prato) {
+    this.pedidoStore.removerPratoPedido({
+      pedidoPratoId: prato.pedido._id,
+      pratoId: prato._id!,
+      grupoId: prato.grupo!,
+    });
   }
 
-  incluirPratoPedido(pratoId: string) {
-    console.log(pratoId);
+  incluirPratoPedido(prato: Prato) {
+    this.modalService
+      .create({
+        nzContent: MarmitasPedidosQuantidadeComponent,
+        nzFooter: null,
+        nzClosable: false,
+        nzTitle: prato.nome,
+        nzData: {
+          quantidadePedido: 0,
+        },
+      })
+      .afterClose.subscribe((quantidade) => {
+        if (!isEmpty(quantidade)) {
+          this.pedidoStore.incluirPratoPedido({
+            pratoId: prato._id!,
+            grupoId: prato.grupo!,
+            quantidade: quantidade,
+          });
+        }
+      });
   }
 
-  editarPratoPedido(value: { pedidoId: string; pratoId: string }) {
-    console.log(`Editando prato pedido ${JSON.stringify(value)}`);
+  editarPratoPedido(prato: Prato) {
+    this.modalService
+      .create({
+        nzContent: MarmitasPedidosQuantidadeComponent,
+        nzFooter: null,
+        nzClosable: false,
+        nzTitle: prato.nome,
+        nzData: {
+          quantidadePedido: prato.pedido.quantidade,
+        },
+      })
+      .afterClose.subscribe((quantidade) => {
+        if (!isEmpty(quantidade)) {
+          prato.pedido.quantidade = quantidade;
+          this.pedidoStore.atualizarQuantidadePratoPedido({
+            pedidoPratoId: prato.pedido._id,
+            pratoId: prato._id!,
+            grupoId: prato.grupo!,
+            quantidade: prato.pedido.quantidade,
+          });
+        }
+      });
   }
 }
