@@ -60,7 +60,7 @@ export class GrupoComponent {
 
   editar(item: Grupo) {
     this.validateForm.setValue({
-      id: item.id,
+      id: item._id,
       nome: item.nome!,
       principal: item.principal,
       observacao: item.observacao || '',
@@ -71,7 +71,7 @@ export class GrupoComponent {
   remover(item: Grupo) {
     this.loadingBtn = true;
     this.service
-      .delete(item.id!)
+      .delete(item._id!)
       .pipe(
         finalize(() => {
           this.loadingBtn = false;

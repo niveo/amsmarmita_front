@@ -1,10 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, Observable } from 'rxjs';
-import { PedidoService } from '../../services/pedido.service';
-import { PratoStore } from '../../stores/prato.store';
 import { PedidoStore } from '../../stores/pedido.store';
-import { Prato } from 'src/app/model';
 
 @Component({
   selector: 'app-marmitas-pedidos-component',
@@ -39,7 +36,7 @@ export class MarmitasPedidosComponent implements OnInit {
     this.visible = false;
   }
 
-  removerPratoPedido(value: { pedidoId: string, pratoId: string }) {
+  removerPratoPedido(value: { pedidoId: string; pratoId: string }) {
     console.log(`Removendo prato pedido ${JSON.stringify(value)}`);
     //this.pedidoStore.remover(L);
   }
@@ -48,7 +45,7 @@ export class MarmitasPedidosComponent implements OnInit {
     console.log(pratoId);
   }
 
-  editarPratoPedido(value: { pedidoId: string, pratoId: string }) {
+  editarPratoPedido(value: { pedidoId: string; pratoId: string }) {
     console.log(`Editando prato pedido ${JSON.stringify(value)}`);
   }
 }

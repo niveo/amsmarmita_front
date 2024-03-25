@@ -93,7 +93,7 @@ export class PratoComponent {
   novoPratoGrupo(item: Grupo) {
     this.validateForm.setValue({
       id: '',
-      grupo: item.id!,
+      grupo: item._id!,
       nome: '',
       composicoes: [],
       observacao: '',
@@ -104,7 +104,7 @@ export class PratoComponent {
 
   editar(item: Prato) {
     this.validateForm.setValue({
-      id: item.id || '',
+      id: item._id || '',
       grupo: item.grupo!,
       nome: item.nome!,
       composicoes: item.composicoes || [],
@@ -159,14 +159,14 @@ export class PratoComponent {
   }
 
   incluirPratoPedido(prato: Prato) {
-    this.eventIncluirPratoPedido.emit(prato.id);
+    this.eventIncluirPratoPedido.emit(prato._id);
   }
 
   removerPratoPedido(prato: Prato) {
-    this.eventRemoverPratoPedido.emit({ pedidoId: prato.pedido.id, pratoId: prato.id });
+    this.eventRemoverPratoPedido.emit({ pedidoId: prato.pedido._id, pratoId: prato._id });
   }
 
   editarPratoPedido(prato: Prato) {
-    this.eventEditarPratoPedido.emit({ pedidoId: prato.pedido.id, pratoId: prato.id });
+    this.eventEditarPratoPedido.emit({ pedidoId: prato.pedido._id, pratoId: prato._id });
   }
 }
