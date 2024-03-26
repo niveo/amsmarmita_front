@@ -34,17 +34,20 @@ export class GrupoService {
     id,
     nome,
     principal,
+    multiplo,
     observacao,
   }: {
     id: string;
     nome: string;
     principal: boolean;
+    multiplo: boolean;
     observacao?: string;
   }) {
     return this.http
       .put<any>('/grupos/' + id, {
         nome: nome,
         principal: principal,
+        multiplo: multiplo,
         observacao: observacao,
       })
       .pipe(this.tapRemoverCache);
@@ -53,16 +56,19 @@ export class GrupoService {
   inlcluir({
     nome,
     principal,
+    multiplo,
     observacao,
   }: {
     nome: string;
     principal: boolean;
+    multiplo: boolean;
     observacao?: string;
   }) {
     return this.http
       .post<any>('/grupos', {
         nome: nome,
         principal: principal,
+        multiplo: multiplo,
         observacao: observacao,
       })
       .pipe(this.tapRemoverCache);
