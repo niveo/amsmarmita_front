@@ -42,11 +42,13 @@ export class GrupoComponent {
     id: FormControl<string>;
     nome: FormControl<string>;
     principal: FormControl<boolean>;
+    multiplo: FormControl<boolean>;
     observacao: FormControl<string>;
   }> = this.fb.group({
     id: [''],
     nome: ['', [Validators.required, ...getFormValidacoes(50)]],
     principal: [false, Validators.required],
+    multiplo: [false, Validators.required],
     observacao: [''],
   });
 
@@ -63,6 +65,7 @@ export class GrupoComponent {
       id: item._id,
       nome: item.nome!,
       principal: item.principal,
+      multiplo: item.multiplo,
       observacao: item.observacao || '',
     });
     this.isVisible = true;
@@ -108,12 +111,14 @@ export class GrupoComponent {
             this.service.inlcluir({
               nome: data.nome!,
               principal: data.principal!,
+              multiplo: data.multiplo!,
               observacao: data.observacao,
             }),
             this.service.atualizar({
               id: value!,
               nome: data.nome!,
               principal: data.principal!,
+              multiplo: data.multiplo!,
               observacao: data.observacao,
             }),
           ),
@@ -130,6 +135,7 @@ export class GrupoComponent {
             id: '',
             nome: '',
             principal: false,
+            multiplo: false,
             observacao: '',
           });
 
