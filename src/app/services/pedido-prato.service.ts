@@ -26,15 +26,12 @@ export class PedidoPratoService {
   }
 
   inlcluir(pedido: string, prato: string, quantidade: number) {
-    return this.http.post(
+    return this.http.post<any>(
       '/pedidopratos',
       {
         pedido,
         prato,
         quantidade,
-      },
-      {
-        responseType: 'text',
       },
     );
   }

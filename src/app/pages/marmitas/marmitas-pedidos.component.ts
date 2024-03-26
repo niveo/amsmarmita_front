@@ -18,9 +18,11 @@ export class MarmitasPedidosComponent implements OnInit {
 
   data$!: Observable<any>;
   loading = false;
+  quantidade$!: Observable<number>;
 
   constructor() {
     this.data$ = this.pedidoStore.data$;
+    this.quantidade$ = this.pedidoStore.quantidade$;
     this.pedidoStore.loading$.subscribe((loading) => (this.loading = loading));
   }
 
