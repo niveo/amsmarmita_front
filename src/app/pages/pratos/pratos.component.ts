@@ -157,30 +157,14 @@ export class PratoComponent {
   }
 
   incluirPratoPedido(prato: Prato) {
-    //this.eventIncluirPratoPedido.emit(prato._id);
     this.eventIncluirPratoPedido.emit(prato);
   }
 
   removerPratoPedido(prato: Prato) {
-    console.log(prato);
-
-    /*  this.eventRemoverPratoPedido.emit({
-      pedidoPratoId: prato.pedido._id,
-      pratoId: prato._id,
-      grupoId: prato.grupo,
-    }); */
-
     this.eventRemoverPratoPedido.emit(prato);
   }
 
   editarPratoPedido(prato: Prato) {
-    /*   this.eventEditarPratoPedido.emit({
-      pedidoPratoId: prato.pedido._id,
-      pratoId: prato._id,
-      grupoId: prato.grupo,
-      quantidade: prato.pedido.quantidade,
-    }); */
-
     this.eventEditarPratoPedido.emit(prato);
   }
 }

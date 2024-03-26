@@ -47,7 +47,7 @@ export class PratoStore extends BaseStore {
 
   carregar() {
     this.iniciarLoading();
-
+    console.log('carregar')
     this.grupoService.data$
       .pipe(
         mergeMap((mp) => {
@@ -65,8 +65,9 @@ export class PratoStore extends BaseStore {
             )
             .pipe(
               map((m) => {
+                console.log(this.pedidoPratoVincular)
                 if (this.pedidoPratoVincular) {
-                  this.pedidoPratoVincular.pratos.forEach((e: any) => {
+                  this.pedidoPratoVincular.forEach((e: any) => {
                     const grupo = m.find((f) => f._id === e.prato.grupo);
                     const prato = grupo?.pratos.find(
                       (f) => f._id === e.prato._id,
@@ -91,9 +92,9 @@ export class PratoStore extends BaseStore {
             .pipe(takeUntilDestroyed(this.destroyRef));
         }),
       )
-
       .subscribe({
         next: (response) => {
+          console.log(response)
           if (response) {
             this._dataSource.next(response);
           } else {
@@ -201,6 +202,21 @@ export class PratoStore extends BaseStore {
 
   vincularPedidoPrato(pedidoPratos: any) {
     this.pedidoPratoVincular = pedidoPratos;
+    console.log(this.pedidoPratoVincular)
+    if (this.pedidoPratoVincular) {
+      this.pedidoPratoVincular.forEach((e: any) => {
+        const grupo = this._dataSource.value.find((f) => f._id === e.prato.grupo);
+        const prato = grupo?.pratos.find(
+          (f) => f._id === e.prato._id,
+        );
+        if (prato)
+          prato['pedido'] = {
+            _id: e._id,
+            quantidade: e.quantidade,
+          };
+      });
+    }
+
   }
 
   removerPratoPedido(value: { pratoId: string; grupoId: string }) {
@@ -231,8 +247,6 @@ export class PratoStore extends BaseStore {
 
     this._dataSource.value[grupoIndex].pratos[pratoIndex].pedido.quantidade =
       value.quantidade;
-
-    this._dataSource.next([...this._dataSource.value]);
   }
 
   incluirPratoPedido(value: {
@@ -253,6 +267,5 @@ export class PratoStore extends BaseStore {
       quantidade: value.quantidade,
     };
 
-    this._dataSource.next([...this._dataSource.value]);
   }
 }
