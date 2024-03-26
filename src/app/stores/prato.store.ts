@@ -3,6 +3,7 @@ import {
   BehaviorSubject,
   EMPTY,
   catchError,
+  filter,
   finalize,
   iif,
   map,
@@ -54,7 +55,7 @@ export class PratoStore extends BaseStore {
             .getAll()
             .pipe(
               map((m) => {
-                return mp.map((n) => {
+                return mp.filter(f => f.principal).map((n) => {
                   return {
                     ...n,
                     pratos: m.filter((f) => f.grupo === n._id),
