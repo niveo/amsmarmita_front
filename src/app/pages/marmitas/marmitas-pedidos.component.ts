@@ -1,9 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { map, mergeMap, Observable } from 'rxjs';
-import { ComedoresService } from '../../services/comedores.service';
-import { PedidoService } from '../../services/pedido.service';
-import { PratoStore } from '../../stores/prato.store';
+import { map, Observable } from 'rxjs';
+import { PedidoStore } from '../../stores/pedido.store';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { MarmitasPedidosQuantidadeComponent } from './marmitas-pedidos-quantidade.component';
+import { isEmpty } from '../../common/util';
+import { Prato } from '../../model';
 
 @Component({
   selector: 'app-marmitas-pedidos-component',
@@ -11,22 +13,24 @@ import { PratoStore } from '../../stores/prato.store';
 })
 export class MarmitasPedidosComponent implements OnInit {
   private readonly activatedRoute = inject(ActivatedRoute);
-  private readonly comedoresService = inject(ComedoresService);
-  private readonly pedidoService = inject(PedidoService);
+  private readonly pedidoStore = inject(PedidoStore);
+  private readonly modalService = inject(NzModalService);
 
-  private readonly pratoStore = inject(PratoStore);
+  data$!: Observable<any>;
+  loading = false;
+  quantidade$!: Observable<number>;
 
-  data$!: Observable<any[]>;
+  constructor() {
+    this.data$ = this.pedidoStore.data$;
+    this.quantidade$ = this.pedidoStore.quantidade$;
+    this.pedidoStore.loading$.subscribe((loading) => (this.loading = loading));
+  }
 
   ngOnInit() {
     this.activatedRoute.params
       .pipe(
         map(({ comedorId, marmitaId }) => {
-          this.data$ = this.pedidoService.getMarmitaId(marmitaId, comedorId);
-
-          /* this.data$.subscribe((response) => {
-            this.pratoStore.vincularPedidoPrato(response);
-          }); */
+          this.pedidoStore.carregarRegistros(marmitaId, comedorId);
         }),
       )
       .subscribe();
@@ -39,5 +43,73 @@ export class MarmitasPedidosComponent implements OnInit {
 
   close(): void {
     this.visible = false;
+  }
+
+
+  removerPratoPedidoLocal(value: any) {
+    this.pedidoStore.removerPratoPedido({
+      pedidoPratoId: value._id,
+      pratoId: value.prato._id,
+      grupoId: value.prato.grupo
+    })
+  }
+
+  removerPratoPedido(prato: Prato) {
+    this.pedidoStore.removerPratoPedido({
+      pedidoPratoId: prato.pedido._id,
+      pratoId: prato._id!,
+      grupoId: prato.grupo!,
+    });
+  }
+
+  editarPratoPedidoLocal(value: any) {
+    this.editarQuantidadePrato(value.prato, value._id, value.quantidade);
+  }
+
+  incluirPratoPedido(prato: Prato) {
+    this.carregarModalQuantidade(prato.nome!, 0).afterClose.subscribe((quantidade) => {
+      if (!isEmpty(quantidade) && quantidade > 0) {
+        this.pedidoStore.incluirPratoPedido({
+          pratoId: prato._id!,
+          grupoId: prato.grupo!,
+          quantidade: quantidade,
+        });
+      }
+    });
+  }
+
+  editarPratoPedido(prato: Prato) {
+    this.editarQuantidadePrato(prato, prato.pedido._id, prato.pedido.quantidade)
+      .afterClose.subscribe((quantidade) => {
+        prato.pedido.quantidade = quantidade;
+      });
+  }
+
+  private editarQuantidadePrato(prato: Prato, pedidoId: string, quantidade: number) {
+    const subs = this.carregarModalQuantidade(prato.nome!, quantidade);
+    subs.afterClose.subscribe((quantidade) => {
+      if (!isEmpty(quantidade)) {
+        this.pedidoStore.atualizarQuantidadePratoPedido({
+          pedidoPratoId: pedidoId,
+          pratoId: prato._id!,
+          grupoId: prato.grupo!,
+          quantidade: quantidade,
+        });
+      }
+    });
+    return subs;
+  }
+
+  private carregarModalQuantidade(titulo: string, quantidade: number) {
+    return this.modalService
+      .create({
+        nzContent: MarmitasPedidosQuantidadeComponent,
+        nzFooter: null,
+        nzClosable: false,
+        nzTitle: titulo,
+        nzData: {
+          quantidadePedido: quantidade,
+        },
+      })
   }
 }

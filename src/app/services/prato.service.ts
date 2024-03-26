@@ -56,10 +56,10 @@ export class PratoService {
     });
   }
 
-  duplicar(_id: string) {
+  duplicar(id: string) {
     return this.http.get<any>('/pratos/duplicar', {
       params: {
-        id: _id,
+        id: id,
       },
     });
   }
