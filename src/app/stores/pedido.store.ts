@@ -1,9 +1,5 @@
 import {
-  LBL_ATUALIZACAO,
   LBL_ERRO,
-  LBL_EXCLUSAO,
-  MSG_ATUALIZADO_SUCESSO,
-  MSG_EXCLUIR_SUCESSO,
 } from './../common/constantes';
 import { Injectable, inject } from '@angular/core';
 import { PedidoService } from '../services/pedido.service';
@@ -11,6 +7,7 @@ import { BehaviorSubject, EMPTY, catchError, finalize } from 'rxjs';
 import { PratoStore } from './prato.store';
 import { PedidoPratoService } from '../services/pedido-prato.service';
 import { BaseStore } from './base.store';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +22,10 @@ export class PedidoStore extends BaseStore {
   private readonly _quantidade = new BehaviorSubject<number>(0);
   readonly quantidade$ = this._quantidade.asObservable();
 
-  private pedidoId?: string;
+  //private pedidoId?: string;
+
+  private comedorId!: string;
+  private marmitaId!: string;
 
   constructor() {
     super();
@@ -33,15 +33,26 @@ export class PedidoStore extends BaseStore {
   }
 
   carregarRegistros(marmitaId: string, comedorId: string) {
+    this.marmitaId = marmitaId;
+    this.comedorId = comedorId;
     this.iniciarLoading();
     const subs = this.pratoStore.data$.subscribe((data) => {
       if (data === null || data === undefined || data.length === 0) return;
       this.pedidoService
         .getMarmitaId(marmitaId, comedorId)
         .pipe(finalize(() => this.finalizarLoading()))
+        .pipe(
+          catchError((response: HttpErrorResponse) => {
+            console.error(response.error);
+            if (response.error.tipo === 0)
+              this.notify.error(LBL_ERRO, response.error.message);
+            return EMPTY;
+          }),
+        )
         .subscribe({
           next: (response: any) => {
-            this.pedidoId = response.pedido._id;
+            console.log(response);
+            //this.pedidoId = response.pedido._id;
             this.pratoStore.vincularPedidoPrato(response.pratos);
             this._dataSource.next(response.pratos);
           },
@@ -94,7 +105,7 @@ export class PedidoStore extends BaseStore {
     grupoId: string;
     quantidade: number;
   }) {
-    if(value.quantidade === 0){
+    if (value.quantidade === 0) {
       this.removerPratoPedido(value);
       return;
     }
@@ -130,7 +141,7 @@ export class PedidoStore extends BaseStore {
     quantidade: any;
   }) {
     this.pedidoPratoService
-      .inlcluir(this.pedidoId!, value.pratoId, value.quantidade)
+      .inlcluir(this.marmitaId, this.comedorId, value.pratoId, value.quantidade)
       .pipe(
         catchError((error: any) => {
           console.error(error);

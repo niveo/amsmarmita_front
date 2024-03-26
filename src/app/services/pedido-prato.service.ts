@@ -25,11 +25,12 @@ export class PedidoPratoService {
     });
   }
 
-  inlcluir(pedido: string, prato: string, quantidade: number) {
+  inlcluir(marmita: string, comedor: string, prato: string, quantidade: number) {
     return this.http.post<any>(
       '/pedidopratos',
       {
-        pedido,
+        marmita,
+        comedor,
         prato,
         quantidade,
       },
