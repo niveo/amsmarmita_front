@@ -94,6 +94,10 @@ export class PedidoStore extends BaseStore {
     grupoId: string;
     quantidade: number;
   }) {
+    if(value.quantidade === 0){
+      this.removerPratoPedido(value);
+      return;
+    }
     this.pedidoPratoService
       .atualizar(value.pedidoPratoId, value.quantidade)
       .pipe(
