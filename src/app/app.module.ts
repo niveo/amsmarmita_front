@@ -29,6 +29,7 @@ import { PratoComponent } from './pages/pratos/pratos.component';
 import { ComedoresService } from './services/comedores.service';
 import { GrupoService } from './services/grupo.service';
 import { MarmitaService } from './services/marmita.service';
+import { MarmitasPedidosQuantidadeComponent } from './pages/marmitas/marmitas-pedidos-quantidade.component';
 
 registerLocaleData(pt);
 
@@ -43,6 +44,7 @@ registerLocaleData(pt);
     PratosFormComposicaoComponent,
     MarmitasComedoresComponent,
     MarmitasPedidosComponent,
+    MarmitasPedidosQuantidadeComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,7 +57,7 @@ registerLocaleData(pt);
     AmsIconComponent,
     GrupoPrincipalComponent,
     IconsProviderUserModule,
-    NzModule
+    NzModule,
   ],
   providers: [
     { provide: TOKEN_APP_CONFIG, useValue: environment },

@@ -15,12 +15,6 @@ export class PedidoService {
     return this.http.get<any[]>('/pedidos/' + id);
   }
 
-  getMarmitaId(marmitaId: string, comedorId: string) {
-    return this.http.get<any[]>('/pedidos/marmitas', {
-      params: { comedorId: comedorId, marmitaId: marmitaId },
-    });
-  }
-
   delete(id: string) {
     return this.http.delete<any>('/pedidos/' + id);
   }
@@ -31,5 +25,11 @@ export class PedidoService {
 
   inlcluir(nome: string) {
     return this.http.post<any>('/pedidos', { nome: nome });
+  }
+
+  getMarmitaId(marmitaId: string, comedorId: string) {
+    return this.http.get<any>('/pedidos/marmitas', {
+      params: { comedorId: comedorId, marmitaId: marmitaId },
+    });
   }
 }

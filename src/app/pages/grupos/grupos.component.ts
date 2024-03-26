@@ -39,12 +39,12 @@ export class GrupoComponent {
   loadingBtn = false;
 
   validateForm: FormGroup<{
-    _id: FormControl<string>;
+    id: FormControl<string>;
     nome: FormControl<string>;
     principal: FormControl<boolean>;
     observacao: FormControl<string>;
   }> = this.fb.group({
-    _id: [''],
+    id: [''],
     nome: ['', [Validators.required, ...getFormValidacoes(50)]],
     principal: [false, Validators.required],
     observacao: [''],
@@ -60,7 +60,7 @@ export class GrupoComponent {
 
   editar(item: Grupo) {
     this.validateForm.setValue({
-      _id: item._id,
+      id: item._id,
       nome: item.nome!,
       principal: item.principal,
       observacao: item.observacao || '',
@@ -100,7 +100,7 @@ export class GrupoComponent {
 
     const data = this.validateForm.value;
 
-    of(this.validateForm.value._id)
+    of(this.validateForm.value.id)
       .pipe(
         mergeMap((value) =>
           iif(
@@ -127,7 +127,7 @@ export class GrupoComponent {
           this.loadingBtn = false;
 
           this.validateForm.setValue({
-            _id: '',
+            id: '',
             nome: '',
             principal: false,
             observacao: '',

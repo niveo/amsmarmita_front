@@ -15,10 +15,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { PratoService } from '../services/prato.service';
 import { Prato } from '../model';
 import {
+  LBL_ATUALIZACAO,
+  LBL_ERRO,
+  LBL_EXCLUSAO,
   MSG_ATUALIZADO_SUCESSO,
   MSG_EXCLUIR_SUCESSO,
 } from '../common/constantes';
-import { skipNull } from '../common/rxjs.utils';
 
 @Injectable({
   providedIn: 'root',
@@ -45,7 +47,6 @@ export class PratoStore extends BaseStore {
 
   carregar() {
     this.iniciarLoading();
-
     this.grupoService.data$
       .pipe(
         mergeMap((mp) => {
@@ -64,14 +65,14 @@ export class PratoStore extends BaseStore {
             .pipe(
               map((m) => {
                 if (this.pedidoPratoVincular) {
-                  this.pedidoPratoVincular.pratos.forEach((e: any) => {
+                  this.pedidoPratoVincular.forEach((e: any) => {
                     const grupo = m.find((f) => f._id === e.prato.grupo);
                     const prato = grupo?.pratos.find(
                       (f) => f._id === e.prato._id,
                     );
                     if (prato)
                       prato['pedido'] = {
-                        id: e._id,
+                        _id: e._id,
                         quantidade: e.quantidade,
                       };
                   });
@@ -89,7 +90,6 @@ export class PratoStore extends BaseStore {
             .pipe(takeUntilDestroyed(this.destroyRef));
         }),
       )
-
       .subscribe({
         next: (response) => {
           if (response) {
@@ -105,11 +105,11 @@ export class PratoStore extends BaseStore {
     this.service.delete(item._id!).subscribe({
       error: (error) => {
         console.error(error);
-        this.notify.error('Erro', error.message);
+        this.notify.error(LBL_ERRO, error.message);
       },
       next: (value) => {
         console.log(value);
-        this.notify.success('Remoção', MSG_EXCLUIR_SUCESSO);
+        this.notify.success(LBL_EXCLUSAO, MSG_EXCLUIR_SUCESSO);
         this.carregar();
       },
     });
@@ -121,13 +121,13 @@ export class PratoStore extends BaseStore {
       .pipe(
         catchError((error: any) => {
           console.error(error);
-          this.notify.error('Erro', error.message);
+          this.notify.error(LBL_ERRO, error.message);
           return EMPTY;
         }),
       )
       .subscribe({
         next: () => {
-          this.notify.success('Atualização', MSG_ATUALIZADO_SUCESSO);
+          this.notify.success(LBL_ATUALIZACAO, MSG_ATUALIZADO_SUCESSO);
           this.carregar();
         },
       });
@@ -160,7 +160,7 @@ export class PratoStore extends BaseStore {
         ),
         catchError((error: any) => {
           console.error(error);
-          this.notify.error('Erro', error.message);
+          this.notify.error(LBL_ERRO, error.message);
 
           reject(error);
 
@@ -188,7 +188,7 @@ export class PratoStore extends BaseStore {
 
           this._dataSource.next([...registros]);
 
-          this.notify.success('Atualização', MSG_ATUALIZADO_SUCESSO);
+          this.notify.success(LBL_ATUALIZACAO, MSG_ATUALIZADO_SUCESSO);
         },
       });
   }
@@ -199,24 +199,69 @@ export class PratoStore extends BaseStore {
 
   vincularPedidoPrato(pedidoPratos: any) {
     this.pedidoPratoVincular = pedidoPratos;
-    //this.carregar();
-    /*    console.log(this._dataSource.getValue());
+    if (this.pedidoPratoVincular) {
+      this.pedidoPratoVincular.forEach((e: any) => {
+        const grupo = this._dataSource.value.find((f) => f._id === e.prato.grupo);
+        const prato = grupo?.pratos.find(
+          (f) => f._id === e.prato._id,
+        );
+        if (prato)
+          prato['pedido'] = {
+            _id: e._id,
+            quantidade: e.quantidade,
+          };
+      });
+    }
 
-    this.data$.subscribe();
-    
+  }
 
-    pedidoPratos.pratos.forEach((e: Prato) => {
-  
-      console.log(e);
-      
+  removerPratoPedido(value: { pratoId: string; grupoId: string }) {
+    const grupoIndex = this._dataSource.value.findIndex(
+      (f) => f._id === value.grupoId,
+    );
+    const pratoIndex = this._dataSource.value[grupoIndex].pratos.findIndex(
+      (f) => f._id === value.pratoId,
+    );
 
-      const grupoIndex = this._dataSource
-        .getValue()
-        .findIndex((f) => f._id === e.grupo);
+    delete this._dataSource.value[grupoIndex].pratos[pratoIndex].pedido;
 
-      const grupo = this._dataSource.getValue()[grupoIndex];
+    this._dataSource.next([...this._dataSource.value]);
+  }
 
-      console.log(grupo);
-    }); */
+  atualizarQuantidadePratoPedido(value: {
+    pedidoPratoId: string;
+    pratoId: string;
+    grupoId: string;
+    quantidade: number;
+  }) {
+    const grupoIndex = this._dataSource.value.findIndex(
+      (f) => f._id === value.grupoId,
+    );
+    const pratoIndex = this._dataSource.value[grupoIndex].pratos.findIndex(
+      (f) => f._id === value.pratoId,
+    );
+
+    this._dataSource.value[grupoIndex].pratos[pratoIndex].pedido.quantidade =
+      value.quantidade;
+  }
+
+  incluirPratoPedido(value: {
+    pedidoPratoId: string;
+    pratoId: string;
+    grupoId: string;
+    quantidade: number;
+  }) {
+    const grupoIndex = this._dataSource.value.findIndex(
+      (f) => f._id === value.grupoId,
+    );
+    const pratoIndex = this._dataSource.value[grupoIndex].pratos.findIndex(
+      (f) => f._id === value.pratoId,
+    );
+
+    this._dataSource.value[grupoIndex].pratos[pratoIndex]['pedido'] = {
+      _id: value.pedidoPratoId,
+      quantidade: value.quantidade,
+    };
+
   }
 }

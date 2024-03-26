@@ -1,38 +1,24 @@
 import {
   Component,
-  DestroyRef,
+  EventEmitter,
   Input,
+  Output,
   booleanAttribute,
   inject,
 } from '@angular/core';
-import {
-  EMPTY,
-  Observable,
-  catchError,
-  finalize,
-  iif,
-  mergeMap,
-  of,
-} from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
-import {
-  MSG_EXCLUIR_SUCESSO,
-  MSG_ATUALIZADO_SUCESSO,
-} from '../../common/constantes';
-import { PratoService } from '../../services/prato.service';
-import { Grupo, Prato } from '../../model';
-import { GrupoService } from '../../services/grupo.service';
 import {
   FormControl,
   FormGroup,
   NonNullableFormBuilder,
   Validators,
 } from '@angular/forms';
-import { getFormValidacoes, validarFormulario } from '../../common/util';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { PratosFormComponent } from './pratos-form.component';
+import { Observable } from 'rxjs';
+import { getFormValidacoes, validarFormulario } from '../../common/util';
+import { Grupo, Prato } from '../../model';
 import { PratoStore } from '../../stores/prato.store';
+import { PratosFormComponent } from './pratos-form.component';
 
 @Component({
   selector: 'app-pratos-component',
@@ -51,24 +37,31 @@ import { PratoStore } from '../../stores/prato.store';
 export class PratoComponent {
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly nzModalService = inject(NzModalService);
-
   private readonly pratoStore = inject(PratoStore);
+
+  @Output()
+  eventIncluirPratoPedido = new EventEmitter<Prato>();
+
+  @Output()
+  eventRemoverPratoPedido = new EventEmitter<Prato>();
+
+  @Output()
+  eventEditarPratoPedido = new EventEmitter<Prato>();
 
   @Input({ transform: booleanAttribute })
   tipoSelecao = false;
- 
 
   data$!: Observable<any[]>;
   loading = true;
 
   validateForm: FormGroup<{
-    _id: FormControl<string>;
+    id: FormControl<string>;
     nome: FormControl<string>;
     grupo: FormControl<string>;
     composicoes: FormControl<string[]>;
     observacao: FormControl<string>;
   }> = this.fb.group({
-    _id: [''],
+    id: [''],
     nome: ['', [Validators.required, ...getFormValidacoes(50)]],
     grupo: ['', [Validators.required]],
     composicoes: [['']],
@@ -85,7 +78,7 @@ export class PratoComponent {
 
   novoPrato() {
     this.validateForm.setValue({
-      _id: '',
+      id: '',
       grupo: '',
       nome: '',
       composicoes: [],
@@ -97,7 +90,7 @@ export class PratoComponent {
 
   novoPratoGrupo(item: Grupo) {
     this.validateForm.setValue({
-      _id: '',
+      id: '',
       grupo: item._id!,
       nome: '',
       composicoes: [],
@@ -109,7 +102,7 @@ export class PratoComponent {
 
   editar(item: Prato) {
     this.validateForm.setValue({
-      _id: item._id || '',
+      id: item._id || '',
       grupo: item.grupo!,
       nome: item.nome!,
       composicoes: item.composicoes || [],
@@ -151,7 +144,7 @@ export class PratoComponent {
       data,
       (value) => {
         this.validateForm.setValue({
-          _id: '',
+          id: '',
           nome: '',
           grupo: '',
           composicoes: [],
@@ -161,5 +154,17 @@ export class PratoComponent {
       },
       reject,
     );
+  }
+
+  incluirPratoPedido(prato: Prato) {
+    this.eventIncluirPratoPedido.emit(prato);
+  }
+
+  removerPratoPedido(prato: Prato) {
+    this.eventRemoverPratoPedido.emit(prato);
+  }
+
+  editarPratoPedido(prato: Prato) {
+    this.eventEditarPratoPedido.emit(prato);
   }
 }
