@@ -6,3 +6,5 @@ export const FORMATO_DATA = 'dd/MM/yyyy';
 export const LBL_ATUALIZACAO = 'Atualização';
 export const LBL_EXCLUSAO = 'Exclusão';
 export const LBL_ERRO = 'Erro';
+
+export const KEY_SECRET_TOKEN = 'access_token';

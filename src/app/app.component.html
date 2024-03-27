@@ -3,13 +3,13 @@
     <ng-container [ngTemplateOutlet]="tplLogo"></ng-container>
 
     <div class="fx-flex"></div>
-    @if (isMobile) {
+    @if (isMobile && (usuarioLogado$ | async)) {
       <ng-container [ngTemplateOutlet]="tplMenu"></ng-container>
     }
   </nz-header>
   <nz-content class="outer-content">
     <nz-layout class="inner-layout">
-      @if (!isMobile) {
+      @if (!isMobile && (usuarioLogado$ | async)) {
         <nz-sider nzWidth="200px" nzTheme="light">
           <ng-container [ngTemplateOutlet]="tplContentMenu"></ng-container>
         </nz-sider>
@@ -93,3 +93,5 @@
     [ngTemplateOutletContext]="{ itemc: 'logo-drawer' }"
   ></ng-container>
 </ng-template>
+
+<router-outlet name="autenticacaoPopup" />

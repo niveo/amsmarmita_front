@@ -1,0 +1,17 @@
+<div style="justify-content: center; display: grid;grid-template-columns: 80px 80px 80px; gap: 10px;">
+  @for (i of quantidadeNumeros; track i) {
+  <button nz-button (click)="selecionar(i)"
+    [nzType]="selecaoContem(i) ? 'primary' : 'default'">
+    {{ i }}
+  </button>
+  }
+  {{selecaoContem | json}}
+  <div class="box0">
+    <button nz-button style="width: 100%" (click)="limparSelecao()">
+      <span nz-icon nzType="close-circle" nzTheme="outline"></span>
+    </button>
+  </div>
+  <div class="box1">
+    <button nz-button style="width: 100%;" (click)="entrar()">Entrar</button>
+  </div>
+</div>
