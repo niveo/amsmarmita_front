@@ -1,88 +1,61 @@
-<nz-skeleton [nzActive]="true" [nzLoading]="loading"></nz-skeleton>
-@if(!loading){
-<button
-  nz-button
-  nzType="primary"
-  style="margin-bottom: 10px"
-  (click)="isVisible = true"
->
-  Novo Grupo
-</button>
-} @if(data$ | async; as data){
-<nz-list nzItemLayout="horizontal" nzBordered nzSize="large">
-  <nz-list-item *ngFor="let item of data">
-    <nz-list-item-meta>
-      <nz-list-item-meta-title>
-        <app-grupo-principal-component [principal]="item.principal" />
-        {{ item.nome }}
-      </nz-list-item-meta-title>
-      @if(item.observacao){
-      <nz-list-item-meta-description>
-        {{ item.observacao }}
-      </nz-list-item-meta-description>
+<div class="comp-body">
+  <div class="comp-head">
+    <nz-skeleton [nzActive]="true" [nzLoading]="loading"></nz-skeleton>
+    @if(!loading){
+    <button nz-button nzType="primary" style="margin-bottom: 10px" (click)="isVisible = true">
+      Novo Grupo
+    </button>
+    }
+  </div>
+  <div class="comp-content">
+    <div class="comp-inner">
+      @if(data$ | async; as data){
+      <nz-list nzItemLayout="horizontal" nzBordered nzSize="large">
+        <nz-list-item *ngFor="let item of data">
+          <nz-list-item-meta>
+            <nz-list-item-meta-title>
+              <app-grupo-principal-component [principal]="item.principal" />
+              {{ item.nome }}
+            </nz-list-item-meta-title>
+            @if(item.observacao){
+            <nz-list-item-meta-description>
+              {{ item.observacao }}
+            </nz-list-item-meta-description>
+            }
+          </nz-list-item-meta>
+
+          <ul nz-list-item-actions>
+            <nz-list-item-action>
+              <button nz-button nzType="dashed" nz-tooltip nzTooltipTitle="Editar" nzSize="small"
+                (click)="editar(item)">
+                <span nz-icon nzType="edit" nzTheme="outline"></span>
+              </button>
+            </nz-list-item-action>
+            <nz-list-item-action>
+              <button nzDanger nz-button nzSize="small" nzType="dashed" nz-tooltip nzTooltipTitle="Remover"
+                nz-popconfirm nzPopconfirmTitle="Deseja remover esse registro?" nzPopconfirmPlacement="bottom"
+                (nzOnConfirm)="remover(item)">
+                <span nz-icon nzType="delete" nzTheme="outline"></span>
+              </button>
+            </nz-list-item-action>
+          </ul>
+        </nz-list-item>
+        <nz-list-empty *ngIf="data.length === 0"></nz-list-empty>
+      </nz-list>
       }
-    </nz-list-item-meta>
-
-    <ul nz-list-item-actions>
-      <nz-list-item-action>
-        <button
-          nz-button
-          nzType="dashed"
-          nz-tooltip
-          nzTooltipTitle="Editar"
-          nzSize="small"
-          (click)="editar(item)"
-        >
-          <span nz-icon nzType="edit" nzTheme="outline"></span>
-        </button>
-      </nz-list-item-action>
-      <nz-list-item-action>
-        <button
-          nzDanger
-          nz-button
-          nzSize="small"
-          nzType="dashed"
-          nz-tooltip
-          nzTooltipTitle="Remover"
-          nz-popconfirm
-          nzPopconfirmTitle="Deseja remover esse registro?"
-          nzPopconfirmPlacement="bottom"
-          (nzOnConfirm)="remover(item)"
-        >
-          <span nz-icon nzType="delete" nzTheme="outline"></span>
-        </button>
-      </nz-list-item-action>
-    </ul>
-  </nz-list-item>
-  <nz-list-empty *ngIf="data.length === 0"></nz-list-empty>
-</nz-list>
-}
-
-<nz-modal
-  [(nzVisible)]="isVisible"
-  nzTitle="Grupo"
-  (nzOnCancel)="isVisible = false"
-  (nzOnOk)="salvar()"
-  nzOkText="Salvar"
->
+    </div>
+  </div>
+</div>
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Grupo" (nzOnCancel)="isVisible = false" (nzOnOk)="salvar()"
+  nzOkText="Salvar">
   <ng-container *nzModalContent>
     <form nz-form [formGroup]="validateForm" nzLayout="vertical">
       <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>Nome</nz-form-label>
-        <nz-form-control
-          [nzSm]="16"
-          [nzXs]="24"
-          nzErrorTip="Por favor informe aqui o nome do grupo!"
-        >
+        <nz-form-control [nzSm]="16" [nzXs]="24" nzErrorTip="Por favor informe aqui o nome do grupo!">
           <nz-input-group>
-            <input
-              type="text"
-              nz-input
-              formControlName="nome"
-              placeholder="Informe aqui o nome do grupo"
-              [maxLength]="50"
-              [max]="50"
-            />
+            <input type="text" nz-input formControlName="nome" placeholder="Informe aqui o nome do grupo"
+              [maxLength]="50" [max]="50" />
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>
@@ -104,13 +77,8 @@
       <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24">Observação</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24">
-          <textarea
-            type="text"
-            nz-input
-            formControlName="observacao"
-            placeholder="Informe aqui uma observação"
-            [maxLength]="100"
-          ></textarea>
+          <textarea type="text" nz-input formControlName="observacao" placeholder="Informe aqui uma observação"
+            [maxLength]="100"></textarea>
         </nz-form-control>
       </nz-form-item>
     </form>

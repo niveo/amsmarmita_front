@@ -1,14 +1,14 @@
-.root {
-    padding: 10px;
-  }
-  
-  .content {
-    gap: 5px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  }
-  
-  .content-card {
-    padding-top: 10px;
-  }
-  
+:host{
+  height: 100%;
+}
+
+.content {
+  gap: 5px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.content-card {
+  padding-top: 10px;
+}
+

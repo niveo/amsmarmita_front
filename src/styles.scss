@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-html, body { height: 100% }
+html, body { height: 100%; overflow: hidden; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 @import 'style-variables';
@@ -93,24 +93,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     overflow: auto;
   }
 
-  /* Small devices (portrait tablets and large phones, 600px and up) */
-  @media only screen and (min-width: 600px) {
-  }
-
-  /* Medium devices (landscape tablets, 768px and up) */
-  @media only screen and (min-width: 768px) {
-  }
-
-  /* Large devices (laptops/desktops, 992px and up) */
-  @media only screen and (min-width: 992px) {
-  }
-
-  /* Extra large devices (large laptops and desktops, 1200px and up) */
-  @media only screen and (min-width: 1200px) {
-  }
-
-
-
 /* Ripple effect */
 .ripple {
   background-position: center;
@@ -129,3 +111,54 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   padding: 5px !important;
   background-color: #E0E0E0  !important;
 }
+
+
+.comp-body{
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.comp-head {
+  padding: 5px;
+}
+
+.comp-content {
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  @include fx-border-box;
+  //flex: 1 1 0%;
+  flex: 1 1 1e-9px;
+}
+
+.comp-inner {
+  height: 100%;
+  overflow: auto;
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (max-width: 600px) {
+  .comp-body{
+    padding: 0px;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+}
+
+
+
