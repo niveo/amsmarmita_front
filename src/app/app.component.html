@@ -1,4 +1,4 @@
-<nz-layout class="layout">
+<nz-layout class="layout fx-column hf ovh">
   <nz-header class="fx-row" style="align-items: center">
     <ng-container [ngTemplateOutlet]="tplLogo"></ng-container>
 
@@ -7,7 +7,7 @@
       <ng-container [ngTemplateOutlet]="tplMenu"></ng-container>
     }
   </nz-header>
-  <nz-content class="outer-content">
+  <nz-content class="outer-content fx-flex">
     <nz-layout class="inner-layout">
       @if (!isMobile && (usuarioLogado$ | async)) {
         <nz-sider nzWidth="200px" nzTheme="light">

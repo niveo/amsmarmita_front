@@ -1,77 +1,52 @@
-<div class="ovh wf root">
-<button
-    nz-button
-    nzType="primary"
-    style="margin-bottom: 10px"
-    (click)="isVisible = true"
-  >
-    Nova Marmita
-  </button>
+<div class="comp-body">
+  <div class="comp-head">
+    <button nz-button nzType="primary" style="margin-bottom: 10px" (click)="isVisible = true">
+      Nova Marmita
+    </button>
 
-  @if(loading){
-  <nz-skeleton [nzActive]="true"></nz-skeleton>
-  }
-
-    <div class="content">
-    @for(item of data$ | async; track item._id){
-
-    <nz-card
-      style="width: 100%"
-      [nzTitle]="tplTitulo"
-      [nzActions]="[actionVisualizar, actionEdit, actionDelete]"
-    >
-      <p>{{ item.observacao }}</p>
-    </nz-card>
-    <ng-template #actionVisualizar>
-      <app-icon (click)="visualizarComedores(item)">launch</app-icon>
-    </ng-template>
-
-    <ng-template #actionEdit>
-      <app-icon (click)="editar(item)">edit</app-icon>
-    </ng-template>
-
-    <ng-template #actionDelete>
-      <app-icon
-        nzDanger
-        nz-popconfirm
-        nzPopconfirmTitle="Deseja remover esse registro?"
-        nzPopconfirmPlacement="bottom"
-        (nzOnConfirm)="remover(item)"
-        >delete</app-icon
-      >
-    </ng-template>
-
-    <ng-template #tplTitulo>
-      <p>{{ item.lancamento | date : "dd/MM/yyyy" }}</p>
-    </ng-template>
-
+    @if(loading){
+    <nz-skeleton [nzActive]="true"></nz-skeleton>
     }
   </div>
-</div>
 
-<nz-modal
-  [(nzVisible)]="isVisible"
-  nzTitle="Marmita"
-  (nzOnCancel)="isVisible = false"
-  (nzOnOk)="salvar()"
-  nzOkText="Salvar"
->
+  <div class="comp-content">
+    <div class="comp-inner content">
+      @for(item of data$ | async; track item._id){
+
+      <nz-card style="width: 100%" [nzTitle]="tplTitulo" [nzActions]="[actionVisualizar, actionEdit, actionDelete]">
+        <p>{{ item.observacao }}</p>
+      </nz-card>
+      <ng-template #actionVisualizar>
+        <app-icon (click)="visualizarComedores(item)">launch</app-icon>
+      </ng-template>
+
+      <ng-template #actionEdit>
+        <app-icon (click)="editar(item)">edit</app-icon>
+      </ng-template>
+
+      <ng-template #actionDelete>
+        <app-icon nzDanger nz-popconfirm nzPopconfirmTitle="Deseja remover esse registro?"
+          nzPopconfirmPlacement="bottom" (nzOnConfirm)="remover(item)">delete</app-icon>
+      </ng-template>
+
+      <ng-template #tplTitulo>
+        <p>{{ item.lancamento | date : "dd/MM/yyyy" }}</p>
+      </ng-template>
+
+      }
+    </div>
+  </div>
+</div>
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Marmita" (nzOnCancel)="isVisible = false" (nzOnOk)="salvar()"
+  nzOkText="Salvar">
   <ng-container *nzModalContent>
     <div class="fx-column gap-5">
-      <nz-date-picker
-        [(ngModel)]="marmitaLancamento"
-        nzPlaceHolder="Informe o dia da Marmita"
-        [nzFormat]="dateFormat"
-      ></nz-date-picker>
+      <nz-date-picker [(ngModel)]="marmitaLancamento" nzPlaceHolder="Informe o dia da Marmita"
+        [nzFormat]="dateFormat"></nz-date-picker>
 
       <nz-textarea-count [nzMaxCharacterCount]="100">
-        <textarea
-          [(ngModel)]="marmitaObservacao"
-          nz-input
-          placeholder="Informe uma observação"
-          [nzAutosize]="{ minRows: 2, maxRows: 6 }"
-          [maxLength]="100"
-        ></textarea>
+        <textarea [(ngModel)]="marmitaObservacao" nz-input placeholder="Informe uma observação"
+          [nzAutosize]="{ minRows: 2, maxRows: 6 }" [maxLength]="100"></textarea>
       </nz-textarea-count>
     </div>
   </ng-container>
