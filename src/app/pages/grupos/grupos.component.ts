@@ -13,6 +13,9 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import {
   MSG_EXCLUIR_SUCESSO,
   MSG_ATUALIZADO_SUCESSO,
+  LBL_ATUALIZACAO,
+  LBL_EXCLUSAO,
+  LBL_ERRO,
 } from '../../common/constantes';
 import { GrupoService } from '../../services/grupo.service';
 import { Grupo } from '../../model/grupo';
@@ -65,7 +68,7 @@ export class GrupoComponent {
       id: item._id,
       nome: item.nome!,
       principal: item.principal,
-      multiplo: item.multiplo,
+      multiplo: item.multiplo || false,
       observacao: item.observacao || '',
     });
     this.isVisible = true;
@@ -83,12 +86,10 @@ export class GrupoComponent {
       .subscribe({
         error: (error) => {
           console.error(error);
-          this.notify.error('Erro', error.message);
+          this.notify.error(LBL_ERRO, error.message);
         },
-        next: (value) => {
-          console.log(value);
-          this.notify.success('Remoção', MSG_EXCLUIR_SUCESSO);
- 
+        next: () => {
+          this.notify.success(LBL_EXCLUSAO, MSG_EXCLUIR_SUCESSO);
         },
       });
   }
@@ -145,8 +146,8 @@ export class GrupoComponent {
       .subscribe({
         next: (value) => {
           console.log(value);
-          this.notify.success('Atualização', MSG_ATUALIZADO_SUCESSO);
- 
+          this.notify.success(LBL_ATUALIZACAO, MSG_ATUALIZADO_SUCESSO);
+
         },
       });
   }
