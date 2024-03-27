@@ -3,6 +3,8 @@ import { isMobile } from './common/util';
 import { NzDrawerPlacement } from 'ng-zorro-antd/drawer';
 import { EventType, Router } from '@angular/router';
 import { TOKEN_APP_CONFIG } from './common/tokens';
+import { AuthService } from './auth/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -14,9 +16,15 @@ export class AppComponent {
   visible = false;
   isCollapsed = false;
   placement: NzDrawerPlacement = 'right';
+  usuarioLogado$!: Observable<boolean>;
+
   readonly config = inject(TOKEN_APP_CONFIG);
   private readonly route = inject(Router);
+  private readonly _authService = inject(AuthService);
+
   constructor() {
+    this.usuarioLogado$ = this._authService.usuarioLogado$;
+
     if (isMobile) {
       this.placement = 'right';
     }

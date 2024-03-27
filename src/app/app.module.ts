@@ -30,6 +30,7 @@ import { ComedoresService } from './services/comedores.service';
 import { GrupoService } from './services/grupo.service';
 import { MarmitaService } from './services/marmita.service';
 import { MarmitasPedidosQuantidadeComponent } from './pages/marmitas/marmitas-pedidos-quantidade.component';
+import { LoginComponent } from './pages/login/login.component';
 
 registerLocaleData(pt);
 
@@ -37,6 +38,7 @@ registerLocaleData(pt);
   declarations: [
     AppComponent,
     ComedoresComponent,
+    LoginComponent,
     MarmitasComponent,
     GrupoComponent,
     PratoComponent,
