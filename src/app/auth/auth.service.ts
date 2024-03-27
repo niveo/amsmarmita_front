@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable, shareReplay, tap } from 'rxjs';
 import { KEY_SECRET_TOKEN } from '../common/constantes';
 import { sha256 } from 'js-sha256';
 import { jwtDecode } from "jwt-decode";
+import { TOKEN_APP_CONFIG } from '../common/tokens';
 @Injectable({
   providedIn: 'root'
 })
@@ -14,6 +15,12 @@ export class AuthService {
   readonly usuarioLogado$ = this._usuarioLogado.asObservable();
   private readonly http = inject(HttpClient);
   private readonly router = inject(Router);
+  private readonly cofigToken = inject(TOKEN_APP_CONFIG);
+
+  constructor() {
+    //Se não for ambiente de produção jogar logado como false
+    this._usuarioLogado.next(!this.cofigToken.production);
+  }
 
   login(password: string) {
     const pass = sha256.update(password).hex()
@@ -36,7 +43,7 @@ export class AuthService {
     return this._usuarioLogado.getValue();
   }
 
-    //console.log(isBefore(new Date(), this.getExpiration()))
+  //console.log(isBefore(new Date(), this.getExpiration()))
   getExpiration() {
     const expiration = localStorage.getItem("expires_at");
     const expiresAt = JSON.parse(expiration!);

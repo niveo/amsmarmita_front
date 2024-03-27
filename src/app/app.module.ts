@@ -31,6 +31,7 @@ import { GrupoService } from './services/grupo.service';
 import { MarmitaService } from './services/marmita.service';
 import { MarmitasPedidosQuantidadeComponent } from './pages/marmitas/marmitas-pedidos-quantidade.component';
 import { LoginComponent } from './pages/login/login.component';
+import { VersaoSistemaDirective } from './directives/versao-sistema.directive';
 
 registerLocaleData(pt);
 
@@ -60,6 +61,7 @@ registerLocaleData(pt);
     GrupoPrincipalComponent,
     IconsProviderUserModule,
     NzModule,
+    VersaoSistemaDirective
   ],
   providers: [
     { provide: TOKEN_APP_CONFIG, useValue: environment },
