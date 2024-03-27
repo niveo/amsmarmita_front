@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Observable, catchError, mergeMap } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import {
   HttpEvent,
@@ -8,24 +8,27 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { TOKEN_APP_CONFIG } from '../common/tokens';
+import { KEY_SECRET_TOKEN } from './constantes';
 
 @Injectable()
 export class HttpsRequestInterceptor implements HttpInterceptor {
   private readonly conf = inject(TOKEN_APP_CONFIG);
 
-  intercept(
-    req: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<HttpEvent<any>> {
-    return this.defaultClone(req, next);
-  }
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    let token = localStorage.getItem(KEY_SECRET_TOKEN);
+    if (token) {
+      request = request.clone({
+        url: this.conf.apiUri + request.url,
+        setHeaders: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+    } else {
+      request = request.clone({
+        url: this.conf.apiUri + request.url,
+      });
 
-  defaultClone(req: HttpRequest<any>, next: HttpHandler) {
-    const dupReq = req.clone({
-      //Passado para pegar sessão
-      withCredentials: true,
-      url: this.conf.apiUri + req.url,
-    });
-    return next.handle(dupReq);
+    }
+    return next.handle(request);
   }
 }

@@ -5,32 +5,43 @@ import { MarmitasComponent } from './pages/marmitas/marmitas.component';
 import { GrupoComponent } from './pages/grupos/grupos.component';
 import { PratoComponent } from './pages/pratos/pratos.component';
 import { MarmitasPedidosComponent } from './pages/marmitas/marmitas-pedidos.component';
+import { LoginComponent } from './pages/login/login.component';
+import { canActivateTeam } from './auth/auth.service';
 
 const routes: Routes = [
   {
-    path: '', 
+    path: '',
     pathMatch: 'full',
     redirectTo: 'marmitas'
   },
   {
+    path: 'login',
+    component: LoginComponent,
+  },
+  {
     path: 'comedores',
     component: ComedoresComponent,
+    canActivate: [canActivateTeam]
   },
   {
     path: 'marmitas',
     component: MarmitasComponent,
+    canActivate: [canActivateTeam]
   },
   {
     path: 'grupos',
     component: GrupoComponent,
+    canActivate: [canActivateTeam]
   },
   {
     path: 'pratos',
     component: PratoComponent,
+    canActivate: [canActivateTeam]
   },
   {
     path: 'pedido',
     component: MarmitasPedidosComponent,
+    canActivate: [canActivateTeam]
   },
 ];
 
@@ -38,4 +49,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
