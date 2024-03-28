@@ -21,7 +21,7 @@ import { AmsIconComponent } from './componentes/icon.component';
 import { ComedoresComponent } from './pages/comedores/comedores.component';
 import { GrupoComponent } from './pages/grupos/grupos.component';
 import { MarmitasComedoresComponent } from './pages/marmitas/marmitas-comedores.component';
-import { MarmitasPedidosComponent } from './pages/marmitas/marmitas-pedidos.component';
+import { MarmitasPedidosComponent } from './pages/marmitas/pedidos/marmitas-pedidos.component';
 import { MarmitasComponent } from './pages/marmitas/marmitas.component';
 import { PratosFormComposicaoComponent } from './pages/pratos/pratos-form-composicao.component';
 import { PratosFormComponent } from './pages/pratos/pratos-form.component';
@@ -29,9 +29,9 @@ import { PratoComponent } from './pages/pratos/pratos.component';
 import { ComedoresService } from './services/comedores.service';
 import { GrupoService } from './services/grupo.service';
 import { MarmitaService } from './services/marmita.service';
-import { MarmitasPedidosQuantidadeComponent } from './pages/marmitas/marmitas-pedidos-quantidade.component';
 import { LoginComponent } from './pages/login/login.component';
 import { VersaoSistemaDirective } from './directives/versao-sistema.directive';
+import { SelecaoNumerosComponent } from './componentes/selecao-numeros.component';
 
 registerLocaleData(pt);
 
@@ -47,7 +47,6 @@ registerLocaleData(pt);
     PratosFormComposicaoComponent,
     MarmitasComedoresComponent,
     MarmitasPedidosComponent,
-    MarmitasPedidosQuantidadeComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,7 +60,8 @@ registerLocaleData(pt);
     GrupoPrincipalComponent,
     IconsProviderUserModule,
     NzModule,
-    VersaoSistemaDirective
+    VersaoSistemaDirective,
+    SelecaoNumerosComponent,
   ],
   providers: [
     { provide: TOKEN_APP_CONFIG, useValue: environment },

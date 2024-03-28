@@ -71,3 +71,36 @@
 <ng-template #extraTemplate>
   <span class="lbl-quantidade">{{ quantidade$ | async }}</span>
 </ng-template>
+
+<nz-drawer
+  [nzClosable]="false"
+  [nzVisible]="visibleAlteracaoPedido"
+  nzPlacement="right"
+  [nzTitle]="tituloAlteracaoPedido"
+  [nzFooter]="tplFooter"
+  (nzOnClose)="closeAlteracaoPedido()"
+>
+  <ng-container *nzDrawerContent>
+    <app-selecao-numeros-component
+      [numeros]="listaQuantidadePedido"
+      [(selecionado)]="quantidadeAlteracaoPedido"
+    ></app-selecao-numeros-component>
+  </ng-container>
+</nz-drawer>
+
+<ng-template #tplFooter>
+  <div class="fx-row wf gap-5">
+    <button
+      nz-button
+      class="fx-flex"
+      nzType="primary"
+      (click)="salvarAlteracaoPedido()"
+    >
+      <span nz-icon nzType="save" nzTheme="outline"></span>
+      Salvar
+    </button>
+    <button nz-button nzType="dashed" (click)="closeAlteracaoPedido()">
+      <span nz-icon nzType="menu-unfold" nzTheme="outline"></span>
+    </button>
+  </div>
+</ng-template>
