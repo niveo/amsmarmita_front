@@ -6,6 +6,7 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { MarmitasPedidosQuantidadeComponent } from './marmitas-pedidos-quantidade.component';
 import { isEmpty } from '../../common/util';
 import { Prato } from '../../model';
+import { NzDrawerService } from 'ng-zorro-antd/drawer';
 
 @Component({
   selector: 'app-marmitas-pedidos-component',
@@ -15,7 +16,7 @@ import { Prato } from '../../model';
 export class MarmitasPedidosComponent implements OnInit {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly pedidoStore = inject(PedidoStore);
-  private readonly modalService = inject(NzModalService);
+  private readonly drawerService = inject(NzDrawerService);
 
   data$!: Observable<any>;
   loading = false;
@@ -101,9 +102,8 @@ export class MarmitasPedidosComponent implements OnInit {
   }
 
   private carregarModalQuantidade(titulo: string, quantidade: number) {
-    return this.modalService.create({
+    return this.drawerService.create({
       nzContent: MarmitasPedidosQuantidadeComponent,
-      nzFooter: null,
       nzClosable: false,
       nzTitle: titulo,
       nzData: {
