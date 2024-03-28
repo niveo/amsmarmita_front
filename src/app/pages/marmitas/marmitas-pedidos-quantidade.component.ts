@@ -1,13 +1,13 @@
 import { Component, inject } from '@angular/core';
-import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
+import { NZ_DRAWER_DATA, NzDrawerRef } from 'ng-zorro-antd/drawer';
 
 @Component({
   selector: 'app-marmitas-pedidos-quantidade-component',
   templateUrl: './marmitas-pedidos-quantidade.component.html',
 })
 export class MarmitasPedidosQuantidadeComponent {
-  readonly #modal = inject(NzModalRef);
-  readonly nzModalData: { quantidadePedido: number } = inject(NZ_MODAL_DATA);
+  readonly #modal = inject(NzDrawerRef);
+  readonly nzModalData: { quantidadePedido: number } = inject(NZ_DRAWER_DATA);
 
   listaQuantidadePedido: number[] = [];
 

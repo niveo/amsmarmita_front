@@ -4,6 +4,7 @@
     nzSize="large"
     nzType="card"
     style="height: 100%"
+    [nzTabBarExtraContent]="extraTemplate"
   >
     <nz-tab [nzTitle]="titleTplPedido">
       <ng-template #titleTplPedido>
@@ -66,3 +67,7 @@
     </nz-tab>
   </nz-tabset>
 </div>
+
+<ng-template #extraTemplate>
+  <span class="lbl-quantidade">{{ quantidade$ | async }}</span>
+</ng-template>
