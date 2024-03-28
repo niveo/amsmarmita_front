@@ -25,6 +25,7 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzFlexModule } from 'ng-zorro-antd/flex';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 
 const COMPONENTES = [
   NzListModule,
@@ -53,6 +54,7 @@ const COMPONENTES = [
   NzRadioModule,
   NzFlexModule,
   NzTabsModule,
+  NzCheckboxModule
 ];
 
 @NgModule({

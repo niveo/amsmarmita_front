@@ -6,5 +6,8 @@ export class Prato {
   observacao?: string;
 
   pedido: any;
+
+
+  pratoSelecionado: boolean = false;
 }
 
