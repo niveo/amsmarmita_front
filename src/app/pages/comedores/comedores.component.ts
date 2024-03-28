@@ -13,8 +13,6 @@ import {
   catchError,
   finalize,
   iif,
-  isEmpty,
-  map,
   mergeMap,
   of,
 } from 'rxjs';
@@ -30,6 +28,7 @@ import {
 @Component({
   selector: 'app-comedores-component',
   templateUrl: './comedores.component.html',
+  styleUrl: './comedores.component.scss'
 })
 export class ComedoresComponent {
   private readonly comedoreService = inject(ComedoresService);
@@ -50,7 +49,7 @@ export class ComedoresComponent {
   ngOnInit() {
     this.carregar();
   }
-  
+
   private carregar() {
     this.loading = true;
     this.data$ = this.comedoreService

@@ -24,15 +24,6 @@ import { PratosFormComponent } from './pratos-form.component';
   selector: 'app-pratos-component',
   templateUrl: './pratos.component.html',
   styleUrl: './pratos.component.scss',
-  styles: [
-    `
-      .lbl-observacao {
-        color: rgba(0, 0, 0, 0.45);
-        font-size: 14px;
-        line-height: 1.5715;
-      }
-    `,
-  ],
 })
 export class PratoComponent {
   private readonly fb = inject(NonNullableFormBuilder);
