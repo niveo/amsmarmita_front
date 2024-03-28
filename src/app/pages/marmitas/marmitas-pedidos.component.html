@@ -1,4 +1,65 @@
-<div class="comp-body">
+<div class="card-container">
+  <nz-tabset
+    nzTabPosition="bottom"
+    nzSize="large"
+    nzType="card"
+    style="height: 100%"
+  >
+    <nz-tab nzTitle="Pedido">
+      <div class="comp-content">
+        <div class="comp-inner comp-inner-grid">
+          @for (item of data$ | async; track item._id) {
+            <ng-template #tplPedidoAcao>
+              <span
+                nz-icon
+                nzType="delete"
+                nzTheme="outline"
+                [nzTheme]="'twotone'"
+                [nzTwotoneColor]="'#F44336'"
+                nz-popconfirm
+                nzPopconfirmTitle="Deseja remover esse registro?"
+                nzPopconfirmPlacement="bottom"
+                (nzOnConfirm)="removerPratoPedidoLocal(item)"
+              ></span>
+            </ng-template>
+
+            <ng-template #tplPedidoQuantidade>
+              <div
+                class="fx-row"
+                style="align-items: center; justify-content: center"
+                (click)="editarPratoPedidoLocal(item)"
+              >
+                <span nz-icon nzType="shop" nzTheme="outline"></span> ({{
+                  item.quantidade
+                }})
+              </div>
+            </ng-template>
+
+            <div style="padding: 5px">
+              <nz-card [nzActions]="[tplPedidoQuantidade, tplPedidoAcao]">
+                <h3>{{ item.prato.nome }}</h3>
+              </nz-card>
+            </div>
+          }
+        </div>
+      </div>
+    </nz-tab>
+    <nz-tab nzTitle="Pratos">
+      <div class="comp-content">
+        <div class="comp-inner comp-inner-grid">
+          <app-pratos-component
+            tipoSelecao
+            (eventRemoverPratoPedido)="removerPratoPedido($event)"
+            (eventIncluirPratoPedido)="incluirPratoPedido($event)"
+            (eventEditarPratoPedido)="editarPratoPedido($event)"
+          />
+        </div>
+      </div>
+    </nz-tab>
+  </nz-tabset>
+</div>
+
+<!--div class="comp-body">
   <div class="comp-head">
     <div class="wf fx-row" style="align-items: center;">
       <div class="fx-flex">
@@ -44,4 +105,4 @@
     <app-pratos-component tipoSelecao (eventRemoverPratoPedido)="removerPratoPedido($event)"
       (eventIncluirPratoPedido)="incluirPratoPedido($event)" (eventEditarPratoPedido)="editarPratoPedido($event)" />
   </ng-container>
-</nz-drawer>
+</nz-drawer -->

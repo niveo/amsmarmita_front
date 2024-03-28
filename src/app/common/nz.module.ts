@@ -24,6 +24,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzFlexModule } from 'ng-zorro-antd/flex';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
 
 const COMPONENTES = [
   NzListModule,
@@ -50,15 +51,14 @@ const COMPONENTES = [
   NzTagModule,
   NzPopoverModule,
   NzRadioModule,
-  NzFlexModule
+  NzFlexModule,
+  NzTabsModule,
 ];
 
 @NgModule({
   declarations: [],
   imports: [...COMPONENTES],
   exports: [...COMPONENTES],
-  providers: []
+  providers: [],
 })
-export class NzModule {
-
-}
+export class NzModule {}
