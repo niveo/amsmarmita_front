@@ -123,6 +123,10 @@ body {
   background-color: white;
 }
 
+.ant-tabs-content {
+  //height: 100%;
+}
+
 .comp-body {
   height: 100%;
   overflow: hidden;
@@ -152,7 +156,7 @@ body {
 }
 
 .comp-inner-grid {
-  gap: 5px;
+  //gap: 5px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }

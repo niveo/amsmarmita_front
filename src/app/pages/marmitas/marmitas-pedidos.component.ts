@@ -10,7 +10,7 @@ import { Prato } from '../../model';
 @Component({
   selector: 'app-marmitas-pedidos-component',
   templateUrl: './marmitas-pedidos.component.html',
-  styleUrl: './marmitas-pedidos.component.scss'
+  styleUrl: './marmitas-pedidos.component.scss',
 })
 export class MarmitasPedidosComponent implements OnInit {
   private readonly activatedRoute = inject(ActivatedRoute);
@@ -46,13 +46,12 @@ export class MarmitasPedidosComponent implements OnInit {
     this.visible = false;
   }
 
-
   removerPratoPedidoLocal(value: any) {
     this.pedidoStore.removerPratoPedido({
       pedidoPratoId: value._id,
       pratoId: value.prato._id,
-      grupoId: value.prato.grupo
-    })
+      grupoId: value.prato.grupo,
+    });
   }
 
   removerPratoPedido(prato: Prato) {
@@ -68,25 +67,34 @@ export class MarmitasPedidosComponent implements OnInit {
   }
 
   incluirPratoPedido(prato: Prato) {
-    this.carregarModalQuantidade(prato.nome!, 0).afterClose.subscribe((quantidade) => {
-      if (!isEmpty(quantidade) && quantidade > 0) {
-        this.pedidoStore.incluirPratoPedido({
-          pratoId: prato._id!,
-          grupoId: prato.grupo!,
-          quantidade: quantidade,
-        });
-      }
-    });
+    this.carregarModalQuantidade(prato.nome!, 0).afterClose.subscribe(
+      (quantidade) => {
+        if (!isEmpty(quantidade) && quantidade > 0) {
+          this.pedidoStore.incluirPratoPedido({
+            pratoId: prato._id!,
+            grupoId: prato.grupo!,
+            quantidade: quantidade,
+          });
+        }
+      },
+    );
   }
 
   editarPratoPedido(prato: Prato) {
-    this.editarQuantidadePrato(prato, prato.pedido._id, prato.pedido.quantidade)
-      .afterClose.subscribe((quantidade) => {
-        prato.pedido.quantidade = quantidade;
-      });
+    this.editarQuantidadePrato(
+      prato,
+      prato.pedido._id,
+      prato.pedido.quantidade,
+    ).afterClose.subscribe((quantidade) => {
+      prato.pedido.quantidade = quantidade;
+    });
   }
 
-  private editarQuantidadePrato(prato: Prato, pedidoId: string, quantidade: number) {
+  private editarQuantidadePrato(
+    prato: Prato,
+    pedidoId: string,
+    quantidade: number,
+  ) {
     const subs = this.carregarModalQuantidade(prato.nome!, quantidade);
     subs.afterClose.subscribe((quantidade) => {
       if (!isEmpty(quantidade)) {
@@ -102,15 +110,14 @@ export class MarmitasPedidosComponent implements OnInit {
   }
 
   private carregarModalQuantidade(titulo: string, quantidade: number) {
-    return this.modalService
-      .create({
-        nzContent: MarmitasPedidosQuantidadeComponent,
-        nzFooter: null,
-        nzClosable: false,
-        nzTitle: titulo,
-        nzData: {
-          quantidadePedido: quantidade,
-        },
-      })
+    return this.modalService.create({
+      nzContent: MarmitasPedidosQuantidadeComponent,
+      nzFooter: null,
+      nzClosable: false,
+      nzTitle: titulo,
+      nzData: {
+        quantidadePedido: quantidade,
+      },
+    });
   }
 }
