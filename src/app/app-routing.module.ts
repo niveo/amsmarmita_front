@@ -4,7 +4,7 @@ import { ComedoresComponent } from './pages/comedores/comedores.component';
 import { MarmitasComponent } from './pages/marmitas/marmitas.component';
 import { GrupoComponent } from './pages/grupos/grupos.component';
 import { PratoComponent } from './pages/pratos/pratos.component';
-import { MarmitasPedidosComponent } from './pages/marmitas/marmitas-pedidos.component';
+import { MarmitasPedidosComponent } from './pages/marmitas/pedidos/marmitas-pedidos.component';
 import { LoginComponent } from './pages/login/login.component';
 import { canActivateTeam } from './auth/auth.service';
 
@@ -12,7 +12,7 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'marmitas'
+    redirectTo: 'marmitas',
   },
   {
     path: 'login',
@@ -21,27 +21,27 @@ const routes: Routes = [
   {
     path: 'comedores',
     component: ComedoresComponent,
-    canActivate: [canActivateTeam]
+    canActivate: [canActivateTeam],
   },
   {
     path: 'marmitas',
     component: MarmitasComponent,
-    canActivate: [canActivateTeam]
+    canActivate: [canActivateTeam],
   },
   {
     path: 'grupos',
     component: GrupoComponent,
-    canActivate: [canActivateTeam]
+    canActivate: [canActivateTeam],
   },
   {
     path: 'pratos',
     component: PratoComponent,
-    canActivate: [canActivateTeam]
+    canActivate: [canActivateTeam],
   },
   {
     path: 'pedido',
     component: MarmitasPedidosComponent,
-    canActivate: [canActivateTeam]
+    canActivate: [canActivateTeam],
   },
 ];
 
@@ -49,4 +49,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
