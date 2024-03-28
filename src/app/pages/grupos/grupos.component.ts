@@ -30,11 +30,14 @@ import { getFormValidacoes, validarFormulario } from '../../common/util';
 @Component({
   selector: 'app-grupos-component',
   templateUrl: './grupos.component.html',
-  styles: [`
-    :host {
-      height: 100%;
-      background-color: white
-    }`]
+  styles: [
+    `
+      :host {
+        height: 100%;
+        background-color: white;
+      }
+    `,
+  ],
 })
 export class GrupoComponent {
   private readonly service = inject(GrupoService);
@@ -152,7 +155,6 @@ export class GrupoComponent {
         next: (value) => {
           console.log(value);
           this.notify.success(LBL_ATUALIZACAO, MSG_ATUALIZADO_SUCESSO);
-
         },
       });
   }

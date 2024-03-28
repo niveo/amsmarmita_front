@@ -1,29 +1,44 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Grupo } from '../model/grupo';
-import { BehaviorSubject, tap } from 'rxjs';
+import { BehaviorSubject, map, mergeMap, shareReplay, tap } from 'rxjs';
+import { PratoService } from './prato.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GrupoService {
   private readonly http = inject(HttpClient);
-
-  private readonly _dataSource = new BehaviorSubject<Grupo[]>([]);
-  readonly data$ = this._dataSource.asObservable();
+  private readonly service = inject(PratoService);
+  private _resourceData$ = new BehaviorSubject<void>(undefined);
 
   tapRemoverCache = tap(() => {
-    this.carregar();
   });
 
-  constructor() {
-    this.carregar();
-  }
+   private apiRequest$ = this.http
+    .get<Grupo[]>('/grupos')
+    .pipe(
+      mergeMap((mp) => {
+        return this.service.getAll().pipe(
+          map((m) => {
+            return mp.map((n) => {
+              return {
+                ...n,
+                pratos: m.filter((f) => f.grupo === n._id),
+              };
+            });
+          }),
+        );
+      }),
+    )
 
-  private carregar() {
-    this.http.get<Grupo[]>('/grupos').subscribe((data) => {
-      this._dataSource.next(data);
-    });
+  public data$ = this._resourceData$.pipe(
+    mergeMap(() => this.apiRequest$),
+    shareReplay(1)
+  );
+
+  updateData() {
+    this._resourceData$.next();
   }
 
   delete(id: string) {

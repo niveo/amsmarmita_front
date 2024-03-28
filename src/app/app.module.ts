@@ -32,6 +32,7 @@ import { MarmitaService } from './services/marmita.service';
 import { LoginComponent } from './pages/login/login.component';
 import { VersaoSistemaDirective } from './directives/versao-sistema.directive';
 import { SelecaoNumerosComponent } from './componentes/selecao-numeros.component';
+import { MarmitasPedidosAcompanhamentoComponent } from './pages/marmitas/pedidos/acompanhamento/marmitas-pedidos-companhamento.component';
 
 registerLocaleData(pt);
 
@@ -47,6 +48,7 @@ registerLocaleData(pt);
     PratosFormComposicaoComponent,
     MarmitasComedoresComponent,
     MarmitasPedidosComponent,
+    MarmitasPedidosAcompanhamentoComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,7 +70,6 @@ registerLocaleData(pt);
     { provide: NZ_I18N, useValue: pt_BR },
     ComedoresService,
     MarmitaService,
-    GrupoService,
 
     { provide: DEFAULT_TIMEOUT, useValue: 30000 },
     {
