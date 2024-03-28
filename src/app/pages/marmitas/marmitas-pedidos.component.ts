@@ -37,15 +37,6 @@ export class MarmitasPedidosComponent implements OnInit {
       .subscribe();
   }
 
-  visible = false;
-  open(): void {
-    this.visible = true;
-  }
-
-  close(): void {
-    this.visible = false;
-  }
-
   removerPratoPedidoLocal(value: any) {
     this.pedidoStore.removerPratoPedido({
       pedidoPratoId: value._id,

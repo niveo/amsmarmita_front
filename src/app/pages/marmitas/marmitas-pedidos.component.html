@@ -5,7 +5,11 @@
     nzType="card"
     style="height: 100%"
   >
-    <nz-tab nzTitle="Pedido">
+    <nz-tab [nzTitle]="titleTplPedido">
+      <ng-template #titleTplPedido>
+        <span nz-icon nzType="shopping-cart" nzTheme="outline"></span>
+        Pedido
+      </ng-template>
       <div class="comp-content">
         <div class="comp-inner comp-inner-grid">
           @for (item of data$ | async; track item._id) {
@@ -44,7 +48,11 @@
         </div>
       </div>
     </nz-tab>
-    <nz-tab nzTitle="Pratos">
+
+    <nz-tab [nzTitle]="titleTplPratos">
+      <ng-template #titleTplPratos>
+        <span nz-icon nzType="shop" nzTheme="outline"></span>Pratos
+      </ng-template>
       <div class="comp-content">
         <div class="comp-inner comp-inner-grid">
           <app-pratos-component
@@ -58,51 +66,3 @@
     </nz-tab>
   </nz-tabset>
 </div>
-
-<!--div class="comp-body">
-  <div class="comp-head">
-    <div class="wf fx-row" style="align-items: center;">
-      <div class="fx-flex">
-        <button nz-button nzType="primary" (click)="visible = true" [nzLoading]="loading" style="width: 100%;">
-          Carregar Pratos
-          <span nz-icon nzType="shop" nzTheme="outline"></span>
-        </button>
-      </div>
-      <span style="font-weight: bold; font-size: 30px; padding-left: 10px; padding-right: 10px;">{{quantidade$ |
-        async}}</span>
-    </div>
-  </div>
-
-  <div class="comp-content">
-    <div class="comp-inner comp-inner-grid">
-      @for (item of data$ | async; track item._id) {
-      <ng-template #tplPedidoAcao>
-        <span nz-icon nzType="delete" nzTheme="outline" [nzTheme]="'twotone'" [nzTwotoneColor]="'#F44336'" nz-popconfirm
-          nzPopconfirmTitle="Deseja remover esse registro?" nzPopconfirmPlacement="bottom"
-          (nzOnConfirm)="removerPratoPedidoLocal(item)"></span>
-      </ng-template>
-
-      <ng-template #tplPedidoQuantidade>
-        <div class="fx-row" style="align-items: center; justify-content: center" (click)="editarPratoPedidoLocal(item)">
-          <span nz-icon nzType="shop" nzTheme="outline"></span> ({{
-          item.quantidade
-          }})
-        </div>
-      </ng-template>
-
-      <div style="padding: 5px">
-        <nz-card [nzActions]="[tplPedidoQuantidade, tplPedidoAcao]">
-          <h3>{{item.prato.nome}}</h3>
-        </nz-card>
-      </div>
-      }
-    </div>
-  </div>
-</div>
-
-<nz-drawer [nzClosable]="false" [nzVisible]="visible" [nzPlacement]="'bottom'" (nzOnClose)="close()" nzHeight="75%">
-  <ng-container *nzDrawerContent>
-    <app-pratos-component tipoSelecao (eventRemoverPratoPedido)="removerPratoPedido($event)"
-      (eventIncluirPratoPedido)="incluirPratoPedido($event)" (eventEditarPratoPedido)="editarPratoPedido($event)" />
-  </ng-container>
-</nz-drawer -->
