@@ -30,7 +30,11 @@ import { getFormValidacoes, validarFormulario } from '../../common/util';
 @Component({
   selector: 'app-grupos-component',
   templateUrl: './grupos.component.html',
-  styles: [`:host {height: 100%}`]
+  styles: [`
+    :host {
+      height: 100%;
+      background-color: white
+    }`]
 })
 export class GrupoComponent {
   private readonly service = inject(GrupoService);

@@ -8,6 +8,7 @@ import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
     tipoSelecao
     (eventComedorTipoSelecao)="comedorTipoSelecao($event)"
   />`,
+  styleUrl: './marmitas-comedores.component.scss'
 })
 export class MarmitasComedoresComponent {
   readonly #modal = inject(NzModalRef);

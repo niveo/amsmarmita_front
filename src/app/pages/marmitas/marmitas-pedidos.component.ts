@@ -10,6 +10,7 @@ import { Prato } from '../../model';
 @Component({
   selector: 'app-marmitas-pedidos-component',
   templateUrl: './marmitas-pedidos.component.html',
+  styleUrl: './marmitas-pedidos.component.scss'
 })
 export class MarmitasPedidosComponent implements OnInit {
   private readonly activatedRoute = inject(ActivatedRoute);

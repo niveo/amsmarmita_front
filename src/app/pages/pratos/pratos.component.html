@@ -13,31 +13,35 @@
     <div class="comp-inner">
 
       <nz-collapse nzGhost>
+
         @for (grupo of data$ | async; track grupo._id) {
-        <nz-collapse-panel [nzHeader]="tplTitulo" [nzShowArrow]="false" style="border-bottom: 1px solid #e0e0e0">
-          @for (item of grupo.pratos; track item._id) {
+        <nz-collapse-panel [nzHeader]="tplTitulo" [nzShowArrow]="false"
+          style="border-bottom: 1px solid #EEEEEE">
+          <div class="comp-inner-grid">
+            @for (item of grupo.pratos; track item._id) {
 
-          <ng-template #tplPedidoAcao>
-            @if (!item.pedido) {
-            <span nz-icon nzType="check" nzTheme="outline" (click)="incluirPratoPedido(item)"></span>
-            } @else {
-            <div class="fx-row" style="align-items: center; justify-content: center" (click)="editarPratoPedido(item)">
-              <span nz-icon nzType="shop" nzTheme="outline"></span> ({{
-              item.pedido?.quantidade
-              }})
-            </div>
-            }
-          </ng-template>
+            <ng-template #tplPedidoAcao>
+              @if (!item.pedido) {
+              <span nz-icon nzType="check" nzTheme="outline" (click)="incluirPratoPedido(item)"></span>
+              } @else {
+              <div class="fx-row" style="align-items: center; justify-content: center"
+                (click)="editarPratoPedido(item)">
+                <span nz-icon nzType="shop" nzTheme="outline"></span> ({{
+                item.pedido?.quantidade
+                }})
+              </div>
+              }
+            </ng-template>
 
-          <ng-template #tplPedidoQuantidade>
-            @if (item.pedido) {
-            <span nz-icon nzType="delete" nzTheme="outline" [nzTheme]="'twotone'" [nzTwotoneColor]="'#F44336'"
-              nz-popconfirm nzPopconfirmTitle="Deseja remover esse registro?" nzPopconfirmPlacement="bottom"
-              (nzOnConfirm)="removerPratoPedido(item)"></span>
-            }
-          </ng-template>
+            <ng-template #tplPedidoQuantidade>
+              @if (item.pedido) {
+              <span nz-icon nzType="delete" nzTheme="outline" [nzTheme]="'twotone'" [nzTwotoneColor]="'#F44336'"
+                nz-popconfirm nzPopconfirmTitle="Deseja remover esse registro?" nzPopconfirmPlacement="bottom"
+                (nzOnConfirm)="removerPratoPedido(item)"></span>
+              }
+            </ng-template>
 
-          <nz-card [nzTitle]="item.nome" style="width: 100%; margin-bottom: 5px" [nzActions]="
+            <nz-card [nzTitle]="item.nome" style="width: 100%; margin-bottom: 5px" [nzActions]="
             tipoSelecao
               ? item.pedido
                 ? [tplPedidoAcao, tplPedidoQuantidade]
@@ -49,43 +53,44 @@
                 ? '0px'
                 : '10px'
           }">
-            <nz-card-meta [nzDescription]="item.observacao"> </nz-card-meta>
+              <nz-card-meta [nzDescription]="item.observacao"> </nz-card-meta>
 
-            @if (item.composicoes?.length > 0) {
-            @for (composicao of item.composicoes; track $index) {
-            <nz-tag nzColor="magenta">{{ composicao }}</nz-tag>
-            }
-            }
-          </nz-card>
-          <ng-template #tplEdit>
-            <span nz-icon nzType="edit" nzTheme="outline" (click)="editar(item)"></span>
-          </ng-template>
-          <ng-template #tplCopy>
-            <span nz-icon nzType="copy" nzTheme="outline" nz-popconfirm
-              nzPopconfirmTitle="Deseja duplicar esse registro?" nzPopconfirmPlacement="bottom"
-              (nzOnConfirm)="duplicar(item)"></span>
-          </ng-template>
-          <ng-template #tplDelete>
-            <span nz-icon nzType="delete" nzTheme="outline" [nzTheme]="'twotone'" [nzTwotoneColor]="'#F44336'"
-              nz-popconfirm nzPopconfirmTitle="Deseja remover esse registro?" nzPopconfirmPlacement="bottom"
-              (nzOnConfirm)="remover(item)"></span>
-          </ng-template>
-          <ng-template #contentTemplate>
-            <div>
-              <button nz-button nzType="default" nz-tooltip nzTooltipTitle="Duplicar" nz-popconfirm
+              @if (item.composicoes?.length > 0) {
+              @for (composicao of item.composicoes; track $index) {
+              <nz-tag nzColor="magenta">{{ composicao }}</nz-tag>
+              }
+              }
+            </nz-card>
+            <ng-template #tplEdit>
+              <span nz-icon nzType="edit" nzTheme="outline" (click)="editar(item)"></span>
+            </ng-template>
+            <ng-template #tplCopy>
+              <span nz-icon nzType="copy" nzTheme="outline" nz-popconfirm
                 nzPopconfirmTitle="Deseja duplicar esse registro?" nzPopconfirmPlacement="bottom"
-                (nzOnConfirm)="duplicar(item)">
-                <span nz-icon nzType="copy" nzTheme="outline"></span>
-              </button>
+                (nzOnConfirm)="duplicar(item)"></span>
+            </ng-template>
+            <ng-template #tplDelete>
+              <span nz-icon nzType="delete" nzTheme="outline" [nzTheme]="'twotone'" [nzTwotoneColor]="'#F44336'"
+                nz-popconfirm nzPopconfirmTitle="Deseja remover esse registro?" nzPopconfirmPlacement="bottom"
+                (nzOnConfirm)="remover(item)"></span>
+            </ng-template>
+            <ng-template #contentTemplate>
+              <div>
+                <button nz-button nzType="default" nz-tooltip nzTooltipTitle="Duplicar" nz-popconfirm
+                  nzPopconfirmTitle="Deseja duplicar esse registro?" nzPopconfirmPlacement="bottom"
+                  (nzOnConfirm)="duplicar(item)">
+                  <span nz-icon nzType="copy" nzTheme="outline"></span>
+                </button>
 
-              <button nzDanger nz-button nzType="default" nz-tooltip nzTooltipTitle="Remover" nz-popconfirm
-                nzPopconfirmTitle="Deseja remover esse registro?" nzPopconfirmPlacement="bottom"
-                (nzOnConfirm)="remover(item)">
-                <span nz-icon nzType="delete" nzTheme="outline"></span>
-              </button>
-            </div>
-          </ng-template>
-          }
+                <button nzDanger nz-button nzType="default" nz-tooltip nzTooltipTitle="Remover" nz-popconfirm
+                  nzPopconfirmTitle="Deseja remover esse registro?" nzPopconfirmPlacement="bottom"
+                  (nzOnConfirm)="remover(item)">
+                  <span nz-icon nzType="delete" nzTheme="outline"></span>
+                </button>
+              </div>
+            </ng-template>
+            }
+          </div>
         </nz-collapse-panel>
 
         <ng-template #tplTitulo>
