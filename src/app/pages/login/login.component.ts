@@ -1,10 +1,22 @@
-import { Component, inject } from "@angular/core";
-import { AuthService } from "src/app/auth/auth.service";
+import { Component, inject } from '@angular/core';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { AuthService } from 'src/app/auth/auth.service';
+import { LBL_ERRO } from 'src/app/common/constantes';
 
 @Component({
   selector: 'app-login-component',
   templateUrl: './login.component.html',
-  styles: [`
+  styles: [
+    `
+
+  .content {
+     justify-content: center;
+     padding: 10px;
+     display: grid;
+     grid-template-columns: 80px 80px 80px; gap: 10px;
+  }
+
   .box0 {
     grid-column-start: 1;
     grid-column-end: 2;
@@ -19,20 +31,21 @@ import { AuthService } from "src/app/auth/auth.service";
 
   :host {
     margin: auto;
-    position: relative;
+    //position: relative;
     top: 100px;
     left: 0;
     bottom: 0;
     right: 0;
     background-color: white;
   }
-`]
+`,
+  ],
 })
 export class LoginComponent {
   quantidadeNumeros: number[] = [];
   selecoes = new Set<number>();
   private readonly service = inject(AuthService);
-
+  private readonly notify = inject(NzNotificationService);
 
   constructor() {
     for (let i = 1; i <= 9; i++) {
@@ -49,7 +62,7 @@ export class LoginComponent {
   }
 
   selecaoContem(i: number) {
-    return [...this.selecoes].includes(i)
+    return [...this.selecoes].includes(i);
   }
 
   limparSelecao() {
@@ -60,7 +73,8 @@ export class LoginComponent {
     this.service.login([...this.selecoes].join('')).subscribe({
       error: (response) => {
         console.error(response);
-      }
-    })
+        this.notify.error(LBL_ERRO,'Senha invalida!');
+      },
+    });
   }
 }
