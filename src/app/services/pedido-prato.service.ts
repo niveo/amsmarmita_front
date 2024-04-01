@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
+import { shareReplay } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -19,13 +20,16 @@ export class PedidoPratoService {
     return this.http.delete<any>('/pedidopratos/' + id);
   }
 
-  atualizar(id: string, quantidade: number) {
+  atualizar(id: string, quantidade: number, acompanhamentos: string[]) {
+    console.log('atualizar');
+
     return this.http.put<any>('/pedidopratos/' + id, {
       quantidade,
+      acompanhamentos
     });
   }
 
-  inlcluir(marmita: string, comedor: string, prato: string, quantidade: number) {
+  inlcluir(marmita: string, comedor: string, prato: string, quantidade: number, acompanhamentos: string[]) {
     return this.http.post<any>(
       '/pedidopratos',
       {
@@ -33,6 +37,7 @@ export class PedidoPratoService {
         comedor,
         prato,
         quantidade,
+        acompanhamentos
       },
     );
   }

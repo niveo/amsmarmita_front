@@ -4,9 +4,9 @@ import { ComedoresComponent } from './pages/comedores/comedores.component';
 import { MarmitasComponent } from './pages/marmitas/marmitas.component';
 import { GrupoComponent } from './pages/grupos/grupos.component';
 import { PratoComponent } from './pages/pratos/pratos.component';
-import { MarmitasPedidosComponent } from './pages/marmitas/pedidos/marmitas-pedidos.component';
 import { LoginComponent } from './pages/login/login.component';
 import { canActivateTeam } from './auth/auth.service';
+import { PedidosComponent } from './pages/pedidos/pedidos.component';
 
 const routes: Routes = [
   {
@@ -40,7 +40,7 @@ const routes: Routes = [
   },
   {
     path: 'pedido',
-    component: MarmitasPedidosComponent,
+    component: PedidosComponent,
     canActivate: [canActivateTeam],
   },
 ];

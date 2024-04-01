@@ -1,11 +1,11 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { map } from 'rxjs';
 import { Grupo } from 'src/app/model';
 import { GrupoService } from 'src/app/services/grupo.service';
 
 @Component({
-  selector: 'app-marmitas-pedidos-acompanhamento-component',
-  templateUrl: './marmitas-pedidos-companhamento.component.html',
+  selector: 'app-pedidos-acompanhamento-component',
+  templateUrl: './pedidos-companhamento.component.html',
   styles: [`
      .lbl-titulo-grupo {
         font-weight: bold;
@@ -14,17 +14,20 @@ import { GrupoService } from 'src/app/services/grupo.service';
       }
   `]
 })
-export class MarmitasPedidosAcompanhamentoComponent {
+export class PedidosAcompanhamentoComponent implements OnInit {
   private readonly grupoService = inject(GrupoService);
 
   pratosSimples?: Grupo[];
   pratosGeral?: Grupo[];
   sortPrincipal = (a: Grupo, b: Grupo) => Number(a.principal) - Number(b.principal);
 
-  @Input()
-  selecoes = new Set<string>();
+  @Input({ required: true })
+  acompanhamento!: string[];
 
-  selecionados = [];
+  @Output()
+  acompanhamentoChange = new EventEmitter<string[]>();
+
+  selecoes!: Set<string>;
 
   constructor() {
     this.grupoService.data$
@@ -39,6 +42,10 @@ export class MarmitasPedidosAcompanhamentoComponent {
       });
   }
 
+  ngOnInit() {
+    this.selecoes = new Set<string>(this.acompanhamento);
+  }
+
   selecaoContem(i: string) {
     return [...this.selecoes].includes(i)
   }
@@ -49,5 +56,6 @@ export class MarmitasPedidosAcompanhamentoComponent {
     } else {
       this.selecoes.add(id);
     }
+    this.acompanhamentoChange.emit([...this.selecoes]);
   }
 }

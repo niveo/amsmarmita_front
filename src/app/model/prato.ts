@@ -1,13 +1,10 @@
+import { Grupo } from "./grupo";
+
 export class Prato {
   _id?: string;
   nome?: string;
-  grupo?: string;
+  grupo?: Grupo;
   composicoes?: string[] = [];
   observacao?: string;
-
-  pedido: any;
-
-
-  pratoSelecionado: boolean = false;
 }
 

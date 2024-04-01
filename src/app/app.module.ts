@@ -21,18 +21,17 @@ import { AmsIconComponent } from './componentes/icon.component';
 import { ComedoresComponent } from './pages/comedores/comedores.component';
 import { GrupoComponent } from './pages/grupos/grupos.component';
 import { MarmitasComedoresComponent } from './pages/marmitas/marmitas-comedores.component';
-import { MarmitasPedidosComponent } from './pages/marmitas/pedidos/marmitas-pedidos.component';
 import { MarmitasComponent } from './pages/marmitas/marmitas.component';
 import { PratosFormComposicaoComponent } from './pages/pratos/pratos-form-composicao.component';
 import { PratosFormComponent } from './pages/pratos/pratos-form.component';
 import { PratoComponent } from './pages/pratos/pratos.component';
 import { ComedoresService } from './services/comedores.service';
-import { GrupoService } from './services/grupo.service';
 import { MarmitaService } from './services/marmita.service';
 import { LoginComponent } from './pages/login/login.component';
 import { VersaoSistemaDirective } from './directives/versao-sistema.directive';
 import { SelecaoNumerosComponent } from './componentes/selecao-numeros.component';
-import { MarmitasPedidosAcompanhamentoComponent } from './pages/marmitas/pedidos/acompanhamento/marmitas-pedidos-companhamento.component';
+import { PedidosComponent } from './pages/pedidos/pedidos.component';
+import { PedidosAcompanhamentoComponent } from './pages/pedidos/acompanhamento/pedidos-companhamento.component';
 
 registerLocaleData(pt);
 
@@ -47,8 +46,8 @@ registerLocaleData(pt);
     PratosFormComponent,
     PratosFormComposicaoComponent,
     MarmitasComedoresComponent,
-    MarmitasPedidosComponent,
-    MarmitasPedidosAcompanhamentoComponent,
+    PedidosComponent,
+    PedidosAcompanhamentoComponent,
   ],
   imports: [
     BrowserModule,
