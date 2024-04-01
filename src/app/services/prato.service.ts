@@ -31,7 +31,7 @@ export class PratoService {
   }) {
     return this.http.put<Prato>('/pratos/' + id, {
       nome: nome,
-      grupoId: grupoId,
+      grupo: grupoId,
       composicoes: composicoes,
       observacao: observacao,
     });
@@ -50,7 +50,7 @@ export class PratoService {
   }) {
     return this.http.post<Prato>('/pratos', {
       nome: nome,
-      grupoId: grupoId,
+      grupo: grupoId,
       composicoes: composicoes,
       observacao: observacao,
     });
