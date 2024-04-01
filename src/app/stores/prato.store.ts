@@ -37,30 +37,40 @@ export class PratoStore extends BaseStore {
     super();
     this.iniciarLoading();
     this.grupoService.data$
-      .pipe(map((m) => m.filter((f) => f.principal)))
       .subscribe({
         next: (response) => {
-          console.log('A');
           if (response) {
             this._dataSource.next(response);
           } else {
             this._dataSource.next([]);
           }
           this.finalizarLoading();
-        }
+        },
       });
   }
 
   remover(item: Prato) {
+    console.log(item);
+
     this.service.delete(item._id!).subscribe({
       error: (error) => {
         console.error(error);
         this.notify.error(LBL_ERRO, error.message);
       },
       next: (value) => {
-        console.log(value);
-        this.notify.success(LBL_EXCLUSAO, MSG_EXCLUIR_SUCESSO);
-        //  this.carregar();
+        if (value) {
+          this.notify.success(LBL_EXCLUSAO, MSG_EXCLUIR_SUCESSO);
+
+          const grupoIndex = this._dataSource.value.findIndex(
+            (f) => f._id === item.grupo?._id,
+          );
+
+          const pratoIndex = this._dataSource.value[
+            grupoIndex
+          ].pratos?.findIndex((f) => f._id === item._id)!;
+
+          this._dataSource.value[grupoIndex].pratos?.splice(pratoIndex, 1);
+        }
       },
     });
   }
@@ -84,7 +94,13 @@ export class PratoStore extends BaseStore {
   }
 
   salvar(
-    data: any,
+    data: {
+      _id?: string;
+      nome?: string;
+      grupo?: string;
+      composicoes?: string[];
+      observacao?: string;
+    },
     resolve: (value: any) => void,
     reject: (error: any) => void,
   ) {
@@ -148,7 +164,6 @@ export class PratoStore extends BaseStore {
   }
 
   vincularPedidoPrato(pedidoPratos: PedidoPrato[]) {
-
     this.pedidoPratoVincularMap = {};
 
     pedidoPratos?.forEach((e: PedidoPrato) => {
@@ -156,40 +171,7 @@ export class PratoStore extends BaseStore {
     });
   }
 
-  removerPratoPedido(pratoId: string, grupoId: string) {
-    const grupoIndex = this._dataSource.value.findIndex(
-      (f) => f._id === grupoId,
-    );
-    const pratoIndex = this._dataSource.value[grupoIndex].pratos!.findIndex(
-      (f) => f._id === pratoId,
-    );
-
-    const prato = this._dataSource.value[grupoIndex].pratos![pratoIndex];
-
-    delete this.pedidoPratoVincularMap[prato._id!];
-
-  }
-
-  atualizarPratoPedido(value: {
-    pedidoPratoId: string;
-    pratoId: string;
-    grupoId: string;
-    quantidade: number;
-  }) {
-    const grupoIndex = this._dataSource.value.findIndex(
-      (f) => f._id === value.grupoId,
-    );
-    const pratoIndex = this._dataSource.value[grupoIndex].pratos!.findIndex(
-      (f) => f._id === value.pratoId,
-    );
-
-    const prato = this._dataSource.value[grupoIndex].pratos![pratoIndex];
-
-    this.pedidoPratoVincularMap[prato._id!] = value.quantidade;
-
-
-  }
-
+ 
   incluirPratoPedido(value: {
     pedidoPratoId: string;
     pratoId: string;
@@ -206,7 +188,5 @@ export class PratoStore extends BaseStore {
     const prato = this._dataSource.value[grupoIndex].pratos![pratoIndex];
 
     this.pedidoPratoVincularMap[prato._id!] = value.quantidade;
-
-
   }
 }
