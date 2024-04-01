@@ -24,7 +24,7 @@ export class GrupoService {
             return mp.map((n) => {
               return {
                 ...n,
-                pratos: m.filter((f) => f.grupo === n._id),
+                pratos: m.filter((f) => f.grupo?._id === n._id),
               };
             });
           }),

@@ -20,6 +20,7 @@ import {
   MSG_ATUALIZADO_SUCESSO,
   MSG_EXCLUIR_SUCESSO,
 } from '../common/constantes';
+import { PedidoPrato } from '../model/pedido-prato';
 
 @Injectable({
   providedIn: 'root',
@@ -29,29 +30,14 @@ export class PratoStore extends BaseStore {
   readonly data$ = this._dataSource.asObservable();
   private readonly grupoService = inject(GrupoService);
   private readonly service = inject(PratoService);
-  pedidoPratoVincular: any;
+
+  pedidoPratoVincularMap: any = {};
 
   constructor() {
     super();
     this.iniciarLoading();
     this.grupoService.data$
       .pipe(map((m) => m.filter((f) => f.principal)))
-      .pipe(
-        map((m) => {
-          if (this.pedidoPratoVincular) {
-            this.pedidoPratoVincular.forEach((e: any) => {
-              const grupo = m.find((f) => f._id === e.prato.grupo);
-              const prato = grupo?.pratos?.find((f) => f._id === e.prato._id);
-              if (prato)
-                prato['pedido'] = {
-                  _id: e._id,
-                  quantidade: e.quantidade,
-                };
-            });
-          }
-          return m;
-        }),
-      )
       .subscribe({
         next: (response) => {
           console.log('A');
@@ -138,7 +124,7 @@ export class PratoStore extends BaseStore {
         next: (response: Prato) => {
           const registros = this._dataSource.getValue();
 
-          const grupo = registros.find((f) => f._id === response.grupo);
+          const grupo = registros.find((f) => f._id === response.grupo?._id);
 
           const pratoIndex = grupo!.pratos?.findIndex(
             (f) => f._id === response._id,
@@ -161,37 +147,30 @@ export class PratoStore extends BaseStore {
     this._dataSource.next([]);
   }
 
-  vincularPedidoPrato(pedidoPratos: any) {
-    this.pedidoPratoVincular = pedidoPratos;
-    if (this.pedidoPratoVincular) {
-      this.pedidoPratoVincular.forEach((e: any) => {
-        const grupo = this._dataSource.value.find(
-          (f) => f._id === e.prato.grupo,
-        );
-        const prato = grupo?.pratos!.find((f) => f._id === e.prato._id);
-        if (prato)
-          prato['pedido'] = {
-            _id: e._id,
-            quantidade: e.quantidade,
-          };
-      });
-    }
+  vincularPedidoPrato(pedidoPratos: PedidoPrato[]) {
+
+    this.pedidoPratoVincularMap = {};
+
+    pedidoPratos?.forEach((e: PedidoPrato) => {
+      this.pedidoPratoVincularMap[e.prato?._id!] = e.quantidade;
+    });
   }
 
-  removerPratoPedido(value: { pratoId: string; grupoId: string }) {
+  removerPratoPedido(pratoId: string, grupoId: string) {
     const grupoIndex = this._dataSource.value.findIndex(
-      (f) => f._id === value.grupoId,
+      (f) => f._id === grupoId,
     );
     const pratoIndex = this._dataSource.value[grupoIndex].pratos!.findIndex(
-      (f) => f._id === value.pratoId,
+      (f) => f._id === pratoId,
     );
 
-    delete this._dataSource.value[grupoIndex].pratos![pratoIndex].pedido;
+    const prato = this._dataSource.value[grupoIndex].pratos![pratoIndex];
 
-    this._dataSource.next([...this._dataSource.value]);
+    delete this.pedidoPratoVincularMap[prato._id!];
+
   }
 
-  atualizarQuantidadePratoPedido(value: {
+  atualizarPratoPedido(value: {
     pedidoPratoId: string;
     pratoId: string;
     grupoId: string;
@@ -204,8 +183,11 @@ export class PratoStore extends BaseStore {
       (f) => f._id === value.pratoId,
     );
 
-    this._dataSource.value[grupoIndex].pratos![pratoIndex].pedido.quantidade =
-      value.quantidade;
+    const prato = this._dataSource.value[grupoIndex].pratos![pratoIndex];
+
+    this.pedidoPratoVincularMap[prato._id!] = value.quantidade;
+
+
   }
 
   incluirPratoPedido(value: {
@@ -221,9 +203,10 @@ export class PratoStore extends BaseStore {
       (f) => f._id === value.pratoId,
     );
 
-    this._dataSource.value[grupoIndex].pratos![pratoIndex]['pedido'] = {
-      _id: value.pedidoPratoId,
-      quantidade: value.quantidade,
-    };
+    const prato = this._dataSource.value[grupoIndex].pratos![pratoIndex];
+
+    this.pedidoPratoVincularMap[prato._id!] = value.quantidade;
+
+
   }
 }

@@ -1,0 +1,117 @@
+<div class="card-container">
+  <nz-tabset
+    nzTabPosition="bottom"
+    nzSize="large"
+    nzType="card"
+    style="height: 100%"
+    [nzTabBarExtraContent]="extraTemplate"
+  >
+    <nz-tab [nzTitle]="titleTplPedido">
+      <ng-template #titleTplPedido>
+        <span nz-icon nzType="shopping-cart" nzTheme="outline"></span>
+        Pedido
+      </ng-template>
+      <div class="comp-content">
+        <div class="comp-inner comp-inner-grid">
+          @for (item of data$ | async; track item._id) {
+            <ng-template #tplPedidoAcao>
+              <span
+                nz-icon
+                nzType="delete"
+                nzTheme="outline"
+                [nzTheme]="'twotone'"
+                [nzTwotoneColor]="'#F44336'"
+                nz-popconfirm
+                nzPopconfirmTitle="Deseja remover esse registro?"
+                nzPopconfirmPlacement="bottom"
+                (nzOnConfirm)="removerPratoPedido(item.prato!._id!)"
+              ></span>
+            </ng-template>
+
+            <ng-template #tplPedidoQuantidade>
+              <div
+                class="fx-row"
+                style="align-items: center; justify-content: center"
+                (click)="editarPratoPedido(item.prato!._id!)"
+              >
+                <span nz-icon nzType="shop" nzTheme="outline"></span> ({{
+                  item.quantidade
+                }})
+              </div>
+            </ng-template>
+
+            <div style="padding: 5px">
+              <nz-card [nzActions]="[tplPedidoQuantidade, tplPedidoAcao]">
+                <h3>{{ item.prato!.nome }}</h3>
+                @for (
+                  acompanhamento of item.acompanhamentos;
+                  track acompanhamento._id
+                ) {
+                  <h5>
+                    {{ acompanhamento.grupo!.nome }}: {{ acompanhamento.nome }}
+                  </h5>
+                }
+              </nz-card>
+            </div>
+          }
+        </div>
+      </div>
+    </nz-tab>
+
+    <nz-tab [nzTitle]="titleTplPratos">
+      <ng-template #titleTplPratos>
+        <span nz-icon nzType="shop" nzTheme="outline"></span>Pratos
+      </ng-template>
+      <div class="comp-content">
+        <div class="comp-inner comp-inner-grid">
+          <app-pratos-component
+            tipoSelecao
+            (eventIncluirPratoPedido)="incluirPratoPedido($event)"
+          />
+        </div>
+      </div>
+    </nz-tab>
+  </nz-tabset>
+</div>
+
+<ng-template #extraTemplate>
+  <span class="lbl-quantidade">{{ quantidade$ | async }}</span>
+</ng-template>
+
+<nz-drawer
+  [nzClosable]="false"
+  [nzVisible]="visibleAlteracaoPedido"
+  nzPlacement="right"
+  [nzTitle]="tituloAlteracaoPedido"
+  [nzFooter]="tplFooter"
+  (nzOnClose)="closeAlteracaoPedido()"
+>
+  <ng-container *nzDrawerContent>
+    <app-selecao-numeros-component
+      [numeros]="listaQuantidadePedido"
+      [(selecionado)]="quantidadeAlteracaoPedido"
+    ></app-selecao-numeros-component>
+    @if (visibleAlteracaoPedido) {
+      <app-pedidos-acompanhamento-component
+        [(acompanhamento)]="acompanhamentosAlteracaoPedido"
+      />
+    }
+  </ng-container>
+</nz-drawer>
+
+<ng-template #tplFooter>
+  <div class="fx-row wf gap-5">
+    <button
+      nz-button
+      class="fx-flex"
+      nzType="primary"
+      (click)="salvarAlteracaoPedido()"
+    >
+      <span nz-icon nzType="save" nzTheme="outline"></span>
+      Salvar
+    </button>
+    <button nz-button nzType="dashed" (click)="closeAlteracaoPedido()">
+      <span nz-icon nzType="menu-unfold" nzTheme="outline"></span>
+    </button>
+  </div>
+</ng-template>

@@ -20,6 +20,12 @@ import { Grupo, Prato } from '../../model';
 import { PratoStore } from '../../stores/prato.store';
 import { PratosFormComponent } from './pratos-form.component';
 
+class PratoEdicao {
+  pratoId!: string;
+  grupoId!: string;
+  nome!: string;
+}
+
 @Component({
   selector: 'app-pratos-component',
   templateUrl: './pratos.component.html',
@@ -28,16 +34,14 @@ import { PratosFormComponent } from './pratos-form.component';
 export class PratoComponent {
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly nzModalService = inject(NzModalService);
-  private readonly pratoStore = inject(PratoStore);
+  readonly pratoStore = inject(PratoStore);
 
   @Output()
-  eventIncluirPratoPedido = new EventEmitter<Prato>();
-
-  @Output()
-  eventRemoverPratoPedido = new EventEmitter<Prato>();
-
-  @Output()
-  eventEditarPratoPedido = new EventEmitter<Prato>();
+  eventIncluirPratoPedido = new EventEmitter<{
+    nome: string;
+    pratoId: string;
+    grupoId: string;
+  }>();
 
   @Input({ transform: booleanAttribute })
   tipoSelecao = false;
@@ -94,7 +98,7 @@ export class PratoComponent {
   editar(item: Prato) {
     this.validateForm.setValue({
       id: item._id || '',
-      grupo: item.grupo!,
+      grupo: item.grupo!._id,
       nome: item.nome!,
       composicoes: item.composicoes || [],
       observacao: item.observacao || '',
@@ -148,14 +152,10 @@ export class PratoComponent {
   }
 
   incluirPratoPedido(prato: Prato) {
-    this.eventIncluirPratoPedido.emit(prato);
-  }
-
-  removerPratoPedido(prato: Prato) {
-    this.eventRemoverPratoPedido.emit(prato);
-  }
-
-  editarPratoPedido(prato: Prato) {
-    this.eventEditarPratoPedido.emit(prato);
+    this.eventIncluirPratoPedido.emit({
+      nome: prato.nome!,
+      grupoId: prato.grupo!._id,
+      pratoId: prato._id!,
+    });
   }
 }
