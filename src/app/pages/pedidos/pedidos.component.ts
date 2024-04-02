@@ -13,6 +13,12 @@ import { LBL_ALERTA } from '../../common/constantes';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Prato } from '../../model';
 import { PedidoItem } from '../../model/pedido-item';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-pedidos-component',
@@ -23,6 +29,8 @@ export class PedidosComponent implements OnInit, OnDestroy {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly pedidoStore = inject(PedidoStore);
   protected readonly notify = inject(NzNotificationService);
+  private readonly formBuilder = inject(FormBuilder);
+
   data$!: Observable<PedidoItem[]>;
 
   visibleAlteracaoPedido = false;
@@ -30,11 +38,18 @@ export class PedidosComponent implements OnInit, OnDestroy {
   quantidadeAlteracaoPedido?: number;
   acompanhamentosAlteracaoPedido: string[] = [];
 
+  formAlteracaoPedido: FormGroup<{
+    observacao: FormControl<string | null>;
+  }> = this.formBuilder.group({
+    observacao: ['', [Validators.maxLength(100)]],
+  });
+
   listaQuantidadePedido: number[] = [];
 
   subjectAlteracaoPedido = new Subject<{
     quantidade: number;
     acompanhamentos: string[];
+    observacao?: string;
   }>();
 
   nzSelectedIndex = computed(() => {
@@ -100,6 +115,7 @@ export class PedidosComponent implements OnInit, OnDestroy {
       grupoId: pedidoItem!.prato!.grupo!._id,
       quantidade: pedidoItem!.quantidade!,
       acompanhamentos: pedidoItem!.acompanhamentos!,
+      observacao: pedidoItem!.observacao,
     });
   }
 
@@ -110,6 +126,7 @@ export class PedidosComponent implements OnInit, OnDestroy {
     grupoId,
     quantidade,
     acompanhamentos,
+    observacao,
   }: {
     pedidoItemId?: string;
     nome: string;
@@ -117,10 +134,11 @@ export class PedidosComponent implements OnInit, OnDestroy {
     grupoId: string;
     quantidade: number;
     acompanhamentos: Prato[];
+    observacao?: string;
   }) {
-    this.carregarModalQuantidade(nome, quantidade, acompanhamentos);
+    this.carregarModalQuantidade(nome, quantidade, acompanhamentos, observacao);
     const sub = this.subjectAlteracaoPedido.subscribe(
-      ({ quantidade, acompanhamentos }) => {
+      ({ quantidade, acompanhamentos, observacao }) => {
         if (pedidoItemId) {
           this.pedidoStore.atualizarPedidoItem({
             pedidoItemId,
@@ -128,6 +146,7 @@ export class PedidosComponent implements OnInit, OnDestroy {
             grupoId,
             quantidade,
             acompanhamentos,
+            observacao,
           });
         } else {
           this.pedidoStore.incluirPedidoItem({
@@ -135,6 +154,7 @@ export class PedidosComponent implements OnInit, OnDestroy {
             grupoId: grupoId,
             quantidade: quantidade,
             acompanhamentos: acompanhamentos,
+            observacao,
           });
         }
 
@@ -147,10 +167,14 @@ export class PedidosComponent implements OnInit, OnDestroy {
     titulo: string,
     quantidade: number,
     acompanhamentos: Prato[] = [],
+    observacao?: string,
   ) {
     this.tituloAlteracaoPedido = titulo;
     this.acompanhamentosAlteracaoPedido = acompanhamentos.map((m) => m._id!);
     this.quantidadeAlteracaoPedido = quantidade;
+
+    if (observacao)
+      this.formAlteracaoPedido.get('observacao')?.setValue(observacao);
 
     this.visibleAlteracaoPedido = true;
   }
@@ -168,11 +192,13 @@ export class PedidosComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.visibleAlteracaoPedido = false;
+    this.visibleAlteracaoPedido = false; 
 
     this.subjectAlteracaoPedido.next({
       quantidade: this.quantidadeAlteracaoPedido!,
       acompanhamentos: this.acompanhamentosAlteracaoPedido,
+      observacao:
+        this.formAlteracaoPedido.get('observacao')?.value || undefined,
     });
   }
 }

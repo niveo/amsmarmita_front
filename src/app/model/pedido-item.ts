@@ -1,9 +1,10 @@
-import { Prato } from "./prato"
+import { Prato } from './prato';
 
 export class PedidoItem {
-    pedido?: string
-    prato?: Prato
-    quantidade?: number
-    _id?: string
-    acompanhamentos?: Prato[]
+  pedido?: string;
+  prato?: Prato;
+  quantidade?: number;
+  _id?: string;
+  acompanhamentos?: Prato[];
+  observacao?: string;
 }
