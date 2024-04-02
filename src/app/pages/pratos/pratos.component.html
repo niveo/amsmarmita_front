@@ -23,42 +23,32 @@
             [nzShowArrow]="false"
             style="border-bottom: 1px solid #eeeeee"
           >
-            <div class="comp-inner-grid">
+            <div class="comp-inner-grid" style="gap: 5px">
               @for (item of grupo.pratos; track item._id) {
-                <ng-template #tplPedidoAcao>
-                  @if (!pratoStore.pedidoItemVinculado[item!._id!]) {
-                    <span
-                      nz-icon
-                      nzType="check"
-                      nzTheme="outline"
-                      (click)="incluirPratoPedido(item)"
-                    ></span>
-                  }
-                </ng-template>
-
                 @if (!pratoStore.pedidoItemVinculado[item!._id!]) {
                   <nz-card
-                    [nzTitle]="item.nome"
-                    style="width: 100%; margin-bottom: 5px"
+                    style="width: 100%"
                     [nzActions]="
-                      tipoSelecao
-                        ? [tplPedidoAcao]
-                        : [tplEdit, tplCopy, tplDelete]
+                      tipoSelecao ? [] : [tplEdit, tplCopy, tplDelete]
                     "
-                    [nzBodyStyle]="{
-                      padding:
-                        item.composicoes?.length === 0 && !item.observacao
-                          ? '0px'
-                          : '10px'
-                    }"
+                    [nzHoverable]="tipoSelecao"
+                    (click)="incluirPratoPedido(item)"
                   >
-                    <nz-card-meta [nzDescription]="item.observacao || ''">
-                    </nz-card-meta>
+                    <nz-card-meta
+                      [nzTitle]="item.nome!"
+                      [nzDescription]="item.observacao || ''"
+                    ></nz-card-meta>
 
-                    @if (item.composicoes && item.composicoes.length > 0) {
-                      @for (composicao of item.composicoes; track $index) {
-                        <nz-tag nzColor="magenta">{{ composicao }}</nz-tag>
-                      }
+                    @if (
+                      item.composicoes &&
+                      item.composicoes.length > 0 &&
+                      !tipoSelecao
+                    ) {
+                      <div style="padding: 10px">
+                        @for (composicao of item.composicoes; track $index) {
+                          <nz-tag nzColor="magenta">{{ composicao }}</nz-tag>
+                        }
+                      </div>
                     }
                   </nz-card>
                 }
