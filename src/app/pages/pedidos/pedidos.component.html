@@ -90,7 +90,9 @@
 </div>
 
 <ng-template #extraTemplate>
-  <span class="lbl-quantidade">{{ quantidadeItens() }} / {{quantidadeRegistros()}}</span>
+  <span class="lbl-quantidade"
+    >{{ quantidadeItens() }} / {{ quantidadeRegistros() }}</span
+  >
 </ng-template>
 
 <nz-drawer
@@ -108,7 +110,7 @@
     ></app-selecao-numeros-component>
     @if (visibleAlteracaoPedido) {
       <app-pedidos-acompanhamento-component
-        [(acompanhamento)]="acompanhamentosAlteracaoPedido"
+        [acompanhamento]="acompanhamentosAlteracaoPedido"
       />
     }
   </ng-container>
