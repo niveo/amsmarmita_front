@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { NZ_MODAL_DATA } from 'ng-zorro-antd/modal';
 import { Grupo } from '../../model';
-import { GrupoService } from 'src/app/services/grupo.service';
+import { GrupoService } from '../../services/grupo.service';
 
 @Component({
   selector: 'app-pratos-form-component',

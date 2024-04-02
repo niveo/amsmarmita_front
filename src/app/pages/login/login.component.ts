@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { AuthService } from 'src/app/auth/auth.service';
-import { LBL_ERRO } from 'src/app/common/constantes';
+import { AuthService } from '../../auth/auth.service';
+import { LBL_ERRO } from '../../common/constantes';
 
 @Component({
   selector: 'app-login-component',

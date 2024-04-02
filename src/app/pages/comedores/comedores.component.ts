@@ -22,7 +22,7 @@ import {
   MSG_EXCLUIR_SUCESSO,
   MSG_ATUALIZADO_SUCESSO,
 } from '../../common/constantes';
-import { isBooleanTransform } from 'src/app/common/util';
+import { isBooleanTransform } from '../../common/util';
 
 @Component({
   selector: 'app-comedores-component',
