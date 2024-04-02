@@ -14,18 +14,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { Observable } from 'rxjs';
+import { Observable, iif, map } from 'rxjs';
 import { getFormValidacoes, validarFormulario } from '../../common/util';
 import { Grupo, Prato } from '../../model';
 import { PratoStore } from '../../stores/prato.store';
 import { PratosFormComponent } from './pratos-form.component';
-
-class PratoEdicao {
-  pratoId!: string;
-  grupoId!: string;
-  nome!: string;
-}
-
+ 
 @Component({
   selector: 'app-pratos-component',
   templateUrl: './pratos.component.html',
@@ -46,17 +40,17 @@ export class PratoComponent {
   @Input({ transform: booleanAttribute })
   tipoSelecao = false;
 
-  data$!: Observable<any[]>;
+  data$!: Observable<Grupo[]>;
   loading = true;
 
   validateForm: FormGroup<{
-    id: FormControl<string>;
+    _id: FormControl<string>;
     nome: FormControl<string>;
     grupo: FormControl<string>;
     composicoes: FormControl<string[]>;
     observacao: FormControl<string>;
   }> = this.fb.group({
-    id: [''],
+    _id: [''],
     nome: ['', [Validators.required, ...getFormValidacoes(50)]],
     grupo: ['', [Validators.required]],
     composicoes: [['']],
@@ -68,12 +62,14 @@ export class PratoComponent {
       .pipe(takeUntilDestroyed())
       .subscribe((loading) => (this.loading = loading));
 
-    this.data$ = this.pratoStore.data$;
+    this.data$ = this.pratoStore.data$.pipe(
+      map((m) => !this.tipoSelecao ? m : m.filter((f) => f.principal)),
+    ); 
   }
 
   novoPrato() {
     this.validateForm.setValue({
-      id: '',
+      _id: '',
       grupo: '',
       nome: '',
       composicoes: [],
@@ -85,7 +81,7 @@ export class PratoComponent {
 
   novoPratoGrupo(item: Grupo) {
     this.validateForm.setValue({
-      id: '',
+      _id: '',
       grupo: item._id!,
       nome: '',
       composicoes: [],
@@ -97,7 +93,7 @@ export class PratoComponent {
 
   editar(item: Prato) {
     this.validateForm.setValue({
-      id: item._id || '',
+      _id: item._id || '',
       grupo: item.grupo!._id,
       nome: item.nome!,
       composicoes: item.composicoes || [],
@@ -139,7 +135,7 @@ export class PratoComponent {
       data,
       (value) => {
         this.validateForm.setValue({
-          id: '',
+          _id: '',
           nome: '',
           grupo: '',
           composicoes: [],

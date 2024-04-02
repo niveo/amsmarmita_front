@@ -1,7 +1,4 @@
-import {
-  LBL_ALERTA,
-  LBL_ERRO,
-} from './../common/constantes';
+import { LBL_ALERTA, LBL_ERRO } from './../common/constantes';
 import { Injectable, inject } from '@angular/core';
 import { PedidoService } from '../services/pedido.service';
 import { BehaviorSubject, EMPTY, catchError, finalize } from 'rxjs';
@@ -31,7 +28,7 @@ export class PedidoStore extends BaseStore {
 
   constructor() {
     super();
-    this.data$.subscribe(() => this.calcularQuantidade())
+    this.data$.subscribe(() => this.calcularQuantidade());
   }
 
   carregarRegistros(marmitaId: string, comedorId: string) {
@@ -52,9 +49,7 @@ export class PedidoStore extends BaseStore {
           }),
         )
         .subscribe({
-          next: ({ pedido,pratos }) => {
-            console.log(pedido, pratos);
-            //this.pedidoId = response.pedido._id;
+          next: ({ pratos }) => {
             this.pratoStore.vincularPedidoPrato(pratos);
             this._dataSource.next(pratos);
           },
@@ -63,14 +58,13 @@ export class PedidoStore extends BaseStore {
           },
           complete: () => {
             subs.unsubscribe();
-          }
+          },
         });
-    })
+    });
   }
 
   removerPratoPedido(pratoId: string) {
     this.iniciarLoading();
-    //console.log(`Removendo prato pedido ${JSON.stringify(value)}`);
 
     const pedidoPrato = this.obterPedidoPrato(pratoId);
 
@@ -86,16 +80,13 @@ export class PedidoStore extends BaseStore {
       .pipe(finalize(() => this.finalizarLoading()))
       .subscribe({
         next: () => {
-
-          const pedidoIndex = this._dataSource.value
-            .findIndex((f: any) => f._id === pedidoPrato!._id!);
+          const pedidoIndex = this._dataSource.value.findIndex(
+            (f: any) => f._id === pedidoPrato!._id!,
+          );
 
           this._dataSource.value.splice(pedidoIndex, 1);
 
-          this.calcularQuantidade()
-
-          this.pratoStore.removerPratoPedido(pedidoPrato!.prato!._id!, pedidoPrato!.prato!.grupo!._id);
-          // this.notify.success(LBL_EXCLUSAO, MSG_EXCLUIR_SUCESSO);
+          this.calcularQuantidade();
         },
       });
   }
@@ -105,7 +96,7 @@ export class PedidoStore extends BaseStore {
     pratoId: string;
     grupoId: string;
     quantidade: number;
-    acompanhamentos: string[]
+    acompanhamentos: string[];
   }) {
     if (value.quantidade === 0) {
       this.removerPratoPedido(value.pratoId);
@@ -123,12 +114,9 @@ export class PedidoStore extends BaseStore {
       .pipe(finalize(() => this.finalizarLoading()))
       .subscribe({
         next: (response) => {
-
-          console.log(response);
-          
-
-          const pedidoIndex = this._dataSource.value
-            .findIndex((f: any) => f._id === value.pedidoPratoId);
+          const pedidoIndex = this._dataSource.value.findIndex(
+            (f: any) => f._id === value.pedidoPratoId,
+          );
 
           const pedido = this._dataSource.value[pedidoIndex];
 
@@ -136,9 +124,6 @@ export class PedidoStore extends BaseStore {
           pedido.acompanhamentos = response.acompanhamentos;
 
           this.calcularQuantidade();
-
-          this.pratoStore.atualizarPratoPedido(value);
-          // this.notify.success(LBL_ATUALIZACAO, MSG_ATUALIZADO_SUCESSO);
         },
       });
   }
@@ -147,10 +132,16 @@ export class PedidoStore extends BaseStore {
     pratoId: string;
     grupoId: string;
     quantidade: any;
-    acompanhamentos: string[]
+    acompanhamentos: string[];
   }) {
     this.pedidoPratoService
-      .inlcluir(this.marmitaId, this.comedorId, value.pratoId, value.quantidade, value.acompanhamentos)
+      .inlcluir(
+        this.marmitaId,
+        this.comedorId,
+        value.pratoId,
+        value.quantidade,
+        value.acompanhamentos,
+      )
       .pipe(
         catchError((error: any) => {
           console.error(error);
@@ -161,7 +152,6 @@ export class PedidoStore extends BaseStore {
       .pipe(finalize(() => this.finalizarLoading()))
       .subscribe({
         next: (response) => {
-
           this._dataSource.value.push(response);
 
           this.calcularQuantidade();
@@ -170,19 +160,18 @@ export class PedidoStore extends BaseStore {
             ...value,
             pedidoPratoId: response._id,
           });
-          // this.notify.success(LBL_ATUALIZACAO, MSG_ATUALIZADO_SUCESSO);
         },
       });
   }
 
   private calcularQuantidade() {
     const quantidade = this._dataSource.value.reduce((p, c) => {
-      return p + c.quantidade!
+      return p + c.quantidade!;
     }, 0);
     this._quantidade.next(quantidade);
   }
 
   obterPedidoPrato(pratoId: string) {
-    return this._dataSource.value.find(f => f.prato?._id === pratoId)
+    return this._dataSource.value.find((f) => f.prato?._id === pratoId);
   }
 }
