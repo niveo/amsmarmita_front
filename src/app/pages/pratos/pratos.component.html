@@ -1,9 +1,9 @@
 <div class="comp-body">
   <div class="comp-head">
-    @if (loading) {
+    @if (loading()) {
       <nz-skeleton [nzActive]="true"></nz-skeleton>
     }
-    @if (!loading && !tipoSelecao) {
+    @if (!loading() && !tipoSelecao()) {
       <button
         nz-button
         nzType="primary"
@@ -29,9 +29,9 @@
                   <nz-card
                     style="width: 100%"
                     [nzActions]="
-                      tipoSelecao ? [] : [tplEdit, tplCopy, tplDelete]
+                      tipoSelecao() ? [] : [tplEdit, tplCopy, tplDelete]
                     "
-                    [nzHoverable]="tipoSelecao"
+                    [nzHoverable]="tipoSelecao()"
                     (click)="incluirPratoPedido(item)"
                   >
                     <nz-card-meta
@@ -86,19 +86,6 @@
                 </ng-template>
                 <ng-template #contentTemplate>
                   <div>
-                    <!--button
-                      nz-button
-                      nzType="default"
-                      nz-tooltip
-                      nzTooltipTitle="Duplicar"
-                      nz-popconfirm
-                      nzPopconfirmTitle="Deseja duplicar esse registro?"
-                      nzPopconfirmPlacement="bottom"
-                      (nzOnConfirm)="duplicar(item)"
-                    >
-                      <span nz-icon nzType="copy" nzTheme="outline"></span>
-                    </!--button-->
-
                     <button
                       nzDanger
                       nz-button

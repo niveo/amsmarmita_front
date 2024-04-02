@@ -1,5 +1,5 @@
 <nz-tag
-  *ngFor="let tag of composicoes; let i = index"
+  *ngFor="let tag of composicoes(); let i = index"
   [nzMode]="'closeable'"
   (nzOnClose)="handleClose(tag)"
 >

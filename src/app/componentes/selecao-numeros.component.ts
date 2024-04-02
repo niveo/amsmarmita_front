@@ -1,4 +1,8 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  input,
+  output,
+} from '@angular/core';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzFlexModule } from 'ng-zorro-antd/flex';
 
@@ -10,11 +14,11 @@ import { NzFlexModule } from 'ng-zorro-antd/flex';
     [nzWrap]="'wrap'"
     style="justify-content: center"
   >
-    @for (i of numeros; track i) {
+    @for (i of numeros(); track i) {
       <button
         nz-button
         style="width: 50px"
-        [nzType]="selecionado === i ? 'primary' : 'default'"
+        [nzType]="selecionado() === i ? 'primary' : 'default'"
         (click)="selecionadoChange.emit(i)"
       >
         {{ i }}
@@ -25,12 +29,9 @@ import { NzFlexModule } from 'ng-zorro-antd/flex';
   imports: [NzButtonModule, NzFlexModule],
 })
 export class SelecaoNumerosComponent {
-  @Input({ required: true })
-  numeros: number[] = [];
+  numeros = input.required<number[]>();
 
-  @Input()
-  selecionado?: number;
+  selecionado = input<number>();
 
-  @Output()
-  selecionadoChange = new EventEmitter<number>();
+  selecionadoChange = output<number>();
 }

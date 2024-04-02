@@ -1,10 +1,9 @@
 import {
   Component,
   ElementRef,
-  EventEmitter,
-  Input,
-  Output,
   ViewChild,
+  input,
+  output,
 } from '@angular/core';
 
 @Component({
@@ -16,15 +15,13 @@ export class PratosFormComposicaoComponent {
   inputValue = '';
   @ViewChild('inputElement', { static: false }) inputElement?: ElementRef;
 
-  @Output()
-  eventAtualizarComposicao = new EventEmitter<string[]>();
-
-  @Input()
-  composicoes: string[] = [];
+  composicoes = input<string[]>([]);
+  composicoesChange = output<string[]>();
 
   handleClose(removedTag: {}): void {
-    this.composicoes = this.composicoes.filter((tag) => tag !== removedTag);
-    this.eventAtualizarComposicao.emit(this.composicoes);
+    this.composicoesChange.emit(
+      this.composicoes().filter((tag) => tag !== removedTag),
+    );
   }
 
   sliceTagName(tag: string): string {
@@ -40,10 +37,11 @@ export class PratosFormComposicaoComponent {
   }
 
   handleInputConfirm(): void {
-    if (this.inputValue && this.composicoes.indexOf(this.inputValue) === -1) {
-      this.composicoes = [...this.composicoes, this.inputValue];
+    let comp;
+    if (this.inputValue && this.composicoes().indexOf(this.inputValue) === -1) {
+      comp = [...this.composicoes(), this.inputValue];
     }
-    this.eventAtualizarComposicao.emit(this.composicoes);
+    this.composicoesChange.emit(comp!);
     this.inputValue = '';
     this.inputVisible = false;
   }

@@ -1,10 +1,11 @@
 import {
   Component,
-  EventEmitter,
-  Input,
   Output,
-  booleanAttribute,
+  Signal,
+  computed,
   inject,
+  input,
+  output,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
@@ -15,11 +16,15 @@ import {
 } from '@angular/forms';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { Observable, iif, map } from 'rxjs';
-import { getFormValidacoes, validarFormulario } from '../../common/util';
+import {
+  getFormValidacoes,
+  isBooleanTransform,
+  validarFormulario,
+} from '../../common/util';
 import { Grupo, Prato } from '../../model';
 import { PratoStore } from '../../stores/prato.store';
 import { PratosFormComponent } from './pratos-form.component';
- 
+
 @Component({
   selector: 'app-pratos-component',
   templateUrl: './pratos.component.html',
@@ -30,18 +35,17 @@ export class PratoComponent {
   private readonly nzModalService = inject(NzModalService);
   readonly pratoStore = inject(PratoStore);
 
-  @Output()
-  eventIncluirPratoPedido = new EventEmitter<{
+  eventIncluirPratoPedido = output<{
     nome: string;
     pratoId: string;
     grupoId: string;
   }>();
 
-  @Input({ transform: booleanAttribute })
-  tipoSelecao = false;
+  tipoSelecao = input(false, {
+    transform: isBooleanTransform,
+  });
 
   data$!: Observable<Grupo[]>;
-  loading = true;
 
   validateForm: FormGroup<{
     _id: FormControl<string>;
@@ -57,14 +61,12 @@ export class PratoComponent {
     observacao: ['', getFormValidacoes(100)],
   });
 
-  constructor() {
-    this.pratoStore.loading$
-      .pipe(takeUntilDestroyed())
-      .subscribe((loading) => (this.loading = loading));
+  loading: Signal<boolean> = computed(() => this.pratoStore.loading());
 
+  constructor() {
     this.data$ = this.pratoStore.data$.pipe(
-      map((m) => !this.tipoSelecao ? m : m.filter((f) => f.principal)),
-    ); 
+      map((m) => (!this.tipoSelecao ? m : m.filter((f) => f.principal))),
+    );
   }
 
   novoPrato() {
@@ -148,7 +150,7 @@ export class PratoComponent {
   }
 
   incluirPratoPedido(prato: Prato) {
-    if(!this.tipoSelecao) return;
+    if (!this.tipoSelecao) return;
     this.eventIncluirPratoPedido.emit({
       nome: prato.nome!,
       grupoId: prato.grupo!._id,

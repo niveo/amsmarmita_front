@@ -26,7 +26,6 @@ export class PedidosComponent implements OnInit, OnDestroy {
   private readonly pedidoStore = inject(PedidoStore);
   protected readonly notify = inject(NzNotificationService);
   data$!: Observable<PedidoItem[]>;
-  loading = false;
 
   visibleAlteracaoPedido = false;
   tituloAlteracaoPedido = '';
@@ -48,12 +47,13 @@ export class PedidosComponent implements OnInit, OnDestroy {
     this.pedidoStore.quantidadeRegistros(),
   );
 
+  loading: Signal<boolean> = computed(() => this.pedidoStore.loading());
+
   constructor() {
     for (let i = 1; i <= 20; i++) {
       this.listaQuantidadePedido.push(i);
     }
     this.data$ = this.pedidoStore.data$;
-    this.pedidoStore.loading$.subscribe((loading) => (this.loading = loading));
   }
 
   ngOnInit() {

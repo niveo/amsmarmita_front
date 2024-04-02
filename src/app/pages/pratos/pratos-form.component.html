@@ -60,6 +60,6 @@
   ></span>
   <app-pratos-form-composicao-component
     [composicoes]="validateForm.value.composicoes"
-    (eventAtualizarComposicao)="atualizarComposicao($event)"
+    (composicoesChange)="atualizarComposicao($event)"
   />
 </form>
