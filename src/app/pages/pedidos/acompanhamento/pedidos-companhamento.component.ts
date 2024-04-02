@@ -3,6 +3,7 @@ import {
   inject,
   output,
   input,
+  OnInit,
 } from '@angular/core';
 import { map } from 'rxjs';
 import { Grupo } from 'src/app/model';

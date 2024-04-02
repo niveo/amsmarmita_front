@@ -22,6 +22,8 @@ export class PratosFormComponent implements OnInit {
   }
 
   atualizarComposicao(e: string[]) {
+    console.log(e);
+    
     this.validateForm.value.composicoes = e;
   }
 }

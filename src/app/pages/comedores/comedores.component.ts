@@ -1,11 +1,9 @@
 import {
   Component,
-  DestroyRef,
-  EventEmitter,
-  Input,
-  Output,
-  booleanAttribute,
+  DestroyRef, 
   inject,
+  input,
+  output,
 } from '@angular/core';
 import {
   EMPTY,
@@ -24,11 +22,12 @@ import {
   MSG_EXCLUIR_SUCESSO,
   MSG_ATUALIZADO_SUCESSO,
 } from '../../common/constantes';
+import { isBooleanTransform } from 'src/app/common/util';
 
 @Component({
   selector: 'app-comedores-component',
   templateUrl: './comedores.component.html',
-  styleUrl: './comedores.component.scss'
+  styleUrl: './comedores.component.scss',
 })
 export class ComedoresComponent {
   private readonly comedoreService = inject(ComedoresService);
@@ -40,11 +39,10 @@ export class ComedoresComponent {
   comedoreId?: string;
   comedoreNome?: string;
 
-  @Input({ transform: booleanAttribute })
-  tipoSelecao = false;
+  tipoSelecao = input(false, { transform: isBooleanTransform });
 
-  @Output()
-  eventComedorTipoSelecao = new EventEmitter<string>();
+ 
+  eventComedorTipoSelecao = output<string>();
 
   ngOnInit() {
     this.carregar();
@@ -59,7 +57,7 @@ export class ComedoresComponent {
         catchError((error: any) => {
           this.notify.error('Erro', error.message);
           return EMPTY;
-        })
+        }),
       )
       .pipe(finalize(() => (this.loading = false)));
   }
@@ -76,7 +74,7 @@ export class ComedoresComponent {
       .pipe(
         finalize(() => {
           this.loadingBtn = false;
-        })
+        }),
       )
       .subscribe({
         error: (error) => {
@@ -102,8 +100,8 @@ export class ComedoresComponent {
           iif(
             () => !value,
             this.comedoreService.inlcluir(this.comedoreNome!),
-            this.comedoreService.atualizar(value, this.comedoreNome!)
-          )
+            this.comedoreService.atualizar(value, this.comedoreNome!),
+          ),
         ),
         catchError((error: any) => {
           console.error(error);
@@ -114,7 +112,7 @@ export class ComedoresComponent {
           this.loadingBtn = false;
           this.comedoreNome = undefined;
           this.comedoreId = undefined;
-        })
+        }),
       )
       .subscribe({
         next: (value) => {
@@ -126,7 +124,6 @@ export class ComedoresComponent {
   }
 
   selecionarComedor(comedor: Comedor) {
-    if(this.tipoSelecao)
-    this.eventComedorTipoSelecao.emit(comedor._id);
+    if (this.tipoSelecao()) this.eventComedorTipoSelecao.emit(comedor._id!);
   }
 }
