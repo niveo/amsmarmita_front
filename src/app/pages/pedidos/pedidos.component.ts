@@ -4,7 +4,9 @@ import {
   inject,
   OnDestroy,
   OnInit,
+  signal,
   Signal,
+  WritableSignal,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, Observable, Subject } from 'rxjs';
@@ -29,7 +31,7 @@ export class PedidosComponent implements OnInit, OnDestroy {
   visibleAlteracaoPedido = false;
   tituloAlteracaoPedido = '';
   quantidadeAlteracaoPedido?: number;
-  acompanhamentosAlteracaoPedido!: string[];
+  acompanhamentosAlteracaoPedido: string[] = [];
 
   listaQuantidadePedido: number[] = [];
 

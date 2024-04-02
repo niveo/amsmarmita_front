@@ -1,4 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
+import {
+  Component, 
+  inject,
+  output,
+  input,
+} from '@angular/core';
 import { map } from 'rxjs';
 import { Grupo } from 'src/app/model';
 import { GrupoService } from 'src/app/services/grupo.service';
@@ -6,26 +11,26 @@ import { GrupoService } from 'src/app/services/grupo.service';
 @Component({
   selector: 'app-pedidos-acompanhamento-component',
   templateUrl: './pedidos-companhamento.component.html',
-  styles: [`
-     .lbl-titulo-grupo {
+  styles: [
+    `
+      .lbl-titulo-grupo {
         font-weight: bold;
-        border-bottom: 1px solid #01579B;
+        border-bottom: 1px solid #01579b;
         margin-bottom: 5px;
       }
-  `]
+    `,
+  ],
 })
 export class PedidosAcompanhamentoComponent implements OnInit {
   private readonly grupoService = inject(GrupoService);
 
   pratosSimples?: Grupo[];
   pratosGeral?: Grupo[];
-  sortPrincipal = (a: Grupo, b: Grupo) => Number(a.principal) - Number(b.principal);
+  sortPrincipal = (a: Grupo, b: Grupo) =>
+    Number(a.principal) - Number(b.principal);
 
-  @Input({ required: true })
-  acompanhamento!: string[];
-
-  @Output()
-  acompanhamentoChange = new EventEmitter<string[]>();
+  acompanhamento = input.required<string[]>();
+  acompanhamentoChange = output<string[]>();
 
   selecoes!: Set<string>;
 
@@ -33,7 +38,10 @@ export class PedidosAcompanhamentoComponent implements OnInit {
     this.grupoService.data$
       .pipe(
         map((m) => {
-          return [m.filter((f) => f.multiplo), m.filter((f) => !f.multiplo).sort(this.sortPrincipal)];
+          return [
+            m.filter((f) => f.multiplo),
+            m.filter((f) => !f.multiplo).sort(this.sortPrincipal),
+          ];
         }),
       )
       .subscribe((data) => {
@@ -43,11 +51,11 @@ export class PedidosAcompanhamentoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.selecoes = new Set<string>(this.acompanhamento);
+    this.selecoes = new Set<string>(this.acompanhamento());
   }
 
   selecaoContem(i: string) {
-    return [...this.selecoes].includes(i)
+    return [...this.selecoes].includes(i);
   }
 
   changeGeral(id: string) {
@@ -56,6 +64,7 @@ export class PedidosAcompanhamentoComponent implements OnInit {
     } else {
       this.selecoes.add(id);
     }
-    this.acompanhamentoChange.emit([...this.selecoes]);
+     this.acompanhamentoChange.emit([...this.selecoes]);
+    // this.acompanhamento.
   }
 }
