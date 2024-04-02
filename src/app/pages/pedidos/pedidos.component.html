@@ -27,7 +27,10 @@
                 nzHoverable
                 [corBoarda]="item.prato?.grupo?.cor"
               >
-                <div (click)="editarPedidoItem(item.prato!._id!)">
+                <div
+                  (click)="editarPedidoItem(item.prato!._id!)"
+                  class="fx-column"
+                >
                   <div nz-row [nzGutter]="8">
                     <div nz-col nzFlex="3"></div>
                     <div nz-col nzFlex="2" class="lbl-title-quantidade">
@@ -52,6 +55,10 @@
                       <h2>{{ item.quantidade }}</h2>
                     </div>
                   </div>
+
+                  @if (item.observacao) {
+                    <span> {{ item.observacao }}</span>
+                  }
                 </div>
               </nz-card>
             </div>
@@ -115,6 +122,22 @@
         [(acompanhamento)]="acompanhamentosAlteracaoPedido"
       />
     }
+
+    <form nz-form [formGroup]="formAlteracaoPedido" nzLayout="vertical">
+      <nz-form-item>
+        <nz-form-label>Observação</nz-form-label>
+        <nz-form-control>
+          <nz-textarea-count [nzMaxCharacterCount]="100">
+            <textarea
+              rows="4"
+              formControlName="observacao"
+              nz-input
+              [maxlength]="100"
+            ></textarea>
+          </nz-textarea-count>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
   </ng-container>
 </nz-drawer>
 

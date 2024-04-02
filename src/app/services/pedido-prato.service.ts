@@ -19,12 +19,16 @@ export class PedidoItemService {
     return this.http.delete<any>('/pedidoitens/' + id);
   }
 
-  atualizar(id: string, quantidade: number, acompanhamentos: string[]) {
-    console.log('atualizar');
-
+  atualizar(
+    id: string,
+    quantidade: number,
+    acompanhamentos: string[],
+    observacao?: string,
+  ) { 
     return this.http.put<any>('/pedidoitens/' + id, {
       quantidade,
       acompanhamentos,
+      observacao: observacao || null,
     });
   }
 
@@ -34,13 +38,15 @@ export class PedidoItemService {
     prato: string,
     quantidade: number,
     acompanhamentos: string[],
-  ) {
+    observacao?: string,
+  ) { 
     return this.http.post<any>('/pedidoitens', {
       marmita,
       comedor,
       prato,
       quantidade,
       acompanhamentos,
+      observacao: observacao || null,
     });
   }
 }

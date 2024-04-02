@@ -97,13 +97,19 @@ export class PedidoStore extends BaseStore {
     grupoId: string;
     quantidade: number;
     acompanhamentos: string[];
+    observacao?: string;
   }) {
     if (value.quantidade === 0) {
       this.removerPedidoItem(value.pratoId);
       return;
     }
     this.pedidoItemService
-      .atualizar(value.pedidoItemId, value.quantidade, value.acompanhamentos)
+      .atualizar(
+        value.pedidoItemId,
+        value.quantidade,
+        value.acompanhamentos,
+        value.observacao,
+      )
       .pipe(
         catchError((error: any) => {
           console.error(error);
@@ -122,6 +128,7 @@ export class PedidoStore extends BaseStore {
 
           pedido.quantidade = response.quantidade;
           pedido.acompanhamentos = response.acompanhamentos;
+          pedido.observacao = response.observacao;
 
           this.calcularQuantidade();
         },
@@ -133,6 +140,7 @@ export class PedidoStore extends BaseStore {
     grupoId: string;
     quantidade: any;
     acompanhamentos: string[];
+    observacao?: string;
   }) {
     this.pedidoItemService
       .inlcluir(
@@ -141,6 +149,7 @@ export class PedidoStore extends BaseStore {
         value.pratoId,
         value.quantidade,
         value.acompanhamentos,
+        value.observacao,
       )
       .pipe(
         catchError((error: any) => {
@@ -166,7 +175,7 @@ export class PedidoStore extends BaseStore {
       return p + c.quantidade!;
     }, 0);
     this.quantidadeItens.set(quantidade);
-    this.quantidadeRegistros.set(this._dataSource.value.length)
+    this.quantidadeRegistros.set(this._dataSource.value.length);
   }
 
   obterPedidoItem(pratoId: string) {
