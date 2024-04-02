@@ -118,6 +118,7 @@
 
 <ng-template #tplFooter>
   <div class="fx-row wf gap-5">
+    <ng-container *ngTemplateOutlet="extraTemplate"></ng-container>
     <button
       nz-button
       class="fx-flex"
