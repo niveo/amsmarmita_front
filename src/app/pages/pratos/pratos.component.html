@@ -26,7 +26,7 @@
             <div class="comp-inner-grid">
               @for (item of grupo.pratos; track item._id) {
                 <ng-template #tplPedidoAcao>
-                  @if (!pratoStore.pedidoPratoVincularMap[item!._id!]) {
+                  @if (!pratoStore.pedidoItemVinculado[item!._id!]) {
                     <span
                       nz-icon
                       nzType="check"
@@ -36,7 +36,7 @@
                   }
                 </ng-template>
 
-                @if (!pratoStore.pedidoPratoVincularMap[item!._id!]) {
+                @if (!pratoStore.pedidoItemVinculado[item!._id!]) {
                   <nz-card
                     [nzTitle]="item.nome"
                     style="width: 100%; margin-bottom: 5px"

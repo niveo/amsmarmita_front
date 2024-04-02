@@ -20,7 +20,7 @@ import {
   MSG_ATUALIZADO_SUCESSO,
   MSG_EXCLUIR_SUCESSO,
 } from '../common/constantes';
-import { PedidoPrato } from '../model/pedido-prato';
+import { PedidoItem } from '../model/pedido-item';
 
 @Injectable({
   providedIn: 'root',
@@ -31,22 +31,21 @@ export class PratoStore extends BaseStore {
   private readonly grupoService = inject(GrupoService);
   private readonly service = inject(PratoService);
 
-  pedidoPratoVincularMap: any = {};
+  pedidoItemVinculado: any = {};
 
   constructor() {
     super();
     this.iniciarLoading();
-    this.grupoService.data$
-      .subscribe({
-        next: (response) => {
-          if (response) {
-            this._dataSource.next(response);
-          } else {
-            this._dataSource.next([]);
-          }
-          this.finalizarLoading();
-        },
-      });
+    this.grupoService.data$.subscribe({
+      next: (response) => {
+        if (response) {
+          this._dataSource.next(response);
+        } else {
+          this._dataSource.next([]);
+        }
+        this.finalizarLoading();
+      },
+    });
   }
 
   remover(item: Prato) {
@@ -163,17 +162,15 @@ export class PratoStore extends BaseStore {
     this._dataSource.next([]);
   }
 
-  vincularPedidoPrato(pedidoPratos: PedidoPrato[]) {
-    this.pedidoPratoVincularMap = {};
+  vincularPedidoItem(PedidoItens: PedidoItem[]) {
+    this.pedidoItemVinculado = {};
 
-    pedidoPratos?.forEach((e: PedidoPrato) => {
-      this.pedidoPratoVincularMap[e.prato?._id!] = e.quantidade;
+    PedidoItens?.forEach((e: PedidoItem) => {
+      this.pedidoItemVinculado[e.prato?._id!] = true;
     });
   }
 
- 
-  incluirPratoPedido(value: {
-    pedidoPratoId: string;
+  incluirPedidoItem(value: {
     pratoId: string;
     grupoId: string;
     quantidade: number;
@@ -187,6 +184,6 @@ export class PratoStore extends BaseStore {
 
     const prato = this._dataSource.value[grupoIndex].pratos![pratoIndex];
 
-    this.pedidoPratoVincularMap[prato._id!] = value.quantidade;
+    this.pedidoItemVinculado[prato._id!] = true;
   }
 }

@@ -32,7 +32,7 @@
               <div
                 class="fx-row"
                 style="align-items: center; justify-content: center"
-                (click)="editarPratoPedido(item.prato!._id!)"
+                (click)="editarPedidoItem(item.prato!._id!)"
               >
                 <span nz-icon nzType="shop" nzTheme="outline"></span> ({{
                   item.quantidade
@@ -63,7 +63,7 @@
         <span nz-icon nzType="shop" nzTheme="outline"></span>Pratos
       </ng-template>
       <div class="comp-content">
-        <div class="comp-inner comp-inner-grid">
+        <div class="comp-inner">
           <app-pratos-component
             tipoSelecao
             (eventIncluirPratoPedido)="incluirPratoPedido($event)"
