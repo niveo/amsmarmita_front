@@ -51,10 +51,13 @@ export class GrupoComponent {
 
   validateForm = this.fb.group({
     _id: [''],
-    nome: ['', [Validators.required, ...getFormValidacoes(50)]],
+    nome: [
+      '',
+      [Validators.required, Validators.minLength(5), Validators.maxLength(25)],
+    ],
     principal: [false, Validators.required],
     multiplo: [false, Validators.required],
-    observacao: [''],
+    observacao: ['', Validators.maxLength(100)],
     cor: [''],
   });
 
