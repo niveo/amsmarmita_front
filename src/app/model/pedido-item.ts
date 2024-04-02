@@ -1,6 +1,6 @@
 import { Prato } from "./prato"
 
-export class PedidoPrato {
+export class PedidoItem {
     pedido?: string
     prato?: Prato
     quantidade?: number

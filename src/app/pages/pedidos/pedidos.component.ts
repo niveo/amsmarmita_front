@@ -2,10 +2,10 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, Observable, Subject } from 'rxjs';
 import { PedidoStore } from '../../stores/pedido.store';
-import { PedidoPrato } from '../../model/pedido-prato';
 import { LBL_ALERTA } from '../../common/constantes';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Prato } from '../../model';
+import { PedidoItem } from '../../model/pedido-item';
 
 @Component({
   selector: 'app-pedidos-component',
@@ -16,7 +16,7 @@ export class PedidosComponent implements OnInit, OnDestroy {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly pedidoStore = inject(PedidoStore);
   protected readonly notify = inject(NzNotificationService);
-  data$!: Observable<PedidoPrato[]>;
+  data$!: Observable<PedidoItem[]>;
   loading = false;
   quantidade$!: Observable<number>;
 
@@ -56,7 +56,7 @@ export class PedidosComponent implements OnInit, OnDestroy {
   }
 
   removerPratoPedido(pratoId: string) {
-    this.pedidoStore.removerPratoPedido(pratoId);
+    this.pedidoStore.removerPedidoItem(pratoId);
   }
 
   incluirPratoPedido(value: {
@@ -73,27 +73,27 @@ export class PedidosComponent implements OnInit, OnDestroy {
     });
   }
 
-  editarPratoPedido(pratoId: string) {
-    const pedidoPrato = this.pedidoStore.obterPedidoPrato(pratoId);
+  editarPedidoItem(pratoId: string) {
+    const pedidoItem = this.pedidoStore.obterPedidoItem(pratoId);
     this.atualizarIncluirPrato({
-      pedidoPratoId: pedidoPrato!._id!,
-      nome: pedidoPrato!.prato!.nome!,
-      pratoId: pedidoPrato!.prato!._id!,
-      grupoId: pedidoPrato!.prato!.grupo!._id,
-      quantidade: pedidoPrato!.quantidade!,
-      acompanhamentos: pedidoPrato!.acompanhamentos!,
+      pedidoItemId: pedidoItem!._id!,
+      nome: pedidoItem!.prato!.nome!,
+      pratoId: pedidoItem!.prato!._id!,
+      grupoId: pedidoItem!.prato!.grupo!._id,
+      quantidade: pedidoItem!.quantidade!,
+      acompanhamentos: pedidoItem!.acompanhamentos!,
     });
   }
 
   private atualizarIncluirPrato({
-    pedidoPratoId,
+    pedidoItemId,
     nome,
     pratoId,
     grupoId,
     quantidade,
     acompanhamentos,
   }: {
-    pedidoPratoId?: string;
+    pedidoItemId?: string;
     nome: string;
     pratoId: string;
     grupoId: string;
@@ -103,16 +103,16 @@ export class PedidosComponent implements OnInit, OnDestroy {
     this.carregarModalQuantidade(nome, quantidade, acompanhamentos);
     const sub = this.subjectAlteracaoPedido.subscribe(
       ({ quantidade, acompanhamentos }) => {
-        if (pedidoPratoId) {
-          this.pedidoStore.atualizarPratoPedido({
-            pedidoPratoId,
+        if (pedidoItemId) {
+          this.pedidoStore.atualizarPedidoItem({
+            pedidoItemId,
             pratoId,
             grupoId,
             quantidade,
             acompanhamentos,
           });
         } else {
-          this.pedidoStore.incluirPratoPedido({
+          this.pedidoStore.incluirPedidoItem({
             pratoId: pratoId,
             grupoId: grupoId,
             quantidade: quantidade,
