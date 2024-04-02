@@ -65,7 +65,7 @@ export class PratoComponent {
 
   constructor() {
     this.data$ = this.pratoStore.data$.pipe(
-      map((m) => (!this.tipoSelecao ? m : m.filter((f) => f.principal))),
+      map((m) => (!this.tipoSelecao() ? m : m.filter((f) => f.principal))),
     );
   }
 
@@ -150,7 +150,7 @@ export class PratoComponent {
   }
 
   incluirPratoPedido(prato: Prato) {
-    if (!this.tipoSelecao) return;
+    if (!this.tipoSelecao()) return;
     this.eventIncluirPratoPedido.emit({
       nome: prato.nome!,
       grupoId: prato.grupo!._id,

@@ -42,7 +42,7 @@
                     @if (
                       item.composicoes &&
                       item.composicoes.length > 0 &&
-                      !tipoSelecao
+                      !tipoSelecao()
                     ) {
                       <div style="padding: 10px">
                         @for (composicao of item.composicoes; track $index) {

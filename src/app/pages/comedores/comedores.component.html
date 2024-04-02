@@ -2,50 +2,91 @@
   <div class="comp-content">
     <div class="comp-inner">
       <nz-skeleton [nzActive]="true" [nzLoading]="loading"></nz-skeleton>
-      @if(data$ | async; as data){
-      <ul nz-list [nzDataSource]="data" nzBordered nzSize="large">
-        @if(!tipoSelecao){
-        <nz-list-header>
-          <nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixButton">
-            <input type="text" nz-input placeholder="Informe aqui um nome" [(ngModel)]="comedoreNome"
-              (keydown.enter)="salvar()" [maxLength]="25" [max]="25" />
-          </nz-input-group>
-          <ng-template #suffixButton>
-            <button nz-button nzType="dashed" nz-tooltip nzTooltipTitle="Salvar" nzSize="large" (click)="salvar()"
-              [nzLoading]="loadingBtn">
-              <span nz-icon nzType="save" nzTheme="outline"></span>
-            </button>
-          </ng-template>
-        </nz-list-header>
-        }
-        <li nz-list-item *ngFor="let item of data" nzNoFlex (click)="selecionarComedor(item)">
-          <ul nz-list-item-actions>
-            @if(!tipoSelecao){
-            <nz-list-item-action>
-              <button nz-button nzSize="small" nzType="dashed" nz-tooltip nzTooltipTitle="Editar"
-                (click)="editar(item)">
-                <span nz-icon nzType="edit" nzTheme="outline"></span>
-              </button>
-            </nz-list-item-action>
-            <nz-list-item-action>
-              <button nzDanger nz-button nzSize="small" nzType="dashed" nz-tooltip nzTooltipTitle="Remover"
-                nz-popconfirm nzPopconfirmTitle="Deseja remover esse registro?" nzPopconfirmPlacement="bottom"
-                (nzOnConfirm)="remover(item)">
-                <span nz-icon nzType="delete" nzTheme="outline"></span>
-              </button>
-            </nz-list-item-action>
-
-            } @else {
-            <nz-list-item-action>
-              <button nz-button nzType="dashed" (click)="selecionarComedor(item)">
-                <span nz-icon nzType="select" nzTheme="outline"></span>
-              </button>
-            </nz-list-item-action>
-            }
-          </ul>
-          {{ item.nome }}
-        </li>
-      </ul>
+      @if (data$ | async; as data) {
+        <ul nz-list [nzDataSource]="data" nzBordered nzSize="large">
+          @if (!tipoSelecao()) {
+            <nz-list-header>
+              <nz-input-group
+                nzSearch
+                nzSize="large"
+                [nzAddOnAfter]="suffixButton"
+              >
+                <input
+                  type="text"
+                  nz-input
+                  placeholder="Informe aqui um nome"
+                  [(ngModel)]="comedoreNome"
+                  (keydown.enter)="salvar()"
+                  [maxLength]="25"
+                  [max]="25"
+                />
+              </nz-input-group>
+              <ng-template #suffixButton>
+                <button
+                  nz-button
+                  nzType="dashed"
+                  nz-tooltip
+                  nzTooltipTitle="Salvar"
+                  nzSize="large"
+                  (click)="salvar()"
+                  [nzLoading]="loadingBtn"
+                >
+                  <span nz-icon nzType="save" nzTheme="outline"></span>
+                </button>
+              </ng-template>
+            </nz-list-header>
+          }
+          <li
+            nz-list-item
+            *ngFor="let item of data"
+            nzNoFlex
+            (click)="selecionarComedor(item)"
+          >
+            <ul nz-list-item-actions>
+              @if (!tipoSelecao()) {
+                <nz-list-item-action>
+                  <button
+                    nz-button
+                    nzSize="small"
+                    nzType="dashed"
+                    nz-tooltip
+                    nzTooltipTitle="Editar"
+                    (click)="editar(item)"
+                  >
+                    <span nz-icon nzType="edit" nzTheme="outline"></span>
+                  </button>
+                </nz-list-item-action>
+                <nz-list-item-action>
+                  <button
+                    nzDanger
+                    nz-button
+                    nzSize="small"
+                    nzType="dashed"
+                    nz-tooltip
+                    nzTooltipTitle="Remover"
+                    nz-popconfirm
+                    nzPopconfirmTitle="Deseja remover esse registro?"
+                    nzPopconfirmPlacement="bottom"
+                    (nzOnConfirm)="remover(item)"
+                  >
+                    <span nz-icon nzType="delete" nzTheme="outline"></span>
+                  </button>
+                </nz-list-item-action>
+              } @else {
+                <nz-list-item-action>
+                  <button
+                    nz-button
+                    nzType="dashed"
+                    (click)="selecionarComedor(item)"
+                  >
+                    <span nz-icon nzType="select" nzTheme="outline"></span>
+                  </button>
+                </nz-list-item-action>
+              }
+            </ul>
+            {{ item.nome }}
+          </li>
+        </ul>
       }
     </div>
   </div>
