@@ -32,6 +32,7 @@ import { VersaoSistemaDirective } from './directives/versao-sistema.directive';
 import { SelecaoNumerosComponent } from './componentes/selecao-numeros.component';
 import { PedidosComponent } from './pages/pedidos/pedidos.component';
 import { PedidosAcompanhamentoComponent } from './pages/pedidos/acompanhamento/pedidos-companhamento.component';
+import { CorBoardaDirective } from './directives/cor-borda.directive';
 
 registerLocaleData(pt);
 
@@ -63,6 +64,7 @@ registerLocaleData(pt);
     NzModule,
     VersaoSistemaDirective,
     SelecaoNumerosComponent,
+    CorBoardaDirective
   ],
   providers: [
     { provide: TOKEN_APP_CONFIG, useValue: environment },

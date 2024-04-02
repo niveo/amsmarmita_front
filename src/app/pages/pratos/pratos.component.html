@@ -22,6 +22,7 @@
             [nzHeader]="tplTitulo"
             [nzShowArrow]="false"
             style="border-bottom: 1px solid #eeeeee"
+            [corBoarda]="grupo.cor"
           >
             <div class="comp-inner-grid" style="gap: 5px">
               @for (item of grupo.pratos; track item._id) {
@@ -108,7 +109,11 @@
           <ng-template #tplTitulo>
             <div class="fx-row wf" style="margin-right: 10px">
               <div class="fx-flex fx-row">
-                <app-grupo-principal-component [principal]="grupo.principal" />
+                @if (!tipoSelecao()) {
+                  <app-grupo-principal-component
+                    [principal]="grupo.principal"
+                  />
+                }
                 <div class="fx-column">
                   <span style="font-weight: bold">{{ grupo.nome }}</span>
                   @if (grupo.observacao) {

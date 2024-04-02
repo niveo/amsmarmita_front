@@ -16,7 +16,10 @@
     <div class="comp-inner">
       @if (data$ | async; as data) {
         <nz-list nzItemLayout="horizontal" nzBordered nzSize="large">
-          <nz-list-item *ngFor="let item of data">
+          <nz-list-item
+            *ngFor="let item of data"
+            [corBoarda]="item.cor"
+          >
             <nz-list-item-meta>
               <nz-list-item-meta-title>
                 <app-grupo-principal-component [principal]="item.principal" />
@@ -72,6 +75,8 @@
   (nzOnCancel)="isVisible = false"
   (nzOnOk)="salvar()"
   nzOkText="Salvar"
+  [nzKeyboard]="false"
+  [nzMask]="false"
 >
   <ng-container *nzModalContent>
     <form nz-form [formGroup]="validateForm" nzLayout="vertical">
@@ -95,19 +100,37 @@
         </nz-form-control>
       </nz-form-item>
 
-      <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24">Principal</nz-form-label>
-        <nz-form-control [nzSm]="16" [nzXs]="24">
-          <nz-switch formControlName="principal"></nz-switch>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24">Seleção (Simples)</nz-form-label>
-        <nz-form-control [nzSm]="16" [nzXs]="24">
-          <nz-switch formControlName="multiplo"></nz-switch>
-        </nz-form-control>
-      </nz-form-item>
+      <div nz-row>
+        <div nz-col [nzFlex]="1">
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24">Principal</nz-form-label>
+            <nz-form-control [nzSm]="16" [nzXs]="24">
+              <nz-switch formControlName="principal"></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzFlex]="2">
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24"
+              >Seleção (Simples)</nz-form-label
+            >
+            <nz-form-control [nzSm]="16" [nzXs]="24">
+              <nz-switch formControlName="multiplo"></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzFlex]="1">
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24">Cor</nz-form-label>
+            <nz-form-control [nzSm]="16" [nzXs]="24">
+              <nz-color-picker
+                formControlName="cor"
+                nzAllowClear
+              ></nz-color-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
 
       <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24">Observação</nz-form-label>

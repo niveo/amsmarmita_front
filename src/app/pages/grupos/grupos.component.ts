@@ -49,18 +49,13 @@ export class GrupoComponent {
   loading = true;
   loadingBtn = false;
 
-  validateForm: FormGroup<{
-    _id: FormControl<string>;
-    nome: FormControl<string>;
-    principal: FormControl<boolean>;
-    multiplo: FormControl<boolean>;
-    observacao: FormControl<string>;
-  }> = this.fb.group({
+  validateForm = this.fb.group({
     _id: [''],
     nome: ['', [Validators.required, ...getFormValidacoes(50)]],
     principal: [false, Validators.required],
     multiplo: [false, Validators.required],
     observacao: [''],
+    cor: [''],
   });
 
   isVisible = false;
@@ -78,6 +73,7 @@ export class GrupoComponent {
       principal: item.principal,
       multiplo: item.multiplo || false,
       observacao: item.observacao || '',
+      cor: item.cor || '',
     });
     this.isVisible = true;
   }
@@ -122,6 +118,7 @@ export class GrupoComponent {
               principal: data.principal!,
               multiplo: data.multiplo!,
               observacao: data.observacao,
+              cor: data.cor,
             }),
             this.service.atualizar({
               id: value!,
@@ -129,6 +126,7 @@ export class GrupoComponent {
               principal: data.principal!,
               multiplo: data.multiplo!,
               observacao: data.observacao,
+              cor: data.cor,
             }),
           ),
         ),
@@ -146,14 +144,15 @@ export class GrupoComponent {
             principal: false,
             multiplo: false,
             observacao: '',
+            cor: '',
           });
 
           this.isVisible = false;
         }),
       )
       .subscribe({
-        next: (value) => {
-          console.log(value);
+        next: () => {
+          this.service.updateData();
           this.notify.success(LBL_ATUALIZACAO, MSG_ATUALIZADO_SUCESSO);
         },
       });

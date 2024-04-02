@@ -7,6 +7,7 @@ export class Grupo {
   multiplo = false;
   observacao?: string;
   pratos?: Prato[];
+  cor?: string;
 
   pratoSelecionado?: string;
 }
