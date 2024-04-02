@@ -84,6 +84,8 @@ export class PedidoStore extends BaseStore {
             (f: any) => f._id === pedidoItem!._id!,
           );
 
+          this.pratoStore.removerPedidoItemPratoId(pedidoItem?.prato?._id!);
+
           this._dataSource.value.splice(pedidoIndex, 1);
 
           this.calcularQuantidade();
@@ -120,6 +122,8 @@ export class PedidoStore extends BaseStore {
       .pipe(finalize(() => this.finalizarLoading()))
       .subscribe({
         next: (response) => {
+          console.log(response);
+
           const pedidoIndex = this._dataSource.value.findIndex(
             (f: any) => f._id === value.pedidoItemId,
           );
@@ -161,6 +165,8 @@ export class PedidoStore extends BaseStore {
       .pipe(finalize(() => this.finalizarLoading()))
       .subscribe({
         next: (response) => {
+          console.log(response);
+
           this._dataSource.value.push(response);
 
           this.calcularQuantidade();

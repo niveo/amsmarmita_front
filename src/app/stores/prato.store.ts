@@ -173,4 +173,8 @@ export class PratoStore extends BaseStore {
   vincularPedidoItemPratoId(pratoId: string) {
     this.pedidoItemVinculado[pratoId] = true;
   }
+
+  removerPedidoItemPratoId(pratoId: string) {
+    delete this.pedidoItemVinculado[pratoId];
+  }
 }
