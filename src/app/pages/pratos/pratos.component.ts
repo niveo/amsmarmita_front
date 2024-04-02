@@ -55,10 +55,13 @@ export class PratoComponent {
     observacao: FormControl<string>;
   }> = this.fb.group({
     _id: [''],
-    nome: ['', [Validators.required, ...getFormValidacoes(50)]],
+    nome: [
+      '',
+      [Validators.required, Validators.minLength(5), Validators.maxLength(50)],
+    ],
     grupo: ['', [Validators.required]],
     composicoes: [['']],
-    observacao: ['', getFormValidacoes(100)],
+    observacao: ['', Validators.maxLength(100)],
   });
 
   loading: Signal<boolean> = computed(() => this.pratoStore.loading());

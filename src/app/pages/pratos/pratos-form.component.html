@@ -13,7 +13,6 @@
           formControlName="nome"
           placeholder="Informe aqui o nome do prato"
           [maxLength]="50"
-          [max]="50"
         />
       </nz-input-group>
     </nz-form-control>
@@ -29,11 +28,11 @@
         formControlName="grupo"
         placeholder="Informe aqui o grupo do prato"
       >
-        @for(g of grupos; track g._id){
-        <nz-option nzCustomContent [nzValue]="g._id" [nzLabel]="g.nome!">
-          <app-grupo-principal-component [principal]="g.principal" />
-          {{ g.nome }}
-        </nz-option>
+        @for (g of grupos; track g._id) {
+          <nz-option nzCustomContent [nzValue]="g._id" [nzLabel]="g.nome!">
+            <app-grupo-principal-component [principal]="g.principal" />
+            {{ g.nome }}
+          </nz-option>
         }
       </nz-select>
     </nz-form-control>
@@ -42,13 +41,15 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24">Observação</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24">
-      <textarea
-        type="text"
-        nz-input
-        formControlName="observacao"
-        placeholder="Informe aqui uma observação"
-        [maxLength]="100"
-      ></textarea>
+      <nz-textarea-count [nzMaxCharacterCount]="100">
+        <textarea
+          type="text"
+          nz-input
+          formControlName="observacao"
+          placeholder="Informe aqui uma observação"
+          [maxLength]="100"
+        ></textarea>
+      </nz-textarea-count>
     </nz-form-control>
   </nz-form-item>
 
