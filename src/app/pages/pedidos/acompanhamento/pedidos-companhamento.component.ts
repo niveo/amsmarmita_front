@@ -6,8 +6,8 @@ import {
   OnInit,
 } from '@angular/core';
 import { map } from 'rxjs';
-import { Grupo } from 'src/app/model';
-import { GrupoService } from 'src/app/services/grupo.service';
+import { GrupoService } from '../../../services/grupo.service';
+import { Grupo } from '../../../model';
 
 @Component({
   selector: 'app-pedidos-acompanhamento-component',
