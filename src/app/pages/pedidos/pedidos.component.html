@@ -24,6 +24,7 @@
                 [nzTitle]="tplTitle"
                 [nzExtra]="extraTemplate"
                 nzHoverable
+                [corBoarda]="item.prato?.grupo?.cor"
               >
                 <div (click)="editarPedidoItem(item.prato!._id!)">
                   <div nz-row [nzGutter]="8">

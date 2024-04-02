@@ -12,29 +12,26 @@ export class GrupoService {
   private readonly service = inject(PratoService);
   private _resourceData$ = new BehaviorSubject<void>(undefined);
 
-  tapRemoverCache = tap(() => {
-  });
+  tapRemoverCache = tap(() => {});
 
-   private apiRequest$ = this.http
-    .get<Grupo[]>('/grupos')
-    .pipe(
-      mergeMap((mp) => {
-        return this.service.getAll().pipe(
-          map((m) => {
-            return mp.map((n) => {
-              return {
-                ...n,
-                pratos: m.filter((f) => f.grupo?._id === n._id),
-              };
-            });
-          }),
-        );
-      }),
-    )
+  private apiRequest$ = this.http.get<Grupo[]>('/grupos').pipe(
+    mergeMap((mp) => {
+      return this.service.getAll().pipe(
+        map((m) => {
+          return mp.map((n) => {
+            return {
+              ...n,
+              pratos: m.filter((f) => f.grupo?._id === n._id),
+            };
+          });
+        }),
+      );
+    }),
+  );
 
   public data$ = this._resourceData$.pipe(
     mergeMap(() => this.apiRequest$),
-    shareReplay(1)
+    shareReplay(1),
   );
 
   updateData() {
@@ -51,19 +48,22 @@ export class GrupoService {
     principal,
     multiplo,
     observacao,
+    cor,
   }: {
     id: string;
     nome: string;
     principal: boolean;
     multiplo: boolean;
     observacao?: string;
+    cor?: string;
   }) {
     return this.http
       .put<any>('/grupos/' + id, {
         nome: nome,
         principal: principal,
         multiplo: multiplo,
-        observacao: observacao,
+        observacao: observacao  || null,
+        cor: cor  || null,
       })
       .pipe(this.tapRemoverCache);
   }
@@ -73,18 +73,21 @@ export class GrupoService {
     principal,
     multiplo,
     observacao,
+    cor,
   }: {
     nome: string;
     principal: boolean;
     multiplo: boolean;
     observacao?: string;
+    cor?: string;
   }) {
     return this.http
       .post<any>('/grupos', {
         nome: nome,
         principal: principal,
         multiplo: multiplo,
-        observacao: observacao,
+        observacao: observacao || null,
+        cor: cor || null,
       })
       .pipe(this.tapRemoverCache);
   }
