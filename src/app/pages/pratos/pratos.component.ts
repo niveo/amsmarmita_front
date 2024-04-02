@@ -148,6 +148,7 @@ export class PratoComponent {
   }
 
   incluirPratoPedido(prato: Prato) {
+    if(!this.tipoSelecao) return;
     this.eventIncluirPratoPedido.emit({
       nome: prato.nome!,
       grupoId: prato.grupo!._id,
