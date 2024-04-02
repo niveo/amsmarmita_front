@@ -1,10 +1,4 @@
-import {
-  Component,
-  DestroyRef, 
-  inject,
-  input,
-  output,
-} from '@angular/core';
+import { Component, DestroyRef, inject, input, output } from '@angular/core';
 import {
   EMPTY,
   Observable,
@@ -23,6 +17,12 @@ import {
   MSG_ATUALIZADO_SUCESSO,
 } from '../../common/constantes';
 import { isBooleanTransform } from '../../common/util';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-comedores-component',
@@ -33,16 +33,25 @@ export class ComedoresComponent {
   private readonly comedoreService = inject(ComedoresService);
   private readonly notify = inject(NzNotificationService);
   protected readonly destroyRef = inject(DestroyRef);
+  private readonly formBuilder = inject(FormBuilder);
+
   data$!: Observable<any[]>;
   loading = true;
   loadingBtn = false;
-  comedoreId?: string;
-  comedoreNome?: string;
 
   tipoSelecao = input(false, { transform: isBooleanTransform });
-
- 
   eventComedorTipoSelecao = output<string>();
+
+  form: FormGroup<{
+    _id: FormControl<string | null>;
+    nome: FormControl<string | null>;
+  }> = this.formBuilder.group({
+    _id: [''],
+    nome: [
+      '',
+      [Validators.required, Validators.minLength(5), Validators.maxLength(25)],
+    ],
+  });
 
   ngOnInit() {
     this.carregar();
@@ -63,8 +72,10 @@ export class ComedoresComponent {
   }
 
   editar(item: Comedor) {
-    this.comedoreNome = item.nome;
-    this.comedoreId = item._id;
+    this.form.setValue({
+      _id: item._id!,
+      nome: item.nome!,
+    });
   }
 
   remover(item: Comedor) {
@@ -81,8 +92,7 @@ export class ComedoresComponent {
           console.error(error);
           this.notify.error('Erro', error.message);
         },
-        next: (value) => {
-          console.log(value);
+        next: () => {
           this.notify.success('Remoção', MSG_EXCLUIR_SUCESSO);
           this.carregar();
         },
@@ -90,17 +100,19 @@ export class ComedoresComponent {
   }
 
   salvar() {
-    if (!this.comedoreNome) return;
+    if (!this.form.valid) return;
 
     this.loadingBtn = true;
 
-    of(this.comedoreId!)
+    const data = this.form.value;
+
+    of(data._id)
       .pipe(
         mergeMap((value) =>
           iif(
             () => !value,
-            this.comedoreService.inlcluir(this.comedoreNome!),
-            this.comedoreService.atualizar(value, this.comedoreNome!),
+            this.comedoreService.inlcluir(data.nome!),
+            this.comedoreService.atualizar(value!, data.nome!),
           ),
         ),
         catchError((error: any) => {
@@ -110,13 +122,14 @@ export class ComedoresComponent {
         }),
         finalize(() => {
           this.loadingBtn = false;
-          this.comedoreNome = undefined;
-          this.comedoreId = undefined;
+          this.form.setValue({
+            _id: null,
+            nome: '',
+          });
         }),
       )
       .subscribe({
-        next: (value) => {
-          console.log(value);
+        next: () => {
           this.notify.success('Atualização', MSG_ATUALIZADO_SUCESSO);
           this.carregar();
         },
