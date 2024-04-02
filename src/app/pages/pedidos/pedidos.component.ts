@@ -4,9 +4,7 @@ import {
   inject,
   OnDestroy,
   OnInit,
-  signal,
   Signal,
-  WritableSignal,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, Observable, Subject } from 'rxjs';
@@ -38,6 +36,11 @@ export class PedidosComponent implements OnInit, OnDestroy {
     quantidade: number;
     acompanhamentos: string[];
   }>();
+
+  nzSelectedIndex = computed(() => {
+    if (this.quantidadeRegistros() === 0) return 1;
+    else return 0;
+  });
 
   quantidadeItens: Signal<number> = computed(() =>
     this.pedidoStore.quantidadeItens(),

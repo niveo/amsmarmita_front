@@ -3,9 +3,9 @@
     <div class="comp-inner">
       <nz-skeleton [nzActive]="true" [nzLoading]="loading"></nz-skeleton>
       @if (data$ | async; as data) {
-        <ul nz-list [nzDataSource]="data" nzBordered nzSize="large">
+        <ul nz-list [nzDataSource]="data"   nzSize="large">
           @if (!tipoSelecao()) {
-            <nz-list-header>
+            <nz-list-header style="padding: 10px;">
               <nz-input-group
                 nzSearch
                 nzSize="large"
@@ -72,17 +72,7 @@
                     <span nz-icon nzType="delete" nzTheme="outline"></span>
                   </button>
                 </nz-list-item-action>
-              } @else {
-                <nz-list-item-action>
-                  <button
-                    nz-button
-                    nzType="dashed"
-                    (click)="selecionarComedor(item)"
-                  >
-                    <span nz-icon nzType="select" nzTheme="outline"></span>
-                  </button>
-                </nz-list-item-action>
-              }
+              } 
             </ul>
             {{ item.nome }}
           </li>
