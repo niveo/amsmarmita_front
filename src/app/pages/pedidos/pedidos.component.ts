@@ -1,4 +1,11 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  OnDestroy,
+  OnInit,
+  Signal,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, Observable, Subject } from 'rxjs';
 import { PedidoStore } from '../../stores/pedido.store';
@@ -18,7 +25,6 @@ export class PedidosComponent implements OnInit, OnDestroy {
   protected readonly notify = inject(NzNotificationService);
   data$!: Observable<PedidoItem[]>;
   loading = false;
-  quantidade$!: Observable<number>;
 
   visibleAlteracaoPedido = false;
   tituloAlteracaoPedido = '';
@@ -32,12 +38,19 @@ export class PedidosComponent implements OnInit, OnDestroy {
     acompanhamentos: string[];
   }>();
 
+  quantidadeItens: Signal<number> = computed(() =>
+    this.pedidoStore.quantidadeItens(),
+  );
+
+  quantidadeRegistros: Signal<number> = computed(() =>
+    this.pedidoStore.quantidadeRegistros(),
+  );
+
   constructor() {
     for (let i = 1; i <= 20; i++) {
       this.listaQuantidadePedido.push(i);
     }
     this.data$ = this.pedidoStore.data$;
-    this.quantidade$ = this.pedidoStore.quantidade$;
     this.pedidoStore.loading$.subscribe((loading) => (this.loading = loading));
   }
 
