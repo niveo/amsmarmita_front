@@ -14,11 +14,13 @@ import {
   MSG_EXCLUIR_SUCESSO,
   MSG_ATUALIZADO_SUCESSO,
   FORMATO_DATA,
+  LBL_ALERTA,
 } from '../../common/constantes';
 import { MarmitaService } from '../../services/marmita.service';
 import { Marmita } from '../../model/marmita';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { MarmitasComedoresComponent } from './marmitas-comedores.component';
+import { isAfter, format, parseJSON } from 'date-fns';
 
 @Component({
   selector: 'app-marmitas-component',
@@ -131,7 +133,15 @@ export class MarmitasComponent {
       });
   }
 
-  visualizarComedores(marmita: Marmita) {
+  visualizarComedores(marmita: Marmita) { 
+
+    if (isAfter(new Date(), parseJSON(marmita.lancamento!))) {
+      this.notify.warning(
+        LBL_ALERTA,
+        `Essa marmita fechou dia ${format(parseJSON(marmita.lancamento!), 'dd/MM/yyyy')}!`,
+      );
+      return;
+    }
     this.nzModalService.create({
       nzClosable: false,
       nzContent: MarmitasComedoresComponent,
