@@ -14,45 +14,60 @@
       <div class="comp-content">
         <div class="comp-inner comp-inner-grid">
           @for (item of data$ | async; track item._id) {
-            <ng-template #tplPedidoAcao>
-              <span
-                nz-icon
-                nzType="delete"
-                nzTheme="outline"
-                [nzTheme]="'twotone'"
-                [nzTwotoneColor]="'#F44336'"
-                nz-popconfirm
-                nzPopconfirmTitle="Deseja remover esse registro?"
-                nzPopconfirmPlacement="bottom"
-                (nzOnConfirm)="removerPratoPedido(item.prato!._id!)"
-              ></span>
-            </ng-template>
-
-            <ng-template #tplPedidoQuantidade>
-              <div
-                class="fx-row"
-                style="align-items: center; justify-content: center"
-                (click)="editarPedidoItem(item.prato!._id!)"
-              >
-                <span nz-icon nzType="shop" nzTheme="outline"></span> ({{
-                  item.quantidade
-                }})
-              </div>
-            </ng-template>
-
             <div style="padding: 5px">
-              <nz-card [nzActions]="[tplPedidoQuantidade, tplPedidoAcao]">
-                <h3>{{ item.prato!.nome }}</h3>
-                @for (
-                  acompanhamento of item.acompanhamentos;
-                  track acompanhamento._id
-                ) {
-                  <h5>
-                    {{ acompanhamento.grupo!.nome }}: {{ acompanhamento.nome }}
-                  </h5>
-                }
+              <ng-template #tplTitle>
+                <div (click)="editarPedidoItem(item.prato!._id!)">
+                  {{ item.prato!.nome }}
+                </div>
+              </ng-template>
+              <nz-card
+                [nzTitle]="tplTitle"
+                [nzExtra]="extraTemplate"
+                nzHoverable
+              >
+                <div (click)="editarPedidoItem(item.prato!._id!)">
+                  <div nz-row [nzGutter]="8">
+                    <div nz-col nzFlex="3"></div>
+                    <div nz-col nzFlex="2" class="lbl-title-quantidade">
+                      Quantidade
+                    </div>
+                  </div>
+
+                  <div nz-row [nzGutter]="8">
+                    <div nz-col nzFlex="3">
+                      @for (
+                        acompanhamento of item.acompanhamentos;
+                        track acompanhamento._id
+                      ) {
+                        <h5>
+                          {{ acompanhamento.grupo!.nome }}:
+                          {{ acompanhamento.nome }}
+                        </h5>
+                      }
+                    </div>
+
+                    <div nz-col nzFlex="2" style="text-align: center">
+                      <h2>{{ item.quantidade }}</h2>
+                    </div>
+                  </div>
+                </div>
               </nz-card>
             </div>
+            <ng-template #extraTemplate>
+              <button nz-button nzType="default" nzShape="circle" nzGhost>
+                <span
+                  nz-icon
+                  nzType="delete"
+                  nzTheme="outline"
+                  [nzTheme]="'twotone'"
+                  [nzTwotoneColor]="'#F44336'"
+                  nz-popconfirm
+                  nzPopconfirmTitle="Deseja remover esse registro?"
+                  nzPopconfirmPlacement="bottom"
+                  (nzOnConfirm)="removerPratoPedido(item.prato!._id!)"
+                ></span>
+              </button>
+            </ng-template>
           }
         </div>
       </div>
@@ -75,7 +90,7 @@
 </div>
 
 <ng-template #extraTemplate>
-  <span class="lbl-quantidade">{{ quantidade$ | async }}</span>
+  <span class="lbl-quantidade">{{ quantidadeItens() }} / {{quantidadeRegistros()}}</span>
 </ng-template>
 
 <nz-drawer

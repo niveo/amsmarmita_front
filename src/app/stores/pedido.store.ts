@@ -1,5 +1,5 @@
 import { LBL_ERRO } from './../common/constantes';
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { PedidoService } from '../services/pedido.service';
 import { BehaviorSubject, EMPTY, catchError, finalize } from 'rxjs';
 import { PratoStore } from './prato.store';
@@ -18,11 +18,11 @@ export class PedidoStore extends BaseStore {
   private readonly pedidoItemService = inject(PedidoItemService);
   private readonly pratoStore = inject(PratoStore);
 
-  private readonly _quantidade = new BehaviorSubject<number>(0);
-  readonly quantidade$ = this._quantidade.asObservable();
-
   private comedorId!: string;
   private marmitaId!: string;
+
+  readonly quantidadeItens = signal(0);
+  readonly quantidadeRegistros = signal(0);
 
   constructor() {
     super();
@@ -32,6 +32,7 @@ export class PedidoStore extends BaseStore {
   carregarRegistros(marmitaId: string, comedorId: string) {
     this.marmitaId = marmitaId;
     this.comedorId = comedorId;
+    this.quantidadeRegistros.set(0);
     this.iniciarLoading();
     const subs = this.pratoStore.data$.subscribe((data) => {
       if (data === null || data === undefined || data.length === 0) return;
@@ -48,6 +49,7 @@ export class PedidoStore extends BaseStore {
         )
         .subscribe({
           next: ({ pratos }) => {
+            this.quantidadeRegistros.set(pratos.length);
             this.pratoStore.vincularPedidoItem(pratos);
             this._dataSource.next(pratos);
           },
@@ -154,7 +156,7 @@ export class PedidoStore extends BaseStore {
 
           this.calcularQuantidade();
 
-          this.pratoStore.incluirPedidoItem(value);
+          this.pratoStore.vincularPedidoItemPratoId(value.pratoId);
         },
       });
   }
@@ -163,7 +165,8 @@ export class PedidoStore extends BaseStore {
     const quantidade = this._dataSource.value.reduce((p, c) => {
       return p + c.quantidade!;
     }, 0);
-    this._quantidade.next(quantidade);
+    this.quantidadeItens.set(quantidade);
+    this.quantidadeRegistros.set(this._dataSource.value.length)
   }
 
   obterPedidoItem(pratoId: string) {

@@ -1,21 +1,29 @@
 @for (item of pratosSimples; track item._id) {
-<div class="lbl-titulo-grupo ">{{ item.nome }}</div>
-<nz-radio-group>
-  <label nz-radio-button>Nehum</label>
-  @for (prato of item.pratos; track prato._id) {
-  <label nz-radio-button [nzValue]="prato._id" [ngModel]="selecaoContem(prato._id!)"
-    (ngModelChange)="changeGeral(prato._id!)">{{ prato.nome }}</label>
-  }
-</nz-radio-group>
+  <div class="lbl-titulo-grupo">{{ item.nome }}</div>
+  <nz-radio-group>
+    <label nz-radio>Nehum</label>
+    @for (prato of item.pratos; track prato._id) {
+      <label
+        nz-radio-button
+        [nzValue]="prato._id"
+        [ngModel]="selecaoContem(prato._id!)"
+        (ngModelChange)="changeGeral(prato._id!)"
+        >{{ prato.nome }}</label
+      >
+    }
+  </nz-radio-group>
 }
 
-
 @for (item of pratosGeral; track item._id) {
-<div class="lbl-titulo-grupo">{{ item.nome }}</div>
-<div class="fx-column" style="direction: rtl;">
-  @for (prato of item.pratos; track prato._id) {
-  <label nz-checkbox [ngModel]="selecaoContem(prato._id!)"
-    (ngModelChange)="changeGeral(prato._id!)">{{prato.nome}}</label>
-  }
-</div>
+  <div class="lbl-titulo-grupo">{{ item.nome }}</div>
+  <div class="fx-column" style="direction: rtl">
+    @for (prato of item.pratos; track prato._id) {
+      <label
+        nz-checkbox
+        [ngModel]="selecaoContem(prato._id!)"
+        (ngModelChange)="changeGeral(prato._id!)"
+        >{{ prato.nome }}</label
+      >
+    }
+  </div>
 }

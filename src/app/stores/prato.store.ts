@@ -162,28 +162,15 @@ export class PratoStore extends BaseStore {
     this._dataSource.next([]);
   }
 
-  vincularPedidoItem(PedidoItens: PedidoItem[]) {
+  vincularPedidoItem(registros: PedidoItem[]) {
     this.pedidoItemVinculado = {};
 
-    PedidoItens?.forEach((e: PedidoItem) => {
+    registros?.forEach((e: PedidoItem) => {
       this.pedidoItemVinculado[e.prato?._id!] = true;
     });
   }
 
-  incluirPedidoItem(value: {
-    pratoId: string;
-    grupoId: string;
-    quantidade: number;
-  }) {
-    const grupoIndex = this._dataSource.value.findIndex(
-      (f) => f._id === value.grupoId,
-    );
-    const pratoIndex = this._dataSource.value[grupoIndex].pratos!.findIndex(
-      (f) => f._id === value.pratoId,
-    );
-
-    const prato = this._dataSource.value[grupoIndex].pratos![pratoIndex];
-
-    this.pedidoItemVinculado[prato._id!] = true;
+  vincularPedidoItemPratoId(pratoId: string) {
+    this.pedidoItemVinculado[pratoId] = true;
   }
 }
