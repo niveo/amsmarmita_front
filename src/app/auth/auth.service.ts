@@ -12,7 +12,8 @@ import { KEY_SECRET_TOKEN } from '../common/constantes';
 import { sha256 } from 'js-sha256';
 import { jwtDecode } from 'jwt-decode';
 import { TOKEN_APP_CONFIG } from '../common/tokens';
-import { isBefore, format } from 'date-fns';
+import { isBefore, differenceInSeconds } from 'date-fns';
+import { SessionTimerService } from '../services/session-timer.service';
 
 @Injectable({
   providedIn: 'root',
@@ -23,12 +24,13 @@ export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly router = inject(Router);
   private readonly cofigToken = inject(TOKEN_APP_CONFIG);
+  private readonly sessionTimerService = inject(SessionTimerService);
 
   constructor() {
     //Se não for ambiente de produção jogar logado como false
     this._usuarioLogado.next(!this.cofigToken.production);
 
-/*     setInterval(() => {
+    /*     setInterval(() => {
       console.log(isBefore(this.getExpiration(), new Date()));
       console.log(
         format(new Date(), 'mm:ss'),
@@ -40,25 +42,28 @@ export class AuthService {
 
   login(password: string) {
     const pass = sha256.update(password).hex();
-    return this.http
-      .post('/auth/login', { password: pass })
-      .pipe(shareReplay())
-      .pipe(
-        tap({
-          next: (response: any) => {
-            const decode = jwtDecode(response.access_token);
-            const dateExtp = new Date(decode.exp! * 1000);
-            localStorage.setItem(KEY_SECRET_TOKEN, response.access_token);
-            localStorage.setItem(
-              'expires_at',
-              JSON.stringify(dateExtp.valueOf()),
-            );
-            this._usuarioLogado.next(true);
+    return this.http.post('/auth/login', { password: pass }).pipe(
+      tap({
+        next: (response: any) => {
+          const decode = jwtDecode(response.access_token);
+          console.log(decode.exp!);
 
-            this.router.navigateByUrl('/');
-          },
-        }),
-      );
+          const dateExtp = new Date(decode.exp! * 1000);
+          localStorage.setItem(KEY_SECRET_TOKEN, response.access_token);
+          localStorage.setItem(
+            'expires_at',
+            JSON.stringify(dateExtp.valueOf()),
+          );
+          this._usuarioLogado.next(true);
+
+          this.sessionTimerService.startTimer(
+            differenceInSeconds(dateExtp, new Date()),
+          );
+
+          this.router.navigateByUrl('/');
+        },
+      }),
+    );
   }
 
   isAuthenticatedUser(): boolean {
@@ -75,8 +80,6 @@ export class AuthService {
   isSessaoExpirou = () => isBefore(this.getExpiration(), new Date());
 
   logout(): void {
-    console.log('logout');
-
     localStorage.removeItem(KEY_SECRET_TOKEN);
     localStorage.removeItem('expires_at');
     this._usuarioLogado.next(false);
