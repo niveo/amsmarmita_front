@@ -51,12 +51,7 @@ export class PedidosComponent implements OnInit, OnDestroy {
     acompanhamentos: string[];
     observacao?: string;
   }>();
-
-  nzSelectedIndex = computed(() => {
-    if (this.quantidadeRegistros() === 0) return 1;
-    else return 0;
-  });
-
+ 
   quantidadeItens: Signal<number> = computed(() =>
     this.pedidoStore.quantidadeItens(),
   );
