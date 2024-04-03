@@ -1,7 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import { Grupo } from '../model/grupo';
-import { BehaviorSubject, finalize, map, mergeMap, shareReplay, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  finalize,
+  map,
+  mergeMap,
+  shareReplay,
+  tap,
+} from 'rxjs';
 import { PratoService } from './prato.service';
 
 @Injectable({
@@ -13,11 +20,11 @@ export class GrupoService {
   private _resourceData$ = new BehaviorSubject<void>(undefined);
   loading = signal(true);
 
-  tapRemoverCache = tap(() => {});
+  tapRemoverCache = tap(() => this.updateData());
 
   private apiRequest$ = this.http.get<Grupo[]>('/grupos').pipe(
     mergeMap((mp) => {
-      return this.service.getAll().pipe(
+      return this.service.data$.pipe(
         map((m) => {
           return mp.map((n) => {
             return {
@@ -31,7 +38,9 @@ export class GrupoService {
   );
 
   public data$ = this._resourceData$.pipe(
-    mergeMap(() => this.apiRequest$.pipe(finalize(() => this.loading.set(false)))), 
+    mergeMap(() =>
+      this.apiRequest$.pipe(finalize(() => this.loading.set(false))),
+    ),
     shareReplay(1),
   );
 
@@ -64,8 +73,8 @@ export class GrupoService {
         nome: nome,
         principal: principal,
         multiplo: multiplo,
-        observacao: observacao  || null,
-        cor: cor  || null,
+        observacao: observacao || null,
+        cor: cor || null,
       })
       .pipe(this.tapRemoverCache);
   }
