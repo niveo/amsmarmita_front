@@ -20,9 +20,9 @@
         @for (grupo of data$ | async; track grupo._id) {
           <nz-collapse-panel
             [nzHeader]="tplTitulo"
-            [nzShowArrow]="false"
-            style="border-bottom: 1px solid #eeeeee"
+            [style]="'border-bottom: 5px solid' + grupo.cor"
             [corBoarda]="grupo.cor"
+            [nzActive]="tipoSelecao()"
           >
             <div class="comp-inner-grid" style="gap: 5px">
               @for (item of grupo.pratos; track item._id) {
