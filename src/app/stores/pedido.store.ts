@@ -44,17 +44,18 @@ export class PedidoStore extends BaseStore {
             console.error(response.error);
             if (response.error.tipo === 0)
               this.notify.error(LBL_ERRO, response.error.message);
+
+            this.pratoStore.vincularPedidoItem([]);
+            this._dataSource.next([]);
+
             return EMPTY;
           }),
         )
         .subscribe({
-          next: ({ pratos }) => {
+          next: ({ pratos }) => { 
             this.quantidadeRegistros.set(pratos.length);
             this.pratoStore.vincularPedidoItem(pratos);
             this._dataSource.next(pratos);
-          },
-          error: (response: any) => {
-            console.error(response);
           },
           complete: () => {
             subs.unsubscribe();
