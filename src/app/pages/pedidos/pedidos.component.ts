@@ -51,7 +51,7 @@ export class PedidosComponent implements OnInit, OnDestroy {
     acompanhamentos: string[];
     observacao?: string;
   }>();
- 
+
   quantidadeItens: Signal<number> = computed(() =>
     this.pedidoStore.quantidadeItens(),
   );
@@ -168,8 +168,7 @@ export class PedidosComponent implements OnInit, OnDestroy {
     this.acompanhamentosAlteracaoPedido = acompanhamentos.map((m) => m._id!);
     this.quantidadeAlteracaoPedido = quantidade;
 
-    if (observacao)
-      this.formAlteracaoPedido.get('observacao')?.setValue(observacao);
+    this.formAlteracaoPedido.get('observacao')?.setValue(observacao || '');
 
     this.visibleAlteracaoPedido = true;
   }
@@ -187,7 +186,7 @@ export class PedidosComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.visibleAlteracaoPedido = false; 
+    this.visibleAlteracaoPedido = false;
 
     this.subjectAlteracaoPedido.next({
       quantidade: this.quantidadeAlteracaoPedido!,
