@@ -46,7 +46,6 @@ export class AuthService {
       tap({
         next: (response: any) => {
           const decode = jwtDecode(response.access_token);
-          console.log(decode.exp!);
 
           const dateExtp = new Date(decode.exp! * 1000);
           localStorage.setItem(KEY_SECRET_TOKEN, response.access_token);

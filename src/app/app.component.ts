@@ -47,9 +47,11 @@ export class AppComponent implements OnDestroy {
         .blank('Sessão', 'Sua sessão foi finalizada...', {
           nzDuration: 0,
           nzPlacement: 'bottom',
-          nzButton: this.btnTemplate
+          nzButton: this.btnTemplate,
         })
-        .onClose.subscribe(() => this._authService.logout());
+        .onClose.subscribe(() => {
+          this._authService.logout();
+        });
     });
 
     if (isMobile) {

@@ -46,6 +46,7 @@ export class LoginComponent {
   selecao: any = {};
   private readonly service = inject(AuthService);
   private readonly notify = inject(NzNotificationService);
+  loading = false;
 
   constructor() {
     for (let i = 1; i <= 9; i++) {
@@ -65,6 +66,7 @@ export class LoginComponent {
   }
 
   entrar() {
+    this.loading = true;
     this.service.login([...this.selecoes].join('')).subscribe({
       error: (response) => {
         console.error(response);
