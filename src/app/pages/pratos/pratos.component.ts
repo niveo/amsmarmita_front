@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
+  FormBuilder,
   FormControl,
   FormGroup,
   NonNullableFormBuilder,
@@ -25,13 +26,22 @@ import { Grupo, Prato } from '../../model';
 import { PratoStore } from '../../stores/prato.store';
 import { PratosFormComponent } from './pratos-form.component';
 
+export class ModelFormPrato {
+  _id!: FormControl<string | null>;
+  nome!: FormControl<string | null>;
+  grupo!: FormControl<string | null>;
+  composicoes!: FormControl<string[] | null>;
+  observacao!: FormControl<string | null>;
+  ingredientes!: FormControl<string[] | null>;
+}
+
 @Component({
   selector: 'app-pratos-component',
   templateUrl: './pratos.component.html',
   styleUrl: './pratos.component.scss',
 })
 export class PratoComponent {
-  private readonly fb = inject(NonNullableFormBuilder);
+  private readonly fb = inject(FormBuilder);
   private readonly nzModalService = inject(NzModalService);
   readonly pratoStore = inject(PratoStore);
 
@@ -47,13 +57,7 @@ export class PratoComponent {
 
   data$!: Observable<Grupo[]>;
 
-  validateForm: FormGroup<{
-    _id: FormControl<string>;
-    nome: FormControl<string>;
-    grupo: FormControl<string>;
-    composicoes: FormControl<string[]>;
-    observacao: FormControl<string>;
-  }> = this.fb.group({
+  validateForm: FormGroup<ModelFormPrato> = this.fb.group({
     _id: [''],
     nome: [
       '',
@@ -62,6 +66,7 @@ export class PratoComponent {
     grupo: ['', [Validators.required]],
     composicoes: [['']],
     observacao: ['', Validators.maxLength(100)],
+    ingredientes: [['']],
   });
 
   loading: Signal<boolean> = computed(() => this.pratoStore.loading());
@@ -79,6 +84,7 @@ export class PratoComponent {
       nome: '',
       composicoes: [],
       observacao: '',
+      ingredientes: [],
     });
 
     this.carregarModalEdicaoPrato();
@@ -91,6 +97,7 @@ export class PratoComponent {
       nome: '',
       composicoes: [],
       observacao: '',
+      ingredientes: [],
     });
 
     this.carregarModalEdicaoPrato();
@@ -103,6 +110,7 @@ export class PratoComponent {
       nome: item.nome!,
       composicoes: item.composicoes || [],
       observacao: item.observacao || '',
+      ingredientes: item.ingredientes || [],
     });
     this.carregarModalEdicaoPrato();
   }
@@ -136,20 +144,26 @@ export class PratoComponent {
 
     const data = this.validateForm.value;
 
-    this.pratoStore.salvar(
-      data,
-      (value) => {
+    this.pratoStore.salvar({
+      _id: data._id,
+      nome: data.nome!,
+      composicoes: data.composicoes,
+      grupo: data.grupo!,
+      ingredientes: data.ingredientes,
+      observacao: data.observacao,
+      resolve: (value) => {
         this.validateForm.setValue({
           _id: '',
           nome: '',
           grupo: '',
           composicoes: [],
           observacao: '',
+          ingredientes: [],
         });
         resolve(value);
       },
       reject,
-    );
+    });
   }
 
   incluirPratoPedido(prato: Prato) {

@@ -7,6 +7,7 @@ import { PratoComponent } from './pages/pratos/pratos.component';
 import { LoginComponent } from './pages/login/login.component';
 import { canActivateTeam } from './auth/auth.service';
 import { PedidosComponent } from './pages/pedidos/pedidos.component';
+import { IngredienteComponent } from './pages/ingrediente/ingrediente.component';
 
 const routes: Routes = [
   {
@@ -41,6 +42,11 @@ const routes: Routes = [
   {
     path: 'pedido',
     component: PedidosComponent,
+    canActivate: [canActivateTeam],
+  },
+  {
+    path: 'ingredientes',
+    component: IngredienteComponent,
     canActivate: [canActivateTeam],
   },
 ];

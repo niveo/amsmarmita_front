@@ -53,6 +53,13 @@
     </nz-form-control>
   </nz-form-item>
 
+  <app-selecao-ingredientes-component
+    [selecionados]="validateForm.value.ingredientes || []"
+    (selecionadosChange)="validateForm.value.ingredientes = $event"
+  /> 
+  <br />
+  <br />
+
   <span
     nz-icon
     nzType="tags"
@@ -60,7 +67,7 @@
     style="margin-right: 5px"
   ></span>
   <app-pratos-form-composicao-component
-    [composicoes]="validateForm.value.composicoes"
-    (composicoesChange)="atualizarComposicao($event)"
+    [composicoes]="validateForm.value.composicoes || []"
+    (composicoesChange)="this.validateForm.value.composicoes = $event"
   />
 </form>
