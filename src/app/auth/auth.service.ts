@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivateFn,
@@ -19,16 +19,16 @@ import { SessionTimerService } from '../services/session-timer.service';
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly _usuarioLogado = new BehaviorSubject<boolean>(false);
-  readonly usuarioLogado$ = this._usuarioLogado.asObservable();
   private readonly http = inject(HttpClient);
   private readonly router = inject(Router);
   private readonly cofigToken = inject(TOKEN_APP_CONFIG);
   private readonly sessionTimerService = inject(SessionTimerService);
 
+  usuarioLogado = signal(false);
+
   constructor() {
     //Se não for ambiente de produção jogar logado como false
-    this._usuarioLogado.next(!this.cofigToken.production);
+    this.usuarioLogado.set(!this.cofigToken.production);
 
     /*     setInterval(() => {
       console.log(isBefore(this.getExpiration(), new Date()));
@@ -53,7 +53,7 @@ export class AuthService {
             'expires_at',
             JSON.stringify(dateExtp.valueOf()),
           );
-          this._usuarioLogado.next(true);
+          this.usuarioLogado.set(true);
 
           this.sessionTimerService.startTimer(
             differenceInSeconds(dateExtp, new Date()),
@@ -66,7 +66,7 @@ export class AuthService {
   }
 
   isAuthenticatedUser(): boolean {
-    return this._usuarioLogado.getValue();
+    return this.usuarioLogado() && !this.isSessaoExpirou();
   }
 
   //console.log(isBefore(this.getExpiration(), new Date()))
@@ -81,7 +81,7 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem(KEY_SECRET_TOKEN);
     localStorage.removeItem('expires_at');
-    this._usuarioLogado.next(false);
+    this.usuarioLogado.set(false);
     this.router.navigateByUrl('/login');
   }
 }

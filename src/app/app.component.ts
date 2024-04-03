@@ -1,8 +1,10 @@
 import {
   Component,
   OnDestroy,
+  Signal,
   TemplateRef,
   ViewChild,
+  computed,
   inject,
 } from '@angular/core';
 import { isMobile } from './common/util';
@@ -27,7 +29,6 @@ export class AppComponent implements OnDestroy {
   visible = false;
   isCollapsed = false;
   placement: NzDrawerPlacement = 'right';
-  usuarioLogado$!: Observable<boolean>;
 
   readonly config = inject(TOKEN_APP_CONFIG);
   private readonly route = inject(Router);
@@ -35,13 +36,15 @@ export class AppComponent implements OnDestroy {
   private readonly sessionTimerService = inject(SessionTimerService);
   private readonly notification = inject(NzNotificationService);
 
+  usuarioLogado: Signal<boolean> = computed(() =>
+    this._authService.isAuthenticatedUser(),
+  );
+
   @ViewChild('notificationBtnTpl', { static: true }) btnTemplate!: TemplateRef<{
     $implicit: NzNotificationComponent;
   }>;
 
   constructor() {
-    this.usuarioLogado$ = this._authService.usuarioLogado$;
-
     this.sessionTimerService.sessionFinished$.subscribe(() => {
       this.notification
         .blank('Sessão', 'Sua sessão foi finalizada...', {

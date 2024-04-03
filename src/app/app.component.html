@@ -3,13 +3,13 @@
     <ng-container [ngTemplateOutlet]="tplLogo"></ng-container>
 
     <div class="fx-flex"></div>
-    @if (isMobile && (usuarioLogado$ | async)) {
+    @if (isMobile && usuarioLogado()) {
       <ng-container [ngTemplateOutlet]="tplMenu"></ng-container>
     }
   </nz-header>
   <nz-content class="outer-content fx-flex">
     <nz-layout class="inner-layout">
-      @if (!isMobile && (usuarioLogado$ | async)) {
+      @if (!isMobile && usuarioLogado()) {
         <nz-sider nzWidth="200px" nzTheme="light">
           <ng-container [ngTemplateOutlet]="tplContentMenu"></ng-container>
         </nz-sider>
@@ -18,7 +18,7 @@
         <router-outlet></router-outlet>
       </nz-content>
     </nz-layout>
-    <nz-footer>©2024 Implement By AMS </nz-footer>
+    <nz-footer>©2024 Implement By AMS <span [versaosis]="1"></span></nz-footer>
   </nz-content>
 </nz-layout>
 
@@ -98,8 +98,6 @@
     [ngTemplateOutletContext]="{ itemc: 'logo-drawer' }"
   ></ng-container>
 </ng-template>
-
-<router-outlet name="autenticacaoPopup" />
 
 <ng-template #notificationBtnTpl let-notification>
   <button
