@@ -49,6 +49,7 @@
             *ngFor="let item of data"
             nzNoFlex
             (click)="selecionarComedor(item)"
+            [ngStyle]="{ cursor: tipoSelecao() ? 'pointer' : 'unset' }"
           >
             <ul nz-list-item-actions>
               @if (!tipoSelecao()) {
