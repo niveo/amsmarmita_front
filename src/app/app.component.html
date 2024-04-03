@@ -18,9 +18,7 @@
         <router-outlet></router-outlet>
       </nz-content>
     </nz-layout>
-    <nz-footer
-      >©2024 Implement By AMS 
-    </nz-footer>
+    <nz-footer>©2024 Implement By AMS </nz-footer>
   </nz-content>
 </nz-layout>
 
@@ -102,3 +100,14 @@
 </ng-template>
 
 <router-outlet name="autenticacaoPopup" />
+
+<ng-template #notificationBtnTpl let-notification>
+  <button
+    nz-button
+    nzType="primary"
+    nzSize="small"
+    (click)="notification.close()"
+  >
+    OK
+  </button>
+</ng-template>
