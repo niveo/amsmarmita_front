@@ -30,6 +30,10 @@ export class AuthService {
     //Se não for ambiente de produção jogar logado como false
     this.usuarioLogado.set(!this.cofigToken.production);
 
+    this.sessionTimerService.sessionFinished$.subscribe(() => {
+      this.usuarioLogado.set(false);
+    });
+
     /*     setInterval(() => {
       console.log(isBefore(this.getExpiration(), new Date()));
       console.log(
@@ -66,7 +70,7 @@ export class AuthService {
   }
 
   isAuthenticatedUser(): boolean {
-    return this.usuarioLogado() && !this.isSessaoExpirou();
+    return this.usuarioLogado(); //;
   }
 
   //console.log(isBefore(this.getExpiration(), new Date()))
