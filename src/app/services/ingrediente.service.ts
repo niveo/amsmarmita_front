@@ -1,21 +1,24 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { Ingrediente } from '../model';
-import { BehaviorSubject, mergeMap, shareReplay } from 'rxjs';
+import { BehaviorSubject, finalize, mergeMap, shareReplay } from 'rxjs';
 
 @Injectable()
 export class IngredienteService {
   private readonly http = inject(HttpClient);
   private _resourceData$ = new BehaviorSubject<void>(undefined);
-
-  private apiRequest$ = this.http.get<Ingrediente[]>('/ingredientes')
+  private apiRequest$ = this.http.get<Ingrediente[]>('/ingredientes');
+  loading = signal(true);
 
   public data$ = this._resourceData$.pipe(
-    mergeMap(() => this.apiRequest$),
+    mergeMap(() =>
+      this.apiRequest$.pipe(finalize(() => this.loading.set(false))),
+    ),
     shareReplay(1),
   );
 
   updateData() {
+    this.loading.set(true);
     this._resourceData$.next();
   }
 

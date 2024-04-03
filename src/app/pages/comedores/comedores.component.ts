@@ -1,3 +1,4 @@
+import { v1 } from 'uuid';
 import { Component, DestroyRef, inject, input, output } from '@angular/core';
 import {
   EMPTY,
@@ -15,6 +16,9 @@ import { Comedor } from '../../model/comedor';
 import {
   MSG_EXCLUIR_SUCESSO,
   MSG_ATUALIZADO_SUCESSO,
+  LBL_ATUALIZACAO,
+  LBL_ERRO,
+  LBL_EXCLUSAO,
 } from '../../common/constantes';
 import { isBooleanTransform } from '../../common/util';
 import {
@@ -23,6 +27,8 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+
+const KEY_NOFITY_SALVAR = v1().toString();
 
 @Component({
   selector: 'app-comedores-component',
@@ -64,7 +70,7 @@ export class ComedoresComponent {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .pipe(
         catchError((error: any) => {
-          this.notify.error('Erro', error.message);
+          this.notify.error(LBL_ERRO, error.message);
           return EMPTY;
         }),
       )
@@ -90,10 +96,10 @@ export class ComedoresComponent {
       .subscribe({
         error: (error) => {
           console.error(error);
-          this.notify.error('Erro', error.message);
+          this.notify.error(LBL_ERRO, error.message);
         },
         next: () => {
-          this.notify.success('Remoção', MSG_EXCLUIR_SUCESSO);
+          this.notify.success(LBL_EXCLUSAO, MSG_EXCLUIR_SUCESSO);
           this.carregar();
         },
       });
@@ -117,7 +123,7 @@ export class ComedoresComponent {
         ),
         catchError((error: any) => {
           console.error(error);
-          this.notify.error('Erro', error.message);
+          this.notify.error(LBL_ERRO, error.message);
           return EMPTY;
         }),
         finalize(() => {
@@ -130,7 +136,9 @@ export class ComedoresComponent {
       )
       .subscribe({
         next: () => {
-          this.notify.success('Atualização', MSG_ATUALIZADO_SUCESSO);
+          this.notify.success(LBL_ATUALIZACAO, MSG_ATUALIZADO_SUCESSO, {
+            nzKey: KEY_NOFITY_SALVAR,
+          });
           this.carregar();
         },
       });

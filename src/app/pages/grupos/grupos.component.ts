@@ -1,4 +1,5 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import { v1 } from 'uuid';
+import { Component, DestroyRef, Signal, computed, inject } from '@angular/core';
 import {
   EMPTY,
   Observable,
@@ -7,8 +8,7 @@ import {
   iif,
   mergeMap,
   of,
-} from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+} from 'rxjs'; 
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import {
   MSG_EXCLUIR_SUCESSO,
@@ -19,13 +19,10 @@ import {
 } from '../../common/constantes';
 import { GrupoService } from '../../services/grupo.service';
 import { Grupo } from '../../model/grupo';
-import {
-  FormControl,
-  FormGroup,
-  NonNullableFormBuilder,
-  Validators,
-} from '@angular/forms';
-import { getFormValidacoes, validarFormulario } from '../../common/util';
+import { NonNullableFormBuilder, Validators } from '@angular/forms';
+import { validarFormulario } from '../../common/util';
+
+const KEY_NOFITY_SALVAR = v1().toString();
 
 @Component({
   selector: 'app-grupos-component',
@@ -46,7 +43,7 @@ export class GrupoComponent {
   private readonly fb = inject(NonNullableFormBuilder);
 
   data$!: Observable<any[]>;
-  loading = true;
+  loading: Signal<boolean> = computed(() => this.service.loading());
   loadingBtn = false;
 
   validateForm = this.fb.group({
@@ -65,8 +62,6 @@ export class GrupoComponent {
 
   constructor() {
     this.data$ = this.service.data$;
-    this.service.data$.pipe(takeUntilDestroyed(this.destroyRef));
-    this.service.data$.subscribe(() => (this.loading = false));
   }
 
   editar(item: Grupo) {
@@ -156,7 +151,9 @@ export class GrupoComponent {
       .subscribe({
         next: () => {
           this.service.updateData();
-          this.notify.success(LBL_ATUALIZACAO, MSG_ATUALIZADO_SUCESSO);
+          this.notify.success(LBL_ATUALIZACAO, MSG_ATUALIZADO_SUCESSO, {
+            nzKey: KEY_NOFITY_SALVAR,
+          });
         },
       });
   }

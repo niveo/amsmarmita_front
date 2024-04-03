@@ -1,3 +1,4 @@
+import { v1 } from 'uuid';
 import { Injectable, inject } from '@angular/core';
 import {
   BehaviorSubject,
@@ -21,6 +22,8 @@ import {
   MSG_EXCLUIR_SUCESSO,
 } from '../common/constantes';
 import { PedidoItem } from '../model/pedido-item';
+
+const KEY_NOFITY_SALVAR = v1().toString();
 
 @Injectable({
   providedIn: 'root',
@@ -163,7 +166,9 @@ export class PratoStore extends BaseStore {
 
           this._dataSource.next([...registros]);
 
-          this.notify.success(LBL_ATUALIZACAO, MSG_ATUALIZADO_SUCESSO);
+          this.notify.success(LBL_ATUALIZACAO, MSG_ATUALIZADO_SUCESSO, {
+            nzKey: KEY_NOFITY_SALVAR,
+          });
         },
       });
   }
