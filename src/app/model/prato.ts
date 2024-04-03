@@ -1,4 +1,5 @@
 import { Grupo } from "./grupo";
+import { Ingrediente } from "./ingrediente";
 
 export class Prato {
   _id?: string;
@@ -6,5 +7,7 @@ export class Prato {
   grupo?: Grupo;
   composicoes?: string[] = [];
   observacao?: string;
+
+  ingredientes?: string[] = [];
 }
 

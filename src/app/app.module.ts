@@ -33,6 +33,9 @@ import { SelecaoNumerosComponent } from './componentes/selecao-numeros.component
 import { PedidosComponent } from './pages/pedidos/pedidos.component';
 import { PedidosAcompanhamentoComponent } from './pages/pedidos/acompanhamento/pedidos-companhamento.component';
 import { CorBoardaDirective } from './directives/cor-borda.directive';
+import { IngredienteService } from './services/ingrediente.service';
+import { IngredienteComponent } from './pages/ingrediente/ingrediente.component';
+import { SelecaoIngredientesComponent } from './componentes/selecao-ingredientes.component';
 
 registerLocaleData(pt);
 
@@ -49,6 +52,7 @@ registerLocaleData(pt);
     MarmitasComedoresComponent,
     PedidosComponent,
     PedidosAcompanhamentoComponent,
+    IngredienteComponent
   ],
   imports: [
     BrowserModule,
@@ -64,13 +68,15 @@ registerLocaleData(pt);
     NzModule,
     VersaoSistemaDirective,
     SelecaoNumerosComponent,
-    CorBoardaDirective
+    CorBoardaDirective,
+    SelecaoIngredientesComponent
   ],
   providers: [
     { provide: TOKEN_APP_CONFIG, useValue: environment },
     { provide: NZ_I18N, useValue: pt_BR },
     ComedoresService,
     MarmitaService,
+    IngredienteService,
 
     { provide: DEFAULT_TIMEOUT, useValue: 30000 },
     {

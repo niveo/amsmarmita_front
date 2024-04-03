@@ -20,39 +20,45 @@ export class PratoService {
     id,
     nome,
     grupoId,
-    composicoes = undefined,
-    observacao = undefined,
+    composicoes,
+    observacao,
+    ingredientes,
   }: {
     id: string;
     nome: string;
     grupoId: string;
-    composicoes?: string[];
-    observacao?: string;
+    composicoes?: string[] | null;
+    observacao?: string | null;
+    ingredientes?: string[] | null;
   }) {
     return this.http.put<Prato>('/pratos/' + id, {
       nome: nome,
       grupo: grupoId,
-      composicoes: composicoes,
-      observacao: observacao,
+      composicoes: composicoes || null,
+      observacao: observacao || null,
+      ingredientes: ingredientes || null,
     });
   }
 
   inlcluir({
     nome,
     grupoId,
-    composicoes = undefined,
-    observacao = undefined,
+    composicoes,
+    observacao,
+    ingredientes,
   }: {
     nome: string;
     grupoId: string;
-    composicoes?: string[];
-    observacao?: string;
+    composicoes?: string[] | null;
+    observacao?: string | null;
+    ingredientes?: string[] | null;
   }) {
     return this.http.post<Prato>('/pratos', {
       nome: nome,
       grupo: grupoId,
-      composicoes: composicoes,
-      observacao: observacao,
+      composicoes: composicoes || null,
+      observacao: observacao || null,
+      ingredientes: ingredientes || null,
     });
   }
 

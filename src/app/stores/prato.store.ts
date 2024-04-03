@@ -92,34 +92,44 @@ export class PratoStore extends BaseStore {
       });
   }
 
-  salvar(
-    data: {
-      _id?: string;
-      nome?: string;
-      grupo?: string;
-      composicoes?: string[];
-      observacao?: string;
-    },
-    resolve: (value: any) => void,
-    reject: (error: any) => void,
-  ) {
-    of(data._id)
+  salvar({
+    _id,
+    nome,
+    grupo,
+    composicoes,
+    observacao,
+    ingredientes,
+    resolve,
+    reject,
+  }: {
+    _id?: string | null;
+    nome?: string;
+    grupo?: string;
+    composicoes?: string[] | null;
+    observacao?: string | null;
+    ingredientes?: string[] | null;
+    resolve: (value: any) => void;
+    reject: (error: any) => void;
+  }) {
+    of(_id)
       .pipe(
         mergeMap((value) =>
           iif(
             () => !value,
             this.service.inlcluir({
-              nome: data.nome!,
-              grupoId: data.grupo!,
-              composicoes: data.composicoes,
-              observacao: data.observacao,
+              nome: nome!,
+              grupoId: grupo!,
+              composicoes: composicoes,
+              observacao: observacao,
+              ingredientes: ingredientes,
             }),
             this.service.atualizar({
               id: value!,
-              nome: data.nome!,
-              grupoId: data.grupo!,
-              composicoes: data.composicoes,
-              observacao: data.observacao,
+              nome: nome!,
+              grupoId: grupo!,
+              composicoes: composicoes,
+              observacao: observacao,
+              ingredientes: ingredientes,
             }),
           ),
         ),
