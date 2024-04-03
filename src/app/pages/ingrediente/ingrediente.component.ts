@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, DestroyRef, Signal, computed, inject } from '@angular/core';
 import {
   EMPTY,
   Observable,
@@ -8,7 +8,6 @@ import {
   mergeMap,
   of,
 } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import {
   MSG_EXCLUIR_SUCESSO,
@@ -25,6 +24,9 @@ import {
 } from '@angular/forms';
 import { IngredienteService } from '../../services/ingrediente.service';
 import { Ingrediente } from '../../model';
+import { v1 } from 'uuid';
+
+const KEY_NOFITY_SALVAR = v1().toString();
 
 @Component({
   selector: 'app-ingrediente-component',
@@ -45,7 +47,7 @@ export class IngredienteComponent {
   private readonly formBuilder = inject(FormBuilder);
 
   data$!: Observable<any[]>;
-  loading = true;
+  loading: Signal<boolean> = computed(() => this.service.loading());
   isVisible = false;
 
   form: FormGroup<{
@@ -61,22 +63,17 @@ export class IngredienteComponent {
     observacao: ['', Validators.maxLength(100)],
   });
 
-  ngOnInit() {
-    this.carregar();
+  constructor() {
+    this.data$ = this.service.data$.pipe(
+      catchError((error: any) => {
+        this.notify.error('Erro', error.message);
+        return EMPTY;
+      }),
+    );
   }
 
   private carregar() {
-    this.loading = true;
-    this.data$ = this.service
-      .getAll()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .pipe(
-        catchError((error: any) => {
-          this.notify.error('Erro', error.message);
-          return EMPTY;
-        }),
-      )
-      .pipe(finalize(() => (this.loading = false)));
+    this.service.updateData();
   }
 
   editar(item: Ingrediente) {
@@ -85,6 +82,7 @@ export class IngredienteComponent {
       nome: item.nome!,
       observacao: item.observacao!,
     });
+    this.isVisible = true;
   }
 
   remover(item: Ingrediente) {
@@ -130,7 +128,9 @@ export class IngredienteComponent {
       )
       .subscribe({
         next: () => {
-          this.notify.success(LBL_ATUALIZACAO, MSG_ATUALIZADO_SUCESSO);
+          this.notify.success(LBL_ATUALIZACAO, MSG_ATUALIZADO_SUCESSO, {
+            nzKey: KEY_NOFITY_SALVAR,
+          });
           this.carregar();
         },
       });

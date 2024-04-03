@@ -1,7 +1,9 @@
 <div class="comp-body">
   <div class="comp-head">
-    <nz-skeleton [nzActive]="true" [nzLoading]="loading"></nz-skeleton>
-    @if (!loading) {
+    @if (loading()) {
+      <nz-skeleton [nzActive]="true"></nz-skeleton>
+    }
+    @if (!loading()) {
       <button
         nz-button
         nzType="primary"
