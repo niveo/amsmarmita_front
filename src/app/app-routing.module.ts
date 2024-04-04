@@ -8,6 +8,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { canActivateTeam } from './auth/auth.service';
 import { PedidosComponent } from './pages/pedidos/pedidos.component';
 import { IngredienteComponent } from './pages/ingrediente/ingrediente.component';
+import { RelatorioComponent } from './pages/relatorio/relatorio.component';
 
 const routes: Routes = [
   {
@@ -47,6 +48,11 @@ const routes: Routes = [
   {
     path: 'ingredientes',
     component: IngredienteComponent,
+    canActivate: [canActivateTeam],
+  },
+  {
+    path: 'relatorio',
+    component: RelatorioComponent,
     canActivate: [canActivateTeam],
   },
 ];

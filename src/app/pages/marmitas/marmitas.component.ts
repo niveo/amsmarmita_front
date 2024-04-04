@@ -15,10 +15,12 @@ import {
   MSG_ATUALIZADO_SUCESSO,
   FORMATO_DATA,
   LBL_ALERTA,
+  LBL_ERRO,
+  LBL_EXCLUSAO,
+  LBL_ATUALIZACAO,
 } from '../../common/constantes';
 import { MarmitaService } from '../../services/marmita.service';
 import { Marmita } from '../../model/marmita';
-import { NzModalService } from 'ng-zorro-antd/modal';
 import { MarmitasComedoresComponent } from './marmitas-comedores.component';
 import { isAfter, format, parseJSON } from 'date-fns';
 import { NzDrawerService } from 'ng-zorro-antd/drawer';
@@ -55,7 +57,7 @@ export class MarmitasComponent {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .pipe(
         catchError((error: any) => {
-          this.notify.error('Erro', error.message);
+          this.notify.error(LBL_ERRO, error.message);
           return EMPTY;
         }),
       )
@@ -81,11 +83,11 @@ export class MarmitasComponent {
       .subscribe({
         error: (error) => {
           console.error(error);
-          this.notify.error('Erro', error.message);
+          this.notify.error(LBL_ERRO, error.message);
         },
         next: (value) => {
           console.log(value);
-          this.notify.success('Remoção', MSG_EXCLUIR_SUCESSO);
+          this.notify.success(LBL_EXCLUSAO, MSG_EXCLUIR_SUCESSO);
           this.carregar();
         },
       });
@@ -114,7 +116,7 @@ export class MarmitasComponent {
         ),
         catchError((error: any) => {
           console.error(error);
-          this.notify.error('Erro', error.message);
+          this.notify.error(LBL_ERRO, error.message);
           return EMPTY;
         }),
         finalize(() => {
@@ -127,15 +129,13 @@ export class MarmitasComponent {
       )
       .subscribe({
         next: (value) => {
-          console.log(value);
-          this.notify.success('Atualização', MSG_ATUALIZADO_SUCESSO);
+          this.notify.success(LBL_ATUALIZACAO, MSG_ATUALIZADO_SUCESSO);
           this.carregar();
         },
       });
   }
 
-  visualizarComedores(marmita: Marmita) { 
-
+  visualizarComedores(marmita: Marmita) {
     if (isAfter(new Date(), parseJSON(marmita.lancamento!))) {
       this.notify.warning(
         LBL_ALERTA,
@@ -146,17 +146,8 @@ export class MarmitasComponent {
     this.nzDrawerService.create({
       nzClosable: false,
       nzContent: MarmitasComedoresComponent,
-      nzTitle:'Comedores',
+      nzTitle: 'Comedores',
       nzPlacement: 'bottom',
-
-     /* nzFooter: [
-        {
-          label: 'Sair',
-          onClick: function (componentInstance) {
-            componentInstance?.sair();
-          },
-        },
-      ],*/
       nzData: {
         marmitaId: marmita._id,
       },

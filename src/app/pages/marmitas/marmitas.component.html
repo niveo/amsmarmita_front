@@ -1,54 +1,107 @@
 <div class="comp-body">
   <div class="comp-head">
-    <button nz-button nzType="primary" style="margin-bottom: 10px" (click)="isVisible = true">
+    <button
+      nz-button
+      nzType="primary"
+      style="margin-bottom: 10px"
+      (click)="isVisible = true"
+    >
       Nova Marmita
     </button>
 
-    @if(loading){
-    <nz-skeleton [nzActive]="true"></nz-skeleton>
+    @if (loading) {
+      <nz-skeleton [nzActive]="true"></nz-skeleton>
     }
   </div>
 
   <div class="comp-content">
     <div class="comp-inner comp-inner-grid">
-      @for(item of data$ | async; track item._id){
+      @for (item of data$ | async; track item._id) {
+        <div style="padding: 5px">
+          <nz-card
+            style="width: 100%"
+            [nzTitle]="tplTitulo"
+            [nzActions]="[
+              actionVisualizar,
+              actionRelatorio,
+              actionEdit,
+              actionDelete
+            ]"
+          >
+            <p>{{ item.observacao }}</p>
+          </nz-card>
+          <ng-template #actionVisualizar>
+            <span
+              nz-icon
+              nzType="select"
+              nzTheme="outline"
+              (click)="visualizarComedores(item)"
+            ></span>
+          </ng-template>
 
-      <div style="padding: 5px;">
+          <ng-template #actionEdit>
+            <span
+              nz-icon
+              nzType="edit"
+              nzTheme="outline"
+              (click)="editar(item)"
+            ></span>
+          </ng-template>
 
-        <nz-card style="width: 100%" [nzTitle]="tplTitulo" [nzActions]="[actionVisualizar, actionEdit, actionDelete]">
-          <p>{{ item.observacao }}</p>
-        </nz-card>
-        <ng-template #actionVisualizar>
-          <app-icon (click)="visualizarComedores(item)">launch</app-icon>
-        </ng-template>
+          <ng-template #actionDelete>
+            <span
+              nz-icon
+              nzType="delete"
+              nzTheme="outline"
+              nz-popconfirm
+              nzPopconfirmTitle="Deseja remover esse registro?"
+              nzPopconfirmPlacement="bottom"
+              [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#F44336'"
+              (nzOnConfirm)="remover(item)"
+            ></span>
+          </ng-template>
 
-        <ng-template #actionEdit>
-          <app-icon (click)="editar(item)">edit</app-icon>
-        </ng-template>
+          <ng-template #actionRelatorio>
+            <span
+              nz-icon
+              nzType="book"
+              nzTheme="outline"
+              [routerLink]="['/relatorio', { marmitaId: item._id }]"
+            ></span>
+          </ng-template>
 
-        <ng-template #actionDelete>
-          <app-icon nzDanger nz-popconfirm nzPopconfirmTitle="Deseja remover esse registro?"
-            nzPopconfirmPlacement="bottom" (nzOnConfirm)="remover(item)">delete</app-icon>
-        </ng-template>
-
-        <ng-template #tplTitulo>
-          <p>{{ item.lancamento | date : "dd/MM/yyyy" }}</p>
-        </ng-template>
-      </div>
+          <ng-template #tplTitulo>
+            <p>{{ item.lancamento | date: "dd/MM/yyyy" }}</p>
+          </ng-template>
+        </div>
       }
     </div>
   </div>
 </div>
-<nz-modal [(nzVisible)]="isVisible" nzTitle="Marmita" (nzOnCancel)="isVisible = false" (nzOnOk)="salvar()"
-  nzOkText="Salvar">
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="Marmita"
+  (nzOnCancel)="isVisible = false"
+  (nzOnOk)="salvar()"
+  nzOkText="Salvar"
+>
   <ng-container *nzModalContent>
     <div class="fx-column gap-5">
-      <nz-date-picker [(ngModel)]="marmitaLancamento" nzPlaceHolder="Informe o dia da Marmita"
-        [nzFormat]="dateFormat"></nz-date-picker>
+      <nz-date-picker
+        [(ngModel)]="marmitaLancamento"
+        nzPlaceHolder="Informe o dia da Marmita"
+        [nzFormat]="dateFormat"
+      ></nz-date-picker>
 
       <nz-textarea-count [nzMaxCharacterCount]="100">
-        <textarea [(ngModel)]="marmitaObservacao" nz-input placeholder="Informe uma observação"
-          [nzAutosize]="{ minRows: 2, maxRows: 6 }" [maxLength]="100"></textarea>
+        <textarea
+          [(ngModel)]="marmitaObservacao"
+          nz-input
+          placeholder="Informe uma observação"
+          [nzAutosize]="{ minRows: 2, maxRows: 6 }"
+          [maxLength]="100"
+        ></textarea>
       </nz-textarea-count>
     </div>
   </ng-container>

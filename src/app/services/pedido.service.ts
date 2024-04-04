@@ -29,7 +29,13 @@ export class PedidoService {
 
   getMarmitaId(marmitaId: string, comedorId: string) {
     return this.http.get<any>('/pedidos/marmitas', {
-      params: { comedorId: comedorId, marmitaId: marmitaId },
+      params: { comedorId, marmitaId },
+    });
+  }
+
+  carregarRelatorio(marmitaId: string) {
+    return this.http.get<any[]>('/pedidos/relatorio', {
+      params: { marmitaId },
     });
   }
 }

@@ -1,6 +1,6 @@
 import { Component, Inject, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { NZ_DRAWER_DATA, NzDrawerRef } from 'ng-zorro-antd/drawer'; 
+import { NZ_DRAWER_DATA, NzDrawerRef } from 'ng-zorro-antd/drawer';
 
 @Component({
   selector: 'app-marmitas-comedores-component',
