@@ -27,6 +27,8 @@ export class PedidosAcompanhamentoComponent implements OnInit {
 
   pratosSimples?: Grupo[];
   pratosGeral?: Grupo[];
+  pratosOutros?: Grupo[];
+
   sortPrincipal = (a: Grupo, b: Grupo) =>
     Number(a.principal) - Number(b.principal);
 
@@ -41,13 +43,15 @@ export class PedidosAcompanhamentoComponent implements OnInit {
         map((m) => {
           return [
             m.filter((f) => f.multiplo),
-            m.filter((f) => !f.multiplo).sort(this.sortPrincipal),
+            m.filter((f) => !f.multiplo && !f.principal).sort(this.sortPrincipal),
+            m.filter((f) => !f.multiplo && f.principal).sort(this.sortPrincipal),
           ];
         }),
       )
       .subscribe((data) => {
         this.pratosSimples = data[0];
         this.pratosGeral = data[1];
+        this.pratosOutros = data[2];
       });
   }
 
