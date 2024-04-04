@@ -2,6 +2,7 @@
   @for (item of registros(); track item) {
     <ng-template #tplItemTitulo>
       <div class="lbl-item-titulo fx-row wf">
+        <app-grupo-principal-component [principal]="item.principal" />
         <span class="fx-flex">{{ item.prato }}</span>
         <span style="font-size: 20px">{{ item.quantidade }}</span>
       </div>
