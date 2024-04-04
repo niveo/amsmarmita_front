@@ -3,6 +3,7 @@ import {
   Output,
   Signal,
   computed,
+  effect,
   inject,
   input,
   output,
@@ -72,6 +73,11 @@ export class PratoComponent {
   loading: Signal<boolean> = computed(() => this.pratoStore.loading());
 
   constructor() {
+    effect(() => {
+      if (!this.tipoSelecao()) {
+        this.pratoStore.vincularPedidoItem([]);
+      }
+    });
     this.data$ = this.pratoStore.data$.pipe(
       map((m) => (!this.tipoSelecao() ? m : m.filter((f) => f.principal))),
     );

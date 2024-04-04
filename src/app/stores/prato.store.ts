@@ -1,5 +1,5 @@
 import { v1 } from 'uuid';
-import { Injectable, inject } from '@angular/core';
+import { Injectable, effect, inject, signal } from '@angular/core';
 import {
   BehaviorSubject,
   EMPTY,
@@ -38,6 +38,7 @@ export class PratoStore extends BaseStore {
 
   constructor() {
     super();
+
     this.iniciarLoading();
     this.grupoService.data$.subscribe({
       next: (response) => {
@@ -52,8 +53,6 @@ export class PratoStore extends BaseStore {
   }
 
   remover(item: Prato) {
-    console.log(item);
-
     this.service.delete(item._id!).subscribe({
       error: (error) => {
         console.error(error);
