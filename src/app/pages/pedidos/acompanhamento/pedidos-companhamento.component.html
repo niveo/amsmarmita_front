@@ -27,3 +27,22 @@
     }
   </div>
 }
+
+<br />
+<nz-collapse>
+  <nz-collapse-panel [nzHeader]="'Outros'">
+    @for (item of pratosOutros; track item._id) {
+      <div class="lbl-titulo-grupo">{{ item.nome }}</div>
+      <div class="fx-column" style="direction: rtl">
+        @for (prato of item.pratos; track prato._id) {
+          <label
+            nz-checkbox
+            [ngModel]="selecaoContem(prato._id!)"
+            (ngModelChange)="changeGeral(prato._id!)"
+            >{{ prato.nome }}</label
+          >
+        }
+      </div>
+    }
+  </nz-collapse-panel>
+</nz-collapse>
