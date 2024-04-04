@@ -45,7 +45,9 @@
                         track acompanhamento._id
                       ) {
                         <h5>
-                          {{ acompanhamento.grupo!.nome }}:
+                          @if (acompanhamento.grupo?.multiplo) {
+                            {{ acompanhamento.grupo!.nome }}:
+                          }
                           {{ acompanhamento.nome }}
                         </h5>
                       }
