@@ -85,8 +85,8 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem(KEY_SECRET_TOKEN);
     localStorage.removeItem('expires_at');
-    this.usuarioLogado.set(false);
-    this.router.navigateByUrl('/login');
+    this.usuarioLogado.set(false); 
+    location.replace(`/login`); 
   }
 }
 
