@@ -36,6 +36,7 @@ import { CorBoardaDirective } from './directives/cor-borda.directive';
 import { IngredienteService } from './services/ingrediente.service';
 import { IngredienteComponent } from './pages/ingrediente/ingrediente.component';
 import { SelecaoIngredientesComponent } from './componentes/selecao-ingredientes.component';
+import { RelatorioComponent } from './pages/relatorio/relatorio.component';
 
 registerLocaleData(pt);
 
@@ -52,7 +53,8 @@ registerLocaleData(pt);
     MarmitasComedoresComponent,
     PedidosComponent,
     PedidosAcompanhamentoComponent,
-    IngredienteComponent
+    IngredienteComponent,
+    RelatorioComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,7 +71,7 @@ registerLocaleData(pt);
     VersaoSistemaDirective,
     SelecaoNumerosComponent,
     CorBoardaDirective,
-    SelecaoIngredientesComponent
+    SelecaoIngredientesComponent,
   ],
   providers: [
     { provide: TOKEN_APP_CONFIG, useValue: environment },
