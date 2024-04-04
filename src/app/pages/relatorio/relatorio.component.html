@@ -1,0 +1,26 @@
+<div class="card-container">
+  <nz-tabset
+    nzTabPosition="bottom"
+    nzSize="large"
+    nzType="card"
+    style="height: 100%"
+  >
+    <nz-tab [nzTitle]="titleTplPedido">
+      <ng-template #titleTplPedido> Principal </ng-template>
+      <div class="comp-content">
+        <div class="comp-inner">
+          <app-relatorio-item-component [registros]="pratosPrincipais" />
+        </div>
+      </div>
+    </nz-tab>
+
+    <nz-tab [nzTitle]="titleTplPratos">
+      <ng-template #titleTplPratos> Acompanhamentos </ng-template>
+      <div class="comp-content">
+        <div class="comp-inner">
+          <app-relatorio-item-component [registros]="pratosAcompanhamento" />
+        </div>
+      </div>
+    </nz-tab>
+  </nz-tabset>
+</div>

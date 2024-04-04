@@ -6,21 +6,30 @@ import { PedidoService } from '../../services/pedido.service';
 @Component({
   selector: 'app-relatorio-component',
   templateUrl: './relatorio.component.html',
+  styleUrl: './relatorio.component.scss',
 })
 export class RelatorioComponent {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly pedidoService = inject(PedidoService);
 
+  pratosPrincipais: any[] = [];
+  pratosAcompanhamento: any[] = [];
+
   ngOnInit() {
     this.activatedRoute.params
       .pipe(
         map(({ marmitaId }) => {
-            console.log(marmitaId);
-            
           this.pedidoService
             .carregarRelatorio(marmitaId)
+            .pipe(
+              map((m) => [
+                m.filter((f) => f.principal),
+                m.filter((f) => !f.principal),
+              ]),
+            )
             .subscribe((response) => {
-              console.log(response);
+              this.pratosPrincipais = response[0];
+              this.pratosAcompanhamento = response[1];
             });
         }),
       )

@@ -1,0 +1,35 @@
+:host {
+  height: 100%;
+  overflow: hidden;
+  display: block;
+}
+
+
+.card-container {
+  height: 100%;
+}
+
+.card-container ::ng-deep p {
+  margin: 0;
+}
+.card-container ::ng-deep > .ant-tabs-card .ant-tabs-content {
+  height: 100%;
+}
+.card-container
+  ::ng-deep
+  > .ant-tabs-card
+  .ant-tabs-content
+  > .ant-tabs-tabpane {
+  background: transparent;
+}
+.card-container ::ng-deep > .ant-tabs-card > .ant-tabs-nav::before {
+  display: none;
+}
+.card-container ::ng-deep > .ant-tabs-card .ant-tabs-tab {
+  border-color: transparent;
+  background: transparent;
+}
+.card-container ::ng-deep > .ant-tabs-card .ant-tabs-tab-active {
+  border-color: #fff;
+  background: #fff;
+}

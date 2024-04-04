@@ -179,3 +179,32 @@ body {
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
 }
+
+.card-container {
+  height: 100%;
+}
+
+.card-container ::ng-deep p {
+  margin: 0;
+}
+.card-container ::ng-deep > .ant-tabs-card .ant-tabs-content {
+  height: 100%;
+}
+.card-container
+  ::ng-deep
+  > .ant-tabs-card
+  .ant-tabs-content
+  > .ant-tabs-tabpane {
+  background: transparent;
+}
+.card-container ::ng-deep > .ant-tabs-card > .ant-tabs-nav::before {
+  display: none;
+}
+.card-container ::ng-deep > .ant-tabs-card .ant-tabs-tab {
+  border-color: transparent;
+  background: transparent;
+}
+.card-container ::ng-deep > .ant-tabs-card .ant-tabs-tab-active {
+  border-color: #fff;
+  background: #fff;
+}
