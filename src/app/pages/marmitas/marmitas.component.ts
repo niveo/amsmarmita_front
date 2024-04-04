@@ -21,6 +21,7 @@ import { Marmita } from '../../model/marmita';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { MarmitasComedoresComponent } from './marmitas-comedores.component';
 import { isAfter, format, parseJSON } from 'date-fns';
+import { NzDrawerService } from 'ng-zorro-antd/drawer';
 
 @Component({
   selector: 'app-marmitas-component',
@@ -31,7 +32,7 @@ export class MarmitasComponent {
   private readonly comedoreService = inject(MarmitaService);
   private readonly notify = inject(NzNotificationService);
   private readonly destroyRef = inject(DestroyRef);
-  private readonly nzModalService = inject(NzModalService);
+  private readonly nzDrawerService = inject(NzDrawerService);
 
   data$!: Observable<any[]>;
   loading = true;
@@ -142,18 +143,20 @@ export class MarmitasComponent {
       );
       return;
     }
-    this.nzModalService.create({
+    this.nzDrawerService.create({
       nzClosable: false,
       nzContent: MarmitasComedoresComponent,
+      nzTitle:'Comedores',
+      nzPlacement: 'bottom',
 
-      nzFooter: [
+     /* nzFooter: [
         {
           label: 'Sair',
           onClick: function (componentInstance) {
             componentInstance?.sair();
           },
         },
-      ],
+      ],*/
       nzData: {
         marmitaId: marmita._id,
       },

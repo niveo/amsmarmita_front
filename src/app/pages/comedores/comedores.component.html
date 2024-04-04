@@ -81,6 +81,10 @@
                     <span nz-icon nzType="delete" nzTheme="outline"></span>
                   </button>
                 </nz-list-item-action>
+              } @else {
+                <nz-list-item-action>
+                  <span nz-icon nzType="select" nzTheme="outline"></span>
+                </nz-list-item-action>
               }
             </ul>
             {{ item.nome }}
