@@ -1,0 +1,32 @@
+<nz-collapse>
+  @for (item of registros(); track item) {
+    <ng-template #tplItemTitulo>
+      <div class="lbl-item-titulo fx-row wf">
+        <span class="fx-flex">{{ item.prato }}</span>
+        <span style="font-size: 20px">{{ item.quantidade }}</span>
+      </div>
+    </ng-template>
+
+    <nz-collapse-panel [nzHeader]="tplItemTitulo">
+      @for (comedor of item.comedores; track comedor) {
+        <div class="item-inner">
+          <div class="fx-row" style="align-items: center">
+            <span class="item-inner-quantidade">
+              {{ comedor.quantidade }}
+            </span>
+
+            <div>
+              <span>
+                {{ comedor.comedor }}
+              </span>
+
+              @for (de of comedor.de; track de) {
+                <div>{{ de }}</div>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    </nz-collapse-panel>
+  }
+</nz-collapse>

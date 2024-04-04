@@ -37,6 +37,7 @@ import { IngredienteService } from './services/ingrediente.service';
 import { IngredienteComponent } from './pages/ingrediente/ingrediente.component';
 import { SelecaoIngredientesComponent } from './componentes/selecao-ingredientes.component';
 import { RelatorioComponent } from './pages/relatorio/relatorio.component';
+import { RelatorioItemComponent } from './pages/relatorio/relatorio-item.component';
 
 registerLocaleData(pt);
 
@@ -55,6 +56,7 @@ registerLocaleData(pt);
     PedidosAcompanhamentoComponent,
     IngredienteComponent,
     RelatorioComponent,
+    RelatorioItemComponent,
   ],
   imports: [
     BrowserModule,
