@@ -1,5 +1,5 @@
 import { v1 } from 'uuid';
-import { Component, DestroyRef, Signal, computed, inject } from '@angular/core';
+import { Component, DestroyRef, Signal, computed, inject, signal } from '@angular/core';
 import {
   EMPTY,
   Observable,
@@ -43,7 +43,7 @@ export class GrupoComponent {
   private readonly fb = inject(NonNullableFormBuilder);
 
   data$!: Observable<any[]>;
-  loading: Signal<boolean> = computed(() => this.service.loading());
+  loading = signal(false);
   loadingBtn = false;
 
   validateForm = this.fb.group({
