@@ -1,6 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { Component, Inject, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
+import { NZ_DRAWER_DATA, NzDrawerRef } from 'ng-zorro-antd/drawer'; 
 
 @Component({
   selector: 'app-marmitas-comedores-component',
@@ -8,11 +8,13 @@ import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
     tipoSelecao
     (eventComedorTipoSelecao)="comedorTipoSelecao($event)"
   />`,
-  styleUrl: './marmitas-comedores.component.scss'
+  styleUrl: './marmitas-comedores.component.scss',
 })
 export class MarmitasComedoresComponent {
-  readonly #modal = inject(NzModalRef);
-  readonly nzModalData: { marmitaId: string } = inject(NZ_MODAL_DATA);
+  constructor(
+    private drawerRef: NzDrawerRef<string>,
+    @Inject(NZ_DRAWER_DATA) public nzData: { marmitaId: string },
+  ) {}
 
   private readonly router = inject(Router);
   comedorTipoSelecao(comedorId: string) {
@@ -20,13 +22,13 @@ export class MarmitasComedoresComponent {
       'pedido',
       {
         comedorId: comedorId,
-        marmitaId: this.nzModalData.marmitaId,
+        marmitaId: this.nzData.marmitaId,
       },
     ]);
-    this.#modal.close();
+    this.drawerRef.close();
   }
 
-  sair(){
-    this.#modal.close();
+  sair() {
+    this.drawerRef.close();
   }
 }
