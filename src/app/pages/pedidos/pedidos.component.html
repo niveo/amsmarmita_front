@@ -106,24 +106,24 @@
 
 <nz-drawer
   [nzClosable]="false"
-  [nzVisible]="visibleAlteracaoPedido"
+  [nzVisible]="alteracaoPedidoVisible"
   nzPlacement="right"
-  [nzTitle]="tituloAlteracaoPedido"
+  [nzTitle]="alteracaoPedidoTitulo"
   [nzFooter]="tplFooter"
   (nzOnClose)="closeAlteracaoPedido()"
 >
   <ng-container *nzDrawerContent>
     <app-selecao-numeros-component
       [numeros]="listaQuantidadePedido"
-      [(selecionado)]="quantidadeAlteracaoPedido"
+      [(selecionado)]="alteracaoPedidoQuantidade"
     ></app-selecao-numeros-component>
-    @if (visibleAlteracaoPedido) {
+    @if (alteracaoPedidoVisible) {
       <app-pedidos-acompanhamento-component
-        [(acompanhamento)]="acompanhamentosAlteracaoPedido"
+        [(acompanhamento)]="alteracaoPedidoAcompanhamentos"
       />
     }
 
-    <form nz-form [formGroup]="formAlteracaoPedido" nzLayout="vertical">
+    <form nz-form [formGroup]="alteracaoPedidoForm" nzLayout="vertical">
       <nz-form-item>
         <nz-form-label>Observação</nz-form-label>
         <nz-form-control>

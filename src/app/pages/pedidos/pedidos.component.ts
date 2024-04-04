@@ -33,12 +33,12 @@ export class PedidosComponent implements OnInit, OnDestroy {
 
   data$!: Observable<PedidoItem[]>;
 
-  visibleAlteracaoPedido = false;
-  tituloAlteracaoPedido = '';
-  quantidadeAlteracaoPedido?: number;
-  acompanhamentosAlteracaoPedido: string[] = [];
+  alteracaoPedidoVisible = false;
+  alteracaoPedidoTitulo = '';
+  alteracaoPedidoQuantidade?: number;
+  alteracaoPedidoAcompanhamentos: string[] = [];
 
-  formAlteracaoPedido: FormGroup<{
+  alteracaoPedidoForm: FormGroup<{
     observacao: FormControl<string | null>;
   }> = this.formBuilder.group({
     observacao: ['', [Validators.maxLength(100)]],
@@ -164,35 +164,42 @@ export class PedidosComponent implements OnInit, OnDestroy {
     acompanhamentos: Prato[] = [],
     observacao?: string,
   ) {
-    this.tituloAlteracaoPedido = titulo;
-    this.acompanhamentosAlteracaoPedido = acompanhamentos.map((m) => m._id!);
-    this.quantidadeAlteracaoPedido = quantidade;
+    this.alteracaoPedidoTitulo = titulo;
+    this.alteracaoPedidoAcompanhamentos = acompanhamentos.map((m) => m._id!);
+    this.alteracaoPedidoQuantidade = quantidade;
+    this.alteracaoPedidoForm.get('observacao')?.setValue(observacao || '');
 
-    this.formAlteracaoPedido.get('observacao')?.setValue(observacao || '');
-
-    this.visibleAlteracaoPedido = true;
+    this.alteracaoPedidoVisible = true;
   }
 
   closeAlteracaoPedido() {
-    this.visibleAlteracaoPedido = false;
+    this.limparCamposAlteracaoPedido();
   }
 
   salvarAlteracaoPedido() {
     if (
-      !this.quantidadeAlteracaoPedido ||
-      this.quantidadeAlteracaoPedido === 0
+      !this.alteracaoPedidoQuantidade ||
+      this.alteracaoPedidoQuantidade === 0
     ) {
       this.notify.warning(LBL_ALERTA, 'Informe uma quantidade!');
       return;
     }
 
-    this.visibleAlteracaoPedido = false;
-
     this.subjectAlteracaoPedido.next({
-      quantidade: this.quantidadeAlteracaoPedido!,
-      acompanhamentos: this.acompanhamentosAlteracaoPedido,
+      quantidade: this.alteracaoPedidoQuantidade!,
+      acompanhamentos: this.alteracaoPedidoAcompanhamentos,
       observacao:
-        this.formAlteracaoPedido.get('observacao')?.value || undefined,
+        this.alteracaoPedidoForm.get('observacao')?.value || undefined,
     });
+
+    this.limparCamposAlteracaoPedido();
+  }
+
+  private limparCamposAlteracaoPedido() {
+    this.alteracaoPedidoVisible = false;
+    this.alteracaoPedidoTitulo = '';
+    this.alteracaoPedidoAcompanhamentos = [];
+    this.alteracaoPedidoQuantidade = undefined;
+    this.alteracaoPedidoForm.get('observacao')?.setValue('');
   }
 }
