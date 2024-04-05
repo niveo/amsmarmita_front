@@ -2,24 +2,19 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { NgTemplateOutlet, registerLocaleData } from '@angular/common';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+
 import pt from '@angular/common/locales/pt';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NZ_I18N, pt_BR } from 'ng-zorro-antd/i18n';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { IconsProviderUserModule } from './common/icons-provider-user.module';
 import { NzModule } from './common/nz.module';
-import { HttpsRequestInterceptor } from './common/requests.interceptor';
-import { TimeoutInterceptor } from './common/timeout.interceptor';
-import { DEFAULT_TIMEOUT, TOKEN_APP_CONFIG } from './common/tokens';
 import { GrupoPrincipalComponent } from './componentes/grupo-principal.component';
 import { AmsIconComponent } from './componentes/icon.component';
 import { ComedoresComponent } from './pages/comedores/comedores.component';
-import { GrupoComponent } from './pages/grupos/grupos.component';
 import { MarmitasComedoresComponent } from './pages/marmitas/marmitas-comedores.component';
 import { MarmitasComponent } from './pages/marmitas/marmitas.component';
 import { PratosFormComposicaoComponent } from './pages/pratos/pratos-form-composicao.component';
@@ -40,7 +35,7 @@ import { RelatorioComponent } from './pages/relatorio/relatorio.component';
 import { RelatorioItemComponent } from './pages/relatorio/relatorio-item.component';
 import { RelatorioGeralComponent } from './pages/relatorio/relatorio-geral.component';
 import { IngredienteFormComponent } from './pages/ingrediente/ingrediente-form.component';
-import { GrupoFormComponent } from './pages/grupos/grupos-form.component';
+import { CoreModule } from './core.module';
 
 registerLocaleData(pt);
 
@@ -50,8 +45,6 @@ registerLocaleData(pt);
     ComedoresComponent,
     LoginComponent,
     MarmitasComponent,
-    GrupoComponent,
-    GrupoFormComponent,
     PratoComponent,
     PratosFormComponent,
     PratosFormComposicaoComponent,
@@ -68,8 +61,7 @@ registerLocaleData(pt);
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
+    ReactiveFormsModule, 
     BrowserAnimationsModule,
     NgTemplateOutlet,
     AmsIconComponent,
@@ -80,22 +72,9 @@ registerLocaleData(pt);
     SelecaoNumerosComponent,
     CorBoardaDirective,
     SelecaoIngredientesComponent,
+    CoreModule,
   ],
-  providers: [
-    { provide: TOKEN_APP_CONFIG, useValue: environment },
-    { provide: NZ_I18N, useValue: pt_BR },
-    ComedoresService,
-    MarmitaService,
-    IngredienteService,
-
-    { provide: DEFAULT_TIMEOUT, useValue: 30000 },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: HttpsRequestInterceptor,
-      multi: true,
-    },
-    { provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true },
-  ],
+  providers: [ComedoresService, MarmitaService, IngredienteService],
   bootstrap: [AppComponent],
 })
 export class AppModule {
