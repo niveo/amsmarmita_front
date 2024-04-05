@@ -1,8 +1,8 @@
 import { Component, input } from '@angular/core';
 
 @Component({
-  selector: 'app-relatorio-item-component',
-  templateUrl: './relatorio-item.component.html',
+  selector: 'app-relatorio-geral-component',
+  templateUrl: './relatorio-geral.component.html',
   styles: [
     `
       .lbl-item-titulo {
@@ -27,6 +27,6 @@ import { Component, input } from '@angular/core';
     `,
   ],
 })
-export class RelatorioItemComponent {
+export class RelatorioGeralComponent {
   registros = input.required<any[]>(); 
 }

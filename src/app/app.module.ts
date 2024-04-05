@@ -38,6 +38,7 @@ import { IngredienteComponent } from './pages/ingrediente/ingrediente.component'
 import { SelecaoIngredientesComponent } from './componentes/selecao-ingredientes.component';
 import { RelatorioComponent } from './pages/relatorio/relatorio.component';
 import { RelatorioItemComponent } from './pages/relatorio/relatorio-item.component';
+import { RelatorioGeralComponent } from './pages/relatorio/relatorio-geral.component';
 
 registerLocaleData(pt);
 
@@ -57,6 +58,7 @@ registerLocaleData(pt);
     IngredienteComponent,
     RelatorioComponent,
     RelatorioItemComponent,
+    RelatorioGeralComponent
   ],
   imports: [
     BrowserModule,
