@@ -11,8 +11,7 @@ import { isMobile } from './common/util';
 import { NzDrawerPlacement } from 'ng-zorro-antd/drawer';
 import { EventType, Router } from '@angular/router';
 import { TOKEN_APP_CONFIG } from './common/tokens';
-import { AuthService } from './auth/auth.service';
-import { Observable } from 'rxjs';
+import { AuthService } from './auth/auth.service'; 
 import { SessionTimerService } from './services/session-timer.service';
 import {
   NzNotificationComponent,

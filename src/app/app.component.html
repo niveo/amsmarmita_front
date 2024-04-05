@@ -18,7 +18,12 @@
         <router-outlet></router-outlet>
       </nz-content>
     </nz-layout>
-    <nz-footer>©2024 Implement By AMS <span [versaosis]="1"></span></nz-footer>
+    <nz-footer
+      >©2024 Implement By AMS
+      @if (!isMobile) {
+        <span versaosis></span>
+      }
+    </nz-footer>
   </nz-content>
 </nz-layout>
 
@@ -49,7 +54,8 @@
 
 <ng-template #tplFooter>
   <div class="fx-row wf">
-    <span class="fx-flex" versaosis style="padding-left: 5px"></span>
+    <span class="fx-flex" versaosis></span>
+
     <button nz-button nzType="dashed" (click)="close()">
       <span nz-icon nzType="menu-unfold" nzTheme="outline"></span>
     </button>

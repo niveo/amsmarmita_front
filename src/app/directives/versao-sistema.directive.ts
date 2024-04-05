@@ -1,5 +1,6 @@
 import { Directive, ElementRef, Inject, Input, inject } from '@angular/core';
 import { TOKEN_APP_CONFIG } from '../common/tokens';
+import { isMobile } from '../common/util';
 
 @Directive({
   selector: '[versaosis]',
@@ -7,16 +8,8 @@ import { TOKEN_APP_CONFIG } from '../common/tokens';
 })
 export class VersaoSistemaDirective {
   private readonly config = inject(TOKEN_APP_CONFIG);
-  constructor(private el: ElementRef) {}
-
-  @Input()
-  set versaosis(value: any) {
-    if (value === 0) {
-      this.el.nativeElement.innerText = this.config.versaoSistemaDescricao;
-    } else {
-      if (value === 1) {
-        this.el.nativeElement.innerText = this.config.versaoSistemaVersao;
-      }
-    }
+  isMobile = isMobile;
+  constructor(private el: ElementRef) {
+    this.el.nativeElement.innerText = this.config.versaoSistemaDescricao;
   }
 }
