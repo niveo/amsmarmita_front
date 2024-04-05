@@ -29,9 +29,7 @@
                 @if (!pratoStore.pedidoItemVinculado[item!._id!]) {
                   <nz-card
                     style="width: 100%"
-                    [nzActions]="
-                      tipoSelecao() ? [] : [tplEdit, tplCopy, tplDelete]
-                    "
+                    [nzActions]="tipoSelecao() ? [] : [tplEdit, tplDelete]"
                     [nzHoverable]="tipoSelecao()"
                     (click)="incluirPratoPedido(item)"
                   >
@@ -61,17 +59,7 @@
                     (click)="editar(item)"
                   ></span>
                 </ng-template>
-                <ng-template #tplCopy>
-                  <span
-                    nz-icon
-                    nzType="copy"
-                    nzTheme="outline"
-                    nz-popconfirm
-                    nzPopconfirmTitle="Deseja duplicar esse registro?"
-                    nzPopconfirmPlacement="bottom"
-                    (nzOnConfirm)="duplicar(item)"
-                  ></span>
-                </ng-template>
+
                 <ng-template #tplDelete>
                   <span
                     nz-icon
@@ -123,16 +111,15 @@
               </div>
             </div>
           </ng-template>
-          <ng-template #tplExtra>
-            <span
-              nz-icon
-              nzType="plus-circle"
-              nzTheme="outline"
-              (click)="$event.stopPropagation(); novoPratoGrupo(grupo)"
-            ></span>
-          </ng-template>
         }
       </nz-collapse>
     </div>
   </div>
 </div>
+
+@if (editarForm) {
+  <app-pratos-form-component
+    [(visible)]="editarForm"
+    [data]="editarFormData()"
+  />
+}

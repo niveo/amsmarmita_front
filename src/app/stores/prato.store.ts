@@ -1,14 +1,13 @@
 import { v1 } from 'uuid';
-import { Injectable, effect, inject, signal } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   BehaviorSubject,
   EMPTY,
   catchError,
-  finalize,
   iif,
-  map,
   mergeMap,
   of,
+  tap,
 } from 'rxjs';
 import { GrupoService } from '../services/grupo.service';
 import { BaseStore } from './base.store';
@@ -101,8 +100,6 @@ export class PratoStore extends BaseStore {
     composicoes,
     observacao,
     ingredientes,
-    resolve,
-    reject,
   }: {
     _id?: string | null;
     nome?: string;
@@ -110,10 +107,8 @@ export class PratoStore extends BaseStore {
     composicoes?: string[] | null;
     observacao?: string | null;
     ingredientes?: string[] | null;
-    resolve: (value: any) => void;
-    reject: (error: any) => void;
   }) {
-    of(_id)
+    return of(_id)
       .pipe(
         mergeMap((value) =>
           iif(
@@ -135,41 +130,28 @@ export class PratoStore extends BaseStore {
             }),
           ),
         ),
-        catchError((error: any) => {
-          console.error(error);
-          this.notify.error(LBL_ERRO, error.message);
-
-          reject(error);
-
-          return EMPTY;
-        }),
-        finalize(() => {
-          resolve(true);
-        }),
       )
-      .subscribe({
-        next: (response: Prato) => {
-          const registros = this._dataSource.getValue();
+      .pipe(
+        tap({
+          next: (response: Prato) => {
+            const registros = this._dataSource.getValue();
 
-          const grupo = registros.find((f) => f._id === response.grupo?._id);
+            const grupo = registros.find((f) => f._id === response.grupo?._id);
 
-          const pratoIndex = grupo!.pratos?.findIndex(
-            (f) => f._id === response._id,
-          )!;
+            const pratoIndex = grupo!.pratos?.findIndex(
+              (f) => f._id === response._id,
+            )!;
 
-          if (pratoIndex !== -1) {
-            grupo!.pratos![pratoIndex] = response;
-          } else {
-            grupo!.pratos!.push(response);
-          }
+            if (pratoIndex !== -1) {
+              grupo!.pratos![pratoIndex] = response;
+            } else {
+              grupo!.pratos!.push(response);
+            }
 
-          this._dataSource.next([...registros]);
-
-          this.notify.success(LBL_ATUALIZACAO, MSG_ATUALIZADO_SUCESSO, {
-            nzKey: KEY_NOFITY_SALVAR,
-          });
-        },
-      });
+            this._dataSource.next([...registros]);
+          },
+        }),
+      );
   }
 
   limparData() {
