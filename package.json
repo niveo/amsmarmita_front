@@ -1,6 +1,6 @@
 {
   "name": "amsmarmita-front",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -9,7 +9,10 @@
     "test": "ng test",
     "prebuild.prod": "node git.version.js",
     "build:prod": "npm run prebuild.prod && ng build --configuration production",
-    "build:dev": "npm run prebuild.prod && ng build --configuration development"
+    "build:dev": "npm run prebuild.prod && ng build --configuration development",
+    "analyze": "webpack-bundle-analyzer dist/stats.json",
+    "build:stats": "ng build --configuration production --stats-json",
+    "analyzeb": "yarn build:stats && yarn analyze"
   },
   "private": true,
   "dependencies": {
@@ -44,6 +47,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "prettier": "^3.2.5",
-    "typescript": "~5.3.3"
+    "typescript": "~5.3.3",
+    "webpack-bundle-analyzer": "^4.10.1"
   }
 }
