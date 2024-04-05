@@ -1,5 +1,5 @@
-import { Component, Signal, computed, inject, signal } from '@angular/core';
-import { EMPTY, Observable, catchError } from 'rxjs';
+import { Component, inject, signal } from '@angular/core';
+import { Observable } from 'rxjs';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import {
   MSG_EXCLUIR_SUCESSO,
@@ -8,8 +8,6 @@ import {
 } from '../../common/constantes';
 import { IngredienteService } from '../../services/ingrediente.service';
 import { Ingrediente } from '../../model';
-import { NzModalService } from 'ng-zorro-antd/modal';
-import { IngredienteFormComponent } from './ingrediente-form.component';
 
 @Component({
   selector: 'app-ingrediente-component',
@@ -27,18 +25,14 @@ export class IngredienteComponent {
   private readonly service = inject(IngredienteService);
   private readonly notify = inject(NzNotificationService);
 
-  private readonly modal = inject(NzModalService);
+  editarFormData = signal<any>(null);
+  editarForm = false;
 
   data$!: Observable<any[]>;
   loading = signal<boolean>(false);
 
   constructor() {
-    this.data$ = this.service.data$.pipe(
-      catchError((error: any) => {
-        this.notify.error('Erro', error.message);
-        return EMPTY;
-      }),
-    );
+    this.data$ = this.service.data$;
   }
 
   incluir() {
@@ -46,14 +40,8 @@ export class IngredienteComponent {
   }
 
   editar(item?: Ingrediente) {
-    this.modal.create({
-      nzContent: IngredienteFormComponent,
-      nzData: { ...item },
-      nzKeyboard: false,
-      nzMask: false,
-      nzTitle: 'Ingrediente',
-      nzFooter: null,
-    });
+    this.editarFormData.set({ ...item });
+    this.editarForm = true;
   }
 
   remover(item: Ingrediente) {

@@ -1,11 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { EMPTY, catchError, finalize, iif, mergeMap, of } from 'rxjs';
 import {
@@ -27,25 +26,10 @@ export class IngredienteFormComponent {
   private readonly notify = inject(NzNotificationService);
   private readonly formBuilder = inject(FormBuilder);
 
-  readonly #modal = inject(NzModalRef);
-  readonly nzModalData: Ingrediente = inject(NZ_MODAL_DATA);
-
-  constructor() {
-    this.#modal.updateConfig({
-      nzFooter: [
-        {
-          label: 'Sair',
-          onClick: () => this.#modal.close(),
-        },
-        {
-          label: 'Salvar',
-          type: 'primary',
-          onClick: () =>
-            new Promise((resolve, reject) => this.salvar(resolve, reject)),
-        },
-      ],
-    });
-  }
+  visible = input.required<boolean>();
+  visibleChange = output<boolean>();
+  isConfirmLoading = false;
+  data = input.required<Ingrediente>();
 
   form: FormGroup<{
     _id: FormControl<string | null>;
@@ -62,16 +46,18 @@ export class IngredienteFormComponent {
 
   ngOnInit() {
     this.form.setValue({
-      _id: this.nzModalData._id || '',
-      nome: this.nzModalData.nome || '',
-      observacao: this.nzModalData.observacao || '',
+      _id: this.data()._id || '',
+      nome: this.data().nome || '',
+      observacao: this.data().observacao || '',
     });
   }
 
-  salvar(resolve: (value: any) => void, reject: (value: any) => void) {
+  salvar() {
     if (!this.form.valid) return;
 
     const data = this.form.value;
+
+    this.isConfirmLoading = true;
 
     of(data._id)
       .pipe(
@@ -85,7 +71,7 @@ export class IngredienteFormComponent {
         catchError((error: any) => {
           console.error(error);
           this.notify.error('Erro', error.message);
-          reject(error);
+          this.isConfirmLoading = false;
           return EMPTY;
         }),
         finalize(() => {
@@ -94,15 +80,15 @@ export class IngredienteFormComponent {
             nome: null,
             observacao: null,
           });
+          this.isConfirmLoading = false;
         }),
       )
       .subscribe({
         next: () => {
-          resolve(true);
           this.notify.success(LBL_ATUALIZACAO, MSG_ATUALIZADO_SUCESSO, {
             nzKey: KEY_NOFITY_SALVAR,
           });
-          this.#modal.close();
+          this.visibleChange.emit(false);
         },
       });
   }
