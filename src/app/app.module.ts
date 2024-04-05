@@ -14,12 +14,8 @@ import { IconsProviderUserModule } from './common/icons-provider-user.module';
 import { NzModule } from './common/nz.module';
 import { GrupoPrincipalComponent } from './componentes/grupo-principal.component';
 import { AmsIconComponent } from './componentes/icon.component';
-import { ComedoresComponent } from './pages/comedores/comedores.component';
 import { MarmitasComedoresComponent } from './pages/marmitas/marmitas-comedores.component';
 import { MarmitasComponent } from './pages/marmitas/marmitas.component';
-import { PratosFormComposicaoComponent } from './pages/pratos/pratos-form-composicao.component';
-import { PratosFormComponent } from './pages/pratos/pratos-form.component';
-import { PratoComponent } from './pages/pratos/pratos.component';
 import { ComedoresService } from './services/comedores.service';
 import { MarmitaService } from './services/marmita.service';
 import { LoginComponent } from './pages/login/login.component';
@@ -35,13 +31,13 @@ import { RelatorioItemComponent } from './pages/relatorio/relatorio-item.compone
 import { RelatorioGeralComponent } from './pages/relatorio/relatorio-geral.component';
 import { CoreModule } from './core.module';
 import { PratosModule } from './pages/pratos/pratos.module';
+import { ComedoresModule } from './pages/comedores/comedores.module';
 
 registerLocaleData(pt);
 
 @NgModule({
   declarations: [
     AppComponent,
-    ComedoresComponent,
     LoginComponent,
     MarmitasComponent,
     MarmitasComedoresComponent,
@@ -55,7 +51,7 @@ registerLocaleData(pt);
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule, 
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     NgTemplateOutlet,
     AmsIconComponent,
@@ -67,7 +63,9 @@ registerLocaleData(pt);
     CorBoardaDirective,
     SelecaoIngredientesComponent,
     CoreModule,
-    PratosModule
+
+    PratosModule,
+    ComedoresModule
   ],
   providers: [ComedoresService, MarmitaService, IngredienteService],
   bootstrap: [AppComponent],
