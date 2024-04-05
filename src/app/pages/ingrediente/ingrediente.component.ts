@@ -1,32 +1,15 @@
-import { Component, DestroyRef, Signal, computed, inject } from '@angular/core';
-import {
-  EMPTY,
-  Observable,
-  catchError,
-  finalize,
-  iif,
-  mergeMap,
-  of,
-} from 'rxjs';
+import { Component, Signal, computed, inject, signal } from '@angular/core';
+import { EMPTY, Observable, catchError } from 'rxjs';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import {
   MSG_EXCLUIR_SUCESSO,
-  MSG_ATUALIZADO_SUCESSO,
-  LBL_ATUALIZACAO,
   LBL_EXCLUSAO,
   LBL_ERRO,
 } from '../../common/constantes';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
 import { IngredienteService } from '../../services/ingrediente.service';
 import { Ingrediente } from '../../model';
-import { v1 } from 'uuid';
-
-const KEY_NOFITY_SALVAR = v1().toString();
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { IngredienteFormComponent } from './ingrediente-form.component';
 
 @Component({
   selector: 'app-ingrediente-component',
@@ -43,25 +26,11 @@ const KEY_NOFITY_SALVAR = v1().toString();
 export class IngredienteComponent {
   private readonly service = inject(IngredienteService);
   private readonly notify = inject(NzNotificationService);
-  protected readonly destroyRef = inject(DestroyRef);
-  private readonly formBuilder = inject(FormBuilder);
+
+  private readonly modal = inject(NzModalService);
 
   data$!: Observable<any[]>;
-  loading: Signal<boolean> = computed(() => this.service.loading());
-  isVisible = false;
-
-  form: FormGroup<{
-    _id: FormControl<string | null>;
-    nome: FormControl<string | null>;
-    observacao: FormControl<string | null>;
-  }> = this.formBuilder.group({
-    _id: [''],
-    nome: [
-      '',
-      [Validators.required, Validators.minLength(2), Validators.maxLength(50)],
-    ],
-    observacao: ['', Validators.maxLength(100)],
-  });
+  loading = signal<boolean>(false);
 
   constructor() {
     this.data$ = this.service.data$.pipe(
@@ -72,17 +41,19 @@ export class IngredienteComponent {
     );
   }
 
-  private carregar() {
-    this.service.updateData();
+  incluir() {
+    this.editar();
   }
 
-  editar(item: Ingrediente) {
-    this.form.setValue({
-      _id: item._id!,
-      nome: item.nome!,
-      observacao: item.observacao!,
+  editar(item?: Ingrediente) {
+    this.modal.create({
+      nzContent: IngredienteFormComponent,
+      nzData: { ...item },
+      nzKeyboard: false,
+      nzMask: false,
+      nzTitle: 'Ingrediente',
+      nzFooter: null,
     });
-    this.isVisible = true;
   }
 
   remover(item: Ingrediente) {
@@ -93,46 +64,7 @@ export class IngredienteComponent {
       },
       next: () => {
         this.notify.success(LBL_EXCLUSAO, MSG_EXCLUIR_SUCESSO);
-        this.carregar();
       },
     });
-  }
-
-  salvar() {
-    if (!this.form.valid) return;
-
-    const data = this.form.value;
-
-    of(data._id)
-      .pipe(
-        mergeMap((value) =>
-          iif(
-            () => !value,
-            this.service.inlcluir(data.nome!, data.observacao!),
-            this.service.atualizar(value!, data.nome!, data.observacao!),
-          ),
-        ),
-        catchError((error: any) => {
-          console.error(error);
-          this.notify.error('Erro', error.message);
-          return EMPTY;
-        }),
-        finalize(() => {
-          this.form.setValue({
-            _id: null,
-            nome: null,
-            observacao: null,
-          });
-          this.isVisible = false;
-        }),
-      )
-      .subscribe({
-        next: () => {
-          this.notify.success(LBL_ATUALIZACAO, MSG_ATUALIZADO_SUCESSO, {
-            nzKey: KEY_NOFITY_SALVAR,
-          });
-          this.carregar();
-        },
-      });
   }
 }

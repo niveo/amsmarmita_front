@@ -16,8 +16,6 @@ export class PratosFormComponent implements OnInit {
 
   validateForm!: FormGroup<ModelFormPrato>;
 
- 
-
   ngOnInit() {
     this.validateForm = this.nzModalData.validateForm;
     this.grupoService.data$.subscribe((response) => (this.grupos = response));

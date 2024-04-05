@@ -8,17 +8,13 @@ export class IngredienteService {
   private readonly http = inject(HttpClient);
   private _resourceData$ = new BehaviorSubject<void>(undefined);
   private apiRequest$ = this.http.get<Ingrediente[]>('/ingredientes');
-  loading = signal(true);
 
   public data$ = this._resourceData$.pipe(
-    mergeMap(() =>
-      this.apiRequest$.pipe(finalize(() => this.loading.set(false))),
-    ),
+    mergeMap(() => this.apiRequest$),
     shareReplay(1),
   );
 
   updateData() {
-    this.loading.set(true);
     this._resourceData$.next();
   }
 
@@ -27,20 +23,26 @@ export class IngredienteService {
   }
 
   delete(id: string) {
-    return this.http.delete<any>('/ingredientes/' + id);
+    return this.http
+      .delete<any>('/ingredientes/' + id)
+      .pipe(finalize(() => this.updateData()));
   }
 
   atualizar(id: string, nome: string, observacao?: string) {
-    return this.http.put<any>('/ingredientes/' + id, {
-      nome,
-      observacao: observacao || null,
-    });
+    return this.http
+      .put<any>('/ingredientes/' + id, {
+        nome,
+        observacao: observacao || null,
+      })
+      .pipe(finalize(() => this.updateData()));
   }
 
   inlcluir(nome: string, observacao?: string) {
-    return this.http.post<any>('/ingredientes', {
-      nome,
-      observacao: observacao || null,
-    });
+    return this.http
+      .post<any>('/ingredientes', {
+        nome,
+        observacao: observacao || null,
+      })
+      .pipe(finalize(() => this.updateData()));
   }
 }
