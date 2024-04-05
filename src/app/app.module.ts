@@ -34,6 +34,7 @@ import { RelatorioComponent } from './pages/relatorio/relatorio.component';
 import { RelatorioItemComponent } from './pages/relatorio/relatorio-item.component';
 import { RelatorioGeralComponent } from './pages/relatorio/relatorio-geral.component';
 import { CoreModule } from './core.module';
+import { PratosModule } from './pages/pratos/pratos.module';
 
 registerLocaleData(pt);
 
@@ -43,9 +44,6 @@ registerLocaleData(pt);
     ComedoresComponent,
     LoginComponent,
     MarmitasComponent,
-    PratoComponent,
-    PratosFormComponent,
-    PratosFormComposicaoComponent,
     MarmitasComedoresComponent,
     PedidosComponent,
     PedidosAcompanhamentoComponent,
@@ -69,6 +67,7 @@ registerLocaleData(pt);
     CorBoardaDirective,
     SelecaoIngredientesComponent,
     CoreModule,
+    PratosModule
   ],
   providers: [ComedoresService, MarmitaService, IngredienteService],
   bootstrap: [AppComponent],
