@@ -40,6 +40,7 @@ import { RelatorioComponent } from './pages/relatorio/relatorio.component';
 import { RelatorioItemComponent } from './pages/relatorio/relatorio-item.component';
 import { RelatorioGeralComponent } from './pages/relatorio/relatorio-geral.component';
 import { IngredienteFormComponent } from './pages/ingrediente/ingrediente-form.component';
+import { GrupoFormComponent } from './pages/grupos/grupos-form.component';
 
 registerLocaleData(pt);
 
@@ -50,6 +51,7 @@ registerLocaleData(pt);
     LoginComponent,
     MarmitasComponent,
     GrupoComponent,
+    GrupoFormComponent,
     PratoComponent,
     PratosFormComponent,
     PratosFormComposicaoComponent,
@@ -60,7 +62,7 @@ registerLocaleData(pt);
     RelatorioComponent,
     RelatorioItemComponent,
     RelatorioGeralComponent,
-    IngredienteFormComponent
+    IngredienteFormComponent,
   ],
   imports: [
     BrowserModule,
