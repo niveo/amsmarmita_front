@@ -1,6 +1,6 @@
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NgModule } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { IconsProviderUserModule } from '../../common/icons-provider-user.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -26,8 +26,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
     NzTabsModule,
     NzDrawerModule,
     NzCollapseModule,
-    NzRadioModule,
-    PratosModule,
+    NzRadioModule, 
     NzButtonModule,
     NzCheckboxModule,
     IconsProviderUserModule,
@@ -41,7 +40,11 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
     FormsModule,
     PedidosRoutingModule,
     NzToolTipModule,
-    NzPopconfirmModule
+    NzPopconfirmModule,
+    NgTemplateOutlet,
+
+    //Manter modulo no final para não entrar como rota
+    PratosModule,
   ],
 })
 export class PedidosModule {}
