@@ -2,12 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ComedoresComponent } from './pages/comedores/comedores.component';
 import { MarmitasComponent } from './pages/marmitas/marmitas.component';
-import { GrupoComponent } from './pages/grupos/grupos.component';
-import { PratoComponent } from './pages/pratos/pratos.component';
 import { LoginComponent } from './pages/login/login.component';
 import { canActivateTeam } from './auth/auth.service';
 import { PedidosComponent } from './pages/pedidos/pedidos.component';
-import { IngredienteComponent } from './pages/ingrediente/ingrediente.component';
 import { RelatorioComponent } from './pages/relatorio/relatorio.component';
 
 const routes: Routes = [
@@ -38,7 +35,8 @@ const routes: Routes = [
   },
   {
     path: 'pratos',
-    component: PratoComponent,
+    loadChildren: () =>
+      import('./pages/pratos/pratos.module').then((m) => m.PratosModule),
     canActivate: [canActivateTeam],
   },
   {
