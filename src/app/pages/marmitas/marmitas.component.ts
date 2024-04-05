@@ -20,10 +20,10 @@ import {
   LBL_ATUALIZACAO,
 } from '../../common/constantes';
 import { MarmitaService } from '../../services/marmita.service';
-import { Marmita } from '../../model/marmita';
-import { MarmitasComedoresComponent } from './marmitas-comedores.component';
+import { Marmita } from '../../model/marmita'; 
 import { isAfter, format, parseJSON } from 'date-fns';
 import { NzDrawerService } from 'ng-zorro-antd/drawer';
+import { SelecaoComedoresComponent } from '../../componentes/selecao-comedores.component';
 
 @Component({
   selector: 'app-marmitas-component',
@@ -145,7 +145,7 @@ export class MarmitasComponent {
     }
     this.nzDrawerService.create({
       nzClosable: false,
-      nzContent: MarmitasComedoresComponent,
+      nzContent: SelecaoComedoresComponent,
       nzTitle: 'Comedores',
       nzPlacement: 'bottom',
       nzData: {

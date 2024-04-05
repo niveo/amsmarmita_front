@@ -4,7 +4,6 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { IconsProviderUserModule } from '../../common/icons-provider-user.module';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { MarmitasComponent } from './marmitas.component';
-import { MarmitasComedoresComponent } from './marmitas-comedores.component';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { ComedoresModule } from '../comedores/comedores.module';
@@ -17,7 +16,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 
 @NgModule({
-  declarations: [MarmitasComponent, MarmitasComedoresComponent ],
+  declarations: [MarmitasComponent],
   exports: [],
   imports: [
     NzSkeletonModule,
@@ -26,7 +25,7 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
     NzButtonModule,
     IconsProviderUserModule,
     NzCardModule,
-    NzDatePickerModule, 
+    NzDatePickerModule,
     NzInputModule,
     FormsModule,
     DatePipe,
