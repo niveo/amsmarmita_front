@@ -32,6 +32,8 @@ export class GrupoComponent {
   editarForm = false;
 
   constructor() {
+    console.log('A');
+    
     this.data$ = this.service.data$;
   }
 

@@ -32,7 +32,8 @@ const routes: Routes = [
   },
   {
     path: 'grupos',
-    component: GrupoComponent,
+    loadChildren: () =>
+      import('./pages/grupos/grupos.module').then((m) => m.GruposModule),
     canActivate: [canActivateTeam],
   },
   {
