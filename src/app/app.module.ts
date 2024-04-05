@@ -29,12 +29,10 @@ import { PedidosComponent } from './pages/pedidos/pedidos.component';
 import { PedidosAcompanhamentoComponent } from './pages/pedidos/acompanhamento/pedidos-companhamento.component';
 import { CorBoardaDirective } from './directives/cor-borda.directive';
 import { IngredienteService } from './services/ingrediente.service';
-import { IngredienteComponent } from './pages/ingrediente/ingrediente.component';
 import { SelecaoIngredientesComponent } from './componentes/selecao-ingredientes.component';
 import { RelatorioComponent } from './pages/relatorio/relatorio.component';
 import { RelatorioItemComponent } from './pages/relatorio/relatorio-item.component';
 import { RelatorioGeralComponent } from './pages/relatorio/relatorio-geral.component';
-import { IngredienteFormComponent } from './pages/ingrediente/ingrediente-form.component';
 import { CoreModule } from './core.module';
 
 registerLocaleData(pt);
@@ -51,11 +49,9 @@ registerLocaleData(pt);
     MarmitasComedoresComponent,
     PedidosComponent,
     PedidosAcompanhamentoComponent,
-    IngredienteComponent,
     RelatorioComponent,
     RelatorioItemComponent,
     RelatorioGeralComponent,
-    IngredienteFormComponent,
   ],
   imports: [
     BrowserModule,

@@ -16,59 +16,54 @@
   </div>
   <div class="comp-content">
     <div class="comp-inner">
-      @if (data$ | async; as data) {
-        <nz-list nzItemLayout="horizontal" nzBordered nzSize="large">
-          @for (item of data; track item._id) {
-            <nz-list-item [corBoarda]="item.cor">
-              <nz-list-item-meta>
-                <nz-list-item-meta-title>
-                  <app-grupo-principal-component [principal]="item.principal" />
-                  {{ item.nome }}
-                </nz-list-item-meta-title>
-                @if (item.observacao) {
-                  <nz-list-item-meta-description>
-                    {{ item.observacao }}
-                  </nz-list-item-meta-description>
-                }
-              </nz-list-item-meta>
+      <nz-list nzItemLayout="horizontal" nzBordered nzSize="large">
+        @for (item of data$ | async; track item._id) {
+          <nz-list-item [corBoarda]="item.cor">
+            <nz-list-item-meta>
+              <nz-list-item-meta-title>
+                <app-grupo-principal-component [principal]="item.principal" />
+                {{ item.nome }}
+              </nz-list-item-meta-title>
+              @if (item.observacao) {
+                <nz-list-item-meta-description>
+                  {{ item.observacao }}
+                </nz-list-item-meta-description>
+              }
+            </nz-list-item-meta>
 
-              <ul nz-list-item-actions>
-                <nz-list-item-action>
-                  <button
-                    nz-button
-                    nzType="dashed"
-                    nz-tooltip
-                    nzTooltipTitle="Editar"
-                    nzSize="small"
-                    (click)="editar(item)"
-                  >
-                    <span nz-icon nzType="edit" nzTheme="outline"></span>
-                  </button>
-                </nz-list-item-action>
-                <nz-list-item-action>
-                  <button
-                    nzDanger
-                    nz-button
-                    nzSize="small"
-                    nzType="dashed"
-                    nz-tooltip
-                    nzTooltipTitle="Remover"
-                    nz-popconfirm
-                    nzPopconfirmTitle="Deseja remover esse registro?"
-                    nzPopconfirmPlacement="bottom"
-                    (nzOnConfirm)="remover(item)"
-                  >
-                    <span nz-icon nzType="delete" nzTheme="outline"></span>
-                  </button>
-                </nz-list-item-action>
-              </ul>
-            </nz-list-item>
-          }
-          @if (data.length === 0) {
-            <nz-list-empty></nz-list-empty>
-          }
-        </nz-list>
-      }
+            <ul nz-list-item-actions>
+              <nz-list-item-action>
+                <button
+                  nz-button
+                  nzType="dashed"
+                  nz-tooltip
+                  nzTooltipTitle="Editar"
+                  nzSize="small"
+                  (click)="editar(item)"
+                >
+                  <span nz-icon nzType="edit" nzTheme="outline"></span>
+                </button>
+              </nz-list-item-action>
+              <nz-list-item-action>
+                <button
+                  nzDanger
+                  nz-button
+                  nzSize="small"
+                  nzType="dashed"
+                  nz-tooltip
+                  nzTooltipTitle="Remover"
+                  nz-popconfirm
+                  nzPopconfirmTitle="Deseja remover esse registro?"
+                  nzPopconfirmPlacement="bottom"
+                  (nzOnConfirm)="remover(item)"
+                >
+                  <span nz-icon nzType="delete" nzTheme="outline"></span>
+                </button>
+              </nz-list-item-action>
+            </ul>
+          </nz-list-item>
+        }
+      </nz-list>
     </div>
   </div>
 </div>

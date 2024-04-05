@@ -48,7 +48,10 @@ const routes: Routes = [
   },
   {
     path: 'ingredientes',
-    component: IngredienteComponent,
+    loadChildren: () =>
+      import('./pages/ingrediente/ingrediente.module').then(
+        (m) => m.IngredienteModule,
+      ),
     canActivate: [canActivateTeam],
   },
   {

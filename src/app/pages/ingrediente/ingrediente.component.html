@@ -16,9 +16,9 @@
   </div>
   <div class="comp-content">
     <div class="comp-inner">
-      @if (data$ | async; as data) {
-        <nz-list nzItemLayout="horizontal" nzBordered nzSize="large">
-          <nz-list-item *ngFor="let item of data">
+      <nz-list nzItemLayout="horizontal" nzBordered nzSize="large">
+        @for (item of data$ | async; track item._id) {
+          <nz-list-item>
             <nz-list-item-meta>
               <nz-list-item-meta-title>
                 {{ item.nome }}
@@ -61,13 +61,11 @@
               </nz-list-item-action>
             </ul>
           </nz-list-item>
-          <nz-list-empty *ngIf="data.length === 0"></nz-list-empty>
-        </nz-list>
-      }
+        }
+      </nz-list>
     </div>
   </div>
 </div>
-
 
 @if (editarForm) {
   <app-ingrediente-form-component
