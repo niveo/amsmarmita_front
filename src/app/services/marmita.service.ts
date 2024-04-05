@@ -2,7 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Marmita } from '../model/marmita';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class MarmitaService {
   private readonly http = inject(HttpClient);
 

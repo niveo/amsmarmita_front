@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router'; 
+import { RouterModule, Routes } from '@angular/router';
 import { MarmitasComponent } from './pages/marmitas/marmitas.component';
 import { LoginComponent } from './pages/login/login.component';
 import { canActivateTeam } from './auth/auth.service';
@@ -26,7 +26,8 @@ const routes: Routes = [
   },
   {
     path: 'marmitas',
-    component: MarmitasComponent,
+    loadChildren: () =>
+      import('./pages/marmitas/marmitas.module').then((m) => m.MarmitasModule),
     canActivate: [canActivateTeam],
   },
   {
@@ -43,7 +44,8 @@ const routes: Routes = [
   },
   {
     path: 'pedido',
-    component: PedidosComponent,
+    loadChildren: () =>
+      import('./pages/pedidos/pedidos.module').then((m) => m.PedidosModule),
     canActivate: [canActivateTeam],
   },
   {
@@ -56,7 +58,10 @@ const routes: Routes = [
   },
   {
     path: 'relatorio',
-    component: RelatorioComponent,
+    loadChildren: () =>
+    import('./pages/relatorio/relatorio.module').then(
+      (m) => m.RelatorioModule,
+    ),
     canActivate: [canActivateTeam],
   },
 ];

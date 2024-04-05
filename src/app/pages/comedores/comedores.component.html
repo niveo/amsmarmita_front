@@ -1,97 +1,70 @@
 <div class="comp-body">
+  <div class="comp-head">
+    @if (loading()) {
+      <nz-skeleton [nzActive]="true"></nz-skeleton>
+    }
+    @if (!loading()) {
+      <button
+        nz-button
+        nzType="primary"
+        style="margin-bottom: 10px"
+        (click)="incluir()"
+      >
+        Novo Comedor
+      </button>
+    }
+  </div>
   <div class="comp-content">
     <div class="comp-inner">
-      <nz-skeleton [nzActive]="true" [nzLoading]="loading"></nz-skeleton>
-      @if (data$ | async; as data) {
-        <ul nz-list [nzDataSource]="data" nzSize="large">
-          @if (!tipoSelecao()) {
-            <nz-list-header style="padding: 10px">
-              <form nz-form [formGroup]="form" nzLayout="vertical">
-                <nz-form-item>
-                  <nz-form-label>Nome</nz-form-label>
-                  <nz-form-control>
-                    <nz-input-group
-                      nzSearch
-                      nzSize="large"
-                      [nzAddOnAfter]="suffixButton"
-                    >
-                      <input
-                        type="text"
-                        nz-input
-                        placeholder="Informe aqui um nome"
-                        formControlName="nome"
-                        [minlength]="5"
-                        [maxLength]="25"
-                      />
-                    </nz-input-group>
-                  </nz-form-control>
-                </nz-form-item>
-              </form>
+      <nz-list nzItemLayout="horizontal" nzBordered nzSize="large">
+        @for (item of data$ | async; track item._id) {
+          <nz-list-item>
+            <nz-list-item-meta>
+              <nz-list-item-meta-title>
+                {{ item.nome }}
+              </nz-list-item-meta-title>
+            </nz-list-item-meta>
 
-              <ng-template #suffixButton>
+            <ul nz-list-item-actions>
+              <nz-list-item-action>
                 <button
                   nz-button
                   nzType="dashed"
                   nz-tooltip
-                  nzTooltipTitle="Salvar"
-                  nzSize="large"
-                  (click)="salvar()"
-                  [nzLoading]="loadingBtn"
-                  [disabled]="!form.valid"
+                  nzTooltipTitle="Editar"
+                  nzSize="small"
+                  (click)="editar(item)"
                 >
-                  <span nz-icon nzType="save" nzTheme="outline"></span>
+                  <span nz-icon nzType="edit" nzTheme="outline"></span>
                 </button>
-              </ng-template>
-            </nz-list-header>
-          }
-          @for (item of data; track item._id) {
-            <li
-              nz-list-item
-              nzNoFlex
-              (click)="selecionarComedor(item)"
-              [ngStyle]="{ cursor: tipoSelecao() ? 'pointer' : 'unset' }"
-            >
-              <ul nz-list-item-actions>
-                @if (!tipoSelecao()) {
-                  <nz-list-item-action>
-                    <button
-                      nz-button
-                      nzSize="small"
-                      nzType="dashed"
-                      nz-tooltip
-                      nzTooltipTitle="Editar"
-                      (click)="editar(item)"
-                    >
-                      <span nz-icon nzType="edit" nzTheme="outline"></span>
-                    </button>
-                  </nz-list-item-action>
-                  <nz-list-item-action>
-                    <button
-                      nzDanger
-                      nz-button
-                      nzSize="small"
-                      nzType="dashed"
-                      nz-tooltip
-                      nzTooltipTitle="Remover"
-                      nz-popconfirm
-                      nzPopconfirmTitle="Deseja remover esse registro?"
-                      nzPopconfirmPlacement="bottom"
-                      (nzOnConfirm)="remover(item)"
-                    >
-                      <span nz-icon nzType="delete" nzTheme="outline"></span>
-                    </button>
-                  </nz-list-item-action>
-                } @else {
-                  <nz-list-item-action>
-                    <span nz-icon nzType="select" nzTheme="outline"></span>
-                  </nz-list-item-action>
-                }
-              </ul>
-              {{ item.nome }}
-            </li>
-          }
-        </ul>
-      }
+              </nz-list-item-action>
+              <nz-list-item-action>
+                <button
+                  nzDanger
+                  nz-button
+                  nzSize="small"
+                  nzType="dashed"
+                  nz-tooltip
+                  nzTooltipTitle="Remover"
+                  nz-popconfirm
+                  nzPopconfirmTitle="Deseja remover esse registro?"
+                  nzPopconfirmPlacement="bottom"
+                  (nzOnConfirm)="remover(item)"
+                >
+                  <span nz-icon nzType="delete" nzTheme="outline"></span>
+                </button>
+              </nz-list-item-action>
+            </ul>
+          </nz-list-item>
+        }
+      </nz-list>
     </div>
   </div>
 </div>
+
+@if (editarForm) {
+  <app-comedores-form-component
+    [(visible)]="editarForm"
+    [data]="editarFormData()"
+  />
+}

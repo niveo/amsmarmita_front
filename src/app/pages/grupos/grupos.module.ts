@@ -15,6 +15,8 @@ import { NzColorPickerModule } from 'ng-zorro-antd/color-picker';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { GruposRoutingModule } from './grupos-routing.module';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 
 @NgModule({
   declarations: [GrupoComponent, GrupoFormComponent],
@@ -34,6 +36,8 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
     IconsProviderUserModule,
     ReactiveFormsModule,
     GruposRoutingModule,
+    NzToolTipModule,
+    NzPopconfirmModule,
   ],
 })
 export class GruposModule {}

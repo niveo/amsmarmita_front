@@ -18,6 +18,8 @@ import { CorBoardaDirective } from '../../directives/cor-borda.directive';
 import { GrupoPrincipalComponent } from '../../componentes/grupo-principal.component';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { SelecaoIngredientesComponent } from '../../componentes/selecao-ingredientes.component';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,8 @@ import { SelecaoIngredientesComponent } from '../../componentes/selecao-ingredie
     GrupoPrincipalComponent,
     SelecaoIngredientesComponent,
     FormsModule,
+    NzToolTipModule,
+    NzPopconfirmModule
   ],
 })
 export class PratosModule {}

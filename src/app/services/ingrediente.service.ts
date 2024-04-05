@@ -3,7 +3,9 @@ import { Injectable, inject, signal } from '@angular/core';
 import { Ingrediente } from '../model';
 import { BehaviorSubject, finalize, mergeMap, shareReplay } from 'rxjs';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class IngredienteService {
   private readonly http = inject(HttpClient);
   private _resourceData$ = new BehaviorSubject<void>(undefined);
