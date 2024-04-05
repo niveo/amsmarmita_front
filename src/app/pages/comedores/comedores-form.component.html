@@ -4,40 +4,23 @@
   [nzKeyboard]="false"
   [nzClosable]="false"
   [nzVisible]="visible()"
-  nzTitle="Ingrediente"
+  nzTitle="Comedor"
   [nzFooter]="footerTpl"
 >
   <form nz-form *nzDrawerContent [formGroup]="form" nzLayout="vertical">
     <nz-form-item>
-      <nz-form-label   nzRequired>Nome</nz-form-label>
-      <nz-form-control 
-        nzErrorTip="Por favor informe aqui o nome do ingrediente!"
-      >
+      <nz-form-label nzRequired>Nome</nz-form-label>
+      <nz-form-control nzErrorTip="Por favor informe aqui o nome do comedor!">
         <nz-input-group>
           <input
             type="text"
             nz-input
             formControlName="nome"
-            placeholder="Informe aqui o nome do ingrediente"
-            [maxLength]="50"
-            [minlength]="2"
+            placeholder="Informe aqui o nome do comedor"
+            [maxLength]="25"
+            [minlength]="5"
           />
         </nz-input-group>
-      </nz-form-control>
-    </nz-form-item>
-
-    <nz-form-item>
-      <nz-form-label  >Observação</nz-form-label>
-      <nz-form-control  >
-        <nz-textarea-count [nzMaxCharacterCount]="100">
-          <textarea
-            type="text"
-            nz-input
-            formControlName="observacao"
-            placeholder="Informe aqui uma observação"
-            [maxLength]="100"
-          ></textarea>
-        </nz-textarea-count>
       </nz-form-control>
     </nz-form-item>
   </form>

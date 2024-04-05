@@ -25,17 +25,12 @@ export class GrupoComponent {
   private readonly service = inject(GrupoService);
   private readonly notify = inject(NzNotificationService);
 
-  data$!: Observable<any[]>;
+  data$: Observable<any[]> = this.service.data$;
+
   loading = signal(false);
 
   editarFormData = signal<any>(null);
   editarForm = false;
-
-  constructor() {
-    console.log('A');
-    
-    this.data$ = this.service.data$;
-  }
 
   incluir() {
     this.editar();

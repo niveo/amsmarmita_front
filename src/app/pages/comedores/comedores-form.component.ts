@@ -8,41 +8,39 @@ import {
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { EMPTY, catchError, finalize, iif, mergeMap, of } from 'rxjs';
 import { LBL_ERRO, MSG_ERRO_PROCSSAMENTO } from '../../common/constantes';
-import { Ingrediente } from '../../model';
-import { IngredienteService } from '../../services/ingrediente.service';
+import { Comedor } from '../../model';
+import { v1 } from 'uuid';
+import { ComedoresService } from '../../services/comedores.service';
 
 @Component({
-  selector: 'app-ingrediente-form-component',
-  templateUrl: './ingrediente-form.component.html',
+  selector: 'app-comedores-form-component',
+  templateUrl: './comedores-form.component.html',
 })
-export class IngredienteFormComponent {
-  private readonly service = inject(IngredienteService);
+export class ComedoresFormComponent {
+  private readonly service = inject(ComedoresService);
   private readonly notify = inject(NzNotificationService);
   private readonly formBuilder = inject(FormBuilder);
 
   visible = input.required<boolean>();
   visibleChange = output<boolean>();
   isConfirmLoading = false;
-  data = input.required<Ingrediente>();
+  data = input.required<Comedor>();
 
   form: FormGroup<{
     _id: FormControl<string | null>;
     nome: FormControl<string | null>;
-    observacao: FormControl<string | null>;
   }> = this.formBuilder.group({
     _id: [''],
     nome: [
       '',
-      [Validators.required, Validators.minLength(2), Validators.maxLength(50)],
+      [Validators.required, Validators.minLength(5), Validators.maxLength(25)],
     ],
-    observacao: ['', Validators.maxLength(100)],
   });
 
   ngOnInit() {
     this.form.setValue({
       _id: this.data()._id || '',
       nome: this.data().nome || '',
-      observacao: this.data().observacao || '',
     });
   }
 
@@ -52,15 +50,14 @@ export class IngredienteFormComponent {
     const data = this.form.value;
 
     this.isConfirmLoading = true;
-    
 
     of(data._id)
       .pipe(
         mergeMap((value) =>
           iif(
             () => !value,
-            this.service.inlcluir(data.nome!, data.observacao!),
-            this.service.atualizar(value!, data.nome!, data.observacao!),
+            this.service.inlcluir(data.nome!),
+            this.service.atualizar(value!, data.nome!),
           ),
         ),
         catchError((error: any) => {
@@ -72,8 +69,7 @@ export class IngredienteFormComponent {
         finalize(() => {
           this.form.setValue({
             _id: null,
-            nome: null,
-            observacao: null,
+            nome: '',
           });
           this.isConfirmLoading = false;
         }),

@@ -28,13 +28,11 @@ export class IngredienteComponent {
   editarFormData = signal<any>(null);
   editarForm = false;
 
-  data$!: Observable<any[]>;
+  data$: Observable<any[]> = this.service.data$;
+  
   loading = signal<boolean>(false);
 
-  constructor() {
-    this.data$ = this.service.data$;
-  }
-
+ 
   incluir() {
     this.editar();
   }

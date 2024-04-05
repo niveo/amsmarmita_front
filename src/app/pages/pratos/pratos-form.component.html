@@ -1,21 +1,16 @@
 <nz-drawer
   [nzBodyStyle]="{ overflow: 'auto' }"
   [nzMaskClosable]="false"
-  [nzKeyboard]="false"
-  [nzMask]="false"
+  [nzKeyboard]="false" 
   [nzClosable]="false"
   [nzVisible]="visible()"
-  nzTitle="Grupo"
+  nzTitle="Pratos"
   [nzFooter]="footerTpl"
 >
   <form nz-form [formGroup]="form" *nzDrawerContent nzLayout="vertical">
     <nz-form-item>
-      <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>Nome</nz-form-label>
-      <nz-form-control
-        [nzSm]="16"
-        [nzXs]="24"
-        nzErrorTip="Por favor informe aqui o nome do prato!"
-      >
+      <nz-form-label nzRequired>Nome</nz-form-label>
+      <nz-form-control nzErrorTip="Por favor informe aqui o nome do prato!">
         <nz-input-group>
           <input
             type="text"
@@ -29,11 +24,8 @@
     </nz-form-item>
 
     <nz-form-item>
-      <nz-form-label [nzSpan]="5" nzRequired>Grupo</nz-form-label>
-      <nz-form-control
-        [nzSpan]="12"
-        nzErrorTip="Por favor informe um grupo do prato!"
-      >
+      <nz-form-label nzRequired>Grupo</nz-form-label>
+      <nz-form-control nzErrorTip="Por favor informe um grupo do prato!">
         <nz-select
           formControlName="grupo"
           placeholder="Informe aqui o grupo do prato"
@@ -49,8 +41,8 @@
     </nz-form-item>
 
     <nz-form-item>
-      <nz-form-label [nzSm]="8" [nzXs]="24">Observação</nz-form-label>
-      <nz-form-control [nzSm]="16" [nzXs]="24">
+      <nz-form-label>Observação</nz-form-label>
+      <nz-form-control>
         <nz-textarea-count [nzMaxCharacterCount]="100">
           <textarea
             type="text"

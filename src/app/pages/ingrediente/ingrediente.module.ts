@@ -11,6 +11,8 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { IngredienteComponent } from './ingrediente.component';
 import { IngredienteFormComponent } from './ingrediente-form.component';
 import { IngredienteRoutingModule } from './ingrediente-routing.module';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @NgModule({
   declarations: [IngredienteComponent, IngredienteFormComponent],
@@ -25,6 +27,8 @@ import { IngredienteRoutingModule } from './ingrediente-routing.module';
     NzDrawerModule,
     NzFormModule,
     NzInputModule,
+    NzToolTipModule,
+    NzPopconfirmModule
   ],
 })
 export class IngredienteModule {}

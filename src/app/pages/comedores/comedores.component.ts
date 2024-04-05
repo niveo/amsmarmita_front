@@ -1,34 +1,23 @@
 import { v1 } from 'uuid';
-import { Component, DestroyRef, inject, input, output } from '@angular/core';
 import {
-  EMPTY,
-  Observable,
-  catchError,
-  finalize,
-  iif,
-  mergeMap,
-  of,
-} from 'rxjs';
+  Component,
+  DestroyRef,
+  inject,
+  input,
+  output,
+  signal,
+} from '@angular/core';
+import { Observable } from 'rxjs';
 import { ComedoresService } from '../../services/comedores.service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Comedor } from '../../model/comedor';
 import {
   MSG_EXCLUIR_SUCESSO,
-  MSG_ATUALIZADO_SUCESSO,
-  LBL_ATUALIZACAO,
   LBL_ERRO,
   LBL_EXCLUSAO,
 } from '../../common/constantes';
 import { isBooleanTransform } from '../../common/util';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-
-const KEY_NOFITY_SALVAR = v1().toString();
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-comedores-component',
@@ -36,112 +25,39 @@ const KEY_NOFITY_SALVAR = v1().toString();
   styleUrl: './comedores.component.scss',
 })
 export class ComedoresComponent {
-  private readonly comedoreService = inject(ComedoresService);
+  private readonly service = inject(ComedoresService);
   private readonly notify = inject(NzNotificationService);
   protected readonly destroyRef = inject(DestroyRef);
   private readonly formBuilder = inject(FormBuilder);
 
-  data$!: Observable<any[]>;
-  loading = true;
-  loadingBtn = false;
+  data$: Observable<any[]> = this.service.data$;
+  loading = signal(false);
 
   tipoSelecao = input(false, { transform: isBooleanTransform });
   eventComedorTipoSelecao = output<string>();
 
-  form: FormGroup<{
-    _id: FormControl<string | null>;
-    nome: FormControl<string | null>;
-  }> = this.formBuilder.group({
-    _id: [''],
-    nome: [
-      '',
-      [Validators.required, Validators.minLength(5), Validators.maxLength(25)],
-    ],
-  });
+  editarFormData = signal<any>(null);
+  editarForm = false;
 
-  ngOnInit() {
-    this.carregar();
+  incluir() {
+    this.editar();
   }
 
-  private carregar() {
-    this.loading = true;
-    this.data$ = this.comedoreService
-      .getAll()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .pipe(
-        catchError((error: any) => {
-          this.notify.error(LBL_ERRO, error.message);
-          return EMPTY;
-        }),
-      )
-      .pipe(finalize(() => (this.loading = false)));
-  }
-
-  editar(item: Comedor) {
-    this.form.setValue({
-      _id: item._id!,
-      nome: item.nome!,
-    });
+  editar(item?: Comedor) {
+    this.editarFormData.set({ ...item });
+    this.editarForm = true;
   }
 
   remover(item: Comedor) {
-    this.loadingBtn = true;
-    this.comedoreService
-      .delete(item._id!)
-      .pipe(
-        finalize(() => {
-          this.loadingBtn = false;
-        }),
-      )
-      .subscribe({
-        error: (error) => {
-          console.error(error);
-          this.notify.error(LBL_ERRO, error.message);
-        },
-        next: () => {
-          this.notify.success(LBL_EXCLUSAO, MSG_EXCLUIR_SUCESSO);
-          this.carregar();
-        },
-      });
-  }
-
-  salvar() {
-    if (!this.form.valid) return;
-
-    this.loadingBtn = true;
-
-    const data = this.form.value;
-
-    of(data._id)
-      .pipe(
-        mergeMap((value) =>
-          iif(
-            () => !value,
-            this.comedoreService.inlcluir(data.nome!),
-            this.comedoreService.atualizar(value!, data.nome!),
-          ),
-        ),
-        catchError((error: any) => {
-          console.error(error);
-          this.notify.error(LBL_ERRO, error.message);
-          return EMPTY;
-        }),
-        finalize(() => {
-          this.loadingBtn = false;
-          this.form.setValue({
-            _id: null,
-            nome: '',
-          });
-        }),
-      )
-      .subscribe({
-        next: () => {
-          this.notify.success(LBL_ATUALIZACAO, MSG_ATUALIZADO_SUCESSO, {
-            nzKey: KEY_NOFITY_SALVAR,
-          });
-          this.carregar();
-        },
-      });
+    this.service.delete(item._id!).subscribe({
+      error: (error) => {
+        console.error(error);
+        this.notify.error(LBL_ERRO, error.message);
+      },
+      next: () => {
+        this.notify.success(LBL_EXCLUSAO, MSG_EXCLUIR_SUCESSO);
+      },
+    });
   }
 
   selecionarComedor(comedor: Comedor) {
