@@ -14,6 +14,7 @@ export class RelatorioComponent {
 
   pratosPrincipais: any[] = [];
   pratosAcompanhamento: any[] = [];
+  pratosGeral: any[] = [];
 
   ngOnInit() {
     this.activatedRoute.params
@@ -23,13 +24,15 @@ export class RelatorioComponent {
             .carregarRelatorio(marmitaId)
             .pipe(
               map((m) => [
-                m.filter((f) => f.principal),
-                m.filter((f) => !f.principal),
+                m.pratos.filter((f: any) => f.principal),
+                m.pratos.filter((f: any) => !f.principal),
+                m.geral,
               ]),
             )
             .subscribe((response) => {
               this.pratosPrincipais = response[0];
               this.pratosAcompanhamento = response[1];
+              this.pratosGeral = response[2];
             });
         }),
       )

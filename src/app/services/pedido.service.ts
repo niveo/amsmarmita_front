@@ -34,7 +34,7 @@ export class PedidoService {
   }
 
   carregarRelatorio(marmitaId: string) {
-    return this.http.get<any[]>('/pedidos/relatorio', {
+    return this.http.get<any>('/pedidos/relatorio', {
       params: { marmitaId },
     });
   }
