@@ -1,0 +1,93 @@
+<nz-drawer
+  [nzBodyStyle]="{ overflow: 'auto' }"
+  [nzMaskClosable]="false"
+  [nzKeyboard]="false"
+  [nzMask]="false"
+  [nzClosable]="false"
+  [nzVisible]="visible()"
+  nzTitle="Ingrediente"
+  [nzFooter]="footerTpl"
+>
+  <form nz-form *nzDrawerContent [formGroup]="form" nzLayout="vertical">
+    <nz-form-item>
+      <nz-form-label nzRequired>Nome</nz-form-label>
+      <nz-form-control nzErrorTip="Por favor informe aqui o nome do grupo!">
+        <nz-input-group>
+          <input
+            type="text"
+            nz-input
+            formControlName="nome"
+            placeholder="Informe aqui o nome do grupo"
+            [maxLength]="25"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <div nz-row>
+      <div nz-col [nzFlex]="1">
+        <nz-form-item>
+          <nz-form-label>Principal</nz-form-label>
+          <nz-form-control>
+            <nz-switch formControlName="principal"></nz-switch>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzFlex]="2">
+        <nz-form-item>
+          <nz-form-label>Seleção (Simples)</nz-form-label>
+          <nz-form-control>
+            <nz-switch formControlName="multiplo"></nz-switch>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzFlex]="1">
+        <nz-form-item>
+          <nz-form-label>Cor</nz-form-label>
+          <nz-form-control>
+            <nz-color-picker
+              formControlName="cor"
+              nzAllowClear
+              [nzAllowClear]="true"
+            ></nz-color-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <nz-form-item>
+      <nz-form-label>Observação</nz-form-label>
+      <nz-form-control>
+        <nz-textarea-count [nzMaxCharacterCount]="100">
+          <textarea
+            type="text"
+            nz-input
+            formControlName="observacao"
+            placeholder="Informe aqui uma observação"
+            [maxLength]="100"
+          ></textarea>
+        </nz-textarea-count>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+
+  <ng-template #footerTpl>
+    <div style="float: right">
+      <button
+        nz-button
+        style="margin-right: 8px"
+        (click)="visibleChange.emit(false)"
+      >
+        Sair
+      </button>
+      <button
+        nz-button
+        nzType="primary"
+        (click)="salvar()"
+        [nzLoading]="isConfirmLoading"
+      >
+        Salvar
+      </button>
+    </div>
+  </ng-template>
+</nz-drawer>
