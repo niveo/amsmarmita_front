@@ -7,15 +7,9 @@ import {
 } from '@angular/forms';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { EMPTY, catchError, finalize, iif, mergeMap, of } from 'rxjs';
-import {
-  LBL_ATUALIZACAO,
-  MSG_ATUALIZADO_SUCESSO,
-} from '../../common/constantes';
+import { LBL_ERRO, MSG_ERRO_PROCSSAMENTO } from '../../common/constantes';
 import { Ingrediente } from '../../model';
 import { IngredienteService } from '../../services/ingrediente.service';
-import { v1 } from 'uuid';
-
-const KEY_NOFITY_SALVAR = v1().toString();
 
 @Component({
   selector: 'app-ingrediente-form-component',
@@ -70,7 +64,7 @@ export class IngredienteFormComponent {
         ),
         catchError((error: any) => {
           console.error(error);
-          this.notify.error('Erro', error.message);
+          this.notify.error(LBL_ERRO, MSG_ERRO_PROCSSAMENTO);
           this.isConfirmLoading = false;
           return EMPTY;
         }),
@@ -85,9 +79,6 @@ export class IngredienteFormComponent {
       )
       .subscribe({
         next: () => {
-          this.notify.success(LBL_ATUALIZACAO, MSG_ATUALIZADO_SUCESSO, {
-            nzKey: KEY_NOFITY_SALVAR,
-          });
           this.visibleChange.emit(false);
         },
       });

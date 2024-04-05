@@ -6,6 +6,7 @@ import {
   LBL_ATUALIZACAO,
   LBL_ERRO,
   MSG_ATUALIZADO_SUCESSO,
+  MSG_ERRO_PROCSSAMENTO,
 } from '../../common/constantes';
 import { Grupo } from '../../model';
 import { v1 } from 'uuid';
@@ -85,7 +86,7 @@ export class GrupoFormComponent {
         ),
         catchError((error: any) => {
           console.error(error);
-          this.notify.error(LBL_ERRO, error.message);
+          this.notify.error(LBL_ERRO, MSG_ERRO_PROCSSAMENTO);
           this.isConfirmLoading = false;
           return EMPTY;
         }),
@@ -103,9 +104,6 @@ export class GrupoFormComponent {
       )
       .subscribe({
         next: () => {
-          this.notify.success(LBL_ATUALIZACAO, MSG_ATUALIZADO_SUCESSO, {
-            nzKey: KEY_NOFITY_SALVAR,
-          });
           this.visibleChange.emit(false);
         },
       });
