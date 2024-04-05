@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { ComedoresComponent } from './pages/comedores/comedores.component';
+import { RouterModule, Routes } from '@angular/router'; 
 import { MarmitasComponent } from './pages/marmitas/marmitas.component';
 import { LoginComponent } from './pages/login/login.component';
 import { canActivateTeam } from './auth/auth.service';
@@ -19,7 +18,10 @@ const routes: Routes = [
   },
   {
     path: 'comedores',
-    component: ComedoresComponent,
+    loadChildren: () =>
+      import('./pages/comedores/comedores.module').then(
+        (m) => m.ComedoresModule,
+      ),
     canActivate: [canActivateTeam],
   },
   {
