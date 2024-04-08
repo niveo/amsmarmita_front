@@ -12,6 +12,24 @@
           <app-relatorio-item-component [registros]="pratos" />
         </div>
       </div>
+      <div style="direction: rtl">
+        Pratos {{ totalPratosRegistros }} / Marmitas {{ totalPratos }}
+      </div>
+    </nz-tab>
+
+    <nz-tab [nzTitle]="'Acompanha'">
+      <div class="comp-content">
+        <div class="comp-inner">
+          <app-relatorio-item-component
+            [registros]="acompanhamentos"
+            [acompanhamento]="true"
+          />
+        </div>
+      </div>
+      <div style="direction: rtl">
+        Pratos {{ totalAcompanhamentosRegistros }} / Marmitas
+        {{ totalAcompanhamentos }}
+      </div>
     </nz-tab>
 
     <nz-tab nzTitle="Ingredientes">
