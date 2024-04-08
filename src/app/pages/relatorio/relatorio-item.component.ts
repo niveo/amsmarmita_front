@@ -13,8 +13,8 @@ import { Component, input } from '@angular/core';
         margin-left: 20px;
         margin-right: 20px;
         padding:  10px;
-        border-bottom: 1px solid gray;
-        border-left: 5px solid gray;
+        border-bottom: 1px solid #07363d;
+        border-left: 5px solid #07363d;
       }
 
       .item-inner span {

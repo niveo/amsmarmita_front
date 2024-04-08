@@ -12,7 +12,7 @@ import { Component, input } from '@angular/core';
   styles: `
     .progress-bar {
       height: 4px;
-      background-color: rgba(5, 114, 206, 0.2);
+      background-color: rgba(7, 54, 61, 0.2);
       width: 100%;
       overflow: hidden;
     }
@@ -20,7 +20,7 @@ import { Component, input } from '@angular/core';
     .progress-bar-value {
       width: 100%;
       height: 100%;
-      background-color: rgb(5, 114, 206);
+      background-color: rgb(7, 54, 61);
       animation: indeterminateAnimation 1s infinite linear;
       transform-origin: 0% 50%;
     }
