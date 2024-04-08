@@ -87,6 +87,6 @@ export class SelecaoIngredientesComponent implements OnInit {
   }
 
   addItem(input: HTMLInputElement) {
-    this.service.inlcluir(input.value).subscribe();
+    this.service.inlcluir(input.value).subscribe(() => (input.value = ''));
   }
 }
