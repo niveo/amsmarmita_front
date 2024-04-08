@@ -12,7 +12,7 @@
           <app-relatorio-item-component [registros]="pratos" />
         </div>
       </div>
-      <div style="direction: rtl">
+      <div style="direction: rtl; padding-right: 10px">
         Pratos {{ totalPratosRegistros }} / Marmitas {{ totalPratos }}
       </div>
     </nz-tab>
@@ -26,13 +26,17 @@
           />
         </div>
       </div>
-      <div style="direction: rtl">
+      <div style="direction: rtl; padding-right: 10px">
         Pratos {{ totalAcompanhamentosRegistros }} / Marmitas
         {{ totalAcompanhamentos }}
       </div>
     </nz-tab>
 
-    <nz-tab nzTitle="Ingredientes">
+    <ng-template #tplTituloIngredientes>
+      <span nz-icon nzType="fire" nzTheme="outline"></span>
+    </ng-template>
+
+    <nz-tab [nzTitle]="tplTituloIngredientes">
       <div class="comp-content">
         <div class="comp-inner">
           <app-relatorio-ingredientes-component [registros]="ingredientes" />
