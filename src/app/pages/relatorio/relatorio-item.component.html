@@ -21,9 +21,20 @@
                   {{ comedor.comedor }}
                 </span>
 
-                @for (de of comedor.de; track de) {
-                  <div>{{ de }}</div>
-                }
+                <div class="fx-row">
+                  @for (de of comedor.de; track de) {
+                    <nz-tag
+                      [nzColor]="de.grupo.cor"
+                      [nzBordered]="!de.grupo.multiplo"
+                    >
+                      @if (de.grupo.multiplo) {
+                        <span nz-icon nzType="fire" nzTheme="outline"></span>
+                      }
+                      {{ de.grupo.multiplo ? de.grupo.nome + "/" : ""
+                      }}{{ de.nome }}</nz-tag
+                    >
+                  }
+                </div>
               </div>
             </div>
           </div>
