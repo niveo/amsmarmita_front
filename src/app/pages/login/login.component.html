@@ -14,6 +14,18 @@
     </button>
   </div>
   <div class="box1">
-    <button nz-button style="width: 100%" (click)="entrar()" [nzLoading]="loading">Entrar</button>
+    <button
+      nz-button
+      style="width: 100%"
+      (click)="entrar()"
+      [nzLoading]="loading"
+    >
+      Entrar
+    </button>
   </div>
+</div>
+<div style="text-align: center;">
+  @if (isMobile) {
+    <span versaosis></span>
+  }  
 </div>

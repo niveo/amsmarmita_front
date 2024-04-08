@@ -3,6 +3,7 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { AuthService } from '../../auth/auth.service';
 import { LBL_ERRO } from '../../common/constantes';
 import { finalize } from 'rxjs';
+import { isMobile } from '../../common/util';
 
 @Component({
   selector: 'app-login-component',
@@ -48,6 +49,7 @@ export class LoginComponent {
   private readonly service = inject(AuthService);
   private readonly notify = inject(NzNotificationService);
   loading = false;
+  isMobile = isMobile;
 
   constructor() {
     for (let i = 1; i <= 9; i++) {
