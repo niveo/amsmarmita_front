@@ -21,20 +21,28 @@
                   {{ comedor.comedor }}
                 </span>
 
-                <div class="fx-row">
-                  @for (de of comedor.de; track de) {
-                    <nz-tag
-                      [nzColor]="de.grupo.cor"
-                      [nzBordered]="!de.grupo.multiplo"
-                    >
-                      @if (de.grupo.multiplo) {
-                        <span nz-icon nzType="fire" nzTheme="outline"></span>
-                      }
-                      {{ de.grupo.multiplo ? de.grupo.nome + "/" : ""
-                      }}{{ de.nome }}</nz-tag
-                    >
-                  }
-                </div>
+                @if (!acompanhamento()) {
+                  <div class="fx-row">
+                    @for (de of comedor.de; track de) {
+                      <nz-tag
+                        [nzColor]="de.grupo.cor"
+                        [nzBordered]="!de.grupo.multiplo"
+                      >
+                        @if (de.grupo.multiplo) {
+                          <span nz-icon nzType="fire" nzTheme="outline"></span>
+                        }
+                        {{ de.grupo.multiplo ? de.grupo.nome + "/" : ""
+                        }}{{ de.nome }}</nz-tag
+                      >
+                    }
+                  </div>
+                } @else {
+                  <div class="fx-column">
+                    @for (acompanha of comedor.acompanha; track acompanha) {
+                      <div>{{ acompanha }}</div>
+                    }
+                  </div>
+                }
               </div>
             </div>
           </div>

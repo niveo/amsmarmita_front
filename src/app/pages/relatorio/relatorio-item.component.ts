@@ -29,4 +29,5 @@ import { Component, input } from '@angular/core';
 })
 export class RelatorioItemComponent {
   registros = input.required<any[]>(); 
+  acompanhamento = input(false); 
 }
