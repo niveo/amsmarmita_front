@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { AsyncPipe, NgStyle } from '@angular/common';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -13,6 +12,7 @@ import { ComedoresFormComponent } from './comedores-form.component';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { ProgressBarComponent } from '../../componentes/progress-bar.component';
 
 @NgModule({
   declarations: [ComedoresComponent, ComedoresFormComponent],
@@ -26,11 +26,11 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
     NgStyle,
     AsyncPipe,
     NzFormModule,
-    NzSkeletonModule,
     ReactiveFormsModule,
     ComedoresRoutingModule,
     NzToolTipModule,
-    NzPopconfirmModule
+    NzPopconfirmModule,
+    ProgressBarComponent,
   ],
 })
 export class ComedoresModule {}

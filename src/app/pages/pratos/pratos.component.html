@@ -1,16 +1,14 @@
 <div class="comp-body">
   <div class="comp-head">
-    @if (loading()) {
-      <nz-skeleton [nzActive]="true"></nz-skeleton>
-    }
     @if (!loading() && !tipoSelecao()) {
       <button
         nz-button
         nzType="primary"
         style="margin-bottom: 10px"
         (click)="novoPrato()"
+        [nzLoading]="loading()"
       >
-        Novo Prato
+        Novo
       </button>
     }
   </div>
@@ -115,6 +113,7 @@
       </nz-collapse>
     </div>
   </div>
+  <app-progress-bar-component [visible]="loading()" />
 </div>
 
 @if (editarForm) {

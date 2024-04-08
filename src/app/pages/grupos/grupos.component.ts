@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import {
@@ -27,7 +27,7 @@ export class GrupoComponent {
 
   data$: Observable<any[]> = this.service.data$;
 
-  loading = signal(false);
+  loading = computed(() => this.service.loading());
 
   editarFormData = signal<any>(null);
   editarForm = false;

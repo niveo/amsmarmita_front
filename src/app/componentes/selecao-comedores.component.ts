@@ -1,4 +1,4 @@
-import { Component, Inject, inject } from '@angular/core';
+import { Component, Inject, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { NZ_DRAWER_DATA, NzDrawerRef } from 'ng-zorro-antd/drawer';
 import { NzListModule } from 'ng-zorro-antd/list';
@@ -10,7 +10,7 @@ import { IconsProviderUserModule } from '../common/icons-provider-user.module';
 @Component({
   selector: 'app-selecao-comedores-component',
   template: `
-    <nz-list nzItemLayout="horizontal" nzSize="large">
+    <nz-list nzItemLayout="horizontal" nzSize="large" [nzLoading]="loading()">
       @for (item of data$ | async; track item._id) {
         <nz-list-item
           (click)="comedorTipoSelecao(item._id)"
@@ -44,6 +44,7 @@ import { IconsProviderUserModule } from '../common/icons-provider-user.module';
 })
 export class SelecaoComedoresComponent {
   private readonly service = inject(ComedoresService);
+  loading = computed(() => this.service.loading());
 
   constructor(
     private drawerRef: NzDrawerRef<string>,

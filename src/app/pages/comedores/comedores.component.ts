@@ -2,6 +2,7 @@ import { v1 } from 'uuid';
 import {
   Component,
   DestroyRef,
+  computed,
   inject,
   input,
   output,
@@ -31,7 +32,7 @@ export class ComedoresComponent {
   private readonly formBuilder = inject(FormBuilder);
 
   data$: Observable<any[]> = this.service.data$;
-  loading = signal(false);
+  loading = computed(() => this.service.loading());
 
   tipoSelecao = input(false, { transform: isBooleanTransform });
   eventComedorTipoSelecao = output<string>();

@@ -1,6 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs';
+import { finalize, map } from 'rxjs';
 import { PedidoService } from '../../services/pedido.service';
 
 @Component({
@@ -11,6 +11,7 @@ import { PedidoService } from '../../services/pedido.service';
 export class RelatorioComponent {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly pedidoService = inject(PedidoService);
+  loading = signal(true);
 
   pratosPrincipais: any[] = [];
   pratosAcompanhamento: any[] = [];
@@ -29,6 +30,7 @@ export class RelatorioComponent {
                 m.geral,
               ]),
             )
+            .pipe(finalize(() => this.loading.set(false)))
             .subscribe((response) => {
               this.pratosPrincipais = response[0];
               this.pratosAcompanhamento = response[1];

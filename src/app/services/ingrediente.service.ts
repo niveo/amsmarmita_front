@@ -9,7 +9,11 @@ import { BehaviorSubject, finalize, mergeMap, shareReplay } from 'rxjs';
 export class IngredienteService {
   private readonly http = inject(HttpClient);
   private _resourceData$ = new BehaviorSubject<void>(undefined);
-  private apiRequest$ = this.http.get<Ingrediente[]>('/ingredientes');
+  loading = signal(true);
+
+  private apiRequest$ = this.http
+    .get<Ingrediente[]>('/ingredientes')
+    .pipe(finalize(() => this.loading.set(false)));
 
   public data$ = this._resourceData$.pipe(
     mergeMap(() => this.apiRequest$),

@@ -1,5 +1,4 @@
-import { NgModule } from '@angular/core';
-import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
+import { NgModule } from '@angular/core'; 
 import { AsyncPipe } from '@angular/common';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { IconsProviderUserModule } from '../../common/icons-provider-user.module';
@@ -20,6 +19,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { SelecaoIngredientesComponent } from '../../componentes/selecao-ingredientes.component';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { ProgressBarComponent } from '../../componentes/progress-bar.component';
 
 @NgModule({
   declarations: [
@@ -37,8 +37,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
     ReactiveFormsModule,
     IconsProviderUserModule,
     NzButtonModule,
-    AsyncPipe,
-    NzSkeletonModule,
+    AsyncPipe, 
     NzCardModule,
     NzTagModule,
     NzCollapseModule,
@@ -47,7 +46,8 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
     SelecaoIngredientesComponent,
     FormsModule,
     NzToolTipModule,
-    NzPopconfirmModule
+    NzPopconfirmModule,
+    ProgressBarComponent
   ],
 })
 export class PratosModule {}

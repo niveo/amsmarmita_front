@@ -1,5 +1,4 @@
-import { NgModule } from '@angular/core';
-import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
+import { NgModule } from '@angular/core'; 
 import { NzListModule } from 'ng-zorro-antd/list';
 import { AsyncPipe } from '@angular/common';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -13,6 +12,7 @@ import { IngredienteFormComponent } from './ingrediente-form.component';
 import { IngredienteRoutingModule } from './ingrediente-routing.module';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { ProgressBarComponent } from '../../componentes/progress-bar.component';
 
 @NgModule({
   declarations: [IngredienteComponent, IngredienteFormComponent],
@@ -21,14 +21,14 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
     NzListModule,
     NzButtonModule,
     IconsProviderUserModule,
-    AsyncPipe,
-    NzSkeletonModule,
+    AsyncPipe, 
     ReactiveFormsModule,
     NzDrawerModule,
     NzFormModule,
     NzInputModule,
     NzToolTipModule,
-    NzPopconfirmModule
+    NzPopconfirmModule,
+    ProgressBarComponent
   ],
 })
 export class IngredienteModule {}
