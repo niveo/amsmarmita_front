@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { Comedor } from '../model/comedor';
 import { BehaviorSubject, finalize, mergeMap, shareReplay } from 'rxjs';
 
@@ -10,7 +10,9 @@ export class ComedoresService {
   private readonly http = inject(HttpClient);
 
   private _resourceData$ = new BehaviorSubject<void>(undefined);
-  private apiRequest$ = this.http.get<Comedor[]>('/comedores');
+  loading = signal(true);
+
+  private apiRequest$ = this.http.get<Comedor[]>('/comedores').pipe(finalize(() => this.loading.set(false)));
 
   public data$ = this._resourceData$.pipe(
     mergeMap(() => this.apiRequest$),

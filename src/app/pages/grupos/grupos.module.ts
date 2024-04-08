@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { GrupoComponent } from './grupos.component';
-import { GrupoFormComponent } from './grupos-form.component';
-import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
+import { GrupoFormComponent } from './grupos-form.component'; 
 import { NzListModule } from 'ng-zorro-antd/list';
 import { CorBoardaDirective } from '../../directives/cor-borda.directive';
 import { GrupoPrincipalComponent } from '../../componentes/grupo-principal.component';
@@ -17,11 +16,11 @@ import { GruposRoutingModule } from './grupos-routing.module';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { ProgressBarComponent } from '../../componentes/progress-bar.component';
 
 @NgModule({
   declarations: [GrupoComponent, GrupoFormComponent],
-  imports: [
-    NzSkeletonModule,
+  imports: [ 
     NzListModule,
     NzButtonModule,
     NzSwitchModule,
@@ -38,6 +37,7 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
     GruposRoutingModule,
     NzToolTipModule,
     NzPopconfirmModule,
+    ProgressBarComponent
   ],
 })
 export class GruposModule {}

@@ -1,5 +1,4 @@
-import { NgModule } from '@angular/core';
-import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
+import { NgModule } from '@angular/core'; 
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { IconsProviderUserModule } from '../../common/icons-provider-user.module';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -14,12 +13,11 @@ import { AsyncPipe, DatePipe } from '@angular/common';
 import { MarmitasRoutingModule } from './marmitas-routing.module';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
-
+import { ProgressBarComponent } from '../../componentes/progress-bar.component';
 @NgModule({
   declarations: [MarmitasComponent],
   exports: [],
-  imports: [
-    NzSkeletonModule,
+  imports: [ 
     NzDrawerModule,
     NzModalModule,
     NzButtonModule,
@@ -33,6 +31,7 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
     MarmitasRoutingModule,
     NzToolTipModule,
     NzPopconfirmModule,
+    ProgressBarComponent,
 
     //Manter modulo no final para não entrar como rota
     ComedoresModule,

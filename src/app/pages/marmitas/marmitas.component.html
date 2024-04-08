@@ -5,13 +5,10 @@
       nzType="primary"
       style="margin-bottom: 10px"
       (click)="isVisible = true"
+      [nzLoading]="loading"
     >
-      Nova Marmita
+      Nova
     </button>
-
-    @if (loading) {
-      <nz-skeleton [nzActive]="true"></nz-skeleton>
-    }
   </div>
 
   <div class="comp-content">
@@ -78,6 +75,7 @@
       }
     </div>
   </div>
+  <app-progress-bar-component [visible]="loading" />
 </div>
 <nz-modal
   [(nzVisible)]="isVisible"

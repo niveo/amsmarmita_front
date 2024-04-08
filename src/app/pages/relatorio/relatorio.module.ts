@@ -6,7 +6,7 @@ import { RelatorioComponent } from './relatorio.component';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { GrupoPrincipalComponent } from '../../componentes/grupo-principal.component';
-
+import { ProgressBarComponent } from '../../componentes/progress-bar.component';
 @NgModule({
   declarations: [
     RelatorioComponent,
@@ -18,6 +18,7 @@ import { GrupoPrincipalComponent } from '../../componentes/grupo-principal.compo
     NzTabsModule,
     NzCollapseModule,
     GrupoPrincipalComponent,
+    ProgressBarComponent
   ],
 })
 export class RelatorioModule {}
