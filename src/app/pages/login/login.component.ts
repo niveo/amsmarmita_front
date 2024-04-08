@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { AuthService } from '../../auth/auth.service';
 import { LBL_ERRO } from '../../common/constantes';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-login-component',
@@ -67,11 +68,14 @@ export class LoginComponent {
 
   entrar() {
     this.loading = true;
-    this.service.login([...this.selecoes].join('')).subscribe({
-      error: (response) => {
-        console.error(response);
-        this.notify.error(LBL_ERRO, 'Senha invalida!');
-      },
-    });
+    this.service
+      .login([...this.selecoes].join(''))
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe({
+        error: (response) => {
+          console.error(response);
+          this.notify.error(LBL_ERRO, 'Senha invalida!');
+        },
+      });
   }
 }
