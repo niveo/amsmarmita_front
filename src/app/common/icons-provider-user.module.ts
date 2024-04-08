@@ -34,7 +34,8 @@ import {
   TagOutline,
   SelectOutline,
   CopyFill,
-  ShopOutline
+  ShopOutline,
+  FireOutline
 } from '@ant-design/icons-angular/icons';
 
 const icons = [
@@ -70,7 +71,8 @@ const icons = [
   TagOutline,
   SelectOutline,
   CopyFill,
-  ShopOutline
+  ShopOutline,
+  FireOutline
 ];
 
 @NgModule({

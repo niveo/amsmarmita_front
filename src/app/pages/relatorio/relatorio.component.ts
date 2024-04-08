@@ -13,9 +13,8 @@ export class RelatorioComponent {
   private readonly pedidoService = inject(PedidoService);
   loading = signal(true);
 
-  pratosPrincipais: any[] = [];
-  pratosAcompanhamento: any[] = [];
-  pratosGeral: any[] = [];
+  pratos: any[] = [];
+  ingredientes: any[] = [];
 
   ngOnInit() {
     this.activatedRoute.params
@@ -23,18 +22,10 @@ export class RelatorioComponent {
         map(({ marmitaId }) => {
           this.pedidoService
             .carregarRelatorio(marmitaId)
-            .pipe(
-              map((m) => [
-                m.pratos.filter((f: any) => f.principal),
-                m.pratos.filter((f: any) => !f.principal),
-                m.geral,
-              ]),
-            )
             .pipe(finalize(() => this.loading.set(false)))
             .subscribe((response) => {
-              this.pratosPrincipais = response[0];
-              this.pratosAcompanhamento = response[1];
-              this.pratosGeral = response[2];
+              this.pratos = response.pratos;
+              this.ingredientes = response.ingredientes;
             });
         }),
       )

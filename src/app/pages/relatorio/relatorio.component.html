@@ -9,19 +9,7 @@
     <nz-tab [nzTitle]="'Principal'">
       <div class="comp-content">
         <div class="comp-inner">
-          <app-relatorio-item-component
-            [registros]="pratosPrincipais" 
-          />
-        </div>
-      </div>
-    </nz-tab>
-
-    <nz-tab [nzTitle]="'Acompanha'">
-      <div class="comp-content">
-        <div class="comp-inner">
-          <app-relatorio-item-component
-            [registros]="pratosAcompanhamento" 
-          />
+          <app-relatorio-item-component [registros]="pratos" />
         </div>
       </div>
     </nz-tab>
@@ -29,7 +17,7 @@
     <nz-tab nzTitle="Geral">
       <div class="comp-content">
         <div class="comp-inner">
-          <app-relatorio-geral-component [registros]="pratosGeral"   />
+          <app-relatorio-ingredientes-component [registros]="ingredientes" />
         </div>
       </div>
     </nz-tab>

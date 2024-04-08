@@ -2,22 +2,21 @@
   @for (item of registros(); track item) {
     <ng-template #tplItemTitulo>
       <div class="lbl-item-titulo fx-row wf">
-        <app-grupo-principal-component
-          [principal]="item.ingredientes && item.ingredientes.length > 0"
-          [cor]="'purple'"
-        />
-        <span class="fx-flex">{{ item.prato }}</span>
+        <span class="fx-flex">{{ item.nome }}</span>
         <span style="font-size: 20px">{{ item.quantidade }}</span>
       </div>
     </ng-template>
 
     <nz-collapse-panel [nzHeader]="tplItemTitulo">
-      @if (item.ingredientes) {
-        @for (ingrediente of item.ingredientes; track ingrediente) {
+      @if (item.pratos) {
+        @for (prato of item.pratos; track prato) {
           <div class="item-inner">
             <div class="fx-row" style="align-items: center">
+              <span class="item-inner-quantidade" >
+                {{ prato.quantidade }}
+              </span>
               <span>
-                {{ ingrediente.nome }}
+                {{ prato.nome }}
               </span>
             </div>
           </div>
