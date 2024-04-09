@@ -1,124 +1,96 @@
-<div class="comp-body">
-  <div class="comp-head">
-    @if (!loading() && !tipoSelecao()) {
+<container-central [(drawer)]="editarForm" [loading]="loading()">
+  <div drawer class="ovh hf">
+    @if (editarForm) {
+      <app-pratos-form-component
+        [(visible)]="editarForm"
+        [data]="editarFormData()"
+      />
+    }
+  </div>
+
+  <div header>
+    @if (!loading()) {
       <button
-        nz-button
-        nzType="primary"
+        mat-raised-button
+        color="primary"
         style="margin-bottom: 10px"
-        (click)="novoPrato()"
-        [nzLoading]="loading()"
+        (click)="incluir()"
       >
         Novo
       </button>
     }
   </div>
-  <div class="comp-content">
-    <div class="comp-inner">
-      <nz-collapse nzGhost>
-        @for (grupo of data$ | async; track grupo._id) {
-          <nz-collapse-panel
-            [nzHeader]="tplTitulo"
-            [style]="'border-bottom: 5px solid' + grupo.cor"
-            [corBoarda]="grupo.cor"
-            [nzActive]="tipoSelecao()"
-          >
-            <div class="comp-inner-grid" style="gap: 5px">
-              @for (item of grupo.pratos; track item._id) {
-                @if (!pratoStore.pedidoItemVinculado[item!._id!]) {
-                  <nz-card
-                    style="width: 100%"
-                    [nzActions]="tipoSelecao() ? [] : [tplEdit, tplDelete]"
-                    [nzHoverable]="tipoSelecao()"
-                    (click)="incluirPratoPedido(item)"
-                  >
-                    <nz-card-meta
-                      [nzTitle]="item.nome!"
-                      [nzDescription]="item.observacao || ''"
-                    ></nz-card-meta>
 
+  <div content>
+    <mat-accordion>
+      @for (grupo of data$ | async; track grupo._id) {
+        <mat-expansion-panel
+          [corBoarda]="grupo.cor"
+          [style]="'border-bottom: 5px solid' + grupo.cor"
+        >
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <div class="fx-row wf" style="margin-right: 10px">
+                <div class="fx-flex fx-row">
+                  @if (!tipoSelecao()) {
+                    <app-grupo-principal-component
+                      [principal]="grupo.principal"
+                    />
+                  }
+                  <span style="font-weight: bold">{{ grupo.nome }}</span>
+                </div>
+              </div>
+            </mat-panel-title>
+            @if (grupo.observacao) {
+              <mat-panel-description>
+                <span class="lbl-observacao">{{ grupo.observacao }}</span>
+              </mat-panel-description>
+            }
+          </mat-expansion-panel-header>
+
+          <div class="comp-inner-grid" style="gap: 5px">
+            @for (item of grupo.pratos; track item._id) {
+              @if (!pratoStore.pedidoItemVinculado[item!._id!]) {
+                <mat-card (click)="incluirPratoPedido(item)">
+                  <mat-card-header>
+                    <mat-card-title>{{ item.nome }}</mat-card-title>
+                    <mat-card-subtitle>
+                      {{ item.observacao }}
+                    </mat-card-subtitle>
+                  </mat-card-header>
+                  <mat-card-content>
                     @if (
                       item.composicoes &&
                       item.composicoes.length > 0 &&
                       !tipoSelecao()
                     ) {
                       <div style="padding: 10px">
-                        @for (composicao of item.composicoes; track $index) {
-                          <nz-tag nzColor="magenta">{{ composicao }}</nz-tag>
-                        }
+                        <mat-chip-set>
+                          @for (composicao of item.composicoes; track $index) {
+                            <mat-chip nzColor="magenta">{{
+                              composicao
+                            }}</mat-chip>
+                          }
+                        </mat-chip-set>
                       </div>
                     }
-                  </nz-card>
-                }
-                <ng-template #tplEdit>
-                  <span
-                    nz-icon
-                    nzType="edit"
-                    nzTheme="outline"
-                    (click)="editar(item)"
-                  ></span>
-                </ng-template>
-
-                <ng-template #tplDelete>
-                  <span
-                    nz-icon
-                    nzType="delete"
-                    nzTheme="outline"
-                    [nzTheme]="'twotone'"
-                    [nzTwotoneColor]="'#F44336'"
-                    nz-popconfirm
-                    nzPopconfirmTitle="Deseja remover esse registro?"
-                    nzPopconfirmPlacement="bottom"
-                    (nzOnConfirm)="remover(item)"
-                  ></span>
-                </ng-template>
-                <ng-template #contentTemplate>
-                  <div>
-                    <button
-                      nzDanger
-                      nz-button
-                      nzType="default"
-                      nz-tooltip
-                      nzTooltipTitle="Remover"
-                      nz-popconfirm
-                      nzPopconfirmTitle="Deseja remover esse registro?"
-                      nzPopconfirmPlacement="bottom"
-                      (nzOnConfirm)="remover(item)"
-                    >
-                      <span nz-icon nzType="delete" nzTheme="outline"></span>
-                    </button>
-                  </div>
-                </ng-template>
-              }
-            </div>
-          </nz-collapse-panel>
-
-          <ng-template #tplTitulo>
-            <div class="fx-row wf" style="margin-right: 10px">
-              <div class="fx-flex fx-row">
-                @if (!tipoSelecao()) {
-                  <app-grupo-principal-component
-                    [principal]="grupo.principal"
-                  />
-                }
-                <div class="fx-column">
-                  <span style="font-weight: bold">{{ grupo.nome }}</span>
-                  @if (grupo.observacao) {
-                    <span class="lbl-observacao">{{ grupo.observacao }}</span>
+                  </mat-card-content>
+                  @if (!tipoSelecao()) {
+                    <mat-card-actions>
+                      <button mat-button (click)="editar(item)">
+                        Editar <mat-icon>edit</mat-icon>
+                      </button>
+                      <button mat-button (click)="removerRegistro(item)">
+                        Remover <mat-icon class="cred">delete</mat-icon>
+                      </button>
+                    </mat-card-actions>
                   }
-                </div>
-              </div>
-            </div>
-          </ng-template>
-        }
-      </nz-collapse>
-    </div>
+                </mat-card>
+              }
+            }
+          </div>
+        </mat-expansion-panel>
+      }
+    </mat-accordion>
   </div>
-  <app-progress-bar-component [visible]="loading()" />
-</div>
-
-@if (editarForm) {
-  <app-pratos-form-component
-    [(visible)]="editarForm"
-    [data]="editarFormData()"
-  />
-}
+</container-central>

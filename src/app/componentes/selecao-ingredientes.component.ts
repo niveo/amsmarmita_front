@@ -1,56 +1,39 @@
-import {
-  Component,
-  OnInit,
-  effect,
-  inject,
-  input,
-  output,
-} from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { NzSelectModule } from 'ng-zorro-antd/select';
+import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
+import { Component, OnInit, inject, input, output } from '@angular/core';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IngredienteService } from '../services/ingrediente.service';
 import { Observable } from 'rxjs';
 import { Ingrediente } from '../model';
 import { AsyncPipe } from '@angular/common';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { IconsProviderUserModule } from '../common/icons-provider-user.module';
-import { NzButtonModule } from 'ng-zorro-antd/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInput, MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-selecao-ingredientes-component',
-  template: `<nz-select
-      [nzDropdownRender]="renderTemplate"
-      nzBorderless
-      [ngModel]="selecionados()"
-      (ngModelChange)="selecionadosChange.emit($event)"
-      nzMode="tags"
-      title="Ingredientes"
-      nzPlaceHolder="Selecione os ingredientes"
+  template: `<mat-form-field class="example-form-field">
+    <mat-label>Video keywords</mat-label>
+    <mat-chip-grid
+      #chipGrid
+      aria-label="Enter keywords"
+      [formControl]="formControl"
     >
-      @for (item of data$ | async; track item._id) {
-        <nz-option [nzLabel]="item.nome" [nzValue]="item._id"></nz-option>
+      @for (keyword of keywords; track keyword) {
+        <mat-chip-row (removed)="removeKeyword(keyword)">
+          {{ keyword }}
+          <button matChipRemove aria-label="'remove ' + keyword">
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip-row>
       }
-    </nz-select>
-    <ng-template #renderTemplate>
-      <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
-        <input
-          type="text"
-          nz-input
-          placeholder="Informe aqui um novo ingrediente"
-          #inputElement
-        />
-      </nz-input-group>
-      <ng-template #suffixIconButton>
-        <button
-          nz-button
-          nzType="primary"
-          nzSearch
-          (click)="addItem(inputElement)"
-        >
-          <span nz-icon nzType="save"></span>
-        </button>
-      </ng-template>
-    </ng-template>`,
+    </mat-chip-grid>
+    <input
+      placeholder="New keyword..."
+      [matChipInputFor]="chipGrid"
+      (matChipInputTokenEnd)="add($event)"
+    />
+  </mat-form-field>`,
   styles: [
     `
       nz-select {
@@ -60,12 +43,14 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
   ],
   standalone: true,
   imports: [
-    NzSelectModule,
     FormsModule,
     AsyncPipe,
-    NzInputModule,
-    IconsProviderUserModule,
-    NzButtonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatChipsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatIconModule,
   ],
 })
 export class SelecaoIngredientesComponent implements OnInit {
@@ -88,5 +73,27 @@ export class SelecaoIngredientesComponent implements OnInit {
 
   addItem(input: HTMLInputElement) {
     this.service.inlcluir(input.value).subscribe(() => (input.value = ''));
+  }
+
+  keywords = ['angular', 'how-to', 'tutorial', 'accessibility'];
+  formControl = new FormControl(['angular']);
+
+  removeKeyword(keyword: string) {
+    const index = this.keywords.indexOf(keyword);
+    if (index >= 0) {
+      this.keywords.splice(index, 1);
+    }
+  }
+
+  add(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+
+    // Add our keyword
+    if (value) {
+      this.keywords.push(value);
+    }
+
+    // Clear the input value
+    event.chipInput!.clear();
   }
 }
