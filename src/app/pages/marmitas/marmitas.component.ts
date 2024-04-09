@@ -1,29 +1,17 @@
-import { Component, DestroyRef, inject } from '@angular/core';
-import {
-  EMPTY,
-  Observable,
-  catchError,
-  finalize,
-  iif,
-  mergeMap,
-  of,
-} from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
-import {
-  MSG_EXCLUIR_SUCESSO,
-  MSG_ATUALIZADO_SUCESSO,
-  FORMATO_DATA,
-  LBL_ALERTA,
-  LBL_ERRO,
-  LBL_EXCLUSAO,
-  LBL_ATUALIZACAO,
-} from '../../common/constantes';
+import { Component, computed, inject, signal } from '@angular/core';
+import { Observable } from 'rxjs';
 import { MarmitaService } from '../../services/marmita.service';
-import { Marmita } from '../../model/marmita'; 
+import { Marmita } from '../../model/marmita';
 import { isAfter, format, parseJSON } from 'date-fns';
-import { NzDrawerService } from 'ng-zorro-antd/drawer';
 import { SelecaoComedoresComponent } from '../../componentes/selecao-comedores.component';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import {
+  MSG_CONFIRMAR_EXCLUSAO,
+  MSG_ERRO_PROCSSAMENTO,
+  MSG_EXCLUIR_SUCESSO,
+} from '../../common/constantes';
+import { ConfirmacaoDialog } from '../../common/confirmacao-dialog';
 
 @Component({
   selector: 'app-marmitas-component',
@@ -31,124 +19,59 @@ import { SelecaoComedoresComponent } from '../../componentes/selecao-comedores.c
   styleUrl: './marmitas.component.scss',
 })
 export class MarmitasComponent {
-  private readonly comedoreService = inject(MarmitaService);
-  private readonly notify = inject(NzNotificationService);
-  private readonly destroyRef = inject(DestroyRef);
-  private readonly nzDrawerService = inject(NzDrawerService);
+  private readonly service = inject(MarmitaService);
+  private readonly _bottomSheet = inject(MatBottomSheet);
+  private readonly _snackBar = inject(MatSnackBar);
+  protected readonly confirmacaoDialog = inject(ConfirmacaoDialog);
 
-  data$!: Observable<any[]>;
-  loading = true;
-  isVisible = false;
+  editarFormData = signal<any>(null);
+  editarForm = false;
+  loading = computed(() => this.service.loading());
 
-  dateFormat = FORMATO_DATA;
+  data$: Observable<Marmita[]> = this.service.data$;
 
-  marmitaId?: string;
-  marmitaLancamento?: Date;
-  marmitaObservacao?: string;
-
-  ngOnInit() {
-    this.carregar();
+  incluir() {
+    this.editar();
   }
 
-  private carregar() {
-    this.loading = true;
-    this.data$ = this.comedoreService
-      .getAll()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .pipe(
-        catchError((error: any) => {
-          this.notify.error(LBL_ERRO, error.message);
-          return EMPTY;
-        }),
-      )
-      .pipe(finalize(() => (this.loading = false)));
-  }
-
-  editar(item: Marmita) {
-    this.marmitaLancamento = item.lancamento;
-    this.marmitaObservacao = item.observacao;
-    this.marmitaId = item._id;
-    this.isVisible = true;
+  editar(item?: Marmita) {
+    this.editarFormData.set({ ...item });
+    this.editarForm = true;
   }
 
   remover(item: Marmita) {
-    this.loading = true;
-    this.comedoreService
-      .delete(item._id!)
-      .pipe(
-        finalize(() => {
-          this.loading = false;
-        }),
-      )
-      .subscribe({
-        error: (error) => {
-          console.error(error);
-          this.notify.error(LBL_ERRO, error.message);
-        },
-        next: (value) => {
-          console.log(value);
-          this.notify.success(LBL_EXCLUSAO, MSG_EXCLUIR_SUCESSO);
-          this.carregar();
-        },
-      });
+    this.service.delete(item._id!).subscribe({
+      error: (error) => {
+        console.error(error);
+        this._snackBar.open(MSG_ERRO_PROCSSAMENTO);
+      },
+      next: () => {
+        this._snackBar.open(MSG_EXCLUIR_SUCESSO);
+      },
+    });
   }
 
-  salvar() {
-    if (!this.marmitaLancamento) return;
-
-    this.loading = true;
-
-    return of(this.marmitaId!)
-      .pipe(
-        mergeMap((value) =>
-          iif(
-            () => !value,
-            this.comedoreService.inlcluir(
-              this.marmitaLancamento!,
-              this.marmitaObservacao,
-            ),
-            this.comedoreService.atualizar(
-              value,
-              this.marmitaLancamento!,
-              this.marmitaObservacao,
-            ),
-          ),
-        ),
-        catchError((error: any) => {
-          console.error(error);
-          this.notify.error(LBL_ERRO, error.message);
-          return EMPTY;
-        }),
-        finalize(() => {
-          this.loading = false;
-          this.isVisible = false;
-          this.marmitaLancamento = undefined;
-          this.marmitaObservacao = undefined;
-          this.marmitaId = undefined;
-        }),
-      )
-      .subscribe({
-        next: (value) => {
-          this.notify.success(LBL_ATUALIZACAO, MSG_ATUALIZADO_SUCESSO);
-          this.carregar();
-        },
+  removerRegistro(item: Marmita) {
+    this.confirmacaoDialog
+      .confirmacao({ mensagem: MSG_CONFIRMAR_EXCLUSAO })
+      .afterClosed()
+      .subscribe((response: boolean) => {
+        if (response) this.remover(item);
       });
   }
 
   visualizarComedores(marmita: Marmita) {
     if (isAfter(new Date(), parseJSON(marmita.lancamento!))) {
-      this.notify.warning(
-        LBL_ALERTA,
+      this._snackBar.open(
         `Essa marmita fechou dia ${format(parseJSON(marmita.lancamento!), 'dd/MM/yyyy')}!`,
+        'OK',
+        { duration: 3000 },
       );
       return;
     }
-    this.nzDrawerService.create({
-      nzClosable: false,
-      nzContent: SelecaoComedoresComponent,
-      nzTitle: 'Comedores',
-      nzPlacement: 'bottom',
-      nzData: {
+
+    this._bottomSheet.open(SelecaoComedoresComponent, {
+      data: {
         marmitaId: marmita._id,
       },
     });

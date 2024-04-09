@@ -1,12 +1,16 @@
-import { Component, Inject, computed, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { NZ_DRAWER_DATA, NzDrawerRef } from 'ng-zorro-antd/drawer';
 import { AsyncPipe } from '@angular/common';
 import { ComedoresService } from '../services/comedores.service';
 import { Observable } from 'rxjs';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
+import {
+  MAT_BOTTOM_SHEET_DATA,
+  MatBottomSheetRef,
+} from '@angular/material/bottom-sheet';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-selecao-comedores-component',
@@ -21,6 +25,7 @@ import { MatIconModule } from '@angular/material/icon';
           <mat-icon matListItemIcon>launch</mat-icon>
           {{ item.nome }}</mat-list-option
         >
+        <mat-divider></mat-divider>
       }
     </mat-selection-list>
     @if (loading()) {
@@ -36,16 +41,24 @@ import { MatIconModule } from '@angular/material/icon';
     `,
   ],
   standalone: true,
-  imports: [AsyncPipe, MatListModule, MatIconModule, MatProgressBarModule],
+  imports: [
+    AsyncPipe,
+    MatListModule,
+    MatIconModule,
+    MatProgressBarModule,
+    MatDividerModule,
+  ],
 })
 export class SelecaoComedoresComponent {
   private readonly service = inject(ComedoresService);
+
   loading = computed(() => this.service.loading());
 
-  constructor(
-    private drawerRef: NzDrawerRef<string>,
-    @Inject(NZ_DRAWER_DATA) public nzData: { marmitaId: string },
-  ) {}
+  private readonly _bottomSheetRef = inject(
+    MatBottomSheetRef<SelecaoComedoresComponent>,
+  );
+
+  private readonly data = inject<{ marmitaId: string }>(MAT_BOTTOM_SHEET_DATA);
 
   data$: Observable<any[]> = this.service.data$;
 
@@ -55,13 +68,9 @@ export class SelecaoComedoresComponent {
       'pedido',
       {
         comedorId: comedorId,
-        marmitaId: this.nzData.marmitaId,
+        marmitaId: this.data.marmitaId,
       },
     ]);
-    this.drawerRef.close();
-  }
-
-  sair() {
-    this.drawerRef.close();
+    this._bottomSheetRef.dismiss();
   }
 }

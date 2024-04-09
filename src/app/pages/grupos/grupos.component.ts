@@ -47,10 +47,10 @@ export class GrupoComponent {
     this.service.delete(item._id!).subscribe({
       error: (error) => {
         console.error(error);
-        this._snackBar.open(MSG_ERRO_PROCSSAMENTO);
+        this._snackBar.open(MSG_ERRO_PROCSSAMENTO, 'OK');
       },
       next: () => {
-        this._snackBar.open(MSG_EXCLUIR_SUCESSO);
+        this._snackBar.open(MSG_EXCLUIR_SUCESSO, 'OK');
       },
     });
   }

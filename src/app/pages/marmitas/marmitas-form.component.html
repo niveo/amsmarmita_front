@@ -2,15 +2,13 @@
   <div class="fx-flex">
     <form [formGroup]="form" class="fx-column gap-5">
       <mat-form-field class="wf">
-        <mat-label>Nome</mat-label>
-        <input
-          matInput
-          placeholder="Nome"
-          formControlName="nome"
-          placeholder="Informe aqui o nome do ingrediente"
-          [maxLength]="50"
-          [minlength]="5"
-        />
+        <mat-label>Lançamento</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="lancamento" />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
 
       <mat-form-field class="wf">
@@ -18,9 +16,9 @@
         <textarea
           matInput
           placeholder="Informe aqui uma observação"
-          formControlName="observacao"
           #txtObservacao
           [maxLength]="100"
+          formControlName="observacao"
         ></textarea>
         <mat-hint align="end">{{ txtObservacao.value.length }} / 100</mat-hint>
       </mat-form-field>

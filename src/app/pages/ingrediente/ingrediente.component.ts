@@ -29,10 +29,9 @@ export class IngredienteComponent {
 
   editarFormData = signal<any>(null);
   editarForm = false;
+  loading = computed(() => this.service.loading());
 
   data$: Observable<Ingrediente[]> = this.service.data$;
-
-  loading = computed(() => this.service.loading());
 
   incluir() {
     this.editar();
@@ -47,10 +46,10 @@ export class IngredienteComponent {
     this.service.delete(item._id!).subscribe({
       error: (error) => {
         console.error(error);
-        this._snackBar.open(MSG_ERRO_PROCSSAMENTO);
+        this._snackBar.open(MSG_ERRO_PROCSSAMENTO, 'OK');
       },
       next: () => {
-        this._snackBar.open(MSG_EXCLUIR_SUCESSO);
+        this._snackBar.open(MSG_EXCLUIR_SUCESSO, 'OK');
       },
     });
   }

@@ -1,40 +1,53 @@
-import { NgModule } from '@angular/core'; 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { IconsProviderUserModule } from '../../common/icons-provider-user.module';
-import { NzInputModule } from 'ng-zorro-antd/input';
+import { NgModule } from '@angular/core';
 import { MarmitasComponent } from './marmitas.component';
-import { NzCardModule } from 'ng-zorro-antd/card';
-import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { ComedoresModule } from '../comedores/comedores.module';
-import { NzDrawerModule } from 'ng-zorro-antd/drawer';
-import { NzModalModule } from 'ng-zorro-antd/modal';
-import { FormsModule } from '@angular/forms';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { MarmitasRoutingModule } from './marmitas-routing.module';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
-import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
-import { ProgressBarComponent } from '../../componentes/progress-bar.component';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { ContainerCentralComponent } from '../../componentes/container-central.component';
+import { ConfirmacaoDialogModule } from '../../common/confirmacao-dialog';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MarmitasFormComponent } from './marmitas-form.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
+import { provideDateFnsAdapter } from '@angular/material-date-fns-adapter';
+import { ptBR } from 'date-fns/locale';
+
 @NgModule({
-  declarations: [MarmitasComponent],
+  declarations: [MarmitasComponent, MarmitasFormComponent],
   exports: [],
-  imports: [ 
-    NzDrawerModule,
-    NzModalModule,
-    NzButtonModule,
-    IconsProviderUserModule,
-    NzCardModule,
-    NzDatePickerModule,
-    NzInputModule,
-    FormsModule,
-    DatePipe,
+  imports: [
     AsyncPipe,
+    DatePipe,
+    ReactiveFormsModule,
+
     MarmitasRoutingModule,
-    NzToolTipModule,
-    NzPopconfirmModule,
-    ProgressBarComponent,
+
+    MatBottomSheetModule,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+
+    ConfirmacaoDialogModule,
+    ContainerCentralComponent,
 
     //Manter modulo no final para não entrar como rota
     ComedoresModule,
+  ],
+  providers: [
+    {
+      provide: MAT_DATE_LOCALE,
+      useValue: ptBR,
+    },
+    provideDateFnsAdapter(),
   ],
 })
 export class MarmitasModule {}
