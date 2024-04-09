@@ -1,31 +1,24 @@
 <div class="content">
   @for (i of quantidadeNumeros; track i) {
-    <button
-      nz-button
-      (click)="selecionar(i)"
-      [nzType]="this.selecao[i] ? 'primary' : 'default'"
-    >
-      {{ i }}
-    </button>
+    @if (this.selecao[i]) {
+      <button mat-flat-button color="primary">{{ i }}</button>
+    } @else {
+      <button mat-button (click)="selecionar(i)">
+        {{ i }}
+      </button>
+    }
   }
   <div class="box0">
-    <button nz-button style="width: 100%" (click)="limparSelecao()">
-      <span nz-icon nzType="close-circle" nzTheme="outline"></span>
+    <button mat-button style="width: 100%" (click)="limparSelecao()">
+      <mat-icon>clear</mat-icon>
     </button>
   </div>
   <div class="box1">
-    <button
-      nz-button
-      style="width: 100%"
-      (click)="entrar()"
-      [nzLoading]="loading"
-    >
-      Entrar
-    </button>
+    <button mat-button style="width: 100%" (click)="entrar()">Entrar</button>
   </div>
 </div>
-<div style="text-align: center;">
+<div style="text-align: center">
   @if (isMobile) {
     <span versaosis></span>
-  }  
+  }
 </div>
