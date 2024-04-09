@@ -24,6 +24,17 @@ import { Component, input } from '@angular/core';
       .item-inner-quantidade {
         padding-right: 10px; padding-left: 10px; font-size: 25px
       }
+
+      .expansion-headers-align .mat-expansion-panel-header-title { 
+        font-weight: 500;
+      } 
+
+      .expansion-headers-align .mat-expansion-panel-header-description {
+        direction: rtl;
+        padding-right: 10px; 
+        font-size: 25px;
+        font-weight: 500;
+      } 
     `,
   ],
 })

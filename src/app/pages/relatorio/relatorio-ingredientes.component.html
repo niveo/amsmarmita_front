@@ -1,18 +1,20 @@
-<nz-collapse>
+<mat-accordion class="expansion-headers-align">
   @for (item of registros(); track item) {
-    <ng-template #tplItemTitulo>
-      <div class="lbl-item-titulo fx-row wf">
-        <span class="fx-flex">{{ item.nome }}</span>
-        <span style="font-size: 20px">{{ item.quantidade }}</span>
-      </div>
-    </ng-template>
-
-    <nz-collapse-panel [nzHeader]="tplItemTitulo">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <div class="fx-row wf">
+            <span class="fx-flex"> {{ item.nome }}</span>
+            <span class="item-inner-quantidade"> {{ item.quantidade }}</span>
+            {{ item.pratos?.length }}
+          </div>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
       @if (item.pratos) {
         @for (prato of item.pratos; track prato) {
           <div class="item-inner">
             <div class="fx-row" style="align-items: center">
-              <span class="item-inner-quantidade" >
+              <span class="item-inner-quantidade">
                 {{ prato.quantidade }}
               </span>
               <span>
@@ -22,6 +24,6 @@
           </div>
         }
       }
-    </nz-collapse-panel>
+    </mat-expansion-panel>
   }
-</nz-collapse>
+</mat-accordion>

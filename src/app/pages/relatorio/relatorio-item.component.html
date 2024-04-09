@@ -1,13 +1,15 @@
-<nz-collapse>
+<mat-accordion class="expansion-headers-align">
   @for (item of registros(); track item) {
-    <ng-template #tplItemTitulo>
-      <div class="lbl-item-titulo fx-row wf">
-        <span class="fx-flex">{{ item.prato }}</span>
-        <span style="font-size: 20px">{{ item.quantidade }}</span>
-      </div>
-    </ng-template>
-
-    <nz-collapse-panel [nzHeader]="tplItemTitulo">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <div class="fx-row wf">
+            <span class="fx-flex"> {{ item.prato }}</span>
+            <span class="item-inner-quantidade"> {{ item.quantidade }}</span>
+            {{ item.comedores?.length }}
+          </div>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
       @if (item.comedores) {
         @for (comedor of item.comedores; track comedor) {
           <div class="item-inner">
@@ -22,20 +24,22 @@
                 </span>
 
                 @if (!acompanhamento()) {
-                  <div class="fx-row">
+                  <mat-chip-set>
                     @for (de of comedor.de; track de) {
-                      <nz-tag
-                        [nzColor]="de.grupo.cor"
-                        [nzBordered]="!de.grupo.multiplo"
+                      <mat-chip
+                        [ngStyle]="{ border: '1px solid ' + de.grupo.cor }"
                       >
                         @if (de.grupo.multiplo) {
-                          <span nz-icon nzType="fire" nzTheme="outline"></span>
+                          <mat-icon
+                            matChipAvatar
+                            fontIcon="rice_bowl"
+                          ></mat-icon>
                         }
                         {{ de.grupo.multiplo ? de.grupo.nome + "/" : ""
-                        }}{{ de.nome }}</nz-tag
-                      >
+                        }}{{ de.nome }}
+                      </mat-chip>
                     }
-                  </div>
+                  </mat-chip-set>
                 } @else {
                   <div class="fx-column">
                     @for (acompanha of comedor.acompanha; track acompanha) {
@@ -48,6 +52,6 @@
           </div>
         }
       }
-    </nz-collapse-panel>
+    </mat-expansion-panel>
   }
-</nz-collapse>
+</mat-accordion>

@@ -15,6 +15,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 registerLocaleData(pt);
 
@@ -37,6 +38,9 @@ registerLocaleData(pt);
     CoreModule,
   ],
   bootstrap: [AppComponent],
+  providers: [
+    provideAnimationsAsync()
+  ],
 })
 export class AppModule {
   constructor(private titleService: Title) {

@@ -1,47 +1,40 @@
-<app-progress-bar-component [visible]="loading()" />
-<div class="card-container">
-  <nz-tabset
-    nzTabPosition="bottom"
-    nzSize="large"
-    nzType="card"
-    style="height: 100%"
-  >
-    <nz-tab [nzTitle]="'Principal'">
-      <div class="comp-content">
-        <div class="comp-inner">
-          <app-relatorio-item-component [registros]="pratos" />
-        </div>
+<mat-tab-group class="fx-column hf ovh">
+  <mat-tab label="Principal">
+    <div class="comp-content">
+      <div class="comp-inner">
+        <app-relatorio-item-component [registros]="pratos" />
       </div>
       <div style="direction: rtl; padding-right: 10px">
         Pratos {{ totalPratosRegistros }} / Marmitas {{ totalPratos }}
       </div>
-    </nz-tab>
-
-    <nz-tab [nzTitle]="'Acompanha'">
-      <div class="comp-content">
-        <div class="comp-inner">
-          <app-relatorio-item-component
-            [registros]="acompanhamentos"
-            [acompanhamento]="true"
-          />
-        </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Acompanha">
+    <div class="comp-content">
+      <div class="comp-inner">
+        <app-relatorio-item-component
+          [registros]="acompanhamentos"
+          [acompanhamento]="true"
+        />
       </div>
       <div style="direction: rtl; padding-right: 10px">
         Pratos {{ totalAcompanhamentosRegistros }} / Marmitas
         {{ totalAcompanhamentos }}
       </div>
-    </nz-tab>
-
-    <ng-template #tplTituloIngredientes>
-      <span nz-icon nzType="fire" nzTheme="outline"></span>
+    </div>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>kitchen</mat-icon>
     </ng-template>
-
-    <nz-tab [nzTitle]="tplTituloIngredientes">
-      <div class="comp-content">
-        <div class="comp-inner">
-          <app-relatorio-ingredientes-component [registros]="ingredientes" />
-        </div>
+    <div class="comp-content">
+      <div class="comp-inner">
+        <app-relatorio-ingredientes-component [registros]="ingredientes" />
       </div>
-    </nz-tab>
-  </nz-tabset>
-</div>
+    </div>
+  </mat-tab>
+</mat-tab-group>
+
+@if (loading()) {
+  <mat-progress-bar mode="indeterminate" style="height: 4px"></mat-progress-bar>
+}
