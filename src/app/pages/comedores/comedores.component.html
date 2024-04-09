@@ -1,58 +1,48 @@
-<mat-drawer-container>
-  <mat-drawer #drawer [opened]="editarForm" (closedStart)="editarForm = false">
-    @if (editarForm) {
+<container-central [(drawer)]="editarForm" [loading]="loading()">
+  <div drawer class="ovh hf">
+    @if (editarForm()) {
       <app-comedores-form-component
         [(visible)]="editarForm"
         [data]="editarFormData()"
       />
     }
-  </mat-drawer>
-  <mat-drawer-content>
-    <div class="comp-body">
-      <div class="comp-head">
-        @if (!loading()) {
-          <button
-            mat-raised-button
-            color="primary"
-            style="margin-bottom: 10px"
-            (click)="incluir()"
-          >
-            Novo
-          </button>
-        }
-      </div>
-      <div class="comp-content">
-        <div class="comp-inner">
-          <mat-selection-list
-            role="list"
-            hideSingleSelectionIndicator
-            [multiple]="false"
-          >
-            @for (item of data$ | async; track item._id) {
-              <mat-list-option role="listitem">
-                <div class="fx-row">
-                  <span
-                    class="fx-flex"
-                    style="align-content: center"
-                    (click)="editar(item)"
-                    >{{ item.nome }}</span
-                  >
-                  <button mat-icon-button  (click)="removerRegistro(item)">
-                    <mat-icon class="cred">delete</mat-icon>
-                  </button>
-                </div>
-              </mat-list-option>
-              <mat-divider></mat-divider>
-            }
-          </mat-selection-list>
-        </div>
-      </div>
-      @if (loading()) {
-        <mat-progress-bar
-          mode="indeterminate"
-          style="height: 4px"
-        ></mat-progress-bar>
+  </div>
+
+  <div header>
+    @if (!loading()) {
+      <button
+        mat-raised-button
+        color="primary"
+        style="margin-bottom: 10px"
+        (click)="incluir()"
+      >
+        Novo
+      </button>
+    }
+  </div>
+
+  <div content>
+    <mat-selection-list
+      role="list"
+      hideSingleSelectionIndicator
+      [multiple]="false"
+    >
+      @for (item of data$ | async; track item._id) {
+        <mat-list-option role="listitem">
+          <div class="fx-row">
+            <span
+              class="fx-flex"
+              style="align-content: center"
+              (click)="editar(item)"
+              >{{ item.nome }}</span
+            >
+            <button mat-icon-button (click)="removerRegistro(item)">
+              <mat-icon class="cred">delete</mat-icon>
+            </button>
+          </div>
+        </mat-list-option>
+        <mat-divider></mat-divider>
       }
-    </div>
-  </mat-drawer-content>
-</mat-drawer-container>
+    </mat-selection-list>
+  </div>
+</container-central>

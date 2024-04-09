@@ -7,14 +7,13 @@ import { ComedoresComponent } from './comedores.component';
 import { ComedoresRoutingModule } from './comedores-routing.module';
 import { ComedoresFormComponent } from './comedores-form.component';
 import { MatListModule } from '@angular/material/list';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { ConfirmacaoDialogModule } from '../../common/confirmacao-dialog';
+import { ContainerCentralComponent } from '../../componentes/container-central.component';
 
 @NgModule({
   declarations: [ComedoresComponent, ComedoresFormComponent],
@@ -26,12 +25,11 @@ import { ConfirmacaoDialogModule } from '../../common/confirmacao-dialog';
     ReactiveFormsModule,
     ComedoresRoutingModule,
     ConfirmacaoDialogModule,
+    ContainerCentralComponent,
 
     MatListModule,
     MatButtonModule,
-    MatProgressBarModule,
     MatDividerModule,
-    MatSidenavModule,
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,

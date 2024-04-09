@@ -2,22 +2,21 @@ import { Component, inject, input, output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { EMPTY, catchError, finalize, iif, mergeMap, of } from 'rxjs';
-import {
-  LBL_ATUALIZACAO,
-  LBL_ERRO,
-  MSG_ATUALIZADO_SUCESSO,
-  MSG_ERRO_PROCSSAMENTO,
-} from '../../common/constantes';
+import { LBL_ERRO, MSG_ERRO_PROCSSAMENTO } from '../../common/constantes';
 import { Grupo } from '../../model';
 import { v1 } from 'uuid';
 import { GrupoService } from '../../services/grupo.service';
 import { validarFormulario } from '../../common/util';
 
-const KEY_NOFITY_SALVAR = v1().toString();
-
 @Component({
   selector: 'app-grupos-form-component',
   templateUrl: './grupos-form.component.html',
+  styles: `
+    :host {
+      background-color: white;
+      height: 100%;
+    }
+  `,
 })
 export class GrupoFormComponent {
   private readonly service = inject(GrupoService);

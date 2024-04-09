@@ -14,6 +14,7 @@ import { Comedor } from '../../model/comedor';
 import {
   MSG_EXCLUIR_SUCESSO,
   MSG_ERRO_PROCSSAMENTO,
+  MSG_CONFIRMAR_EXCLUSAO,
 } from '../../common/constantes';
 import { isBooleanTransform } from '../../common/util';
 import { ConfirmacaoDialog } from '../../common/confirmacao-dialog';
@@ -28,7 +29,6 @@ export class ComedoresComponent {
   private readonly service = inject(ComedoresService);
   protected readonly destroyRef = inject(DestroyRef);
   private readonly _snackBar = inject(MatSnackBar);
-
   protected readonly confirmacaoDialog = inject(ConfirmacaoDialog);
 
   data$: Observable<any[]> = this.service.data$;
@@ -38,7 +38,7 @@ export class ComedoresComponent {
   eventComedorTipoSelecao = output<string>();
 
   editarFormData = signal<any>(null);
-  editarForm = false;
+  editarForm = signal(false);
 
   incluir() {
     this.editar();
@@ -46,7 +46,7 @@ export class ComedoresComponent {
 
   editar(item?: Comedor) {
     this.editarFormData.set({ ...item });
-    this.editarForm = true;
+    this.editarForm.set(true);
   }
 
   remover(item: Comedor) {
@@ -63,7 +63,7 @@ export class ComedoresComponent {
 
   removerRegistro(item: Comedor) {
     this.confirmacaoDialog
-      .confirmacao({ mensagem: 'Deseja excluir o registro(s) selecionado(s)?' })
+      .confirmacao({ mensagem: MSG_CONFIRMAR_EXCLUSAO })
       .afterClosed()
       .subscribe((response: boolean) => {
         if (response) this.remover(item);
