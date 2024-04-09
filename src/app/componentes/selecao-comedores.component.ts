@@ -1,35 +1,31 @@
 import { Component, Inject, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { NZ_DRAWER_DATA, NzDrawerRef } from 'ng-zorro-antd/drawer';
-import { NzListModule } from 'ng-zorro-antd/list';
 import { AsyncPipe } from '@angular/common';
 import { ComedoresService } from '../services/comedores.service';
 import { Observable } from 'rxjs';
-import { IconsProviderUserModule } from '../common/icons-provider-user.module';
+import { MatListModule } from '@angular/material/list';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-selecao-comedores-component',
   template: `
-    <nz-list nzItemLayout="horizontal" nzSize="large" [nzLoading]="loading()">
+    <mat-selection-list
+      #shoes
+      [hideSingleSelectionIndicator]="true"
+      [multiple]="false"
+    >
       @for (item of data$ | async; track item._id) {
-        <nz-list-item
-          (click)="comedorTipoSelecao(item._id)"
-          style="cursor: pointer;"
+        <mat-list-option (click)="comedorTipoSelecao(item._id)">
+          <mat-icon matListItemIcon>launch</mat-icon>
+          {{ item.nome }}</mat-list-option
         >
-          <nz-list-item-meta>
-            <nz-list-item-meta-title>
-              {{ item.nome }}
-            </nz-list-item-meta-title>
-          </nz-list-item-meta>
-
-          <ul nz-list-item-actions>
-            <nz-list-item-action>
-              <span nz-icon nzType="select" nzTheme="outline"></span>
-            </nz-list-item-action>
-          </ul>
-        </nz-list-item>
       }
-    </nz-list>
+    </mat-selection-list>
+    @if (loading()) {
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
   `,
   styles: [
     `
@@ -40,7 +36,7 @@ import { IconsProviderUserModule } from '../common/icons-provider-user.module';
     `,
   ],
   standalone: true,
-  imports: [NzListModule, AsyncPipe, IconsProviderUserModule],
+  imports: [AsyncPipe, MatListModule, MatIconModule, MatProgressBarModule],
 })
 export class SelecaoComedoresComponent {
   private readonly service = inject(ComedoresService);
