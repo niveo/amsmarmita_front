@@ -7,16 +7,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { IconsProviderUserModule } from './common/icons-provider-user.module';
 import { LoginComponent } from './pages/login/login.component';
 import { VersaoSistemaDirective } from './directives/versao-sistema.directive';
 import { CoreModule } from './core.module';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzDrawerModule } from 'ng-zorro-antd/drawer';
-import { NzMenuModule } from 'ng-zorro-antd/menu';
-import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatRippleModule } from '@angular/material/core';
+import { FooterComponent } from './componentes/footer.component';
+import { MatListModule } from '@angular/material/list';
 
 registerLocaleData(pt);
 
@@ -28,17 +30,19 @@ registerLocaleData(pt);
     BrowserAnimationsModule,
     VersaoSistemaDirective,
 
-    NzDrawerModule,
-    NzButtonModule,
-    NzMenuModule,
-    NzLayoutModule,
     NgTemplateOutlet,
-
-    IconsProviderUserModule,
 
     MatSnackBarModule,
 
     LoginComponent,
+    FooterComponent,
+
+    MatSidenavModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatRippleModule,
+    MatListModule,
 
     CoreModule,
   ],

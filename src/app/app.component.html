@@ -1,99 +1,64 @@
-<nz-layout class="layout fx-column hf ovh">
-  <nz-header class="fx-row" style="align-items: center">
-    <ng-container [ngTemplateOutlet]="tplLogo"></ng-container>
-
-    <div class="fx-flex"></div>
-    @if (isMobile && usuarioLogado()) {
-      <ng-container [ngTemplateOutlet]="tplMenu"></ng-container>
-    }
-  </nz-header>
-  <nz-content class="outer-content fx-flex">
-    <nz-layout class="inner-layout">
-      @if (!isMobile && usuarioLogado()) {
-        <nz-sider nzWidth="200px" nzTheme="light">
-          <ng-container [ngTemplateOutlet]="tplContentMenu"></ng-container>
-        </nz-sider>
-      }
-      <nz-content class="inner-content">
-        <router-outlet></router-outlet>
-      </nz-content>
-    </nz-layout>
-    <nz-footer
-      ><span>©2024 Implement By AMS</span>
-      @if (!isMobile) {
-        <span versaosis></span>
-      }
-    </nz-footer>
-  </nz-content>
-</nz-layout>
-
 <ng-template #tplMenu>
-  <button
-    nz-button
-    [nzGhost]="true"
-    nzType="dashed"
-    nzShape="circle"
-    (click)="open()"
-  >
-    <span nz-icon nzType="menu"></span>
+  <button mat-icon-button (click)="drawer.toggle()">
+    <mat-icon>menu</mat-icon>
   </button>
 </ng-template>
 
-<nz-drawer
-  [nzClosable]="false"
-  [nzVisible]="visible"
-  [nzPlacement]="placement"
-  [nzTitle]="tplLogoDrawer"
-  (nzOnClose)="close()"
-  [nzFooter]="tplFooter"
->
-  <ng-container *nzDrawerContent>
-    <ng-container [ngTemplateOutlet]="tplContentMenu"></ng-container>
-  </ng-container>
-</nz-drawer>
+<mat-drawer-container class="layout fx-column hf ovh" autosize>
+  <mat-drawer #drawer mode="over">
+    <div class="fx-column hf ovh">
+      <ng-container [ngTemplateOutlet]="tplLogoDrawer"></ng-container>
+      <div class="fx-flex">
+        <ng-container [ngTemplateOutlet]="tplContentMenu"></ng-container>
+      </div>
+      <ng-container [ngTemplateOutlet]="tplFooter"></ng-container>
+    </div>
+  </mat-drawer>
+  <section class="fx-column hf ovh">
+    <mat-toolbar color="primary">
+      <ng-container [ngTemplateOutlet]="tplLogoDrawer"></ng-container>
+
+      <div class="fx-flex"></div>
+      @if (isMobile && usuarioLogado()) {
+        <ng-container [ngTemplateOutlet]="tplMenu"></ng-container>
+      }
+    </mat-toolbar>
+    <div class="fx-flex hf ovh">
+      <router-outlet></router-outlet>
+    </div>
+    <app-footer-component />
+  </section>
+</mat-drawer-container>
 
 <ng-template #tplFooter>
-  <div class="fx-row wf">
-    <span class="fx-flex" versaosis style="padding-left: 10px;"></span>
+  <div class="fx-row wf" style="padding: 10px; align-items: center">
+    <span class="fx-flex" versaosis style="padding-left: 10px"></span>
 
-    <button nz-button nzType="dashed" (click)="close()">
-      <span nz-icon nzType="menu-unfold" nzTheme="outline"></span>
+    <button mat-icon-button (click)="drawer.toggle()">
+      <mat-icon>menu_open</mat-icon>
     </button>
   </div>
 </ng-template>
 
 <ng-template #tplContentMenu>
-  <ul nz-menu nzMode="inline" class="sider-menu">
-    <li nz-menu-item routerLink="marmitas">
-      <span nz-icon nzType="coffee" nzTheme="outline"></span>
-      Marmitas
-    </li>
-    <li nz-menu-item routerLink="comedores">
-      <span nz-icon nzType="user" nzTheme="outline"></span>
-      Comedores
-    </li>
-
-    <li nz-submenu nzOpen nzIcon="user" nzTitle="Pratos">
-      <ul>
-        <li nz-menu-item routerLink="grupos">
-          <span nz-icon nzType="group" nzTheme="outline"></span>
-          Grupos
-        </li>
-        <li nz-menu-item routerLink="pratos">
-          <span nz-icon nzType="shop" nzTheme="outline"></span>
-          Pratos
-        </li>
-        <li nz-menu-item routerLink="ingredientes">
-          <span nz-icon nzType="fire" nzTheme="outline"></span>
-          Ingredientes
-        </li>
-      </ul>
-    </li>
-  </ul>
+  <mat-nav-list>
+    @for (item of listaMenu; track item) {
+      <a mat-list-item [routerLink]="item.rota">
+        <mat-icon matListItemIcon>{{ item.icone }}</mat-icon>
+        <a matListItemTitle>{{ item.titulo }}</a>
+      </a>
+    }
+  </mat-nav-list>
 </ng-template>
 
 <ng-template #tplLogo let-item="itemc">
-  <div class="logo ripple" [ngClass]="item" routerLink="/">
+  <div
+    class="logo"
+    matRipple
+    [ngClass]="item"
+    routerLink="/"
+    (click)="drawer.close()"
+  >
     <span>{{ config.titulo }}</span>
   </div>
 </ng-template>
@@ -103,15 +68,4 @@
     [ngTemplateOutlet]="tplLogo"
     [ngTemplateOutletContext]="{ itemc: 'logo-drawer' }"
   ></ng-container>
-</ng-template>
-
-<ng-template #notificationBtnTpl let-notification>
-  <button
-    nz-button
-    nzType="primary"
-    nzSize="small"
-    (click)="notification.close()"
-  >
-    OK
-  </button>
 </ng-template>
