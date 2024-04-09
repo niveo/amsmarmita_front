@@ -1,36 +1,40 @@
 import { NgModule } from '@angular/core';
-import { NzListModule } from 'ng-zorro-antd/list';
+
 import { AsyncPipe, NgStyle } from '@angular/common';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { IconsProviderUserModule } from '../../common/icons-provider-user.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
+
 import { ComedoresComponent } from './comedores.component';
 import { ComedoresRoutingModule } from './comedores-routing.module';
 import { ComedoresFormComponent } from './comedores-form.component';
-import { NzDrawerModule } from 'ng-zorro-antd/drawer';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
-import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
-import { ProgressBarComponent } from '../../componentes/progress-bar.component';
+import { MatListModule } from '@angular/material/list';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { ConfirmacaoDialogModule } from '../../common/confirmacao-dialog';
 
 @NgModule({
   declarations: [ComedoresComponent, ComedoresFormComponent],
   exports: [ComedoresComponent],
   imports: [
-    NzListModule,
-    NzButtonModule,
-    NzDrawerModule,
-    IconsProviderUserModule,
-    NzInputModule,
     NgStyle,
     AsyncPipe,
-    NzFormModule,
+
     ReactiveFormsModule,
     ComedoresRoutingModule,
-    NzToolTipModule,
-    NzPopconfirmModule,
-    ProgressBarComponent,
+    ConfirmacaoDialogModule,
+
+    MatListModule,
+    MatButtonModule,
+    MatProgressBarModule,
+    MatDividerModule,
+    MatSidenavModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
   ],
 })
 export class ComedoresModule {}

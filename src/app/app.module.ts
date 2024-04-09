@@ -16,6 +16,7 @@ import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 registerLocaleData(pt);
 
@@ -35,12 +36,12 @@ registerLocaleData(pt);
 
     IconsProviderUserModule,
 
+    MatSnackBarModule,
+
     CoreModule,
   ],
   bootstrap: [AppComponent],
-  providers: [
-    provideAnimationsAsync()
-  ],
+  providers: [provideAnimationsAsync()],
 })
 export class AppModule {
   constructor(private titleService: Title) {
