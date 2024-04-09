@@ -28,8 +28,8 @@
       [multiple]="false"
     >
       @for (item of data$ | async; track item._id) {
-        <mat-list-option role="listitem">
-          <div class="fx-row">
+        <mat-list-option role="listitem" [corBoarda]="item.cor">
+          <div class="fx-row" style="align-items: center">
             <app-grupo-principal-component [principal]="item.principal" />
             <span
               class="fx-flex"

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core'; 
+import { NgModule } from '@angular/core';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { AsyncPipe } from '@angular/common';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -13,22 +13,34 @@ import { IngredienteRoutingModule } from './ingrediente-routing.module';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { ProgressBarComponent } from '../../componentes/progress-bar.component';
+import { ConfirmacaoDialogModule } from 'src/app/common/confirmacao-dialog';
+import { ContainerCentralComponent } from 'src/app/componentes/container-central.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [IngredienteComponent, IngredienteFormComponent],
   imports: [
     IngredienteRoutingModule,
-    NzListModule,
-    NzButtonModule,
-    IconsProviderUserModule,
-    AsyncPipe, 
+
+    AsyncPipe,
     ReactiveFormsModule,
-    NzDrawerModule,
-    NzFormModule,
-    NzInputModule,
-    NzToolTipModule,
-    NzPopconfirmModule,
-    ProgressBarComponent
+
+    MatListModule,
+    MatButtonModule,
+    MatDividerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatSnackBarModule,
+
+    ConfirmacaoDialogModule,
+    ContainerCentralComponent,
   ],
 })
 export class IngredienteModule {}

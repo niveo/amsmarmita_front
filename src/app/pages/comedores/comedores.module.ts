@@ -14,6 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { ConfirmacaoDialogModule } from '../../common/confirmacao-dialog';
 import { ContainerCentralComponent } from '../../componentes/container-central.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [ComedoresComponent, ComedoresFormComponent],
@@ -33,6 +34,7 @@ import { ContainerCentralComponent } from '../../componentes/container-central.c
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
+    MatSnackBarModule
   ],
 })
 export class ComedoresModule {}
