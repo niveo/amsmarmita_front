@@ -2,21 +2,16 @@ import {
   Component,
   OnDestroy,
   Signal,
-  TemplateRef,
   ViewChild,
   computed,
   inject,
 } from '@angular/core';
 import { isMobile } from './common/util';
-import { NzDrawerPlacement } from 'ng-zorro-antd/drawer';
 import { EventType, Router } from '@angular/router';
 import { TOKEN_APP_CONFIG } from './common/tokens';
-import { AuthService } from './auth/auth.service'; 
+import { AuthService } from './auth/auth.service';
 import { SessionTimerService } from './services/session-timer.service';
-import {
-  NzNotificationComponent,
-  NzNotificationService,
-} from 'ng-zorro-antd/notification';
+import { MatDrawer } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-root',
@@ -25,40 +20,49 @@ import {
 })
 export class AppComponent implements OnDestroy {
   isMobile = isMobile;
-  visible = false;
-  isCollapsed = false;
-  placement: NzDrawerPlacement = 'right';
+
+  @ViewChild('drawer', { static: true }) drawer!: MatDrawer;
 
   readonly config = inject(TOKEN_APP_CONFIG);
   private readonly route = inject(Router);
   private readonly _authService = inject(AuthService);
   private readonly sessionTimerService = inject(SessionTimerService);
-  private readonly notification = inject(NzNotificationService);
 
   usuarioLogado: Signal<boolean> = computed(() =>
     this._authService.isAuthenticatedUser(),
   );
 
-  @ViewChild('notificationBtnTpl', { static: true }) btnTemplate!: TemplateRef<{
-    $implicit: NzNotificationComponent;
-  }>;
+  listaMenu = [
+    {
+      rota: '',
+      titulo: 'Marmitas',
+      icone: 'restaurant',
+    },
+    {
+      rota: 'comedores',
+      titulo: 'Comedores',
+      icone: 'groups',
+    },
+    {
+      rota: 'grupos',
+      titulo: 'Grupo/Pratos',
+      icone: 'bento',
+    },
+    {
+      rota: 'pratos',
+      titulo: 'Pratos',
+      icone: 'restaurant_menu',
+    },
+    {
+      rota: 'ingredientes',
+      titulo: 'Ingredientes',
+      icone: 'kitchen',
+    },
+  ];
 
   constructor() {
-    this.sessionTimerService.sessionFinished$.subscribe(() => {
-      this.notification
-        .blank('Sessão', 'Sua sessão foi finalizada...', {
-          nzDuration: 0,
-          nzPlacement: 'bottom',
-          nzButton: this.btnTemplate,
-        })
-        .onClose.subscribe(() => {
-          this._authService.logout();
-        });
-    });
+    this.sessionTimerService.sessionFinished$.subscribe(() => {});
 
-    if (isMobile) {
-      this.placement = 'right';
-    }
     this.route.events.subscribe((event) => {
       //console.log(event);
       if (
@@ -68,16 +72,9 @@ export class AppComponent implements OnDestroy {
           EventType.NavigationEnd,
         ].includes(event.type)
       ) {
-        this.visible = false;
+        this.drawer.close();
       }
     });
-  }
-  open() {
-    this.visible = true;
-  }
-
-  close() {
-    this.visible = false;
   }
 
   openView(view: string) {
