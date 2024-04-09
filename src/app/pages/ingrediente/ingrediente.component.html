@@ -1,72 +1,48 @@
-<div class="comp-body">
-  <div class="comp-head">
-    <button
-      nz-button
-      nzType="primary"
-      style="margin-bottom: 10px"
-      (click)="incluir()"
-      [nzLoading]="loading()"
+<container-central [(drawer)]="editarForm" [loading]="loading()">
+  <div drawer class="ovh hf">
+    @if (editarForm) {
+      <app-ingrediente-form-component
+        [(visible)]="editarForm"
+        [data]="editarFormData()"
+      />
+    }
+  </div>
+
+  <div header>
+    @if (!loading()) {
+      <button
+        mat-raised-button
+        color="primary"
+        style="margin-bottom: 10px"
+        (click)="incluir()"
+      >
+        Novo
+      </button>
+    }
+  </div>
+
+  <div content>
+    <mat-selection-list
+      role="list"
+      hideSingleSelectionIndicator
+      [multiple]="false"
     >
-      Novo
-    </button>
+      @for (item of data$ | async; track item._id) {
+        <mat-list-option role="listitem">
+          <div class="fx-row"> 
+            <span
+              class="fx-flex"
+              style="align-content: center"
+              (click)="editar(item)"
+              >{{ item.nome }}</span
+            >
+            <button mat-icon-button (click)="removerRegistro(item)">
+              <mat-icon class="cred">delete</mat-icon>
+            </button>
+          </div>
+        </mat-list-option>
+        <mat-divider></mat-divider>
+      }
+    </mat-selection-list>
   </div>
-  <div class="comp-content">
-    <div class="comp-inner">
-      <nz-list nzItemLayout="horizontal" nzBordered nzSize="large">
-        @for (item of data$ | async; track item._id) {
-          <nz-list-item>
-            <nz-list-item-meta>
-              <nz-list-item-meta-title>
-                {{ item.nome }}
-              </nz-list-item-meta-title>
-              @if (item.observacao) {
-                <nz-list-item-meta-description>
-                  {{ item.observacao }}
-                </nz-list-item-meta-description>
-              }
-            </nz-list-item-meta>
-
-            <ul nz-list-item-actions>
-              <nz-list-item-action>
-                <button
-                  nz-button
-                  nzType="dashed"
-                  nz-tooltip
-                  nzTooltipTitle="Editar"
-                  nzSize="small"
-                  (click)="editar(item)"
-                >
-                  <span nz-icon nzType="edit" nzTheme="outline"></span>
-                </button>
-              </nz-list-item-action>
-              <nz-list-item-action>
-                <button
-                  nzDanger
-                  nz-button
-                  nzSize="small"
-                  nzType="dashed"
-                  nz-tooltip
-                  nzTooltipTitle="Remover"
-                  nz-popconfirm
-                  nzPopconfirmTitle="Deseja remover esse registro?"
-                  nzPopconfirmPlacement="bottom"
-                  (nzOnConfirm)="remover(item)"
-                >
-                  <span nz-icon nzType="delete" nzTheme="outline"></span>
-                </button>
-              </nz-list-item-action>
-            </ul>
-          </nz-list-item>
-        }
-      </nz-list>
-    </div>
-  </div>
-  <app-progress-bar-component [visible]="loading()" />
-</div>
-
-@if (editarForm) {
-  <app-ingrediente-form-component
-    [(visible)]="editarForm"
-    [data]="editarFormData()"
-  />
-}
+</container-central>

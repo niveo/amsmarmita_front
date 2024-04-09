@@ -1,10 +1,7 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { Observable } from 'rxjs';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
 import {
   MSG_EXCLUIR_SUCESSO,
-  LBL_EXCLUSAO,
-  LBL_ERRO,
   MSG_CONFIRMAR_EXCLUSAO,
   MSG_ERRO_PROCSSAMENTO,
 } from '../../common/constantes';
@@ -19,14 +16,14 @@ import { ConfirmacaoDialog } from '../../common/confirmacao-dialog';
   styles: [
     `
       :host {
-        height: 100%;
         background-color: white;
+        height: 100%;
       }
     `,
   ],
 })
 export class GrupoComponent {
-  private readonly service = inject(GrupoService); 
+  private readonly service = inject(GrupoService);
   private readonly _snackBar = inject(MatSnackBar);
   protected readonly confirmacaoDialog = inject(ConfirmacaoDialog);
 
