@@ -1,14 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RelatorioRoutingModule } from './relatorio-routing.module';
 import { RelatorioItemComponent } from './relatorio-item.component';
-import { RelatorioComponent } from './relatorio.component';
-import { NzTabsModule } from 'ng-zorro-antd/tabs';
-import { NzCollapseModule } from 'ng-zorro-antd/collapse';
-import { GrupoPrincipalComponent } from '../../componentes/grupo-principal.component';
-import { ProgressBarComponent } from '../../componentes/progress-bar.component';
-import { NzTagModule } from 'ng-zorro-antd/tag';
-import { IconsProviderUserModule } from '../../common/icons-provider-user.module';
+import { RelatorioComponent } from './relatorio.component'; 
 import { RelatorioIngredienteComponent } from './relatorio-ingredientes.component';
+
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
+import { NgStyle } from '@angular/common';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+
 @NgModule({
   declarations: [
     RelatorioComponent,
@@ -17,12 +19,14 @@ import { RelatorioIngredienteComponent } from './relatorio-ingredientes.componen
   ],
   imports: [
     RelatorioRoutingModule,
-    NzTabsModule,
-    NzTagModule,
-    NzCollapseModule,
-    GrupoPrincipalComponent,
-    ProgressBarComponent,
-    IconsProviderUserModule,
+
+    MatTabsModule,
+    MatChipsModule,
+    MatExpansionModule,
+    MatIconModule,
+    MatProgressBarModule,
+
+    NgStyle, 
   ],
 })
 export class RelatorioModule {}

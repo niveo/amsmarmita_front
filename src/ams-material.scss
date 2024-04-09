@@ -1,0 +1,24 @@
+@use "@angular/material" as mat;
+@import "@angular/cdk/overlay-prebuilt.css";
+@import "ams-variables";
+
+
+@include mat.core();
+
+$primary: mat.define-palette($mat-custom-primary);
+
+$accent: mat.define-palette($mat-custom-accent);
+$warn: mat.define-palette($mat-custom-warn);
+
+$theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $primary,
+      accent: $accent,
+      warn: $warn,
+    ),
+  )
+);
+
+@include mat.all-component-themes($theme);
+ 

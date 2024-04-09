@@ -12,7 +12,7 @@ import { Component, input } from '@angular/core';
       .item-inner {
         margin-left: 20px;
         margin-right: 20px;
-        padding:  10px;
+        padding: 10px;
         border-bottom: 1px solid #07363d;
         border-left: 5px solid #07363d;
       }
@@ -22,12 +22,18 @@ import { Component, input } from '@angular/core';
       }
 
       .item-inner-quantidade {
-        padding-right: 10px; padding-left: 10px; font-size: 25px
+        padding-right: 10px;
+        padding-left: 10px;
+        font-size: 25px;
       }
+
+      .expansion-headers-align .mat-expansion-panel-header-title { 
+        font-weight: 500;
+      } 
     `,
   ],
 })
 export class RelatorioItemComponent {
-  registros = input.required<any[]>(); 
-  acompanhamento = input(false); 
+  registros = input.required<any[]>();
+  acompanhamento = input(false);
 }

@@ -1,43 +1,16 @@
 import { Component, input } from '@angular/core';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-progress-bar-component',
   template: `@if (visible()) {
-    <ng-container>
-      <div class="progress-bar">
-        <div class="progress-bar-value"></div>
-      </div>
-    </ng-container>
+    <mat-progress-bar
+      mode="indeterminate"
+      style="height: 4px"
+    ></mat-progress-bar>
   } `,
-  styles: `
-    .progress-bar {
-      height: 4px;
-      background-color: rgba(7, 54, 61, 0.2);
-      width: 100%;
-      overflow: hidden;
-    }
-
-    .progress-bar-value {
-      width: 100%;
-      height: 100%;
-      background-color: rgb(7, 54, 61);
-      animation: indeterminateAnimation 1s infinite linear;
-      transform-origin: 0% 50%;
-    }
-
-    @keyframes indeterminateAnimation {
-      0% {
-        transform: translateX(0) scaleX(0);
-      }
-      40% {
-        transform: translateX(0) scaleX(0.4);
-      }
-      100% {
-        transform: translateX(100%) scaleX(0.5);
-      }
-    }
-  `,
   standalone: true,
+  imports: [MatProgressBarModule],
 })
 export class ProgressBarComponent {
   visible = input(false);

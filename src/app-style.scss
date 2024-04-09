@@ -1,0 +1,19 @@
+@import "ams-material";
+
+/*TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version.*/
+.mat-drawer-container,
+.mat-tab-body-wrapper {
+  height: 100%;
+}
+
+.mat-mdc-tab-body-wrapper {
+  height: 100%;
+}
+
+.mat-mdc-tab-group {
+  background-color: white;
+}
+
+.mat-mdc-dialog-content {
+  max-height: unset !important;
+}
