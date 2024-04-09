@@ -1,5 +1,5 @@
 <mat-drawer-container>
-  <mat-drawer [opened]="drawer()" (closedStart)="drawerChange.emit(false)">
+  <mat-drawer [opened]="drawer()" (closedStart)="drawerChange.emit(false)" position="end">
     <ng-content select="[drawer]"></ng-content>
   </mat-drawer>
   <mat-drawer-content>

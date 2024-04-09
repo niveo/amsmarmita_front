@@ -8,6 +8,8 @@ import { PratoStore } from '../../stores/prato.store';
 import { EMPTY, catchError, finalize } from 'rxjs';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { LBL_ERRO, MSG_ERRO_PROCSSAMENTO } from '../../common/constantes';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 
 @Component({
   selector: 'app-pratos-form-component',
@@ -20,6 +22,8 @@ export class PratosFormComponent implements OnInit {
   private readonly notify = inject(NzNotificationService);
 
   grupos?: Grupo[];
+
+  announcer = inject(LiveAnnouncer);
 
   visible = input.required<boolean>();
   visibleChange = output<boolean>();
@@ -92,5 +96,26 @@ export class PratosFormComponent implements OnInit {
           this.visibleChange.emit(false);
         },
       });
+  }
+
+  removeKeyword(keyword: string) {
+    const index = this.form.value.composicoes!.indexOf(keyword);
+    if (index >= 0) {
+      this.form.value.composicoes!.splice(index, 1);
+
+      this.announcer.announce(`removed ${keyword}`);
+    }
+  }
+
+  add(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+
+    // Add our keyword
+    if (value) {
+      this.form.value.composicoes!.push(value);
+    }
+
+    // Clear the input value
+    event.chipInput!.clear();
   }
 }

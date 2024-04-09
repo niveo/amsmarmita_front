@@ -1,96 +1,79 @@
-<nz-drawer
-  [nzBodyStyle]="{ overflow: 'auto' }"
-  [nzMaskClosable]="false"
-  [nzKeyboard]="false" 
-  [nzClosable]="false"
-  [nzVisible]="visible()"
-  nzTitle="Pratos"
-  [nzFooter]="footerTpl"
->
-  <form nz-form [formGroup]="form" *nzDrawerContent nzLayout="vertical">
-    <nz-form-item>
-      <nz-form-label nzRequired>Nome</nz-form-label>
-      <nz-form-control nzErrorTip="Por favor informe aqui o nome do prato!">
-        <nz-input-group>
-          <input
-            type="text"
-            nz-input
-            formControlName="nome"
-            placeholder="Informe aqui o nome do prato"
-            [maxLength]="50"
-          />
-        </nz-input-group>
-      </nz-form-control>
-    </nz-form-item>
+<div class="ova hf fx-column pd-5">
+  <div class="fx-flex">
+    <form [formGroup]="form" class="fx-column gap-5">
+      <mat-form-field class="wf">
+        <mat-label>Nome</mat-label>
+        <input
+          matInput
+          placeholder="Nome"
+          formControlName="nome"
+          placeholder="Informe aqui o nome do ingrediente"
+          [maxLength]="50"
+          [minlength]="5"
+        />
+      </mat-form-field>
 
-    <nz-form-item>
-      <nz-form-label nzRequired>Grupo</nz-form-label>
-      <nz-form-control nzErrorTip="Por favor informe um grupo do prato!">
-        <nz-select
-          formControlName="grupo"
-          placeholder="Informe aqui o grupo do prato"
-        >
+      <mat-form-field class="wf">
+        <mat-label>Grupo</mat-label>
+        <mat-select formControlName="grupo" required>
+          <mat-option>--</mat-option>
           @for (g of grupos; track g._id) {
-            <nz-option nzCustomContent [nzValue]="g._id" [nzLabel]="g.nome!">
+            <mat-option [value]="g._id">
               <app-grupo-principal-component [principal]="g.principal" />
-              {{ g.nome }}
-            </nz-option>
+              {{ g.nome! }}</mat-option
+            >
           }
-        </nz-select>
-      </nz-form-control>
-    </nz-form-item>
+        </mat-select>
+      </mat-form-field>
 
-    <nz-form-item>
-      <nz-form-label>Observação</nz-form-label>
-      <nz-form-control>
-        <nz-textarea-count [nzMaxCharacterCount]="100">
-          <textarea
-            type="text"
-            nz-input
-            formControlName="observacao"
-            placeholder="Informe aqui uma observação"
-            [maxLength]="100"
-          ></textarea>
-        </nz-textarea-count>
-      </nz-form-control>
-    </nz-form-item>
+      <mat-form-field class="wf">
+        <mat-label>Observação</mat-label>
+        <textarea
+          matInput
+          placeholder="Informe aqui uma observação"
+          #txtObservacao
+          [maxLength]="100"
+          formControlName="observacao"
+        ></textarea>
+        <mat-hint align="end">{{ txtObservacao.value.length }} / 100</mat-hint>
+      </mat-form-field>
 
-    <app-selecao-ingredientes-component
-      [selecionados]="form.value.ingredientes || []"
-      (selecionadosChange)="form.value.ingredientes = $event"
-    />
-    <br />
-    <br />
+      <app-selecao-ingredientes-component
+        [selecionados]="form.value.ingredientes || []"
+        (selecionadosChange)="form.value.ingredientes = $event"
+      />
 
-    <span
-      nz-icon
-      nzType="tags"
-      nzTheme="outline"
-      style="margin-right: 5px"
-    ></span>
-    <app-pratos-form-composicao-component
-      [composicoes]="form.value.composicoes || []"
-      (composicoesChange)="form.value.composicoes = $event"
-    />
-  </form>
+      <br />
 
-  <ng-template #footerTpl>
-    <div style="float: right">
-      <button
-        nz-button
-        style="margin-right: 8px"
-        (click)="visibleChange.emit(false)"
-      >
-        Sair
-      </button>
-      <button
-        nz-button
-        nzType="primary"
-        (click)="salvar()"
-        [nzLoading]="isConfirmLoading"
-      >
-        Salvar
-      </button>
-    </div>
-  </ng-template>
-</nz-drawer>
+      <mat-form-field>
+        <mat-label> <mat-icon>label</mat-icon> Tags </mat-label>
+        <mat-chip-grid #chipGrid formControlName="composicoes">
+          @for (composicao of form.value.composicoes; track composicao) {
+            <mat-chip-row (removed)="removeKeyword(composicao)">
+              {{ composicao }}
+              <button matChipRemove>
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip-row>
+          }
+        </mat-chip-grid>
+        <input
+          placeholder="Nova Tag"
+          [matChipInputFor]="chipGrid"
+          (matChipInputTokenEnd)="add($event)"
+        />
+      </mat-form-field>
+    </form>
+  </div>
+  <div class="fx-row gap-5" style="justify-content: end">
+    <button mat-button (click)="visibleChange.emit(false)">Sair</button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="salvar()"
+      [disabled]="!form.valid"
+    >
+      Salvar <mat-icon>save</mat-icon>
+    </button>
+  </div>
+</div>

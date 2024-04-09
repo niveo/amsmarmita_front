@@ -13,6 +13,8 @@ import { Observable, map } from 'rxjs';
 import { isBooleanTransform } from '../../common/util';
 import { Grupo, Prato } from '../../model';
 import { PratoStore } from '../../stores/prato.store';
+import { MSG_CONFIRMAR_EXCLUSAO } from 'src/app/common/constantes';
+import { ConfirmacaoDialog } from 'src/app/common/confirmacao-dialog';
 
 export class ModelFormPrato {
   _id!: FormControl<string | null>;
@@ -30,6 +32,7 @@ export class ModelFormPrato {
 })
 export class PratoComponent {
   readonly pratoStore = inject(PratoStore);
+  protected readonly confirmacaoDialog = inject(ConfirmacaoDialog);
 
   eventIncluirPratoPedido = output<{
     nome: string;
@@ -41,7 +44,9 @@ export class PratoComponent {
     transform: isBooleanTransform,
   });
 
-  data$!: Observable<Grupo[]>;
+  data$ = this.pratoStore.data$.pipe(
+    map((m) => (!this.tipoSelecao() ? m : m.filter((f) => f.principal))),
+  );
 
   loading: Signal<boolean> = computed(() => this.pratoStore.loading());
 
@@ -54,12 +59,9 @@ export class PratoComponent {
         this.pratoStore.vincularPedidoItem([]);
       }
     });
-    this.data$ = this.pratoStore.data$.pipe(
-      map((m) => (!this.tipoSelecao() ? m : m.filter((f) => f.principal))),
-    );
   }
 
-  novoPrato() {
+  incluir() {
     this.editar();
   }
 
@@ -83,5 +85,14 @@ export class PratoComponent {
       grupoId: prato.grupo!._id,
       pratoId: prato._id!,
     });
+  }
+
+  removerRegistro(item: Prato) {
+    this.confirmacaoDialog
+      .confirmacao({ mensagem: MSG_CONFIRMAR_EXCLUSAO })
+      .afterClosed()
+      .subscribe((response: boolean) => {
+        if (response) this.remover(item);
+      });
   }
 }

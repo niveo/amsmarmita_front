@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core'; 
+import { NgModule } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { IconsProviderUserModule } from '../../common/icons-provider-user.module';
@@ -20,6 +20,17 @@ import { SelecaoIngredientesComponent } from '../../componentes/selecao-ingredie
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { ProgressBarComponent } from '../../componentes/progress-bar.component';
+import { ContainerCentralComponent } from '../../componentes/container-central.component';
+import { ConfirmacaoDialogModule } from '../../common/confirmacao-dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatSelectModule} from '@angular/material/select';
+
 
 @NgModule({
   declarations: [
@@ -37,7 +48,7 @@ import { ProgressBarComponent } from '../../componentes/progress-bar.component';
     ReactiveFormsModule,
     IconsProviderUserModule,
     NzButtonModule,
-    AsyncPipe, 
+    AsyncPipe,
     NzCardModule,
     NzTagModule,
     NzCollapseModule,
@@ -47,7 +58,19 @@ import { ProgressBarComponent } from '../../componentes/progress-bar.component';
     FormsModule,
     NzToolTipModule,
     NzPopconfirmModule,
-    ProgressBarComponent
+    ProgressBarComponent,
+
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatExpansionModule,
+    MatChipsModule,
+    MatSelectModule,
+
+    ContainerCentralComponent,
+    ConfirmacaoDialogModule,
   ],
 })
 export class PratosModule {}
