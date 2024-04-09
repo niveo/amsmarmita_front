@@ -1,8 +1,24 @@
 @use "@angular/material" as mat;
+@use '@angular/material-experimental' as matx;
 @import "@angular/cdk/overlay-prebuilt.css";
 @import "ams-variables";
 
+$theme: matx.define-theme((
+  color: (
+    theme-type: light,
+    primary: matx.$m3-azure-palette,
+    tertiary: matx.$m3-blue-palette,
+  )
+));
 
+@include mat.core();
+@include matx.color-variants-back-compat($theme);
+
+:root {
+  @include mat.all-component-themes($theme);
+}
+
+/* 
 @include mat.core();
 
 $primary: mat.define-palette($mat-custom-primary);
@@ -21,4 +37,4 @@ $theme: mat.define-light-theme(
 );
 
 @include mat.all-component-themes($theme);
- 
+  */

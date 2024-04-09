@@ -10,15 +10,14 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ComedoresService } from '../../services/comedores.service';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Comedor } from '../../model/comedor';
 import {
   MSG_EXCLUIR_SUCESSO,
-  LBL_ERRO,
-  LBL_EXCLUSAO,
+  MSG_ERRO_PROCSSAMENTO,
 } from '../../common/constantes';
 import { isBooleanTransform } from '../../common/util';
-import { FormBuilder } from '@angular/forms';
+import { ConfirmacaoDialog } from '../../common/confirmacao-dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-comedores-component',
@@ -27,9 +26,10 @@ import { FormBuilder } from '@angular/forms';
 })
 export class ComedoresComponent {
   private readonly service = inject(ComedoresService);
-  private readonly notify = inject(NzNotificationService);
   protected readonly destroyRef = inject(DestroyRef);
-  private readonly formBuilder = inject(FormBuilder);
+  private readonly _snackBar = inject(MatSnackBar);
+
+  protected readonly confirmacaoDialog = inject(ConfirmacaoDialog);
 
   data$: Observable<any[]> = this.service.data$;
   loading = computed(() => this.service.loading());
@@ -53,12 +53,21 @@ export class ComedoresComponent {
     this.service.delete(item._id!).subscribe({
       error: (error) => {
         console.error(error);
-        this.notify.error(LBL_ERRO, error.message);
+        this._snackBar.open(MSG_ERRO_PROCSSAMENTO);
       },
       next: () => {
-        this.notify.success(LBL_EXCLUSAO, MSG_EXCLUIR_SUCESSO);
+        this._snackBar.open(MSG_EXCLUIR_SUCESSO);
       },
     });
+  }
+
+  removerRegistro(item: Comedor) {
+    this.confirmacaoDialog
+      .confirmacao({ mensagem: 'Deseja excluir o registro(s) selecionado(s)?' })
+      .afterClosed()
+      .subscribe((response: boolean) => {
+        if (response) this.remover(item);
+      });
   }
 
   selecionarComedor(comedor: Comedor) {

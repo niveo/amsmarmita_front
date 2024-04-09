@@ -8,13 +8,12 @@ import {
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { EMPTY, catchError, finalize, iif, mergeMap, of } from 'rxjs';
 import { LBL_ERRO, MSG_ERRO_PROCSSAMENTO } from '../../common/constantes';
-import { Comedor } from '../../model';
-import { v1 } from 'uuid';
+import { Comedor } from '../../model'; 
 import { ComedoresService } from '../../services/comedores.service';
 
 @Component({
   selector: 'app-comedores-form-component',
-  templateUrl: './comedores-form.component.html',
+  templateUrl: './comedores-form.component.html', 
 })
 export class ComedoresFormComponent {
   private readonly service = inject(ComedoresService);
