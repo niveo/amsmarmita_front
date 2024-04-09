@@ -1,106 +1,59 @@
-<div class="comp-body">
-  <div class="comp-head">
-    <button
-      nz-button
-      nzType="primary"
-      style="margin-bottom: 10px"
-      (click)="isVisible = true"
-      [nzLoading]="loading"
-    >
-      Nova
-    </button>
+<container-central [(drawer)]="editarForm" [loading]="loading()">
+  <div drawer class="ovh hf">
+    @if (editarForm) {
+      <app-marmitas-form-component
+        [(visible)]="editarForm"
+        [data]="editarFormData()"
+      />
+    }
   </div>
 
-  <div class="comp-content">
-    <div class="comp-inner comp-inner-grid">
+  <div header>
+    @if (!loading()) {
+      <button
+        mat-raised-button
+        color="primary"
+        style="margin-bottom: 10px"
+        (click)="incluir()"
+      >
+        Novo
+      </button>
+    }
+  </div>
+
+  <div content>
+    <div class="comp-inner-grid">
       @for (item of data$ | async; track item._id) {
         <div style="padding: 5px">
-          <nz-card
-            style="width: 100%"
-            [nzTitle]="tplTitulo"
-            [nzActions]="[
-              actionVisualizar,
-              actionRelatorio,
-              actionEdit,
-              actionDelete
-            ]"
-          >
-            <p>{{ item.observacao }}</p>
-          </nz-card>
-          <ng-template #actionVisualizar>
-            <span
-              nz-icon
-              nzType="select"
-              nzTheme="outline"
-              (click)="visualizarComedores(item)"
-            ></span>
-          </ng-template>
-
-          <ng-template #actionEdit>
-            <span
-              nz-icon
-              nzType="edit"
-              nzTheme="outline"
-              (click)="editar(item)"
-            ></span>
-          </ng-template>
-
-          <ng-template #actionDelete>
-            <span
-              nz-icon
-              nzType="delete"
-              nzTheme="outline"
-              nz-popconfirm
-              nzPopconfirmTitle="Deseja remover esse registro?"
-              nzPopconfirmPlacement="bottom"
-              [nzTheme]="'twotone'"
-              [nzTwotoneColor]="'#F44336'"
-              (nzOnConfirm)="remover(item)"
-            ></span>
-          </ng-template>
-
-          <ng-template #actionRelatorio>
-            <span
-              nz-icon
-              nzType="book"
-              nzTheme="outline"
-              [routerLink]="['/relatorio', { marmitaId: item._id }]"
-            ></span>
-          </ng-template>
-
-          <ng-template #tplTitulo>
-            <p>{{ item.lancamento | date: "dd/MM/yyyy" }}</p>
-          </ng-template>
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>{{
+                item.lancamento | date: "dd/MM/yyyy"
+              }}</mat-card-title>
+              <mat-card-subtitle>
+                {{ item.observacao }}
+              </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-actions>
+              <button mat-button (click)="visualizarComedores(item)">
+                <mat-icon>launch</mat-icon>
+              </button>
+              <button
+                mat-button
+                [routerLink]="['/relatorio', { marmitaId: item._id }]"
+              >
+                <mat-icon>description</mat-icon>
+              </button>
+              <button mat-button (click)="editar(item)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-button (click)="removerRegistro(item)">
+                <mat-icon class="cred">delete</mat-icon>
+              </button>
+            </mat-card-actions>
+          </mat-card>
         </div>
       }
     </div>
   </div>
-  <app-progress-bar-component [visible]="loading" />
-</div>
-<nz-modal
-  [(nzVisible)]="isVisible"
-  nzTitle="Marmita"
-  (nzOnCancel)="isVisible = false"
-  (nzOnOk)="salvar()"
-  nzOkText="Salvar"
->
-  <ng-container *nzModalContent>
-    <div class="fx-column gap-5">
-      <nz-date-picker
-        [(ngModel)]="marmitaLancamento"
-        nzPlaceHolder="Informe o dia da Marmita"
-        [nzFormat]="dateFormat"
-      ></nz-date-picker>
-
-      <nz-textarea-count [nzMaxCharacterCount]="100">
-        <textarea
-          [(ngModel)]="marmitaObservacao"
-          nz-input
-          placeholder="Informe uma observação"
-          [nzAutosize]="{ minRows: 2, maxRows: 6 }"
-          [maxLength]="100"
-        ></textarea>
-      </nz-textarea-count>
-    </div>
-  </ng-container>
-</nz-modal>
+</container-central>

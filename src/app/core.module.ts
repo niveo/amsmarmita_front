@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 
 import { registerLocaleData } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -11,12 +11,14 @@ import { HttpsRequestInterceptor } from './common/requests.interceptor';
 import { TimeoutInterceptor } from './common/timeout.interceptor';
 import { DEFAULT_TIMEOUT, TOKEN_APP_CONFIG } from './common/tokens';
 
-registerLocaleData(pt);
+import localeExtraPT from '@angular/common/locales/extra/pt';
+registerLocaleData(pt, 'pt', localeExtraPT);
 
 @NgModule({
   imports: [HttpClientModule],
   exports: [HttpClientModule],
   providers: [
+    { provide: LOCALE_ID, useValue: 'pt' },
     { provide: TOKEN_APP_CONFIG, useValue: environment },
     { provide: NZ_I18N, useValue: pt_BR },
 
