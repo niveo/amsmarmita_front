@@ -2,7 +2,7 @@ export const MSG_EXCLUIR_SUCESSO = 'Registro(s) excluido(s) com sucesso!';
 export const MSG_ATUALIZADO_SUCESSO = 'Registro(s) atualizado(s) com sucesso!';
 
 export const MSG_ERRO_PROCSSAMENTO = 'Erro no processamento!';
-
+export const MSG_CONFIRMAR_EXCLUSAO = 'Deseja excluir o registro(s) selecionado(s)?';
 
 export const FORMATO_DATA = 'dd/MM/yyyy';
 
