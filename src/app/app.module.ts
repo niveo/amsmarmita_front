@@ -21,7 +21,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 registerLocaleData(pt);
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -37,6 +37,8 @@ registerLocaleData(pt);
     IconsProviderUserModule,
 
     MatSnackBarModule,
+
+    LoginComponent,
 
     CoreModule,
   ],

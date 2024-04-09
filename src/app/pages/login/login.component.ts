@@ -4,10 +4,13 @@ import { AuthService } from '../../auth/auth.service';
 import { LBL_ERRO } from '../../common/constantes';
 import { finalize } from 'rxjs';
 import { isMobile } from '../../common/util';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
 
 @Component({
   selector: 'app-login-component',
   templateUrl: './login.component.html',
+  standalone: true,
   styles: [
     `
       .content {
@@ -41,6 +44,10 @@ import { isMobile } from '../../common/util';
       }
     `,
   ],
+  imports:[
+    MatButtonModule,
+    MatIconModule
+  ]
 })
 export class LoginComponent {
   quantidadeNumeros: number[] = [];
