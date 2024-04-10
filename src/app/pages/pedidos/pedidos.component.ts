@@ -7,10 +7,9 @@ import {
   Signal,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { map, Observable, Subject } from 'rxjs';
+import { map, Observable, Subject, timeout } from 'rxjs';
 import { PedidoStore } from '../../stores/pedido.store';
 import { LBL_ALERTA } from '../../common/constantes';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Prato } from '../../model';
 import { PedidoItem } from '../../model/pedido-item';
 import {
@@ -19,6 +18,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-pedidos-component',
@@ -28,8 +28,8 @@ import {
 export class PedidosComponent implements OnInit, OnDestroy {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly pedidoStore = inject(PedidoStore);
-  protected readonly notify = inject(NzNotificationService);
   private readonly formBuilder = inject(FormBuilder);
+  private readonly _snackBar = inject(MatSnackBar);
 
   data$: Observable<PedidoItem[]> = this.pedidoStore.data$;
 
@@ -180,7 +180,7 @@ export class PedidosComponent implements OnInit, OnDestroy {
       !this.alteracaoPedidoQuantidade ||
       this.alteracaoPedidoQuantidade === 0
     ) {
-      this.notify.warning(LBL_ALERTA, 'Informe uma quantidade!');
+      this._snackBar.open('Informe uma quantidade!', 'OK', { duration: 300 });
       return;
     }
 

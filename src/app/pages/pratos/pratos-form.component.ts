@@ -6,10 +6,10 @@ import { ModelFormPrato } from './pratos.component';
 import { validarFormulario } from '../../common/util';
 import { PratoStore } from '../../stores/prato.store';
 import { EMPTY, catchError, finalize } from 'rxjs';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { LBL_ERRO, MSG_ERRO_PROCSSAMENTO } from '../../common/constantes';
+import { MSG_ERRO_PROCSSAMENTO } from '../../common/constantes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-pratos-form-component',
@@ -18,8 +18,8 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 export class PratosFormComponent implements OnInit {
   private readonly grupoService = inject(GrupoService);
   private readonly formBuilder = inject(FormBuilder);
+  private readonly _snackBar = inject(MatSnackBar);
   readonly pratoStore = inject(PratoStore);
-  private readonly notify = inject(NzNotificationService);
 
   grupos?: Grupo[];
 
@@ -76,7 +76,7 @@ export class PratosFormComponent implements OnInit {
       .pipe(
         catchError((error: any) => {
           console.error(error);
-          this.notify.error(LBL_ERRO, MSG_ERRO_PROCSSAMENTO);
+          this._snackBar.open(MSG_ERRO_PROCSSAMENTO, 'OK');
           this.isConfirmLoading = false;
           return EMPTY;
         }),

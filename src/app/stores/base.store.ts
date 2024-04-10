@@ -1,10 +1,9 @@
 import { DestroyRef, inject, signal } from '@angular/core';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { BehaviorSubject } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export abstract class BaseStore {
   protected readonly destroyRef = inject(DestroyRef);
-  protected readonly notify = inject(NzNotificationService);
+  protected readonly _snackBar = inject(MatSnackBar);
 
   loading = signal(false);
 
