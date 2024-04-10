@@ -14,10 +14,8 @@ import { BaseStore } from './base.store';
 import { PratoService } from '../services/prato.service';
 import { Grupo, Prato } from '../model';
 import {
-  LBL_ATUALIZACAO,
-  LBL_ERRO,
-  LBL_EXCLUSAO,
   MSG_ATUALIZADO_SUCESSO,
+  MSG_ERRO_PROCSSAMENTO,
   MSG_EXCLUIR_SUCESSO,
 } from '../common/constantes';
 import { PedidoItem } from '../model/pedido-item';
@@ -55,11 +53,11 @@ export class PratoStore extends BaseStore {
     this.service.delete(item._id!).subscribe({
       error: (error) => {
         console.error(error);
-        this.notify.error(LBL_ERRO, error.message);
+        this._snackBar.open(MSG_ERRO_PROCSSAMENTO, 'OK');
       },
       next: (value) => {
         if (value) {
-          this.notify.success(LBL_EXCLUSAO, MSG_EXCLUIR_SUCESSO);
+          this._snackBar.open(MSG_EXCLUIR_SUCESSO, 'OK', { duration: 300 });
 
           const grupoIndex = this._dataSource.value.findIndex(
             (f) => f._id === item.grupo?._id,
@@ -81,13 +79,13 @@ export class PratoStore extends BaseStore {
       .pipe(
         catchError((error: any) => {
           console.error(error);
-          this.notify.error(LBL_ERRO, error.message);
+          this._snackBar.open(MSG_ERRO_PROCSSAMENTO, 'OK');
           return EMPTY;
         }),
       )
       .subscribe({
         next: () => {
-          this.notify.success(LBL_ATUALIZACAO, MSG_ATUALIZADO_SUCESSO);
+          this._snackBar.open(MSG_ATUALIZADO_SUCESSO, 'OK', { duration: 300 });
           //  this.carregar();
         },
       });

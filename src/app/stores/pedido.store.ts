@@ -1,4 +1,4 @@
-import { LBL_ERRO } from './../common/constantes';
+import { MSG_ERRO_PROCSSAMENTO } from './../common/constantes';
 import { Injectable, inject, signal } from '@angular/core';
 import { PedidoService } from '../services/pedido.service';
 import { BehaviorSubject, EMPTY, catchError, finalize } from 'rxjs';
@@ -43,7 +43,7 @@ export class PedidoStore extends BaseStore {
           catchError((response: HttpErrorResponse) => {
             console.error(response.error);
             if (response.error.tipo === 0)
-              this.notify.error(LBL_ERRO, response.error.message);
+              this._snackBar.open(MSG_ERRO_PROCSSAMENTO, 'OK');
 
             this.pratoStore.vincularPedidoItem([]);
             this._dataSource.next([]);
@@ -52,7 +52,7 @@ export class PedidoStore extends BaseStore {
           }),
         )
         .subscribe({
-          next: ({ pratos }) => { 
+          next: ({ pratos }) => {
             this.quantidadeRegistros.set(pratos.length);
             this.pratoStore.vincularPedidoItem(pratos);
             this._dataSource.next(pratos);
@@ -74,7 +74,7 @@ export class PedidoStore extends BaseStore {
       .pipe(
         catchError((error: any) => {
           console.error(error);
-          this.notify.error(LBL_ERRO, error.message);
+          this._snackBar.open(MSG_ERRO_PROCSSAMENTO, 'OK');
           return EMPTY;
         }),
       )
@@ -116,7 +116,7 @@ export class PedidoStore extends BaseStore {
       .pipe(
         catchError((error: any) => {
           console.error(error);
-          this.notify.error(LBL_ERRO, error.message);
+          this._snackBar.open(MSG_ERRO_PROCSSAMENTO, 'OK');
           return EMPTY;
         }),
       )
@@ -159,7 +159,7 @@ export class PedidoStore extends BaseStore {
       .pipe(
         catchError((error: any) => {
           console.error(error);
-          this.notify.error(LBL_ERRO, error.message);
+          this._snackBar.open(MSG_ERRO_PROCSSAMENTO, 'OK');
           return EMPTY;
         }),
       )

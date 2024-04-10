@@ -1,11 +1,10 @@
 import { Component, inject } from '@angular/core';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { AuthService } from '../../auth/auth.service';
-import { LBL_ERRO } from '../../common/constantes';
 import { finalize } from 'rxjs';
 import { isMobile } from '../../common/util';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login-component',
@@ -44,17 +43,16 @@ import {MatIconModule} from '@angular/material/icon';
       }
     `,
   ],
-  imports:[
-    MatButtonModule,
-    MatIconModule
-  ]
+  imports: [MatButtonModule, MatIconModule],
 })
 export class LoginComponent {
+  private readonly service = inject(AuthService);
+  private readonly _snackBar = inject(MatSnackBar);
+
   quantidadeNumeros: number[] = [];
   selecoes = new Set<number>();
   selecao: any = {};
-  private readonly service = inject(AuthService);
-  private readonly notify = inject(NzNotificationService);
+
   loading = false;
   isMobile = isMobile;
 
@@ -83,7 +81,7 @@ export class LoginComponent {
       .subscribe({
         error: (response) => {
           console.error(response);
-          this.notify.error(LBL_ERRO, 'Senha invalida!');
+          this._snackBar.open('Senha invalida!', 'OK');
         },
       });
   }

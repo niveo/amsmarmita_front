@@ -5,11 +5,11 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { EMPTY, catchError, finalize, iif, mergeMap, of } from 'rxjs';
-import { LBL_ERRO, MSG_ERRO_PROCSSAMENTO } from '../../common/constantes';
+import { MSG_ERRO_PROCSSAMENTO } from '../../common/constantes';
 import { Comedor } from '../../model';
 import { ComedoresService } from '../../services/comedores.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-comedores-form-component',
@@ -23,8 +23,8 @@ import { ComedoresService } from '../../services/comedores.service';
 })
 export class ComedoresFormComponent {
   private readonly service = inject(ComedoresService);
-  private readonly notify = inject(NzNotificationService);
   private readonly formBuilder = inject(FormBuilder);
+  protected readonly _snackBar = inject(MatSnackBar);
 
   visible = input.required<boolean>();
   visibleChange = output<boolean>();
@@ -67,7 +67,7 @@ export class ComedoresFormComponent {
         ),
         catchError((error: any) => {
           console.error(error);
-          this.notify.error(LBL_ERRO, MSG_ERRO_PROCSSAMENTO);
+          this._snackBar.open(MSG_ERRO_PROCSSAMENTO, 'OK');
           this.isConfirmLoading = false;
           return EMPTY;
         }),

@@ -5,11 +5,11 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { EMPTY, catchError, finalize, iif, mergeMap, of } from 'rxjs';
-import { LBL_ERRO, MSG_ERRO_PROCSSAMENTO } from '../../common/constantes';
+import { MSG_ERRO_PROCSSAMENTO } from '../../common/constantes';
 import { Ingrediente } from '../../model';
 import { IngredienteService } from '../../services/ingrediente.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-ingrediente-form-component',
@@ -17,8 +17,8 @@ import { IngredienteService } from '../../services/ingrediente.service';
 })
 export class IngredienteFormComponent {
   private readonly service = inject(IngredienteService);
-  private readonly notify = inject(NzNotificationService);
   private readonly formBuilder = inject(FormBuilder);
+  private readonly _snackBar = inject(MatSnackBar);
 
   visible = input.required<boolean>();
   visibleChange = output<boolean>();
@@ -52,7 +52,6 @@ export class IngredienteFormComponent {
     const data = this.form.value;
 
     this.isConfirmLoading = true;
-    
 
     of(data._id)
       .pipe(
@@ -65,7 +64,7 @@ export class IngredienteFormComponent {
         ),
         catchError((error: any) => {
           console.error(error);
-          this.notify.error(LBL_ERRO, MSG_ERRO_PROCSSAMENTO);
+          this._snackBar.open(MSG_ERRO_PROCSSAMENTO);
           this.isConfirmLoading = false;
           return EMPTY;
         }),

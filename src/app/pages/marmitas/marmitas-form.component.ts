@@ -5,11 +5,11 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { EMPTY, catchError, finalize, iif, mergeMap, of } from 'rxjs';
-import { LBL_ERRO, MSG_ERRO_PROCSSAMENTO } from '../../common/constantes';
+import { MSG_ERRO_PROCSSAMENTO } from '../../common/constantes';
 import { Marmita } from '../../model';
 import { MarmitaService } from '../../services/marmita.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-marmitas-form-component',
@@ -17,8 +17,8 @@ import { MarmitaService } from '../../services/marmita.service';
 })
 export class MarmitasFormComponent {
   private readonly service = inject(MarmitaService);
-  private readonly notify = inject(NzNotificationService);
   private readonly formBuilder = inject(FormBuilder);
+  private readonly _snackBar = inject(MatSnackBar);
 
   visible = input.required<boolean>();
   visibleChange = output<boolean>();
@@ -31,7 +31,7 @@ export class MarmitasFormComponent {
     observacao: FormControl<string | null>;
   }> = this.formBuilder.group({
     _id: [''],
-    lancamento: [ '', [Validators.required]],
+    lancamento: ['', [Validators.required]],
     observacao: ['', Validators.maxLength(100)],
   });
 
@@ -61,7 +61,7 @@ export class MarmitasFormComponent {
         ),
         catchError((error: any) => {
           console.error(error);
-          this.notify.error(LBL_ERRO, MSG_ERRO_PROCSSAMENTO);
+          this._snackBar.open(MSG_ERRO_PROCSSAMENTO, 'OK');
           this.isConfirmLoading = false;
           return EMPTY;
         }),

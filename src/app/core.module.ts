@@ -4,7 +4,6 @@ import { registerLocaleData } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import pt from '@angular/common/locales/pt';
 import { HttpClientModule } from '@angular/common/http';
-import { NZ_I18N, pt_BR } from 'ng-zorro-antd/i18n';
 import { environment } from '../environments/environment';
 
 import { HttpsRequestInterceptor } from './common/requests.interceptor';
@@ -20,7 +19,6 @@ registerLocaleData(pt, 'pt', localeExtraPT);
   providers: [
     { provide: LOCALE_ID, useValue: 'pt' },
     { provide: TOKEN_APP_CONFIG, useValue: environment },
-    { provide: NZ_I18N, useValue: pt_BR },
 
     { provide: DEFAULT_TIMEOUT, useValue: 30000 },
     {
