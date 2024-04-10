@@ -35,7 +35,8 @@ export class MarmitasComponent {
   }
 
   editar(item?: Marmita) {
-    this.editarFormData.set({ ...item });
+    const n = JSON.parse(JSON.stringify(item));
+    this.editarFormData.set(n);
     this.editarForm = true;
   }
 

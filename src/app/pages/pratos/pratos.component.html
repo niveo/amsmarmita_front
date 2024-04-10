@@ -24,10 +24,7 @@
   <div content>
     <mat-accordion>
       @for (grupo of data$ | async; track grupo._id) {
-        <mat-expansion-panel
-          [corBoarda]="grupo.cor"
-          [style]="'border-bottom: 5px solid' + grupo.cor"
-        >
+        <mat-expansion-panel [corBoarda]="grupo.cor">
           <mat-expansion-panel-header>
             <mat-panel-title>
               <div class="fx-row wf" style="margin-right: 10px">

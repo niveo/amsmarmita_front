@@ -39,7 +39,8 @@ export class GrupoComponent {
   }
 
   editar(item?: Grupo) {
-    this.editarFormData.set({ ...item });
+    const n = JSON.parse(JSON.stringify(item));
+    this.editarFormData.set(n);
     this.editarForm = true;
   }
 

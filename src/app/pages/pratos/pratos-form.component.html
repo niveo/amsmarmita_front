@@ -1,6 +1,6 @@
-<div class="ova hf fx-column pd-5">
-  <div class="fx-flex">
-    <form [formGroup]="form" class="fx-column gap-5">
+<div class="ovh hf fx-column pd-5">
+  <div class="fx-flex ovh">
+    <form [formGroup]="form" class="fx-column gap-5 ova hf">
       <mat-form-field class="wf">
         <mat-label>Nome</mat-label>
         <input
@@ -26,6 +26,10 @@
         </mat-select>
       </mat-form-field>
 
+      <app-selecao-ingredientes-component
+        [(selecionados)]="form.value.ingredientes!"
+      />
+
       <mat-form-field class="wf">
         <mat-label>Observação</mat-label>
         <textarea
@@ -38,14 +42,7 @@
         <mat-hint align="end">{{ txtObservacao.value.length }} / 100</mat-hint>
       </mat-form-field>
 
-      <app-selecao-ingredientes-component
-        [selecionados]="form.value.ingredientes || []"
-        (selecionadosChange)="form.value.ingredientes = $event"
-      />
-
-      <br />
-
-      <mat-form-field>
+      <mat-form-field class="wf">
         <mat-label> <mat-icon>label</mat-icon> Tags </mat-label>
         <mat-chip-grid #chipGrid formControlName="composicoes">
           @for (composicao of form.value.composicoes; track composicao) {
