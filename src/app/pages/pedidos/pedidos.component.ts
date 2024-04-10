@@ -5,6 +5,7 @@ import {
   OnDestroy,
   OnInit,
   Signal,
+  ViewChild,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, Observable, Subject, timeout } from 'rxjs';
@@ -19,6 +20,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDrawer } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-pedidos-component',
@@ -31,9 +33,10 @@ export class PedidosComponent implements OnInit, OnDestroy {
   private readonly formBuilder = inject(FormBuilder);
   private readonly _snackBar = inject(MatSnackBar);
 
+  @ViewChild('drawer', { static: true }) drawer!: MatDrawer;
+
   data$: Observable<PedidoItem[]> = this.pedidoStore.data$;
 
-  alteracaoPedidoVisible = false;
   alteracaoPedidoTitulo = '';
   alteracaoPedidoQuantidade?: number;
   alteracaoPedidoAcompanhamentos: string[] = [];
@@ -168,7 +171,7 @@ export class PedidosComponent implements OnInit, OnDestroy {
     this.alteracaoPedidoQuantidade = quantidade;
     this.alteracaoPedidoForm.get('observacao')?.setValue(observacao || '');
 
-    this.alteracaoPedidoVisible = true;
+    this.drawer.open();
   }
 
   closeAlteracaoPedido() {
@@ -195,7 +198,7 @@ export class PedidosComponent implements OnInit, OnDestroy {
   }
 
   private limparCamposAlteracaoPedido() {
-    this.alteracaoPedidoVisible = false;
+    this.drawer.close();
     this.alteracaoPedidoTitulo = '';
     this.alteracaoPedidoAcompanhamentos = [];
     this.alteracaoPedidoQuantidade = undefined;

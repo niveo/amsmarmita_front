@@ -9,7 +9,7 @@
   </div>
 
   <div header>
-    @if (!loading()) {
+    @if (!loading() && !tipoSelecao()) {
       <button
         mat-raised-button
         color="primary"
