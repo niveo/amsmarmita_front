@@ -28,7 +28,7 @@ export class PratosFormComponent implements OnInit {
   visible = input.required<boolean>();
   visibleChange = output<boolean>();
   isConfirmLoading = false;
-  data = input.required<Prato>();
+  data = input.required<Prato | null>();
 
   form: FormGroup<ModelFormPrato> = this.formBuilder.group({
     _id: [''],
@@ -45,13 +45,14 @@ export class PratosFormComponent implements OnInit {
   ngOnInit() {
     this.grupoService.data$.subscribe((response) => (this.grupos = response));
 
+    const data = this.data()!;
     this.form.setValue({
-      _id: this.data()._id || '',
-      grupo: this.data().grupo?._id || '',
-      nome: this.data().nome || '',
-      composicoes: this.data().composicoes || [],
-      observacao: this.data().observacao || '',
-      ingredientes: this.data().ingredientes || [],
+      _id: data._id || '',
+      grupo: data.grupo?._id || '',
+      nome: data.nome || '',
+      composicoes: data.composicoes || [],
+      observacao: data.observacao || '',
+      ingredientes: data.ingredientes || [],
     });
   }
 

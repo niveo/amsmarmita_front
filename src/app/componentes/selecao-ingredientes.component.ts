@@ -1,99 +1,151 @@
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
-import { Component, OnInit, inject, input, output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  ViewChild,
+  effect,
+  inject,
+  input,
+  output,
+} from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IngredienteService } from '../services/ingrediente.service';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, take } from 'rxjs';
 import { Ingrediente } from '../model';
 import { AsyncPipe } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInput, MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import {
+  MatAutocompleteModule,
+  MatAutocompleteTrigger,
+} from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-selecao-ingredientes-component',
-  template: `<mat-form-field class="example-form-field">
-    <mat-label>Video keywords</mat-label>
-    <mat-chip-grid
-      #chipGrid
-      aria-label="Enter keywords"
-      [formControl]="formControl"
-    >
-      @for (keyword of keywords; track keyword) {
-        <mat-chip-row (removed)="removeKeyword(keyword)">
-          {{ keyword }}
-          <button matChipRemove aria-label="'remove ' + keyword">
+  template: `<mat-form-field class="wf">
+    <mat-label>Ingredientes</mat-label>
+    <mat-chip-grid #chipGrid>
+      @for (ingrediente of dataFilter$ | async; track ingrediente._id) {
+        <mat-chip-row (removed)="remove(ingrediente)">
+          {{ ingrediente.nome }}
+          <button matChipRemove>
             <mat-icon>cancel</mat-icon>
           </button>
         </mat-chip-row>
       }
     </mat-chip-grid>
     <input
-      placeholder="New keyword..."
+      placeholder="Novo Ingrediente"
+      #dataInput
+      [formControl]="ingredienteCtrl"
       [matChipInputFor]="chipGrid"
-      (matChipInputTokenEnd)="add($event)"
+      [matAutocomplete]="auto"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      (matChipInputTokenEnd)="add($event); trigger.closePanel()"
     />
-  </mat-form-field>`,
-  styles: [
-    `
-      nz-select {
-        width: 100%;
+    <mat-autocomplete
+      #auto="matAutocomplete"
+      (optionSelected)="selected($event.option.value)"
+    >
+      @for (ingrediente of data$ | async; track ingrediente._id) {
+        <mat-option [value]="ingrediente._id">{{
+          ingrediente.nome
+        }}</mat-option>
       }
-    `,
-  ],
+    </mat-autocomplete>
+  </mat-form-field>`,
   standalone: true,
   imports: [
     FormsModule,
-    AsyncPipe,
-    MatButtonModule,
     MatFormFieldModule,
     MatChipsModule,
-    FormsModule,
-    ReactiveFormsModule,
     MatIconModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
+    AsyncPipe,
   ],
 })
-export class SelecaoIngredientesComponent implements OnInit {
-  tagValue: string[] = [];
-
+export class SelecaoIngredientesComponent {
   selecionados = input<string[]>([]);
   selecionadosChange = output<string[]>();
-
-  data$!: Observable<Ingrediente[]>;
-
   private readonly service = inject(IngredienteService);
 
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  ingredienteCtrl = new FormControl('');
+
+  private readonly _dataSource = new BehaviorSubject<Ingrediente[]>([]);
+  readonly data$ = this._dataSource.asObservable();
+
+  private readonly _dataSourceFilter = new BehaviorSubject<Ingrediente[]>([]);
+  readonly dataFilter$ = this._dataSourceFilter.asObservable();
+
+  sortNome = (a: Ingrediente, b: Ingrediente) => a.nome.localeCompare(b.nome);
+
+  @ViewChild('dataInput') dataInput!: ElementRef<HTMLInputElement>;
+  @ViewChild(MatAutocompleteTrigger) trigger!: MatAutocompleteTrigger;
+
+  allIngredientes: Ingrediente[] = [];
+
   constructor() {
-    this.data$ = this.service.data$;
+    //take para limitar o carregamento caso tenha atualização no serviço que usa cache
+    this.service.data$.pipe(take(1)).subscribe((response) => {
+      this.allIngredientes = response;
+      this.carregarIngredienteSelecionados(this.selecionados());
+    });
+
+    effect(() => {
+      //Passar o selecionados() para agitar a arvore de dados na emissão do change
+      this.carregarIngredienteSelecionados(this.selecionados());
+    });
   }
 
-  ngOnInit() {
-    this.tagValue = this.selecionados();
-  }
+  carregarIngredienteSelecionados(selecionados: string[]) {
+    if (!(this.allIngredientes.length > 0)) return;
 
-  addItem(input: HTMLInputElement) {
-    this.service.inlcluir(input.value).subscribe(() => (input.value = ''));
-  }
+    this._dataSourceFilter.next(
+      this.allIngredientes
+        .filter((f) => selecionados.includes(f._id))
+        .sort(this.sortNome),
+    );
 
-  keywords = ['angular', 'how-to', 'tutorial', 'accessibility'];
-  formControl = new FormControl(['angular']);
-
-  removeKeyword(keyword: string) {
-    const index = this.keywords.indexOf(keyword);
-    if (index >= 0) {
-      this.keywords.splice(index, 1);
-    }
+    this._dataSource.next(
+      this.allIngredientes
+        .filter((f) => !selecionados.includes(f._id))
+        .sort(this.sortNome),
+    );
   }
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
 
-    // Add our keyword
-    if (value) {
-      this.keywords.push(value);
-    }
+    this.service.inlcluir(value).subscribe((response: Ingrediente) => {
+      // Add our fruit
+      if (value) {
+        this.allIngredientes.push(response);
+        this.selecionadosChange.emit([...this.selecionados(), response._id]);
+      }
 
-    // Clear the input value
-    event.chipInput!.clear();
+      // Clear the input value
+      event.chipInput!.clear();
+
+      this.ingredienteCtrl.setValue(null);
+    });
+  }
+
+  remove(ingrediente: Ingrediente): void {
+    const index = this.selecionados().findIndex((f) => f === ingrediente._id);
+
+    if (index >= 0) {
+      this.selecionados().splice(index, 1);
+      this.selecionadosChange.emit([...this.selecionados()]);
+    }
+  }
+
+  selected(value: string): void {
+    this.selecionadosChange.emit([...this.selecionados(), value]);
+
+    this.dataInput.nativeElement.value = '';
+    this.ingredienteCtrl.setValue(null);
   }
 }

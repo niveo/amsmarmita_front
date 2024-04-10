@@ -38,7 +38,8 @@ export class IngredienteComponent {
   }
 
   editar(item?: Ingrediente) {
-    this.editarFormData.set({ ...item });
+    const n = JSON.parse(JSON.stringify(item));
+    this.editarFormData.set(n);
     this.editarForm = true;
   }
 

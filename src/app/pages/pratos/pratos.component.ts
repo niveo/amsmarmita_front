@@ -50,7 +50,7 @@ export class PratoComponent {
 
   loading: Signal<boolean> = computed(() => this.pratoStore.loading());
 
-  editarFormData = signal<any>(null);
+  editarFormData = signal<Prato | null>(null);
   editarForm = false;
 
   constructor() {
@@ -66,7 +66,8 @@ export class PratoComponent {
   }
 
   editar(item?: Prato) {
-    this.editarFormData.set({ ...item });
+    const n = JSON.parse(JSON.stringify(item));
+    this.editarFormData.set(n);
     this.editarForm = true;
   }
 
