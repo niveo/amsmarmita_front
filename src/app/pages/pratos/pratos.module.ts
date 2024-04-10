@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PratosRoutingModule } from './pratos-routing.module';
-import { PratosFormComposicaoComponent } from './pratos-form-composicao.component';
 import { PratosFormComponent } from './pratos-form.component';
 import { PratoComponent } from './pratos.component';
 import { CorBoardaDirective } from '../../directives/cor-borda.directive';
@@ -21,11 +20,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
-  declarations: [
-    PratoComponent,
-    PratosFormComponent,
-    PratosFormComposicaoComponent,
-  ],
+  declarations: [PratoComponent, PratosFormComponent],
   exports: [PratoComponent],
   imports: [
     PratosRoutingModule,
