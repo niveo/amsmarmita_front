@@ -21,7 +21,7 @@
     }
   </div>
 
-  <div content>
+  <div content class="wf ovh">
     <div class="comp-inner-grid">
       @for (item of data$ | async; track item._id) {
         <div style="padding: 5px">
@@ -45,10 +45,10 @@
                 <mat-icon>description</mat-icon>
               </button>
               <button mat-button (click)="editar(item)">
-                Editar <mat-icon>edit</mat-icon>
+                <mat-icon>edit</mat-icon>
               </button>
               <button mat-button (click)="removerRegistro(item)">
-                Remover <mat-icon class="cred">delete</mat-icon>
+                <mat-icon class="cred">delete</mat-icon>
               </button>
             </mat-card-actions>
           </mat-card>

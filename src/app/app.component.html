@@ -24,7 +24,18 @@
       }
     </mat-toolbar>
     <div class="fx-flex hf ovh">
-      <router-outlet></router-outlet>
+      <div class="fx-row hf ovh">
+        @if (!isMobile && usuarioLogado()) {
+          <div style="padding: 10px">
+            <div class="menu-elevation-2">
+              <ng-container [ngTemplateOutlet]="tplContentMenu"></ng-container>
+            </div>
+          </div>
+        }
+        <div class="fx-flex">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
     </div>
     <app-footer-component />
   </section>
@@ -44,8 +55,10 @@
   <mat-nav-list>
     @for (item of listaMenu; track item) {
       <a mat-list-item [routerLink]="item.rota">
-        <mat-icon matListItemIcon>{{ item.icone }}</mat-icon>
-        <a matListItemTitle>{{ item.titulo }}</a>
+        <div matListItemIcon>
+          <mat-icon>{{ item.icone }}</mat-icon>
+        </div>
+        <span matListItemTitle>{{ item.titulo }}</span>
       </a>
     }
   </mat-nav-list>

@@ -36,7 +36,7 @@ export class AppComponent implements OnDestroy {
     {
       rota: '',
       titulo: 'Marmitas',
-      icone: 'restaurant',
+      icone: 'soup_kitchen',
     },
     {
       rota: 'comedores',
