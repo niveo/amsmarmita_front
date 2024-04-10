@@ -1,47 +1,50 @@
-import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NgModule } from '@angular/core';
 import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { IconsProviderUserModule } from '../../common/icons-provider-user.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
 import { PedidosAcompanhamentoComponent } from './acompanhamento/pedidos-companhamento.component';
 import { PedidosComponent } from './pedidos.component';
-import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { PratosModule } from '../pratos/pratos.module';
 import { SelecaoNumerosComponent } from '../../componentes/selecao-numeros.component';
-import { NzCardModule } from 'ng-zorro-antd/card';
 import { CorBoardaDirective } from '../../directives/cor-borda.directive';
-import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
-import { NzCollapseModule } from 'ng-zorro-antd/collapse';
-import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { PedidosRoutingModule } from './pedidos-routing.module';
-import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [PedidosComponent, PedidosAcompanhamentoComponent],
   imports: [
-    NzTabsModule,
-    NzDrawerModule,
-    NzCollapseModule,
-    NzRadioModule, 
-    NzButtonModule,
-    NzCheckboxModule,
-    IconsProviderUserModule,
     SelecaoNumerosComponent,
-    NzFormModule,
-    NzInputModule,
-    NzCardModule,
-    ReactiveFormsModule,
     CorBoardaDirective,
+
+    ReactiveFormsModule,
     AsyncPipe,
     FormsModule,
+
     PedidosRoutingModule,
-    NzToolTipModule,
-    NzPopconfirmModule,
+
     NgTemplateOutlet,
+
+    MatSidenavModule,
+    MatTabsModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatDividerModule,
+    MatButtonToggleModule,
+    MatCheckboxModule,
+    MatExpansionModule,
+    MatCardModule,
 
     //Manter modulo no final para não entrar como rota
     PratosModule,

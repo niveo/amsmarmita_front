@@ -1,10 +1,4 @@
-import {
-  Component, 
-  inject,
-  output,
-  input,
-  OnInit,
-} from '@angular/core';
+import { Component, inject, output, input, OnInit } from '@angular/core';
 import { map } from 'rxjs';
 import { GrupoService } from '../../../services/grupo.service';
 import { Grupo } from '../../../model';
@@ -13,7 +7,7 @@ import { Grupo } from '../../../model';
   selector: 'app-pedidos-acompanhamento-component',
   templateUrl: './pedidos-companhamento.component.html',
   styles: [
-    `
+    `  
       .lbl-titulo-grupo {
         font-weight: bold;
         border-bottom: 1px solid #01579b;
@@ -43,8 +37,12 @@ export class PedidosAcompanhamentoComponent implements OnInit {
         map((m) => {
           return [
             m.filter((f) => f.multiplo),
-            m.filter((f) => !f.multiplo && !f.principal).sort(this.sortPrincipal),
-            m.filter((f) => !f.multiplo && f.principal).sort(this.sortPrincipal),
+            m
+              .filter((f) => !f.multiplo && !f.principal)
+              .sort(this.sortPrincipal),
+            m
+              .filter((f) => !f.multiplo && f.principal)
+              .sort(this.sortPrincipal),
           ];
         }),
       )
@@ -69,7 +67,6 @@ export class PedidosAcompanhamentoComponent implements OnInit {
     } else {
       this.selecoes.add(id);
     }
-     this.acompanhamentoChange.emit([...this.selecoes]);
-    // this.acompanhamento.
+    this.acompanhamentoChange.emit([...this.selecoes]);
   }
 }
