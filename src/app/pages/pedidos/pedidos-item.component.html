@@ -20,8 +20,11 @@
                     border: '1px solid ' + acompanhamento.grupo!.cor
                   }"
                 >
-                  @if (acompanhamento.grupo!.multiplo) {
-                    <mat-icon matChipAvatar fontIcon="rice_bowl"></mat-icon>
+                  @if (acompanhamento.icone) {
+                    <mat-icon
+                      matChipAvatar
+                      [fontIcon]="acompanhamento.icone"
+                    ></mat-icon>
                   }
                   {{
                     acompanhamento.grupo!.multiplo

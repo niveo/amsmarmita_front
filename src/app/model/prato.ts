@@ -8,6 +8,9 @@ export class Prato {
   composicoes?: string[] = [];
   observacao?: string;
 
+  icone?: string;
+  imagem?: string;
+
   ingredientes?: string[] = [];
 }
 

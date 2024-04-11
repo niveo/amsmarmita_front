@@ -1,15 +1,29 @@
-import { Component, Input, input } from '@angular/core';
-import { NzBadgeModule } from 'ng-zorro-antd/badge';
+import { NgStyle } from '@angular/common';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-grupo-principal-component',
-  template: ` <nz-badge
-    [nzColor]="principal() ? cor() : '#d9d9d9'"
-  ></nz-badge>`,
+  template: `
+    <div
+      class="item"
+      [ngStyle]="{ background: principal() ? cor() : '#d9d9d9' }"
+    ></div>
+  `,
+  styles: `
+    .item {
+      width: 5px;
+      height: 25%;
+      margin-right: 5px; 
+    }
+    :host {
+      align-items: center;
+      display: flex;
+    }
+  `,
   standalone: true,
-  imports: [NzBadgeModule],
+  imports: [NgStyle],
 })
 export class GrupoPrincipalComponent {
   principal = input.required<boolean>();
-  cor = input<string>('green');
+  cor = input<string>('#C5CAE9');
 }

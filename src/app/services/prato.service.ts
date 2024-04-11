@@ -14,7 +14,7 @@ export class PratoService {
     .get<Prato[]>('/pratos')
     .pipe(map((m) => m.sort(this.sortNome)));
 
-    sortNome = (a: Prato, b: Prato) => a.nome!.localeCompare(b.nome!);
+  sortNome = (a: Prato, b: Prato) => a.nome!.localeCompare(b.nome!);
 
   public data$ = this._resourceData$.pipe(
     mergeMap(() => this.apiRequest$),
@@ -40,6 +40,8 @@ export class PratoService {
     composicoes,
     observacao,
     ingredientes,
+    icone,
+    imagem
   }: {
     id: string;
     nome: string;
@@ -47,13 +49,17 @@ export class PratoService {
     composicoes?: string[] | null;
     observacao?: string | null;
     ingredientes?: string[] | null;
+    icone?: string | null;
+    imagem?: string | null;
   }) {
     return this.http.put<Prato>('/pratos/' + id, {
-      nome: nome,
+      nome,
       grupo: grupoId,
-      composicoes: composicoes || null,
-      observacao: observacao || null,
-      ingredientes: ingredientes || null,
+      composicoes,
+      observacao,
+      ingredientes,
+      icone,
+      imagem
     });
   }
 
@@ -63,19 +69,25 @@ export class PratoService {
     composicoes,
     observacao,
     ingredientes,
+    icone,
+    imagem
   }: {
     nome: string;
     grupoId: string;
     composicoes?: string[] | null;
     observacao?: string | null;
     ingredientes?: string[] | null;
+    icone?: string | null;
+    imagem?: string | null;
   }) {
     return this.http.post<Prato>('/pratos', {
-      nome: nome,
+      nome,
       grupo: grupoId,
-      composicoes: composicoes || null,
-      observacao: observacao || null,
-      ingredientes: ingredientes || null,
+      composicoes,
+      observacao,
+      ingredientes,
+      icone,
+      imagem
     });
   }
 
