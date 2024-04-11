@@ -96,7 +96,8 @@ body {
 }
 
 .ova {
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .cblue {
@@ -111,35 +112,6 @@ body {
   color: #4caf50 !important;
 }
  
-
-/* Ripple effect */
-.ripple {
-  background-position: center;
-  transition: background 0.8s;
-}
-.ripple:hover {
-  background: $ripple-color
-    radial-gradient(circle, transparent 1%, $ripple-color 1%) center/15000%;
-}
-.ripple:active {
-  background-color: $ripple-color;
-  background-size: 100%;
-  transition: background 0s;
-}
-
-.ant-collapse-content > .ant-collapse-content-box {
-  padding: 5px !important;
-  //background-color: #E0E0E0  !important;
-}
-
-.ant-collapse > .ant-collapse-item > .ant-collapse-header {
-  background-color: white;
-}
-
-.ant-tabs-content {
-  //height: 100%;
-}
-
 .comp-body {
   height: 100%;
   overflow: hidden;

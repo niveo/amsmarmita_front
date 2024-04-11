@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgStyle } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PratosRoutingModule } from './pratos-routing.module';
 import { PratosFormComponent } from './pratos-form.component';
@@ -26,6 +26,7 @@ import { MatSelectModule } from '@angular/material/select';
     PratosRoutingModule,
     ReactiveFormsModule,
     AsyncPipe,
+    NgStyle,
     CorBoardaDirective,
     GrupoPrincipalComponent,
     SelecaoIngredientesComponent,

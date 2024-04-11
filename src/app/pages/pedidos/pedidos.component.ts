@@ -1,3 +1,4 @@
+import { ConfirmacaoDialog } from 'src/app/common/confirmacao-dialog';
 import {
   Component,
   computed,
@@ -8,9 +9,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { map, Observable, Subject, timeout } from 'rxjs';
+import { map, Observable, Subject } from 'rxjs';
 import { PedidoStore } from '../../stores/pedido.store';
-import { LBL_ALERTA } from '../../common/constantes';
 import { Prato } from '../../model';
 import { PedidoItem } from '../../model/pedido-item';
 import {
@@ -20,7 +20,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDrawer } from '@angular/material/sidenav';
+import { MatSidenav } from '@angular/material/sidenav';
+import { MSG_CONFIRMAR_EXCLUSAO } from '@navegador/common/constantes';
 
 @Component({
   selector: 'app-pedidos-component',
@@ -32,8 +33,9 @@ export class PedidosComponent implements OnInit, OnDestroy {
   private readonly pedidoStore = inject(PedidoStore);
   private readonly formBuilder = inject(FormBuilder);
   private readonly _snackBar = inject(MatSnackBar);
+  private readonly _confirmacaoDialog = inject(ConfirmacaoDialog);
 
-  @ViewChild('drawer', { static: true }) drawer!: MatDrawer;
+  @ViewChild('drawer', { static: true }) drawer!: MatSidenav;
 
   data$: Observable<PedidoItem[]> = this.pedidoStore.data$;
 
@@ -85,8 +87,13 @@ export class PedidosComponent implements OnInit, OnDestroy {
     this.subjectAlteracaoPedido.unsubscribe();
   }
 
-  removerPratoPedido(pratoId: string) {
-    this.pedidoStore.removerPedidoItem(pratoId);
+  removerPedidoItem(pratoId: string) {
+    this._confirmacaoDialog
+      .confirmacao({ mensagem: MSG_CONFIRMAR_EXCLUSAO })
+      .afterClosed()
+      .subscribe((response) =>
+        response ? this.pedidoStore.removerPedidoItem(pratoId) : '',
+      );
   }
 
   incluirPratoPedido(value: {

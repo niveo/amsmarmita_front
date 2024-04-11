@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
+import { AsyncPipe, NgStyle, NgTemplateOutlet } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PedidosAcompanhamentoComponent } from './acompanhamento/pedidos-companhamento.component';
 import { PedidosComponent } from './pedidos.component';
@@ -19,15 +19,22 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCardModule } from '@angular/material/card';
+import { PedidosItemComponent } from './pedidos-item.component';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
-  declarations: [PedidosComponent, PedidosAcompanhamentoComponent],
+  declarations: [
+    PedidosComponent,
+    PedidosItemComponent,
+    PedidosAcompanhamentoComponent,
+  ],
   imports: [
     SelecaoNumerosComponent,
     CorBoardaDirective,
 
     ReactiveFormsModule,
     AsyncPipe,
+    NgStyle,
     FormsModule,
 
     PedidosRoutingModule,
@@ -45,6 +52,7 @@ import { MatCardModule } from '@angular/material/card';
     MatCheckboxModule,
     MatExpansionModule,
     MatCardModule,
+    MatChipsModule,
 
     //Manter modulo no final para não entrar como rota
     PratosModule,

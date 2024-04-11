@@ -15,12 +15,18 @@
   </div>
 </ng-template>
 
-<mat-drawer-container class="hf ovh fx-column">
-  <mat-drawer #drawer mode="over" position="end">
+<mat-sidenav-container class="hf ovh fx-column">
+  <mat-sidenav
+    #drawer
+    mode="over"
+    position="end"
+    fixedInViewport
+    class="menu-sidenav"
+  >
     <ng-container [ngTemplateOutlet]="tplDrawer"></ng-container>
-  </mat-drawer>
+  </mat-sidenav>
 
-  <div class="fx-column hf ovh fx-flex">
+  <mat-sidenav-content class="fx-column hf ovh fx-flex">
     <mat-tab-group headerPosition="below" class="fx-flex hf ovh">
       <mat-tab>
         <ng-template mat-tab-label>
@@ -30,51 +36,11 @@
         <div class="comp-content">
           <div class="comp-inner comp-inner-grid">
             @for (item of data$ | async; track item._id) {
-              <div style="padding: 5px">
-                <mat-card
-                  [corBoarda]="item.prato?.grupo?.cor"
-                  (click)="editarPedidoItem(item.prato!._id!)"
-                >
-                  <mat-card-header>
-                    {{ item.prato!.nome }}
-                  </mat-card-header>
-
-                  <mat-card-content>
-                    <div class="fx-column">
-                      <div class="fx-row">
-                        <div style="flex-grow: 2"></div>
-                        <div style="flex-grow: 1" class="lbl-title-quantidade">
-                          Quantidade
-                        </div>
-                      </div>
-
-                      <div class="fx-row">
-                        <div style="flex-grow: 2">
-                          @for (
-                            acompanhamento of item.acompanhamentos;
-                            track acompanhamento._id
-                          ) {
-                            <h5>
-                              @if (acompanhamento.grupo?.multiplo) {
-                                {{ acompanhamento.grupo!.nome }}:
-                              }
-                              {{ acompanhamento.nome }}
-                            </h5>
-                          }
-                        </div>
-
-                        <div style="text-align: center; flex-grow: 1">
-                          <h2>{{ item.quantidade }}</h2>
-                        </div>
-                      </div>
-
-                      @if (item.observacao) {
-                        <span> {{ item.observacao }}</span>
-                      }
-                    </div>
-                  </mat-card-content>
-                </mat-card>
-              </div>
+              <app-pedidos-item-component
+                [item]="item"
+                (editarPedidoItem)="editarPedidoItem($event)"
+                (removerPedidoItem)="removerPedidoItem($event)"
+              />
             }
           </div>
         </div>
@@ -95,8 +61,8 @@
       </mat-tab>
     </mat-tab-group>
     <ng-container [ngTemplateOutlet]="extraTemplate"></ng-container>
-  </div>
-</mat-drawer-container>
+  </mat-sidenav-content>
+</mat-sidenav-container>
 
 <ng-template #tplDrawer>
   <div class="fx-column gap-5 pd-5 hf ovh">
