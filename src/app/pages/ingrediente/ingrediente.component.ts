@@ -4,11 +4,11 @@ import {
   MSG_EXCLUIR_SUCESSO,
   MSG_ERRO_PROCSSAMENTO,
   MSG_CONFIRMAR_EXCLUSAO,
-} from '../../common/constantes';
-import { IngredienteService } from '../../services/ingrediente.service';
-import { Ingrediente } from '../../model';
+} from '@navegador/common/constantes';
+import { IngredienteService } from '@navegador/services/ingrediente.service';
+import { Ingrediente } from '@navegador/model';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ConfirmacaoDialog } from '../../common/confirmacao-dialog';
+import { ConfirmacaoDialog } from '@navegador/common/confirmacao-dialog';
 
 @Component({
   selector: 'app-ingrediente-component',

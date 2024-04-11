@@ -10,9 +10,9 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, Observable, Subject } from 'rxjs';
-import { PedidoStore } from '../../stores/pedido.store';
-import { Prato } from '../../model';
-import { PedidoItem } from '../../model/pedido-item';
+import { PedidoStore } from '@navegador/stores/pedido.store';
+import { Prato } from '@navegador/model';
+import { PedidoItem } from '@navegador/model/pedido-item';
 import {
   FormBuilder,
   FormControl,

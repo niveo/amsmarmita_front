@@ -1,7 +1,7 @@
 import { Component, inject, output, input, OnInit } from '@angular/core';
 import { map } from 'rxjs';
-import { GrupoService } from '../../../services/grupo.service';
-import { Grupo } from '../../../model';
+import { GrupoService } from '@navegador/services/grupo.service';
+import { Grupo } from '@navegador/model';
 
 @Component({
   selector: 'app-pedidos-acompanhamento-component',

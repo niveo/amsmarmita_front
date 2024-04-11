@@ -6,9 +6,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { EMPTY, catchError, finalize, iif, mergeMap, of } from 'rxjs';
-import { MSG_ERRO_PROCSSAMENTO } from '../../common/constantes';
-import { Ingrediente } from '../../model';
-import { IngredienteService } from '../../services/ingrediente.service';
+import { MSG_ERRO_PROCSSAMENTO } from '@navegador/common/constantes';
+import { Ingrediente } from '@navegador/model';
+import { IngredienteService } from '@navegador/services/ingrediente.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({

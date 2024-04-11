@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { finalize, map } from 'rxjs';
-import { PedidoService } from '../../services/pedido.service';
+import { PedidoService } from '@navegador/services/pedido.service';
 
 @Component({
   selector: 'app-relatorio-component',

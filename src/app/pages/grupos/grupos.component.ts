@@ -4,11 +4,11 @@ import {
   MSG_EXCLUIR_SUCESSO,
   MSG_CONFIRMAR_EXCLUSAO,
   MSG_ERRO_PROCSSAMENTO,
-} from '../../common/constantes';
-import { GrupoService } from '../../services/grupo.service';
-import { Grupo } from '../../model/grupo';
+} from '@navegador/common/constantes';
+import { GrupoService } from '@navegador/services/grupo.service';
+import { Grupo } from '@navegador/model/grupo';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ConfirmacaoDialog } from '../../common/confirmacao-dialog';
+import { ConfirmacaoDialog } from '@navegador/common/confirmacao-dialog';
 
 @Component({
   selector: 'app-grupos-component',

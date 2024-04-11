@@ -6,9 +6,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { EMPTY, catchError, finalize, iif, mergeMap, of } from 'rxjs';
-import { MSG_ERRO_PROCSSAMENTO } from '../../common/constantes';
-import { Marmita } from '../../model';
-import { MarmitaService } from '../../services/marmita.service';
+import { MSG_ERRO_PROCSSAMENTO } from '@navegador/common/constantes';
+import { Marmita } from '@navegador/model';
+import { MarmitaService } from '@navegador/services/marmita.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({

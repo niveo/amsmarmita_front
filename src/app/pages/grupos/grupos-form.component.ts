@@ -1,10 +1,10 @@
 import { Component, inject, input, output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { EMPTY, catchError, finalize, iif, mergeMap, of } from 'rxjs';
-import { LBL_ERRO, MSG_ERRO_PROCSSAMENTO } from '../../common/constantes';
-import { Grupo } from '../../model';
-import { GrupoService } from '../../services/grupo.service';
-import { validarFormulario } from '../../common/util';
+import { LBL_ERRO, MSG_ERRO_PROCSSAMENTO } from '@navegador/common/constantes';
+import { Grupo } from '@navegador/model';
+import { GrupoService } from '@navegador/services/grupo.service';
+import { validarFormulario } from '@navegador/common/util';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({

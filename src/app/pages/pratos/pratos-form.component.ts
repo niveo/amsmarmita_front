@@ -1,12 +1,12 @@
 import { Component, OnInit, inject, input, output } from '@angular/core';
-import { Grupo, Prato } from '../../model';
-import { GrupoService } from '../../services/grupo.service';
+import { Grupo, Prato } from '@navegador/model';
+import { GrupoService } from '@navegador/services/grupo.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModelFormPrato } from './pratos.component';
-import { validarFormulario } from '../../common/util';
-import { PratoStore } from '../../stores/prato.store';
+import { validarFormulario } from '@navegador/common/util';
+import { PratoStore } from '@navegador/stores/prato.store';
 import { EMPTY, catchError, finalize } from 'rxjs';
-import { MSG_ERRO_PROCSSAMENTO } from '../../common/constantes';
+import { MSG_ERRO_PROCSSAMENTO } from '@navegador/common/constantes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSnackBar } from '@angular/material/snack-bar';
