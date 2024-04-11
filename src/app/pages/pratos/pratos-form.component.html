@@ -60,6 +60,30 @@
           (matChipInputTokenEnd)="add($event)"
         />
       </mat-form-field>
+
+      <mat-form-field class="wf">
+        <mat-label>Icone</mat-label>
+        <input
+          matInput
+          placeholder="Icone"
+          formControlName="icone"
+          placeholder="Informe aqui um icone"
+          [maxLength]="50"
+          #txtIcone
+        />
+        @if (txtIcone.value) {
+          <mat-icon matSuffix>{{ txtIcone.value }}</mat-icon>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="wf">
+        <mat-label>Imagem *URL</mat-label>
+        <textarea
+          matInput
+          placeholder="Informe aqui uma imagem"
+          formControlName="imagem"
+        ></textarea>
+      </mat-form-field>
     </form>
   </div>
   <div class="fx-row gap-5" style="justify-content: end">

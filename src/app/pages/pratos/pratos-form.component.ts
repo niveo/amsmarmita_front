@@ -40,6 +40,8 @@ export class PratosFormComponent implements OnInit {
     composicoes: [['']],
     observacao: ['', Validators.maxLength(100)],
     ingredientes: [['']],
+    icone: ['', Validators.maxLength(50)],
+    imagem: [''],
   });
 
   ngOnInit() {
@@ -53,6 +55,8 @@ export class PratosFormComponent implements OnInit {
       composicoes: data.composicoes || [],
       observacao: data.observacao || '',
       ingredientes: data.ingredientes || [],
+      icone: data.icone || '',
+      imagem: data.imagem || ''
     });
   }
 
@@ -72,6 +76,7 @@ export class PratosFormComponent implements OnInit {
         grupo: data.grupo!,
         ingredientes: data.ingredientes,
         observacao: data.observacao,
+        icone: data.icone
       })
       .pipe(
         catchError((error: any) => {
@@ -88,6 +93,8 @@ export class PratosFormComponent implements OnInit {
             composicoes: [],
             observacao: '',
             ingredientes: [],
+            icone: '',
+            imagem: ''
           });
           this.isConfirmLoading = false;
         }),

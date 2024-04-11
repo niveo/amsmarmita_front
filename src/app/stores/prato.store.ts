@@ -98,6 +98,8 @@ export class PratoStore extends BaseStore {
     composicoes,
     observacao,
     ingredientes,
+    icone,
+    imagem
   }: {
     _id?: string | null;
     nome?: string;
@@ -105,6 +107,8 @@ export class PratoStore extends BaseStore {
     composicoes?: string[] | null;
     observacao?: string | null;
     ingredientes?: string[] | null;
+    icone?: string | null;
+    imagem?: string | null;
   }) {
     return of(_id)
       .pipe(
@@ -114,17 +118,21 @@ export class PratoStore extends BaseStore {
             this.service.inlcluir({
               nome: nome!,
               grupoId: grupo!,
-              composicoes: composicoes,
-              observacao: observacao,
-              ingredientes: ingredientes,
+              composicoes,
+              observacao,
+              ingredientes,
+              icone,
+              imagem
             }),
             this.service.atualizar({
               id: value!,
               nome: nome!,
               grupoId: grupo!,
-              composicoes: composicoes,
-              observacao: observacao,
-              ingredientes: ingredientes,
+              composicoes,
+              observacao,
+              ingredientes,
+              icone,
+              imagem
             }),
           ),
         ),

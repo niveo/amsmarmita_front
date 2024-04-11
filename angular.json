@@ -35,8 +35,7 @@
               }
             ],
             "styles": [
-              "src/app-style.scss",
-              "src/theme.less",
+              "src/app-style.scss", 
               "src/styles.scss"
             ],
             "scripts": []

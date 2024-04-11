@@ -92,12 +92,12 @@ body {
 }
 
 .ovh {
-  overflow: hidden;
-}
+  overflow: hidden !important;
+ }
 
 .ova {
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
 }
 
 .cblue {
@@ -117,7 +117,7 @@ body {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  //padding: 10px;
 }
 
 .comp-head {

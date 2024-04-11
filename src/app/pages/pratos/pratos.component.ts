@@ -9,9 +9,9 @@ import {
   signal,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable, map } from 'rxjs';
+import { map } from 'rxjs';
 import { isBooleanTransform } from '@navegador/common/util';
-import { Grupo, Prato } from '@navegador/model';
+import { Prato } from '@navegador/model';
 import { PratoStore } from '@navegador/stores/prato.store';
 import { MSG_CONFIRMAR_EXCLUSAO } from '@navegador/common/constantes';
 import { ConfirmacaoDialog } from '@navegador/common/confirmacao-dialog';
@@ -23,6 +23,8 @@ export class ModelFormPrato {
   composicoes!: FormControl<string[] | null>;
   observacao!: FormControl<string | null>;
   ingredientes!: FormControl<string[] | null>;
+  icone!: FormControl<string | null>;
+  imagem!: FormControl<string | null>;
 }
 
 @Component({
