@@ -10,9 +10,9 @@ import {
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, map } from 'rxjs';
-import { isBooleanTransform } from '../../common/util';
-import { Grupo, Prato } from '../../model';
-import { PratoStore } from '../../stores/prato.store';
+import { isBooleanTransform } from '@navegador/common/util';
+import { Grupo, Prato } from '@navegador/model';
+import { PratoStore } from '@navegador/stores/prato.store';
 import { MSG_CONFIRMAR_EXCLUSAO } from '@navegador/common/constantes';
 import { ConfirmacaoDialog } from '@navegador/common/confirmacao-dialog';
 

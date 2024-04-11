@@ -4,8 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PedidosAcompanhamentoComponent } from './acompanhamento/pedidos-companhamento.component';
 import { PedidosComponent } from './pedidos.component';
 import { PratosModule } from '../pratos/pratos.module';
-import { SelecaoNumerosComponent } from '../../componentes/selecao-numeros.component';
-import { CorBoardaDirective } from '../../directives/cor-borda.directive';
+import { SelecaoNumerosComponent } from '@navegador/componentes/selecao-numeros.component';
+import { CorBoardaDirective } from '@navegador/directives/cor-borda.directive';
 import { PedidosRoutingModule } from './pedidos-routing.module';
 
 import { MatSidenavModule } from '@angular/material/sidenav';

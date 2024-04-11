@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { AuthService } from '../../auth/auth.service';
+import { AuthService } from '@navegador/auth/auth.service';
 import { finalize } from 'rxjs';
-import { isMobile } from '../../common/util';
+import { isMobile } from '@navegador/common/util';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';

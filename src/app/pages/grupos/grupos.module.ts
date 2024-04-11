@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { GrupoComponent } from './grupos.component';
 import { GrupoFormComponent } from './grupos-form.component';
-import { CorBoardaDirective } from '../../directives/cor-borda.directive';
-import { GrupoPrincipalComponent } from '../../componentes/grupo-principal.component';
+import { CorBoardaDirective } from '@navegador/directives/cor-borda.directive';
+import { GrupoPrincipalComponent } from '@navegador/componentes/grupo-principal.component';
 import { AsyncPipe } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { ContainerCentralComponent } from '../../componentes/container-central.component';
+import { ContainerCentralComponent } from '@navegador/componentes/container-central.component';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';

@@ -1,17 +1,17 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { Observable } from 'rxjs';
-import { MarmitaService } from '../../services/marmita.service';
-import { Marmita } from '../../model/marmita';
+import { MarmitaService } from '@navegador/services/marmita.service';
+import { Marmita } from '@navegador/model/marmita';
 import { isAfter, format, parseJSON } from 'date-fns';
-import { SelecaoComedoresComponent } from '../../componentes/selecao-comedores.component';
+import { SelecaoComedoresComponent } from '@navegador/componentes/selecao-comedores.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {
   MSG_CONFIRMAR_EXCLUSAO,
   MSG_ERRO_PROCSSAMENTO,
   MSG_EXCLUIR_SUCESSO,
-} from '../../common/constantes';
-import { ConfirmacaoDialog } from '../../common/confirmacao-dialog';
+} from '@navegador/common/constantes';
+import { ConfirmacaoDialog } from '@navegador/common/confirmacao-dialog';
 
 @Component({
   selector: 'app-marmitas-component',

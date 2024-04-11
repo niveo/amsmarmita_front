@@ -9,15 +9,15 @@ import {
   signal,
 } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ComedoresService } from '../../services/comedores.service';
-import { Comedor } from '../../model/comedor';
+import { ComedoresService } from '@navegador/services/comedores.service';
+import { Comedor } from '@navegador/model/comedor';
 import {
   MSG_EXCLUIR_SUCESSO,
   MSG_ERRO_PROCSSAMENTO,
   MSG_CONFIRMAR_EXCLUSAO,
-} from '../../common/constantes';
-import { isBooleanTransform } from '../../common/util';
-import { ConfirmacaoDialog } from '../../common/confirmacao-dialog';
+} from '@navegador/common/constantes';
+import { isBooleanTransform } from '@navegador/common/util';
+import { ConfirmacaoDialog } from '@navegador/common/confirmacao-dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({

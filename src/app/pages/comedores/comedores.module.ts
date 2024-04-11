@@ -12,8 +12,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { ConfirmacaoDialogModule } from '../../common/confirmacao-dialog';
-import { ContainerCentralComponent } from '../../componentes/container-central.component';
+import { ConfirmacaoDialogModule } from '@navegador/common/confirmacao-dialog';
+import { ContainerCentralComponent } from '@navegador/componentes/container-central.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
