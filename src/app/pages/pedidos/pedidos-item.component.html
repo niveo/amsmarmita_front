@@ -1,0 +1,53 @@
+<div style="padding: 5px">
+  <mat-card [corBoarda]="item().prato?.grupo?.cor">
+    <mat-card-header>
+      {{ item().prato!.nome }}
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="fx-row">
+        <div class="fx-row">
+          @if (item().acompanhamentos) {
+            <mat-chip-set>
+              @for (
+                acompanhamento of item().acompanhamentos;
+                track acompanhamento._id
+              ) {
+                <mat-chip
+                  [ngStyle]="{
+                    border: '1px solid ' + acompanhamento.grupo!.cor
+                  }"
+                >
+                  @if (acompanhamento.grupo!.multiplo) {
+                    <mat-icon matChipAvatar fontIcon="rice_bowl"></mat-icon>
+                  }
+                  {{
+                    acompanhamento.grupo!.multiplo
+                      ? acompanhamento.grupo!.nome + "/"
+                      : ""
+                  }}{{ acompanhamento.nome }}
+                </mat-chip>
+              }
+            </mat-chip-set>
+          }
+        </div>
+        <div style="text-align: center">
+          <h2>{{ item().quantidade }}</h2>
+        </div>
+      </div>
+    </mat-card-content>
+    @if (item().observacao) {
+      <mat-card-footer style="padding: 10px">
+        <span> {{ item().observacao }}</span>
+      </mat-card-footer>
+    }
+    <mat-card-actions>
+      <button mat-button (click)="editarPedidoItem.emit(item().prato!._id!)">
+        Editar <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-button (click)="removerPedidoItem.emit(item().prato!._id!)">
+        Remover <mat-icon class="cred">delete</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

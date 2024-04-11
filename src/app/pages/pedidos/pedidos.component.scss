@@ -4,6 +4,10 @@
   display: block;
 }
 
+mat-sidenav-content {
+  overflow: hidden;
+}
+
 .lbl-quantidade {
   font-weight: bold;
   font-size: large;
@@ -16,33 +20,14 @@
   font-size: 10px;
   text-align: center;
 }
- 
 
-.card-container {
-  height: 100%;
+.menu-sidenav {
+  background-color: #f5f5f5;
 }
 
-.card-container ::ng-deep p {
-  margin: 0;
+
+@media only screen and (max-width: 600px) {
+.menu-sidenav {
+  width: 100%;
 }
-.card-container ::ng-deep > .ant-tabs-card .ant-tabs-content {
-  height: 100%;
-}
-.card-container
-  ::ng-deep
-  > .ant-tabs-card
-  .ant-tabs-content
-  > .ant-tabs-tabpane {
-  background: transparent;
-}
-.card-container ::ng-deep > .ant-tabs-card > .ant-tabs-nav::before {
-  display: none;
-}
-.card-container ::ng-deep > .ant-tabs-card .ant-tabs-tab {
-  border-color: transparent;
-  background: transparent;
-}
-.card-container ::ng-deep > .ant-tabs-card .ant-tabs-tab-active {
-  border-color: #fff;
-  background: #fff;
 }

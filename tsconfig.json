@@ -31,7 +31,11 @@
       {
         "name": "@angular/language-service"
       }
-    ]
+    ],
+    "paths": {
+      "@navegador/*": ["src/app/*"],
+      "@navegador": ["src/app"],
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

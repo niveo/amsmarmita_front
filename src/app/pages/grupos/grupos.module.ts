@@ -13,7 +13,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { ConfirmacaoDialogModule } from 'src/app/common/confirmacao-dialog';
+import { ConfirmacaoDialogModule } from '@navegador/common/confirmacao-dialog';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { NgxColorsModule } from 'ngx-colors';
 import { MatSnackBarModule } from '@angular/material/snack-bar';

@@ -13,8 +13,8 @@ import { Observable, map } from 'rxjs';
 import { isBooleanTransform } from '../../common/util';
 import { Grupo, Prato } from '../../model';
 import { PratoStore } from '../../stores/prato.store';
-import { MSG_CONFIRMAR_EXCLUSAO } from 'src/app/common/constantes';
-import { ConfirmacaoDialog } from 'src/app/common/confirmacao-dialog';
+import { MSG_CONFIRMAR_EXCLUSAO } from '@navegador/common/constantes';
+import { ConfirmacaoDialog } from '@navegador/common/confirmacao-dialog';
 
 export class ModelFormPrato {
   _id!: FormControl<string | null>;
