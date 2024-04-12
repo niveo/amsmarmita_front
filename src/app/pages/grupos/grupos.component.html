@@ -1,6 +1,6 @@
 <container-central [(drawer)]="editarForm" [loading]="loading()">
   <div drawer class="ovh hf">
-    @if (editarForm) {
+    @if (editarForm()) {
       <app-grupos-form-component
         [(visible)]="editarForm"
         [data]="editarFormData()"
@@ -38,7 +38,7 @@
               [value]="item.principal"
               >{{ item.nome }}</span
             >
-            <button mat-icon-button (click)="removerRegistro(item)">
+            <button mat-icon-button (click)="removerRegistro(item._id!)">
               <mat-icon class="cred">delete</mat-icon>
             </button>
           </div>

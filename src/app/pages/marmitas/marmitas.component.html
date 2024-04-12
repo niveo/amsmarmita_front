@@ -1,6 +1,6 @@
 <container-central [(drawer)]="editarForm" [loading]="loading()">
   <div drawer class="ovh hf">
-    @if (editarForm) {
+    @if (editarForm()) {
       <app-marmitas-form-component
         [(visible)]="editarForm"
         [data]="editarFormData()"

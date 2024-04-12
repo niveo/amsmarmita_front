@@ -14,17 +14,8 @@ export class GrupoPrincipalDirective {
   ) {}
 
   ngOnInit() {
-    const arrow = this.getArrowElement(this.value());
-    this.el.nativeElement.insertAdjacentElement('beforebegin', arrow);
-  }
-
-  getArrowElement(value: boolean) {
-    const arrow = this.document.createElement('span');
-    arrow.style.setProperty('display', 'flex');
-    arrow.style.setProperty('align-items', 'center');
-    arrow.style.setProperty('color', '#004D40');
-    arrow.style.setProperty('width', '15px');
-    arrow.innerHTML = value ? '¤' : '';
-    return arrow;
+    if (this.value())
+      this.el.nativeElement.style.setProperty('border-left', '1px solid red');
+    this.el.nativeElement.style.setProperty('padding-left', '5px');
   }
 }

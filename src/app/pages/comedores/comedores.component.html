@@ -36,7 +36,7 @@
               (click)="editar(item)"
               >{{ item.nome }}</span
             >
-            <button mat-icon-button (click)="removerRegistro(item)">
+            <button mat-icon-button (click)="removerRegistro(item._id!)">
               <mat-icon class="cred">delete</mat-icon>
             </button>
           </div>
