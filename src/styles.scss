@@ -151,6 +151,10 @@ body {
   .comp-body {
     padding: 0px;
   }
+
+  mat-drawer {
+    max-width: 90%;
+  }
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
@@ -164,3 +168,4 @@ body {
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
 }
+ 

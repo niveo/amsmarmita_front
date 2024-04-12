@@ -5,6 +5,7 @@ import { isMobile } from '@navegador/common/util';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { VersaoSistemaDirective } from '@navegador/directives/versao-sistema.directive';
 
 @Component({
   selector: 'app-login-component',
@@ -46,7 +47,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
       }
     `,
   ],
-  imports: [MatButtonModule, MatIconModule],
+  imports: [MatButtonModule, MatIconModule, VersaoSistemaDirective],
 })
 export class LoginComponent {
   private readonly service = inject(AuthService);
