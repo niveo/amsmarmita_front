@@ -12,6 +12,6 @@ export const TOKEN_APP_CONFIG = new InjectionToken<{
   versaoSistemaDescricao: string;
 }>('Application config');
 
-export const SERVICO_GENERICO_TOKEN = new InjectionToken<BaseService>(
+export const SERVICO_GENERICO_TOKEN = new InjectionToken<BaseService<any>>(
   'SERVICO_GENERICO_TOKEN',
 );

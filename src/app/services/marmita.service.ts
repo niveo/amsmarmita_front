@@ -1,28 +1,15 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Marmita } from '../model/marmita';
-import { BehaviorSubject, finalize, mergeMap, shareReplay } from 'rxjs';
+import { finalize } from 'rxjs';
+import { BaseService } from './base.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class MarmitaService {
-  private readonly http = inject(HttpClient);
-  private _resourceData$ = new BehaviorSubject<void>(undefined);
-  loading = signal(true);
-
-  private apiRequest$ = this.http
+export class MarmitaService extends BaseService<Marmita> {
+    apiRequest$ = this.http
     .get<Marmita[]>('/marmitas')
     .pipe(finalize(() => this.loading.set(false)));
-
-  public data$ = this._resourceData$.pipe(
-    mergeMap(() => this.apiRequest$),
-    shareReplay(1),
-  );
-
-  updateData() {
-    this._resourceData$.next();
-  }
 
   getAll() {
     return this.http.get<Marmita[]>('/marmitas');

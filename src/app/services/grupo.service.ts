@@ -1,28 +1,19 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Grupo } from '../model/grupo';
-import {
-  BehaviorSubject,
-  finalize,
-  map,
-  mergeMap,
-  shareReplay,
-  tap,
-} from 'rxjs';
+import { finalize, map, mergeMap, tap } from 'rxjs';
 import { PratoService } from './prato.service';
+import { BaseService } from './base.service';
+import { Prato } from '@navegador/model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class GrupoService {
-  private readonly http = inject(HttpClient);
+export class GrupoService extends BaseService<Grupo> {
   private readonly service = inject(PratoService);
-  private _resourceData$ = new BehaviorSubject<void>(undefined);
-  loading = signal(true);
 
   tapRemoverCache = tap(() => this.updateData());
 
-  private apiRequest$ = this.http
+  apiRequest$ = this.http
     .get<Grupo[]>('/grupos')
     .pipe(finalize(() => this.loading.set(false)))
     .pipe(
@@ -32,22 +23,13 @@ export class GrupoService {
             return mp.map((n) => {
               return {
                 ...n,
-                pratos: m.filter((f) => f.grupo?._id === n._id),
+                pratos: m.filter((f: Prato) => f.grupo?._id === n._id),
               };
             });
           }),
         );
       }),
     );
-
-  public data$ = this._resourceData$.pipe(
-    mergeMap(() => this.apiRequest$),
-    shareReplay(1),
-  );
-
-  updateData() {
-    this._resourceData$.next();
-  }
 
   delete(id: string) {
     return this.http.delete<any>('/grupos/' + id).pipe(this.tapRemoverCache);
