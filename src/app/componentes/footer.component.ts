@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { isMobile } from '../common/util'; 
 
 @Component({
   selector: 'app-footer-component',
@@ -12,6 +11,4 @@ import { isMobile } from '../common/util';
   `,
   standalone: true,
 })
-export class FooterComponent {
-  isMobile = isMobile;
-}
+export class FooterComponent {}

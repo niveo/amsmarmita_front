@@ -1,5 +1,10 @@
 <mat-drawer-container class="ovh hf">
-  <mat-drawer [opened]="drawer()" (closedStart)="drawerChange.emit(false)" position="end">
+  <mat-drawer
+    [opened]="drawer()"
+    class="ovh hf"
+    (closedStart)="drawerChange.emit(false)"
+    position="end"
+  >
     <ng-content select="[drawer]"></ng-content>
   </mat-drawer>
   <mat-drawer-content class="ovh hf">

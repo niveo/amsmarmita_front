@@ -4,8 +4,8 @@
   </button>
 </ng-template>
 
-<mat-drawer-container class="layout fx-column hf ovh" autosize>
-  <mat-drawer #drawer mode="over">
+<mat-drawer-container class="fx-column hf ovh">
+  <mat-drawer #drawer mode="over" class="menu-drawer hf ovh">
     <div class="fx-column hf ovh">
       <ng-container [ngTemplateOutlet]="tplLogoDrawer"></ng-container>
       <div class="fx-flex">
@@ -42,11 +42,8 @@
 </mat-drawer-container>
 
 <ng-template #tplFooter>
-  <div class="fx-row wf" style="padding: 10px; align-items: center">
-    <span class="fx-flex">
-      <app-footer-component />
-    </span>
-
+  <div class="fx-row wf" style="padding: 10px; align-items: center;">
+    <span versaosis class="fx-flex"></span>
     <button mat-icon-button (click)="drawer.toggle()">
       <mat-icon>menu_open</mat-icon>
     </button>
@@ -67,7 +64,6 @@
         }
       </mat-nav-list>
     </div>
-    <span style="text-align: center; padding: 5px" versaosis></span>
   </div>
 </ng-template>
 
