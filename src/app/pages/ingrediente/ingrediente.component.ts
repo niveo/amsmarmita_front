@@ -56,6 +56,8 @@ export class IngredienteComponent {
   }
 
   removerRegistro(item: Ingrediente) {
+    console.log('removerRegistro');
+    
     this.confirmacaoDialog
       .confirmacao({ mensagem: MSG_CONFIRMAR_EXCLUSAO })
       .afterClosed()

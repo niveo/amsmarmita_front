@@ -28,7 +28,10 @@
       [multiple]="false"
     >
       @for (item of data$ | async; track item._id) {
-        <mat-list-option role="listitem">
+        <mat-list-option
+          role="listitem" 
+          (longPress)="removerRegistro(item)"
+        >
           <div class="fx-row" style="align-items: stretch">
             <span
               class="fx-flex"
@@ -36,9 +39,6 @@
               (click)="editar(item)"
               >{{ item.nome }}</span
             >
-            <button mat-icon-button (click)="removerRegistro(item)">
-              <mat-icon class="cred">delete</mat-icon>
-            </button>
           </div>
         </mat-list-option>
         <mat-divider></mat-divider>
