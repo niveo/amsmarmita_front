@@ -19,9 +19,8 @@
           <mat-option>--</mat-option>
           @for (g of grupos; track g._id) {
             <mat-option [value]="g._id">
-              <app-grupo-principal-component [principal]="g.principal" />
-              {{ g.nome! }}</mat-option
-            >
+              <span grupoPrincipal [value]="g.principal"> {{ g.nome! }}</span>
+            </mat-option>
           }
         </mat-select>
       </mat-form-field>

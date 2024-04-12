@@ -5,9 +5,7 @@ import { PratosRoutingModule } from './pratos-routing.module';
 import { PratosFormComponent } from './pratos-form.component';
 import { PratoComponent } from './pratos.component';
 import { CorBoardaDirective } from '@navegador/directives/cor-borda.directive';
-import { GrupoPrincipalComponent } from '@navegador/componentes/grupo-principal.component';
-import { SelecaoIngredientesComponent } from '@navegador/componentes/selecao-ingredientes.component';
-import { ProgressBarComponent } from '@navegador/componentes/progress-bar.component';
+import { SelecaoIngredientesComponent } from '@navegador/componentes/selecao-ingredientes.component'; 
 import { ContainerCentralComponent } from '@navegador/componentes/container-central.component';
 import { ConfirmacaoDialogModule } from '@navegador/common/confirmacao-dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,6 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSelectModule } from '@angular/material/select';
+import { GrupoPrincipalDirective } from '@navegador/directives/grupo-principal.directive';
 
 @NgModule({
   declarations: [PratoComponent, PratosFormComponent],
@@ -28,10 +27,9 @@ import { MatSelectModule } from '@angular/material/select';
     AsyncPipe,
     NgStyle,
     CorBoardaDirective,
-    GrupoPrincipalComponent,
+    GrupoPrincipalDirective,
     SelecaoIngredientesComponent,
-    FormsModule,
-    ProgressBarComponent,
+    FormsModule, 
 
     MatButtonModule,
     MatCardModule,

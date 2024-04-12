@@ -30,14 +30,12 @@
       @for (item of data$ | async; track item._id) {
         <mat-list-option role="listitem" [corBoarda]="item.cor">
           <div class="fx-row" style="align-items: stretch">
-            <app-grupo-principal-component
-              [principal]="item.principal"
-              style="align-content: center"
-            />
             <span
               class="fx-flex"
               style="align-content: center"
               (click)="editar(item)"
+              grupoPrincipal
+              [value]="item.principal"
               >{{ item.nome }}</span
             >
             <button mat-icon-button (click)="removerRegistro(item)">
