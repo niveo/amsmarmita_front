@@ -22,7 +22,7 @@ export abstract class BaseViewComponent<T> {
   protected readonly _snackBar = inject(MatSnackBar);
   protected readonly confirmacaoDialog = inject(ConfirmacaoDialog);
 
-  protected readonly service = inject<BaseService>(SERVICO_GENERICO_TOKEN, {
+  protected readonly service = inject<BaseService<T>>(SERVICO_GENERICO_TOKEN, {
     optional: true,
   });
 

@@ -21,6 +21,7 @@ import {
   MSG_EXCLUIR_SUCESSO,
 } from '../common/constantes';
 import { PedidoItem } from '../model/pedido-item';
+import { SERVICO_GENERICO_TOKEN } from '@navegador/common/tokens';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +30,7 @@ export class PratoStore extends BaseStore {
   private readonly _dataSource = new BehaviorSubject<Grupo[]>([]);
   readonly data$ = this._dataSource.asObservable();
   private readonly grupoService = inject(GrupoService);
-  private readonly service = inject(PratoService);
+  private readonly service = inject<PratoService>(SERVICO_GENERICO_TOKEN);
 
   pedidoItemVinculado: any = {};
 

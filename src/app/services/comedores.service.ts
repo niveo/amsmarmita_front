@@ -1,27 +1,15 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Comedor } from '../model/comedor';
-import { BehaviorSubject, finalize, mergeMap, shareReplay } from 'rxjs';
+import { finalize } from 'rxjs';
 import { BaseService } from './base.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ComedoresService extends BaseService {
-  private _resourceData$ = new BehaviorSubject<void>(undefined);
-
-  private apiRequest$ = this.http
+export class ComedoresService extends BaseService<Comedor> {
+  apiRequest$ = this.http
     .get<Comedor[]>('/comedores')
     .pipe(finalize(() => this.loading.set(false)));
-
-  public data$ = this._resourceData$.pipe(
-    mergeMap(() => this.apiRequest$),
-    shareReplay(1),
-  );
-
-  updateData() {
-    this._resourceData$.next();
-  }
 
   getId(id: string) {
     return this.http.get<Comedor[]>('/comedores/' + id);

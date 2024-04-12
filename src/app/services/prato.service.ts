@@ -1,29 +1,17 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Prato } from '../model';
-import { BehaviorSubject, map, mergeMap, shareReplay } from 'rxjs';
+import { map } from 'rxjs';
+import { BaseService } from './base.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class PratoService {
-  private readonly http = inject(HttpClient);
-
-  private _resourceData$ = new BehaviorSubject<void>(undefined);
-  private apiRequest$ = this.http
+export class PratoService extends BaseService<Prato> {
+    apiRequest$ = this.http
     .get<Prato[]>('/pratos')
     .pipe(map((m) => m.sort(this.sortNome)));
 
   sortNome = (a: Prato, b: Prato) => a.nome!.localeCompare(b.nome!);
-
-  public data$ = this._resourceData$.pipe(
-    mergeMap(() => this.apiRequest$),
-    shareReplay(1),
-  );
-
-  updateData() {
-    this._resourceData$.next();
-  }
 
   getAll() {
     return this.http.get<Prato[]>('/pratos');
@@ -41,7 +29,7 @@ export class PratoService {
     observacao,
     ingredientes,
     icone,
-    imagem
+    imagem,
   }: {
     id: string;
     nome: string;
@@ -59,7 +47,7 @@ export class PratoService {
       observacao,
       ingredientes,
       icone,
-      imagem
+      imagem,
     });
   }
 
@@ -70,7 +58,7 @@ export class PratoService {
     observacao,
     ingredientes,
     icone,
-    imagem
+    imagem,
   }: {
     nome: string;
     grupoId: string;
@@ -87,7 +75,7 @@ export class PratoService {
       observacao,
       ingredientes,
       icone,
-      imagem
+      imagem,
     });
   }
 

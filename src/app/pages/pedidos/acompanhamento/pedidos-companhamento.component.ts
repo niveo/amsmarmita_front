@@ -36,12 +36,12 @@ export class PedidosAcompanhamentoComponent implements OnInit {
       .pipe(
         map((m) => {
           return [
-            m.filter((f) => f.multiplo),
+            m.filter((f: Grupo) => f.multiplo),
             m
-              .filter((f) => !f.multiplo && !f.principal)
+              .filter((f: Grupo) => !f.multiplo && !f.principal)
               .sort(this.sortPrincipal),
             m
-              .filter((f) => !f.multiplo && f.principal)
+              .filter((f: Grupo) => !f.multiplo && f.principal)
               .sort(this.sortPrincipal),
           ];
         }),

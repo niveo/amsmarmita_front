@@ -24,5 +24,11 @@ import { SERVICO_GENERICO_TOKEN } from '@navegador/common/tokens';
   ],
 })
 export class IngredienteComponent extends BaseViewComponent<Ingrediente> {
-  data$: Observable<Ingrediente[]> = this.service!.data$;
+  data$ = this.service!.data$;
+
+  constructor() {
+    super();
+
+    this.data$.subscribe(console.log);
+  }
 }
