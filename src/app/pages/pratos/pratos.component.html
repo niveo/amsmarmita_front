@@ -29,12 +29,11 @@
             <mat-panel-title>
               <div class="fx-row wf" style="margin-right: 10px">
                 <div class="fx-flex fx-row">
-                  @if (!tipoSelecao()) {
-                    <app-grupo-principal-component
-                      [principal]="grupo.principal"
-                    />
-                  }
-                  <span style="font-weight: bold">{{ grupo.nome }}</span>
+                  <span
+                    grupoPrincipal
+                    [value]="grupo.principal && !tipoSelecao()"
+                    >{{ grupo.nome }}</span
+                  >
                 </div>
               </div>
             </mat-panel-title>

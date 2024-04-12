@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { GrupoComponent } from './grupos.component';
 import { GrupoFormComponent } from './grupos-form.component';
 import { CorBoardaDirective } from '@navegador/directives/cor-borda.directive';
-import { GrupoPrincipalComponent } from '@navegador/componentes/grupo-principal.component';
 import { AsyncPipe } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -18,12 +17,13 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { NgxColorsModule } from 'ngx-colors';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { GruposRoutingModule } from './grupos-routing.module';
+import { GrupoPrincipalDirective } from '@navegador/directives/grupo-principal.directive';
 
 @NgModule({
   declarations: [GrupoComponent, GrupoFormComponent],
   imports: [
     CorBoardaDirective,
-    GrupoPrincipalComponent,
+    GrupoPrincipalDirective,
     AsyncPipe,
     ReactiveFormsModule,
 
