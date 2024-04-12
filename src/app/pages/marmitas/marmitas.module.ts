@@ -17,9 +17,14 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { provideDateFnsAdapter } from '@angular/material-date-fns-adapter';
 import { ptBR } from 'date-fns/locale';
+import { MarmitasItemComponent } from './marmitas-item.component';
 
 @NgModule({
-  declarations: [MarmitasComponent, MarmitasFormComponent],
+  declarations: [
+    MarmitasComponent,
+    MarmitasItemComponent,
+    MarmitasFormComponent,
+  ],
   exports: [],
   imports: [
     AsyncPipe,

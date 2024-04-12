@@ -33,13 +33,16 @@ import { MatSnackBar } from '@angular/material/snack-bar';
       }
 
       :host {
-        margin: auto;
-        //position: relative;
-        top: 100px;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        background-color: white;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .mat-mdc-button > .mat-icon {
+        margin-right: 0px;
+        margin-left: 0px;
       }
     `,
   ],
@@ -81,7 +84,9 @@ export class LoginComponent {
       .subscribe({
         error: (response) => {
           console.error(response);
-          this._snackBar.open('Senha invalida!', 'OK');
+          this._snackBar.open('Senha invalida!', 'OK', {
+            duration: 500
+          });
         },
       });
   }
