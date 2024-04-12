@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { VersaoSistemaDirective } from '@navegador/directives/versao-sistema.directive';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-login-component',
@@ -39,6 +40,7 @@ import { VersaoSistemaDirective } from '@navegador/directives/versao-sistema.dir
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        padding: 5px;
       }
       
       .mat-mdc-button > .mat-icon {
@@ -47,7 +49,7 @@ import { VersaoSistemaDirective } from '@navegador/directives/versao-sistema.dir
       }
     `,
   ],
-  imports: [MatButtonModule, MatIconModule, VersaoSistemaDirective],
+  imports: [MatButtonModule, MatIconModule, VersaoSistemaDirective, MatProgressBarModule],
 })
 export class LoginComponent {
   private readonly service = inject(AuthService);
