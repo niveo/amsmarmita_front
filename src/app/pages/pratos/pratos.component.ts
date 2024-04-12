@@ -5,16 +5,14 @@ import {
   effect,
   inject,
   input,
-  output,
-  signal,
+  output, 
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { map } from 'rxjs';
 import { isBooleanTransform } from '@navegador/common/util';
 import { Prato } from '@navegador/model';
-import { PratoStore } from '@navegador/stores/prato.store';
-import { MSG_CONFIRMAR_EXCLUSAO } from '@navegador/common/constantes';
-import { ConfirmacaoDialog } from '@navegador/common/confirmacao-dialog';
+import { PratoStore } from '@navegador/stores/prato.store'; 
+import { BaseViewComponent } from '@navegador/componentes/base-view.component';
 
 export class ModelFormPrato {
   _id!: FormControl<string | null>;
@@ -32,9 +30,8 @@ export class ModelFormPrato {
   templateUrl: './pratos.component.html',
   styleUrl: './pratos.component.scss',
 })
-export class PratoComponent {
+export class PratoComponent extends BaseViewComponent<Prato> {
   readonly pratoStore = inject(PratoStore);
-  protected readonly confirmacaoDialog = inject(ConfirmacaoDialog);
 
   eventIncluirPratoPedido = output<{
     nome: string;
@@ -50,12 +47,10 @@ export class PratoComponent {
     map((m) => (!this.tipoSelecao() ? m : m.filter((f) => f.principal))),
   );
 
-  loading: Signal<boolean> = computed(() => this.pratoStore.loading());
-
-  editarFormData = signal<Prato | null>(null);
-  editarForm = false;
+  override loading: Signal<boolean> = computed(() => this.pratoStore.loading());
 
   constructor() {
+    super();
     effect(() => {
       if (!this.tipoSelecao()) {
         this.pratoStore.vincularPedidoItem([]);
@@ -63,18 +58,8 @@ export class PratoComponent {
     });
   }
 
-  incluir() {
-    this.editar();
-  }
-
-  editar(item?: Prato) {
-    const n = JSON.parse(JSON.stringify(item));
-    this.editarFormData.set(n);
-    this.editarForm = true;
-  }
-
-  remover(item: Prato) {
-    this.pratoStore.remover(item);
+  override remover(registroId: string) {
+    this.pratoStore.remover(registroId);
   }
 
   duplicar(item: Prato) {
@@ -88,14 +73,5 @@ export class PratoComponent {
       grupoId: prato.grupo!._id,
       pratoId: prato._id!,
     });
-  }
-
-  removerRegistro(item: Prato) {
-    this.confirmacaoDialog
-      .confirmacao({ mensagem: MSG_CONFIRMAR_EXCLUSAO })
-      .afterClosed()
-      .subscribe((response: boolean) => {
-        if (response) this.remover(item);
-      });
   }
 }

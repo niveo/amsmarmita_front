@@ -1,74 +1,27 @@
-import { v1 } from 'uuid';
-import {
-  Component,
-  DestroyRef,
-  computed,
-  inject,
-  input,
-  output,
-  signal,
-} from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ComedoresService } from '@navegador/services/comedores.service';
 import { Comedor } from '@navegador/model/comedor';
-import {
-  MSG_EXCLUIR_SUCESSO,
-  MSG_ERRO_PROCSSAMENTO,
-  MSG_CONFIRMAR_EXCLUSAO,
-} from '@navegador/common/constantes';
 import { isBooleanTransform } from '@navegador/common/util';
-import { ConfirmacaoDialog } from '@navegador/common/confirmacao-dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { BaseViewComponent } from '@navegador/componentes/base-view.component';
+import { SERVICO_GENERICO_TOKEN } from '@navegador/common/tokens';
 
 @Component({
   selector: 'app-comedores-component',
   templateUrl: './comedores.component.html',
   styleUrl: './comedores.component.scss',
+  providers: [
+    {
+      provide: SERVICO_GENERICO_TOKEN,
+      useClass: ComedoresService,
+    },
+  ],
 })
-export class ComedoresComponent {
-  private readonly service = inject(ComedoresService);
-  protected readonly destroyRef = inject(DestroyRef);
-  private readonly _snackBar = inject(MatSnackBar);
-  protected readonly confirmacaoDialog = inject(ConfirmacaoDialog);
-
-  data$: Observable<any[]> = this.service.data$;
-  loading = computed(() => this.service.loading());
+export class ComedoresComponent extends BaseViewComponent<Comedor> {
+  data$: Observable<Comedor[]> = this.service!.data$;
 
   tipoSelecao = input(false, { transform: isBooleanTransform });
   eventComedorTipoSelecao = output<string>();
-
-  editarFormData = signal<any>(null);
-  editarForm = signal(false);
-
-  incluir() {
-    this.editar();
-  }
-
-  editar(item?: Comedor) {
-    this.editarFormData.set({ ...item });
-    this.editarForm.set(true);
-  }
-
-  remover(item: Comedor) {
-    this.service.delete(item._id!).subscribe({
-      error: (error) => {
-        console.error(error);
-        this._snackBar.open(MSG_ERRO_PROCSSAMENTO, 'OK');
-      },
-      next: () => {
-        this._snackBar.open(MSG_EXCLUIR_SUCESSO, 'OK');
-      },
-    });
-  }
-
-  removerRegistro(item: Comedor) {
-    this.confirmacaoDialog
-      .confirmacao({ mensagem: MSG_CONFIRMAR_EXCLUSAO })
-      .afterClosed()
-      .subscribe((response: boolean) => {
-        if (response) this.remover(item);
-      });
-  }
 
   selecionarComedor(comedor: Comedor) {
     if (this.tipoSelecao()) this.eventComedorTipoSelecao.emit(comedor._id!);

@@ -1,6 +1,6 @@
 <container-central [(drawer)]="editarForm" [loading]="loading()">
   <div drawer class="ovh hf">
-    @if (editarForm) {
+    @if (editarForm()) {
       <app-pratos-form-component
         [(visible)]="editarForm"
         [data]="editarFormData()"
@@ -77,7 +77,7 @@
                       <button mat-button (click)="editar(item)">
                         Editar <mat-icon>edit</mat-icon>
                       </button>
-                      <button mat-button (click)="removerRegistro(item)">
+                      <button mat-button (click)="removerRegistro(item._id!)">
                         Remover <mat-icon class="cred">delete</mat-icon>
                       </button>
                     </mat-card-actions>

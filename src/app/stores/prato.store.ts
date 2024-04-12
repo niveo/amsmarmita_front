@@ -4,7 +4,9 @@ import {
   BehaviorSubject,
   EMPTY,
   catchError,
+  from,
   iif,
+  map,
   mergeMap,
   of,
   tap,
@@ -19,8 +21,6 @@ import {
   MSG_EXCLUIR_SUCESSO,
 } from '../common/constantes';
 import { PedidoItem } from '../model/pedido-item';
-
-const KEY_NOFITY_SALVAR = v1().toString();
 
 @Injectable({
   providedIn: 'root',
@@ -49,8 +49,8 @@ export class PratoStore extends BaseStore {
     });
   }
 
-  remover(item: Prato) {
-    this.service.delete(item._id!).subscribe({
+  remover(registroId: string) {
+    this.service.delete(registroId).subscribe({
       error: (error) => {
         console.error(error);
         this._snackBar.open(MSG_ERRO_PROCSSAMENTO, 'OK');
@@ -59,15 +59,27 @@ export class PratoStore extends BaseStore {
         if (value) {
           this._snackBar.open(MSG_EXCLUIR_SUCESSO, 'OK', { duration: 300 });
 
-          const grupoIndex = this._dataSource.value.findIndex(
-            (f) => f._id === item.grupo?._id,
-          );
+          this._dataSource.value.forEach((g) => {
+            g.pratos?.findIndex((p) => p._id === registroId);
+          });
 
-          const pratoIndex = this._dataSource.value[
-            grupoIndex
-          ].pratos?.findIndex((f) => f._id === item._id)!;
-
-          this._dataSource.value[grupoIndex].pratos?.splice(pratoIndex, 1);
+          from(this._dataSource.value)
+            .pipe(
+              map((mp, index) => {
+                return {
+                  grupoIndex: index,
+                  pratoIndex: mp.pratos?.findIndex(
+                    (f) => f._id === registroId,
+                  )!,
+                };
+              }),
+            )
+            .subscribe((response) => {
+              this._dataSource.value[response.grupoIndex].pratos?.splice(
+                response.pratoIndex,
+                1,
+              );
+            });
         }
       },
     });
@@ -99,7 +111,7 @@ export class PratoStore extends BaseStore {
     observacao,
     ingredientes,
     icone,
-    imagem
+    imagem,
   }: {
     _id?: string | null;
     nome?: string;
@@ -122,7 +134,7 @@ export class PratoStore extends BaseStore {
               observacao,
               ingredientes,
               icone,
-              imagem
+              imagem,
             }),
             this.service.atualizar({
               id: value!,
@@ -132,7 +144,7 @@ export class PratoStore extends BaseStore {
               observacao,
               ingredientes,
               icone,
-              imagem
+              imagem,
             }),
           ),
         ),
