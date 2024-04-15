@@ -26,8 +26,8 @@
     <ng-container [ngTemplateOutlet]="tplDrawer"></ng-container>
   </mat-sidenav>
 
-  <mat-sidenav-content class="fx-column hf ovh fx-flex">
-    <mat-tab-group headerPosition="below" class="fx-flex hf ovh">
+  <mat-sidenav-content>
+    <mat-tab-group headerPosition="below">
       <mat-tab>
         <ng-template mat-tab-label>
           <mat-icon>shopping_cart</mat-icon>
@@ -60,6 +60,7 @@
         </div>
       </mat-tab>
     </mat-tab-group>
+
     <ng-container [ngTemplateOutlet]="extraTemplate"></ng-container>
   </mat-sidenav-content>
 </mat-sidenav-container>

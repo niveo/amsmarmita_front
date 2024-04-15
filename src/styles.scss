@@ -13,11 +13,11 @@ body {
 
 /* You can add global styles to this file, and also import other style files */
 @mixin fx-border-box {
-  box-sizing: border-box;
+  box-sizing: border-box !important;;
 }
 
 .fx-border-box {
-  box-sizing: border-box;
+  box-sizing: border-box !important;;
 }
 
 .fx-d-flex {
@@ -27,8 +27,8 @@ body {
 
 @mixin fx-flex($percentual) {
   @include fx-border-box;
-  flex: 1 1 $percentual;
-  max-width: $percentual;
+  flex: 1 1 $percentual !important;;
+  max-width: $percentual !important;;
 }
 
 .fx-flex30 {
@@ -42,13 +42,13 @@ body {
 
 .fx-column {
   @extend .fx-d-flex;
-  flex-direction: column;
+  flex-direction: column !important;;
 }
 
 .fx-flex {
   @include fx-border-box;
   //flex: 1 1 0%;
-  flex: 1 1 1e-9px;
+  flex: 1 1 1e-9px !important;;
 }
 
 .fx-aic {
@@ -168,4 +168,3 @@ body {
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
 }
- 
