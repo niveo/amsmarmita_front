@@ -8,6 +8,7 @@ import { lastValueFrom } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MSG_ERRO_PROCSSAMENTO } from '@navegador/common/constantes';
+import { MessageSnackBarService } from './message-snackbar.component';
 
 @Component({
   selector: 'app-upload-component',
@@ -66,7 +67,7 @@ export class UploadComponent implements OnInit {
 
   private readonly http = inject(HttpClient);
 
-  protected readonly _snackBar = inject(MatSnackBar);
+  private readonly messageSnackBarService = inject(MessageSnackBarService);
 
   loading = signal(false);
 
@@ -123,6 +124,9 @@ export class UploadComponent implements OnInit {
     console.log('There was an error in upload: ', err);
     // this.uploadErrorMessage = 'File upload failed.';
     this.loading.set(false);
-    this._snackBar.open(MSG_ERRO_PROCSSAMENTO, 'OK');
+    this.messageSnackBarService.create({
+      titulo: MSG_ERRO_PROCSSAMENTO,
+      mensagem: err,
+    });
   }
 }

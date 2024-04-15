@@ -1,3 +1,4 @@
+import { MessageSnackBarService } from './componentes/message-snackbar.component';
 import {
   Component,
   OnDestroy,
@@ -60,7 +61,7 @@ export class AppComponent implements OnDestroy {
     },
   ];
 
-  constructor() {  
+  constructor() {
     this.sessionTimerService.sessionFinished$.subscribe(() => {});
 
     this.route.events.subscribe((event) => {

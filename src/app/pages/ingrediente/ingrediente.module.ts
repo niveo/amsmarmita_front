@@ -4,7 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { IngredienteComponent } from './ingrediente.component';
 import { IngredienteFormComponent } from './ingrediente-form.component';
 import { IngredienteRoutingModule } from './ingrediente-routing.module';
-import { ConfirmacaoDialogModule } from '@navegador/common/confirmacao-dialog';
+import { AmsDialogModule } from '@navegador/common/confirmacao-dialog';
 import { ContainerCentralComponent } from '@navegador/componentes/container-central.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
@@ -31,7 +31,7 @@ import { LongPressDirective } from '@navegador/directives/long-press.directive';
     MatIconModule,
     MatSnackBarModule,
 
-    ConfirmacaoDialogModule,
+    AmsDialogModule,
     ContainerCentralComponent,
     LongPressDirective,
   ],
