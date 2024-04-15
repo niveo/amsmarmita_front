@@ -1,6 +1,6 @@
 {
   "name": "amsmarmita-front",
-  "version": "1.21.01",
+  "version": "1.22.00",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

@@ -18,12 +18,11 @@ import { NgxColorsModule } from 'ngx-colors';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { GruposRoutingModule } from './grupos-routing.module';
 import { GrupoPrincipalDirective } from '@navegador/directives/grupo-principal.directive';
+import { LongPressDirective } from '@navegador/directives/long-press.directive';
 
 @NgModule({
   declarations: [GrupoComponent, GrupoFormComponent],
   imports: [
-    CorBoardaDirective,
-    GrupoPrincipalDirective,
     AsyncPipe,
     ReactiveFormsModule,
 
@@ -40,6 +39,9 @@ import { GrupoPrincipalDirective } from '@navegador/directives/grupo-principal.d
 
     NgxColorsModule,
 
+    CorBoardaDirective,
+    GrupoPrincipalDirective,
+    LongPressDirective,
     ConfirmacaoDialogModule,
     ContainerCentralComponent,
   ],
