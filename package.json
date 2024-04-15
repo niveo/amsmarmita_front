@@ -1,15 +1,15 @@
 {
   "name": "amsmarmita-front",
-  "version": "1.22.03",
+  "version": "1.23.00",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "prebuild.prod": "node git.version.js",
+    "prebuild.prod": "node git.version.js && node configenv.js",
     "build:prod": "npm run prebuild.prod && ng build --configuration production",
-    "build:dev": "npm run prebuild.prod && ng build --configuration development",
+    "build:dev": " npm run prebuild.prod && ng build --configuration development",
     "analyze": "webpack-bundle-analyzer dist/stats.json",
     "build:stats": "ng build --configuration production --stats-json",
     "analyzeb": "yarn build:stats && yarn analyze"
@@ -28,6 +28,7 @@
     "@angular/platform-browser": "^17.3.2",
     "@angular/platform-browser-dynamic": "^17.3.2",
     "@angular/router": "^17.3.2",
+    "dotenv": "^16.4.5",
     "imagekitio-angular": "^4.0.0",
     "js-sha256": "^0.11.0",
     "jwt-decode": "^4.0.0",
