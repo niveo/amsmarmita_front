@@ -2,15 +2,16 @@ import { Injectable } from '@angular/core';
 import { Ingrediente } from '../model';
 import { finalize } from 'rxjs';
 import { BaseService } from './base.service';
+import { ExposeServiceRest } from '@navegador/common/expose-service-rest.utils';
 
 @Injectable({
   providedIn: 'root',
 })
+@ExposeServiceRest({
+  path: '/ingredientes',
+})
 export class IngredienteService extends BaseService<Ingrediente> {
-  apiRequest$ = this.http
-    .get<Ingrediente[]>('/ingredientes')
-    .pipe(finalize(() => this.loading.set(false)));
-
+  
   getAll() {
     return this.http.get<Ingrediente[]>('/ingredientes');
   }

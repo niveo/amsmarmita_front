@@ -4,16 +4,20 @@ import { finalize, map, mergeMap, tap } from 'rxjs';
 import { PratoService } from './prato.service';
 import { BaseService } from './base.service';
 import { Prato } from '@navegador/model';
+import { ExposeServiceRest } from '@navegador/common/expose-service-rest.utils';
 
 @Injectable({
   providedIn: 'root',
+})
+@ExposeServiceRest({
+  path: '/grupos',
 })
 export class GrupoService extends BaseService<Grupo> {
   private readonly service = inject(PratoService);
 
   tapRemoverCache = tap(() => this.updateData());
 
-  apiRequest$ = this.http
+  override apiRequest$ = this.http
     .get<Grupo[]>('/grupos')
     .pipe(finalize(() => this.loading.set(false)))
     .pipe(

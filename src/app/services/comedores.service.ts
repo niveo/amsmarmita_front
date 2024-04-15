@@ -2,15 +2,15 @@ import { Injectable } from '@angular/core';
 import { Comedor } from '../model/comedor';
 import { finalize } from 'rxjs';
 import { BaseService } from './base.service';
+import { ExposeServiceRest } from '@navegador/common/expose-service-rest.utils';
 
 @Injectable({
   providedIn: 'root',
 })
+@ExposeServiceRest({
+  path: '/comedores',
+})
 export class ComedoresService extends BaseService<Comedor> {
-  apiRequest$ = this.http
-    .get<Comedor[]>('/comedores')
-    .pipe(finalize(() => this.loading.set(false)));
-
   getId(id: string) {
     return this.http.get<Comedor[]>('/comedores/' + id);
   }

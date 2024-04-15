@@ -1,8 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
+import { ExposeServiceRest } from '@navegador/common/expose-service-rest.utils';
 
 @Injectable({
   providedIn: 'root',
+})
+@ExposeServiceRest({
+  path: '/pedidos',
 })
 export class PedidoService {
   private readonly http = inject(HttpClient);

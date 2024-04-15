@@ -1,23 +1,17 @@
-import { Component, input, output } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ComedoresService } from '@navegador/services/comedores.service';
 import { Comedor } from '@navegador/model/comedor';
 import { isBooleanTransform } from '@navegador/common/util';
 import { BaseViewComponent } from '@navegador/componentes/base-view.component';
-import { SERVICO_GENERICO_TOKEN } from '@navegador/common/tokens';
 
 @Component({
   selector: 'app-comedores-component',
   templateUrl: './comedores.component.html',
-  styleUrl: './comedores.component.scss',
-  providers: [
-    {
-      provide: SERVICO_GENERICO_TOKEN,
-      useClass: ComedoresService,
-    },
-  ],
+  styleUrl: './comedores.component.scss', 
 })
 export class ComedoresComponent extends BaseViewComponent<Comedor> {
+  override readonly service = inject(ComedoresService);
   data$: Observable<Comedor[]> = this.service!.data$;
 
   tipoSelecao = input(false, { transform: isBooleanTransform });

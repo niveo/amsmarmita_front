@@ -2,12 +2,17 @@ import { Injectable } from '@angular/core';
 import { Prato } from '../model';
 import { map } from 'rxjs';
 import { BaseService } from './base.service';
+import { ExposeServiceRest } from '@navegador/common/expose-service-rest.utils';
 
 @Injectable({
   providedIn: 'root',
 })
+@ExposeServiceRest({
+  path: '/pratos',
+})
 export class PratoService extends BaseService<Prato> {
-    apiRequest$ = this.http
+ 
+  override apiRequest$ = this.http
     .get<Prato[]>('/pratos')
     .pipe(map((m) => m.sort(this.sortNome)));
 
