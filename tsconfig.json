@@ -16,6 +16,11 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
+
+    "strictPropertyInitialization": false,
+    "noImplicitAny": false,
+    "strictNullChecks": false,
+
     "noUncheckedIndexedAccess": false,
     //Habilitar leitura json
     "resolveJsonModule": true,
@@ -34,7 +39,12 @@
     ],
     "paths": {
       "@navegador/*": ["src/app/*"],
-      "@navegador": ["src/app"],
+      "@navegador": [
+        "src/app"
+      ],
+      "imagekit-angular": [
+        "projects/imagekit-angular/src/public_api.ts"
+      ],
     }
   },
   "angularCompilerOptions": {

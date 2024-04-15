@@ -5,4 +5,6 @@ export const environment = {
   production: false,
   apiUri: 'http://localhost:3000',
   ...version,
+  imageKitPublicKey: 'public_T+f1go8ZY0QaMaAj4kIWJLLsIfU=',
+  imageKitUrlEndpoint: 'https://ik.imagekit.io/aspofp9v1',
 };

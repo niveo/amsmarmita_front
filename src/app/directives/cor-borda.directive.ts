@@ -9,7 +9,7 @@ export class CorBoardaDirective {
 
 
   @Input()
-  set corBoarda(value: any) { 
+  set corBoarda(value: any | null) { 
     this.el.nativeElement.style['border-left'] = '4px solid '+ (value || '#EEEEEE');
   }
 }

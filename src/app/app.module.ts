@@ -19,6 +19,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatRippleModule } from '@angular/material/core';
 import { FooterComponent } from './componentes/footer.component';
 import { MatListModule } from '@angular/material/list';
+import { provideImageKitLoader } from '@angular/common';
+import { ImagekitioAngularModule } from 'imagekit-angular';
 
 registerLocaleData(pt);
 
@@ -45,9 +47,17 @@ registerLocaleData(pt);
     MatListModule,
 
     CoreModule,
+
+    ImagekitioAngularModule.forRoot({
+      publicKey: environment.imageKitPublicKey,
+      urlEndpoint: environment.imageKitUrlEndpoint,
+    }),
   ],
   bootstrap: [AppComponent],
-  providers: [provideAnimationsAsync()],
+  providers: [
+    provideAnimationsAsync(),
+    provideImageKitLoader(environment.imageKitUrlEndpoint),
+  ],
 })
 export class AppModule {
   constructor(private titleService: Title) {

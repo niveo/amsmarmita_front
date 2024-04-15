@@ -11,6 +11,7 @@ import {
   MatBottomSheetRef,
 } from '@angular/material/bottom-sheet';
 import { MatDividerModule } from '@angular/material/divider';
+import { ImagemComponent } from './imagem.component';
 
 @Component({
   selector: 'app-selecao-comedores-component',
@@ -22,7 +23,14 @@ import { MatDividerModule } from '@angular/material/divider';
     >
       @for (item of data$ | async; track item._id) {
         <mat-list-option (click)="comedorTipoSelecao(item._id)">
-          <mat-icon matListItemIcon>launch</mat-icon>
+          <app-imagem-component
+            matListItemAvatar
+            [fileName]="item._id"
+            [queryParameters]="
+              item.updatedAt ? { updatedAt: item.updatedAt } : null
+            "
+          />
+
           {{ item.nome }}</mat-list-option
         >
         <mat-divider></mat-divider>
@@ -47,6 +55,7 @@ import { MatDividerModule } from '@angular/material/divider';
     MatIconModule,
     MatProgressBarModule,
     MatDividerModule,
+    ImagemComponent,
   ],
 })
 export class SelecaoComedoresComponent {

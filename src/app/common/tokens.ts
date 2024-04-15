@@ -9,3 +9,5 @@ export const TOKEN_APP_CONFIG = new InjectionToken<{
   versaoSistemaCodigo: number;
   versaoSistemaDescricao: string;
 }>('Application config');
+
+export const TOKEN_PATH_IMAGEKIT = new InjectionToken<string>('url path image kit');

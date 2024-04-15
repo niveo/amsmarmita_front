@@ -1,6 +1,10 @@
 <div class="ova hf fx-column pd-5">
   <div class="fx-flex">
     <form [formGroup]="form">
+      @if (form.get("_id").value) {
+        <app-upload-component [fileName]="form.get('_id').value" />
+      }
+
       <mat-form-field class="wf">
         <mat-label>Nome</mat-label>
         <input
