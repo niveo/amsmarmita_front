@@ -31,6 +31,8 @@ export class ComedoresFormComponent {
   isConfirmLoading = false;
   data = input.required<Comedor>();
 
+  queryParameters;
+
   form: FormGroup<{
     _id: FormControl<string | null>;
     nome: FormControl<string | null>;
