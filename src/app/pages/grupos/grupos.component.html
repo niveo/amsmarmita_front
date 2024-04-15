@@ -32,6 +32,7 @@
           role="listitem"
           (longPress)="removerRegistro(item._id)"
           (click)="editar(item)"
+          [corBoarda]="item.cor"
         >
           <h3 matListItemTitle>{{ item.nome }}</h3>
           @if (item.observacao) {
