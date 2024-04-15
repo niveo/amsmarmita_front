@@ -2,15 +2,15 @@ import { Injectable } from '@angular/core';
 import { Marmita } from '../model/marmita';
 import { finalize } from 'rxjs';
 import { BaseService } from './base.service';
+import { ExposeServiceRest } from '@navegador/common/expose-service-rest.utils';
 
 @Injectable({
   providedIn: 'root',
 })
+@ExposeServiceRest({
+  path: '/marmitas',
+})
 export class MarmitaService extends BaseService<Marmita> {
-    apiRequest$ = this.http
-    .get<Marmita[]>('/marmitas')
-    .pipe(finalize(() => this.loading.set(false)));
-
   getAll() {
     return this.http.get<Marmita[]>('/marmitas');
   }

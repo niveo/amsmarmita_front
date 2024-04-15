@@ -1,9 +1,7 @@
-import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, inject } from '@angular/core';
 import { IngredienteService } from '@navegador/services/ingrediente.service';
 import { Ingrediente } from '@navegador/model';
 import { BaseViewComponent } from '@navegador/componentes/base-view.component';
-import { SERVICO_GENERICO_TOKEN } from '@navegador/common/tokens';
 
 @Component({
   selector: 'app-ingrediente-component',
@@ -16,19 +14,8 @@ import { SERVICO_GENERICO_TOKEN } from '@navegador/common/tokens';
       }
     `,
   ],
-  providers: [
-    {
-      provide: SERVICO_GENERICO_TOKEN,
-      useClass: IngredienteService,
-    },
-  ],
 })
 export class IngredienteComponent extends BaseViewComponent<Ingrediente> {
+  override readonly service = inject(IngredienteService);
   data$ = this.service!.data$;
-
-  constructor() {
-    super();
-
-    this.data$.subscribe(console.log);
-  }
 }

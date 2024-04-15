@@ -6,7 +6,6 @@ import {
   MSG_ERRO_PROCSSAMENTO,
   MSG_EXCLUIR_SUCESSO,
 } from '@navegador/common/constantes';
-import { SERVICO_GENERICO_TOKEN } from '@navegador/common/tokens';
 import { BaseService } from '@navegador/services/base.service';
 
 @Component({
@@ -22,9 +21,7 @@ export abstract class BaseViewComponent<T> {
   protected readonly _snackBar = inject(MatSnackBar);
   protected readonly confirmacaoDialog = inject(ConfirmacaoDialog);
 
-  protected readonly service = inject<BaseService<T>>(SERVICO_GENERICO_TOKEN, {
-    optional: true,
-  });
+  abstract service: BaseService<T>;
 
   incluir() {
     this.editar();

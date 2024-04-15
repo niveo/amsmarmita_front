@@ -5,14 +5,16 @@ import {
   effect,
   inject,
   input,
-  output, 
+  output,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { map } from 'rxjs';
 import { isBooleanTransform } from '@navegador/common/util';
 import { Prato } from '@navegador/model';
-import { PratoStore } from '@navegador/stores/prato.store'; 
+import { PratoStore } from '@navegador/stores/prato.store';
 import { BaseViewComponent } from '@navegador/componentes/base-view.component';
+import { BaseService } from '@navegador/services/base.service';
+import { PratoService } from '@navegador/services/prato.service';
 
 export class ModelFormPrato {
   _id!: FormControl<string | null>;
@@ -31,6 +33,9 @@ export class ModelFormPrato {
   styleUrl: './pratos.component.scss',
 })
 export class PratoComponent extends BaseViewComponent<Prato> {
+
+  override readonly service = inject(PratoService);
+  
   readonly pratoStore = inject(PratoStore);
 
   eventIncluirPratoPedido = output<{
