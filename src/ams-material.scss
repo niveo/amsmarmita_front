@@ -1,9 +1,9 @@
 @use "@angular/material" as mat;
-@use '@angular/material-experimental' as matx;
+//@use '@angular/material-experimental' as matx;
 @import "@angular/cdk/overlay-prebuilt.css";
 @import "ams-variables";
 
-$theme: matx.define-theme((
+/* $theme: matx.define-theme((
   color: (
     theme-type: light,
     primary: matx.$m3-azure-palette,
@@ -17,7 +17,7 @@ $theme: matx.define-theme((
 :root {
   @include mat.all-component-themes($theme);
 }
-
+ */
 .menu-elevation-2 {
   // Adds a shadow for elevation level 2 with default color and full opacity:
   @include mat.elevation(2);
@@ -27,7 +27,7 @@ $theme: matx.define-theme((
   width: 250px;
 }
 
-/* 
+
 @include mat.core();
 
 $primary: mat.define-palette($mat-custom-primary);
@@ -45,5 +45,7 @@ $theme: mat.define-light-theme(
   )
 );
 
-@include mat.all-component-themes($theme);
-  */
+:root {
+  @include mat.all-component-themes($theme);
+}
+ 
