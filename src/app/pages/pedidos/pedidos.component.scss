@@ -5,7 +5,18 @@
 }
 
 mat-sidenav-content {
-  overflow: hidden;
+  overflow: hidden !important;
+  display: flex;
+  height: 100%;
+  box-sizing: border-box;
+  flex-direction: column;
+}
+
+mat-tab-group {
+  overflow: hidden !important;
+  display: flex;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .lbl-quantidade {
@@ -13,6 +24,7 @@ mat-sidenav-content {
   font-size: large;
   margin-right: 10px;
   margin-left: 10px;
+  direction: rtl;
 }
 
 .lbl-title-quantidade {
