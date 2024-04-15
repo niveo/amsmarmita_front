@@ -32,6 +32,7 @@
           placeholder="Informe aqui uma observação"
           #txtObservacao
           [maxLength]="100"
+          formControlName="observacao"
         ></textarea>
         <mat-hint align="end">{{ txtObservacao.value.length }} / 100</mat-hint>
       </mat-form-field>
