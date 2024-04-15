@@ -15,6 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ConfirmacaoDialogModule } from '@navegador/common/confirmacao-dialog';
 import { ContainerCentralComponent } from '@navegador/componentes/container-central.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { LongPressDirective } from '@navegador/directives/long-press.directive';
 
 @NgModule({
   declarations: [ComedoresComponent, ComedoresFormComponent],
@@ -27,6 +28,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     ComedoresRoutingModule,
     ConfirmacaoDialogModule,
     ContainerCentralComponent,
+    LongPressDirective,
 
     MatListModule,
     MatButtonModule,

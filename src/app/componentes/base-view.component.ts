@@ -53,7 +53,9 @@ export abstract class BaseViewComponent<T> {
         this._snackBar.open(MSG_ERRO_PROCSSAMENTO, 'OK');
       },
       next: () => {
-        this._snackBar.open(MSG_EXCLUIR_SUCESSO, 'OK');
+        this._snackBar.open(MSG_EXCLUIR_SUCESSO, 'OK', {
+          duration: 3000
+        });
       },
     });
   }
