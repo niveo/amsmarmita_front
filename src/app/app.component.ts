@@ -60,7 +60,7 @@ export class AppComponent implements OnDestroy {
     },
   ];
 
-  constructor() {
+  constructor() {  
     this.sessionTimerService.sessionFinished$.subscribe(() => {});
 
     this.route.events.subscribe((event) => {
