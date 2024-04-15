@@ -5,7 +5,7 @@ import { AsyncPipe, DatePipe } from '@angular/common';
 import { MarmitasRoutingModule } from './marmitas-routing.module';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { ContainerCentralComponent } from '@navegador/componentes/container-central.component';
-import { ConfirmacaoDialogModule } from '@navegador/common/confirmacao-dialog';
+import { AmsDialogModule } from '@navegador/common/confirmacao-dialog';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -41,7 +41,7 @@ import { MarmitasItemComponent } from './marmitas-item.component';
     MatDatepickerModule,
     MatFormFieldModule,
 
-    ConfirmacaoDialogModule,
+    AmsDialogModule,
     ContainerCentralComponent,
 
     //Manter modulo no final para não entrar como rota

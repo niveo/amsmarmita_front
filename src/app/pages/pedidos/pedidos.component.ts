@@ -1,4 +1,4 @@
-import { ConfirmacaoDialog } from 'src/app/common/confirmacao-dialog';
+import { AmsDialogService } from 'src/app/common/confirmacao-dialog';
 import {
   Component,
   computed,
@@ -33,7 +33,7 @@ export class PedidosComponent implements OnInit, OnDestroy {
   private readonly pedidoStore = inject(PedidoStore);
   private readonly formBuilder = inject(FormBuilder);
   private readonly _snackBar = inject(MatSnackBar);
-  private readonly _confirmacaoDialog = inject(ConfirmacaoDialog);
+  private readonly _confirmacaoDialog = inject(AmsDialogService);
 
   @ViewChild('drawer', { static: true }) drawer!: MatSidenav;
 

@@ -12,7 +12,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { ConfirmacaoDialogModule } from '@navegador/common/confirmacao-dialog';
+import { AmsDialogModule } from '@navegador/common/confirmacao-dialog';
 import { ContainerCentralComponent } from '@navegador/componentes/container-central.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { LongPressDirective } from '@navegador/directives/long-press.directive'; 
@@ -31,7 +31,7 @@ import { TOKEN_PATH_IMAGEKIT } from '@navegador/common/tokens';
 
     ReactiveFormsModule,
     ComedoresRoutingModule,
-    ConfirmacaoDialogModule,
+    AmsDialogModule,
     ContainerCentralComponent,
     LongPressDirective,
 

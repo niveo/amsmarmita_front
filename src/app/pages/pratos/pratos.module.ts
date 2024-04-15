@@ -7,7 +7,7 @@ import { PratoComponent } from './pratos.component';
 import { CorBoardaDirective } from '@navegador/directives/cor-borda.directive';
 import { SelecaoIngredientesComponent } from '@navegador/componentes/selecao-ingredientes.component'; 
 import { ContainerCentralComponent } from '@navegador/componentes/container-central.component';
-import { ConfirmacaoDialogModule } from '@navegador/common/confirmacao-dialog';
+import { AmsDialogModule } from '@navegador/common/confirmacao-dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -41,7 +41,7 @@ import { GrupoPrincipalDirective } from '@navegador/directives/grupo-principal.d
     MatSelectModule,
 
     ContainerCentralComponent,
-    ConfirmacaoDialogModule,
+    AmsDialogModule,
   ],
 })
 export class PratosModule {}
