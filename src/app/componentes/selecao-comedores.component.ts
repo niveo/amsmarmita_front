@@ -12,6 +12,7 @@ import {
 } from '@angular/material/bottom-sheet';
 import { MatDividerModule } from '@angular/material/divider';
 import { ImagemComponent } from './imagem.component';
+import { Comedor } from '@navegador/model';
 
 @Component({
   selector: 'app-selecao-comedores-component',
@@ -69,7 +70,7 @@ export class SelecaoComedoresComponent {
 
   private readonly data = inject<{ marmitaId: string }>(MAT_BOTTOM_SHEET_DATA);
 
-  data$: Observable<any[]> = this.service.data$;
+  data$: Observable<Comedor[]> = this.service.data$;
 
   private readonly router = inject(Router);
   comedorTipoSelecao(comedorId: string) {
