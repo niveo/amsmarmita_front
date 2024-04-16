@@ -16,18 +16,21 @@ export class ComedoresService extends BaseService<Comedor> {
   }
 
   delete(id: string) {
+    this.iniciarLoading();
     return this.http
       .delete<any>('/comedores/' + id)
       .pipe(finalize(() => this.updateData()));
   }
 
   atualizar(id: string, nome: string) {
+    this.iniciarLoading();
     return this.http
       .put<any>('/comedores/' + id, { nome: nome })
       .pipe(finalize(() => this.updateData()));
   }
 
   inlcluir(nome: string) {
+    this.iniciarLoading();
     return this.http
       .post<any>('/comedores', { nome: nome })
       .pipe(finalize(() => this.updateData()));

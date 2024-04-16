@@ -1,4 +1,4 @@
-import { Component, inject, input, output } from '@angular/core';
+import { Component, computed, inject, input, output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { EMPTY, catchError, finalize, iif, mergeMap, of } from 'rxjs';
 import { MSG_ERRO_PROCSSAMENTO } from '@navegador/common/constantes';
@@ -23,9 +23,10 @@ export class GrupoFormComponent {
   private readonly _messageService = inject(NotificationService);
 
   visible = input.required<boolean>();
-  visibleChange = output<boolean>();
-  isConfirmLoading = false;
+  visibleChange = output<boolean>(); 
   data = input.required<Grupo>();
+
+  loading = computed(() => this.service?.loading() || false);
 
   form = this.formBuilder.group({
     _id: [''],
@@ -57,8 +58,7 @@ export class GrupoFormComponent {
     }
 
     const data = this.form.value;
-
-    this.isConfirmLoading = true;
+ 
 
     of(this.form.value._id)
       .pipe(
@@ -84,8 +84,7 @@ export class GrupoFormComponent {
         ),
         catchError((error: any) => {
           console.error(error);
-          this._messageService.error(MSG_ERRO_PROCSSAMENTO, JSON.parse(error));
-          this.isConfirmLoading = false;
+          this._messageService.error(MSG_ERRO_PROCSSAMENTO, JSON.parse(error)); 
           return EMPTY;
         }),
         finalize(() => {
@@ -96,8 +95,7 @@ export class GrupoFormComponent {
             multiplo: false,
             observacao: '',
             cor: '',
-          });
-          this.isConfirmLoading = false;
+          }); 
         }),
       )
       .subscribe({

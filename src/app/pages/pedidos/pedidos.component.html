@@ -62,6 +62,12 @@
     </mat-tab-group>
 
     <ng-container [ngTemplateOutlet]="extraTemplate"></ng-container>
+    @if (loading()) {
+      <mat-progress-bar
+        mode="indeterminate"
+        style="height: 4px"
+      ></mat-progress-bar>
+    }
   </mat-sidenav-content>
 </mat-sidenav-container>
 

@@ -1,4 +1,11 @@
-import { Component, OnInit, inject, input, output } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  computed,
+  inject,
+  input,
+  output,
+} from '@angular/core';
 import { Grupo, Prato } from '@navegador/model';
 import { GrupoService } from '@navegador/services/grupo.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -40,8 +47,9 @@ export class PratosFormComponent implements OnInit {
     observacao: ['', Validators.maxLength(100)],
     ingredientes: [['']],
     icone: ['', Validators.maxLength(50)],
-    imagem: [''],
   });
+
+  loading = computed(() => this.pratoStore?.loading() || false);
 
   ngOnInit() {
     this.grupoService.data$.subscribe((response) => (this.grupos = response));
@@ -55,7 +63,6 @@ export class PratosFormComponent implements OnInit {
       observacao: data.observacao || '',
       ingredientes: data.ingredientes || [],
       icone: data.icone || '',
-      imagem: data.imagem || '',
     });
   }
 
@@ -91,8 +98,7 @@ export class PratosFormComponent implements OnInit {
             composicoes: [],
             observacao: '',
             ingredientes: [],
-            icone: '',
-            imagem: '',
+            icone: '', 
           });
         }),
       )

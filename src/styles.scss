@@ -157,7 +157,11 @@ mat-drawer {
   }
 
   mat-drawer {
-    min-width: 90%;
+    //material-experimental
+    max-width: 90%;
+
+    //material-default
+    //min-width: 90%;
   }
 }
 

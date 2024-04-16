@@ -21,6 +21,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCardModule } from '@angular/material/card';
 import { PedidosItemComponent } from './pedidos-item.component';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { MatChipsModule } from '@angular/material/chips';
     MatExpansionModule,
     MatCardModule,
     MatChipsModule,
+    MatProgressBarModule,
 
     //Manter modulo no final para não entrar como rota
     PratosModule,

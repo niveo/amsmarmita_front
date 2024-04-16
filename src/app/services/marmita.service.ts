@@ -16,12 +16,14 @@ export class MarmitaService extends BaseService<Marmita> {
   }
 
   delete(id: string) {
+    this.iniciarLoading();
     return this.http
       .delete<any>('/marmitas/' + id)
       .pipe(finalize(() => this.updateData()));
   }
 
   atualizar(id: string, lancamento: Date, observacao?: string | null) {
+    this.iniciarLoading();
     return this.http
       .put<any>('/marmitas/' + id, {
         lancamento: lancamento,
@@ -31,6 +33,7 @@ export class MarmitaService extends BaseService<Marmita> {
   }
 
   inlcluir(lancamento: Date, observacao?: string | null) {
+    this.iniciarLoading();
     return this.http
       .post<any>('/marmitas', {
         lancamento: lancamento,

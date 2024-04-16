@@ -1,4 +1,4 @@
-import { Component, inject, input, output } from '@angular/core';
+import { Component, computed, inject, input, output } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -28,10 +28,9 @@ export class ComedoresFormComponent {
 
   visible = input.required<boolean>();
   visibleChange = output<boolean>();
-  isConfirmLoading = false;
   data = input.required<Comedor>();
 
-  queryParameters;
+  loading = computed(() => this.service?.loading() || false);
 
   form: FormGroup<{
     _id: FormControl<string | null>;
@@ -56,8 +55,6 @@ export class ComedoresFormComponent {
 
     const data = this.form.value;
 
-    this.isConfirmLoading = true;
-
     of(data._id)
       .pipe(
         mergeMap((value) =>
@@ -70,7 +67,6 @@ export class ComedoresFormComponent {
         catchError((error: any) => {
           console.error(error);
           this._messageService.error(MSG_ERRO_PROCSSAMENTO, JSON.parse(error));
-          this.isConfirmLoading = false;
           return EMPTY;
         }),
         finalize(() => {
@@ -78,7 +74,6 @@ export class ComedoresFormComponent {
             _id: null,
             nome: '',
           });
-          this.isConfirmLoading = false;
         }),
       )
       .subscribe({

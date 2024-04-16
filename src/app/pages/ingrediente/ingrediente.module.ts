@@ -13,7 +13,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { LongPressDirective } from '@navegador/directives/long-press.directive';
+import { LongPressDirective } from '@navegador/directives/long-press.directive'; 
 
 @NgModule({
   declarations: [IngredienteComponent, IngredienteFormComponent],
@@ -29,7 +29,7 @@ import { LongPressDirective } from '@navegador/directives/long-press.directive';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    MatSnackBarModule,
+    MatSnackBarModule, 
 
     AmsDialogModule,
     ContainerCentralComponent,

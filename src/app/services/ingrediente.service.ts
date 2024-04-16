@@ -11,18 +11,19 @@ import { ExposeServiceRest } from '@navegador/common/expose-service-rest.utils';
   path: '/ingredientes',
 })
 export class IngredienteService extends BaseService<Ingrediente> {
-  
   getAll() {
     return this.http.get<Ingrediente[]>('/ingredientes');
   }
 
   delete(id: string) {
+    this.iniciarLoading();
     return this.http
       .delete<any>('/ingredientes/' + id)
       .pipe(finalize(() => this.updateData()));
   }
 
   atualizar(id: string, nome: string, observacao?: string) {
+    this.iniciarLoading();
     return this.http
       .put<any>('/ingredientes/' + id, {
         nome,
@@ -32,6 +33,7 @@ export class IngredienteService extends BaseService<Ingrediente> {
   }
 
   inlcluir(nome: string, observacao?: string) {
+    this.iniciarLoading();
     return this.http
       .post<any>('/ingredientes', {
         nome,

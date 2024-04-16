@@ -15,11 +15,9 @@ import { ExposeServiceRest } from '@navegador/common/expose-service-rest.utils';
 export class GrupoService extends BaseService<Grupo> {
   private readonly service = inject(PratoService);
 
-  tapRemoverCache = tap(() => this.updateData());
-
   override apiRequest$ = this.http
     .get<Grupo[]>('/grupos')
-    .pipe(finalize(() => this.loading.set(false)))
+    .pipe(finalize(() => this.finalizarLoading()))
     .pipe(
       mergeMap((mp) => {
         return this.service.data$.pipe(
@@ -36,7 +34,10 @@ export class GrupoService extends BaseService<Grupo> {
     );
 
   delete(id: string) {
-    return this.http.delete<any>('/grupos/' + id).pipe(this.tapRemoverCache);
+    this.iniciarLoading();
+    return this.http
+      .delete<any>('/grupos/' + id)
+      .pipe(finalize(() => this.updateData()));
   }
 
   atualizar({
@@ -54,6 +55,7 @@ export class GrupoService extends BaseService<Grupo> {
     observacao?: string;
     cor?: string;
   }) {
+    this.iniciarLoading();
     return this.http
       .put<any>('/grupos/' + id, {
         nome: nome,
@@ -62,7 +64,7 @@ export class GrupoService extends BaseService<Grupo> {
         observacao: observacao || null,
         cor: cor || null,
       })
-      .pipe(this.tapRemoverCache);
+      .pipe(finalize(() => this.updateData()));
   }
 
   inlcluir({
@@ -78,6 +80,7 @@ export class GrupoService extends BaseService<Grupo> {
     observacao?: string;
     cor?: string;
   }) {
+    this.iniciarLoading();
     return this.http
       .post<any>('/grupos', {
         nome: nome,
@@ -86,6 +89,6 @@ export class GrupoService extends BaseService<Grupo> {
         observacao: observacao || null,
         cor: cor || null,
       })
-      .pipe(this.tapRemoverCache);
+      .pipe(finalize(() => this.updateData()));
   }
 }
