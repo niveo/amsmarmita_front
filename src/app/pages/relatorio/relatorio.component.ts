@@ -27,6 +27,8 @@ export class RelatorioComponent {
     this.activatedRoute.params
       .pipe(
         map(({ marmitaId }) => {
+          this.loading.set(true);
+          
           this.pedidoService
             .carregarRelatorio(marmitaId)
             .pipe(finalize(() => this.loading.set(false)))
