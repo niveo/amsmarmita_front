@@ -21,7 +21,7 @@ import { NotificationMessageData } from './notitication-message.data';
   template: `<div class="content">
     <span matSnackBarLabel>{{ data.titulo }}</span>
     <div matSnackBarActions class="content-buttons">
-      @if (data.tipo) {
+      @if (data.tipo && data.message) {
         <button mat-button matSnackBarAction (click)="detalhar()">
           @switch (data.tipo) {
             @case ('warning') {
@@ -84,6 +84,7 @@ export class NotificationComponent {
 
     this.dialog.open<any>(NotificationtDialog, {
       data: { titulo: this.data.titulo, mensagem: this.data.message },
+      height: '400px',
     });
   }
 }
@@ -93,8 +94,11 @@ export class NotificationComponent {
   template: ` @if (data.titulo) {
       <h2 mat-dialog-title>{{ data.titulo }}</h2>
     }
-    <mat-dialog-content>
-      {{ data.mensagem }}
+
+    <mat-dialog-content class="mat-typography" style="line-break: auto;">
+      @if (data.mensagem) {
+        {{ data.mensagem }}
+      }
     </mat-dialog-content>
 
     <mat-dialog-actions>
