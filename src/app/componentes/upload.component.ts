@@ -6,9 +6,9 @@ import { TOKEN_PATH_IMAGEKIT } from '@navegador/common/tokens';
 import { ImagekitioAngularModule } from 'imagekit-angular';
 import { lastValueFrom } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MSG_ERRO_PROCSSAMENTO } from '@navegador/common/constantes';
-import { MessageSnackBarService } from './message-snackbar.component';
+import { NotificationService } from 'amslib';
+ 
 
 @Component({
   selector: 'app-upload-component',
@@ -67,7 +67,7 @@ export class UploadComponent implements OnInit {
 
   private readonly http = inject(HttpClient);
 
-  private readonly messageSnackBarService = inject(MessageSnackBarService);
+  private readonly messageSnackBarService = inject(NotificationService);
 
   loading = signal(false);
 
@@ -83,7 +83,7 @@ export class UploadComponent implements OnInit {
     try {
       const response = await lastValueFrom(
         this.http.get<{ signature: string; expire: string; token: string }>(
-          '/auth/authimagekit',
+          '/auth/authimagekit2',
         ),
       );
 
@@ -121,12 +121,12 @@ export class UploadComponent implements OnInit {
   }
 
   handleUploadError(err: any) {
-    console.log('There was an error in upload: ', err);
+    console.error('There was an error in upload: ', err);
     // this.uploadErrorMessage = 'File upload failed.';
     this.loading.set(false);
-    this.messageSnackBarService.create({
-      titulo: MSG_ERRO_PROCSSAMENTO,
-      mensagem: JSON.stringify(err),
-    });
+    this.messageSnackBarService.error(
+      MSG_ERRO_PROCSSAMENTO,
+      JSON.stringify(err),
+    );
   }
 }

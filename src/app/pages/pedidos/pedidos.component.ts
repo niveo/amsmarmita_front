@@ -19,9 +19,9 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MSG_CONFIRMAR_EXCLUSAO } from '@navegador/common/constantes';
+import { NotificationService } from 'amslib';
 
 @Component({
   selector: 'app-pedidos-component',
@@ -32,8 +32,8 @@ export class PedidosComponent implements OnInit, OnDestroy {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly pedidoStore = inject(PedidoStore);
   private readonly formBuilder = inject(FormBuilder);
-  private readonly _snackBar = inject(MatSnackBar);
   private readonly _confirmacaoDialog = inject(AmsDialogService);
+  private readonly _messageService = inject(NotificationService);
 
   @ViewChild('drawer', { static: true }) drawer!: MatSidenav;
 
@@ -190,7 +190,7 @@ export class PedidosComponent implements OnInit, OnDestroy {
       !this.alteracaoPedidoQuantidade ||
       this.alteracaoPedidoQuantidade === 0
     ) {
-      this._snackBar.open('Informe uma quantidade!', 'OK', { duration: 300 });
+      this._messageService.warning('Informe uma quantidade!');
       return;
     }
 

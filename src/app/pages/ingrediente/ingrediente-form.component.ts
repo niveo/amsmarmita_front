@@ -9,7 +9,7 @@ import { EMPTY, catchError, finalize, iif, mergeMap, of } from 'rxjs';
 import { MSG_ERRO_PROCSSAMENTO } from '@navegador/common/constantes';
 import { Ingrediente } from '@navegador/model';
 import { IngredienteService } from '@navegador/services/ingrediente.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { NotificationService } from 'amslib';
 
 @Component({
   selector: 'app-ingrediente-form-component',
@@ -18,11 +18,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class IngredienteFormComponent {
   private readonly service = inject(IngredienteService);
   private readonly formBuilder = inject(FormBuilder);
-  private readonly _snackBar = inject(MatSnackBar);
+  private readonly _messageService = inject(NotificationService);
 
   visible = input.required<boolean>();
   visibleChange = output<boolean>();
-  isConfirmLoading = false;
   data = input.required<Ingrediente>();
 
   form: FormGroup<{
@@ -51,8 +50,6 @@ export class IngredienteFormComponent {
 
     const data = this.form.value;
 
-    this.isConfirmLoading = true;
-
     of(data._id)
       .pipe(
         mergeMap((value) =>
@@ -64,8 +61,7 @@ export class IngredienteFormComponent {
         ),
         catchError((error: any) => {
           console.error(error);
-          this._snackBar.open(MSG_ERRO_PROCSSAMENTO);
-          this.isConfirmLoading = false;
+          this._messageService.error(MSG_ERRO_PROCSSAMENTO, JSON.parse(error));
           return EMPTY;
         }),
         finalize(() => {
@@ -74,7 +70,6 @@ export class IngredienteFormComponent {
             nome: null,
             observacao: null,
           });
-          this.isConfirmLoading = false;
         }),
       )
       .subscribe({

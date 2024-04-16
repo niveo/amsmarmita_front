@@ -9,7 +9,7 @@ import { EMPTY, catchError, finalize, iif, mergeMap, of } from 'rxjs';
 import { MSG_ERRO_PROCSSAMENTO } from '@navegador/common/constantes';
 import { Comedor } from '@navegador/model';
 import { ComedoresService } from '@navegador/services/comedores.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { NotificationService } from 'amslib';
 
 @Component({
   selector: 'app-comedores-form-component',
@@ -24,7 +24,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class ComedoresFormComponent {
   private readonly service = inject(ComedoresService);
   private readonly formBuilder = inject(FormBuilder);
-  protected readonly _snackBar = inject(MatSnackBar);
+  private readonly _messageService = inject(NotificationService);
 
   visible = input.required<boolean>();
   visibleChange = output<boolean>();
@@ -69,7 +69,7 @@ export class ComedoresFormComponent {
         ),
         catchError((error: any) => {
           console.error(error);
-          this._snackBar.open(MSG_ERRO_PROCSSAMENTO, 'OK');
+          this._messageService.error(MSG_ERRO_PROCSSAMENTO, JSON.parse(error));
           this.isConfirmLoading = false;
           return EMPTY;
         }),

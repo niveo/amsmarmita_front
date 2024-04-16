@@ -1,11 +1,11 @@
 import { Component, inject, input, output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { EMPTY, catchError, finalize, iif, mergeMap, of } from 'rxjs';
-import { LBL_ERRO, MSG_ERRO_PROCSSAMENTO } from '@navegador/common/constantes';
+import { MSG_ERRO_PROCSSAMENTO } from '@navegador/common/constantes';
 import { Grupo } from '@navegador/model';
 import { GrupoService } from '@navegador/services/grupo.service';
 import { validarFormulario } from '@navegador/common/util';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { NotificationService } from 'amslib';
 
 @Component({
   selector: 'app-grupos-form-component',
@@ -20,7 +20,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class GrupoFormComponent {
   private readonly service = inject(GrupoService);
   private readonly formBuilder = inject(FormBuilder);
-  protected readonly _snackBar = inject(MatSnackBar);
+  private readonly _messageService = inject(NotificationService);
 
   visible = input.required<boolean>();
   visibleChange = output<boolean>();
@@ -84,7 +84,7 @@ export class GrupoFormComponent {
         ),
         catchError((error: any) => {
           console.error(error);
-          this._snackBar.open(MSG_ERRO_PROCSSAMENTO, 'OK');
+          this._messageService.error(MSG_ERRO_PROCSSAMENTO, JSON.parse(error));
           this.isConfirmLoading = false;
           return EMPTY;
         }),

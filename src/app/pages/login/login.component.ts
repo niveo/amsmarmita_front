@@ -4,9 +4,9 @@ import { finalize } from 'rxjs';
 import { isMobile } from '@navegador/common/util';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { VersaoSistemaDirective } from '@navegador/directives/versao-sistema.directive';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { NotificationService } from 'amslib';
 
 @Component({
   selector: 'app-login-component',
@@ -42,18 +42,23 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
         justify-content: center;
         padding: 5px;
       }
-      
+
       .mat-mdc-button > .mat-icon {
         margin-right: 0px;
         margin-left: 0px;
       }
     `,
   ],
-  imports: [MatButtonModule, MatIconModule, VersaoSistemaDirective, MatProgressBarModule],
+  imports: [
+    MatButtonModule,
+    MatIconModule,
+    VersaoSistemaDirective,
+    MatProgressBarModule,
+  ],
 })
 export class LoginComponent {
   private readonly service = inject(AuthService);
-  private readonly _snackBar = inject(MatSnackBar);
+  private readonly _messageService = inject(NotificationService);
 
   quantidadeNumeros: number[] = [];
   selecoes = new Set<number>();
@@ -87,9 +92,7 @@ export class LoginComponent {
       .subscribe({
         error: (response) => {
           console.error(response);
-          this._snackBar.open('Senha invalida!', 'OK', {
-            duration: 500
-          });
+          this._messageService.warning('Senha invalida!');
         },
       });
   }
