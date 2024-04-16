@@ -24,18 +24,14 @@
   <div content>
     <mat-accordion>
       @for (grupo of data$ | async; track grupo._id) {
-        <mat-expansion-panel [corBoarda]="grupo.cor">
+        <mat-expansion-panel [corBoarda]="grupo.cor" #panelx>
           <mat-expansion-panel-header>
             <mat-panel-title>
-              <div class="fx-row wf" style="margin-right: 10px">
-                <div class="fx-flex fx-row">
-                  <span
-                    grupoPrincipal
-                    [value]="grupo.principal && !tipoSelecao()"
-                    >{{ grupo.nome }}</span
-                  >
-                </div>
-              </div>
+              <span
+                grupoPrincipal
+                [value]="grupo.principal && !tipoSelecao()"
+                >{{ grupo.nome }}</span
+              >
             </mat-panel-title>
             @if (grupo.observacao) {
               <mat-panel-description>
@@ -44,48 +40,64 @@
             }
           </mat-expansion-panel-header>
 
-          <div class="comp-inner-grid" style="gap: 5px">
-            @for (item of grupo.pratos; track item._id) {
-              @if (!pratoStore.pedidoItemVinculado[item!._id!]) {
-                <mat-card
-                  (click)="incluirPratoPedido(item)"
-                  [ngStyle]="{ cursor: tipoSelecao() ? 'pointer' : 'none' }"
-                >
-                  <mat-card-header>
-                    <mat-card-title>{{ item.nome }}</mat-card-title>
-                    <mat-card-subtitle>
-                      {{ item.observacao }}
-                    </mat-card-subtitle>
-                  </mat-card-header>
-                  <mat-card-content>
-                    @if (
-                      item.composicoes &&
-                      item.composicoes.length > 0 &&
-                      !tipoSelecao()
-                    ) {
-                      <div style="padding: 10px">
-                        <mat-chip-set>
-                          @for (composicao of item.composicoes; track $index) {
-                            <mat-chip>{{ composicao }}</mat-chip>
-                          }
-                        </mat-chip-set>
-                      </div>
+          @if (panelx.expanded) {
+            <div class="comp-inner-grid" style="gap: 5px">
+              @for (item of grupo.pratos; track item._id) {
+                @if (!pratoStore.pedidoItemVinculado[item!._id!]) {
+                  <mat-card
+                    (click)="incluirPratoPedido(item)"
+                    [ngStyle]="{ cursor: tipoSelecao() ? 'pointer' : 'none' }"
+                  >
+                    <mat-card-header>
+                      <mat-card-title>{{ item.nome }}</mat-card-title>
+                      <mat-card-subtitle>
+                        {{ item.observacao }}
+                      </mat-card-subtitle>
+                    </mat-card-header>
+
+                    <app-imagem-component
+                      mat-card-image
+                      [fileName]="item._id"
+                      animation
+                      [width]="'305'"
+                      [height]="'250'"
+                      [queryParameters]="
+                        item.updatedAt ? { updatedAt: item.updatedAt } : null
+                      "
+                    />
+                    <mat-card-content>
+                      @if (
+                        item.composicoes &&
+                        item.composicoes.length > 0 &&
+                        !tipoSelecao()
+                      ) {
+                        <div style="padding: 10px">
+                          <mat-chip-set>
+                            @for (
+                              composicao of item.composicoes;
+                              track $index
+                            ) {
+                              <mat-chip>{{ composicao }}</mat-chip>
+                            }
+                          </mat-chip-set>
+                        </div>
+                      }
+                    </mat-card-content>
+                    @if (!tipoSelecao()) {
+                      <mat-card-actions>
+                        <button mat-button (click)="editar(item)">
+                          Editar <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-button (click)="removerRegistro(item._id!)">
+                          Remover <mat-icon class="cred">delete</mat-icon>
+                        </button>
+                      </mat-card-actions>
                     }
-                  </mat-card-content>
-                  @if (!tipoSelecao()) {
-                    <mat-card-actions>
-                      <button mat-button (click)="editar(item)">
-                        Editar <mat-icon>edit</mat-icon>
-                      </button>
-                      <button mat-button (click)="removerRegistro(item._id!)">
-                        Remover <mat-icon class="cred">delete</mat-icon>
-                      </button>
-                    </mat-card-actions>
-                  }
-                </mat-card>
+                  </mat-card>
+                }
               }
-            }
-          </div>
+            </div>
+          }
         </mat-expansion-panel>
       }
     </mat-accordion>

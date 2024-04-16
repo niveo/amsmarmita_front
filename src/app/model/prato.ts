@@ -1,5 +1,4 @@
-import { Grupo } from "./grupo";
-import { Ingrediente } from "./ingrediente";
+import { Grupo } from "./grupo"; 
 
 export class Prato {
   _id?: string;
@@ -8,9 +7,11 @@ export class Prato {
   composicoes?: string[] = [];
   observacao?: string;
 
-  icone?: string;
-  imagem?: string;
+  icone?: string; 
 
   ingredientes?: string[] = [];
+
+  createdAt?: number;
+  updatedAt?: number; 
 }
 

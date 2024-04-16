@@ -5,7 +5,7 @@ import { PratosRoutingModule } from './pratos-routing.module';
 import { PratosFormComponent } from './pratos-form.component';
 import { PratoComponent } from './pratos.component';
 import { CorBoardaDirective } from '@navegador/directives/cor-borda.directive';
-import { SelecaoIngredientesComponent } from '@navegador/componentes/selecao-ingredientes.component'; 
+import { SelecaoIngredientesComponent } from '@navegador/componentes/selecao-ingredientes.component';
 import { ContainerCentralComponent } from '@navegador/componentes/container-central.component';
 import { AmsDialogModule } from '@navegador/common/confirmacao-dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,6 +17,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSelectModule } from '@angular/material/select';
 import { GrupoPrincipalDirective } from '@navegador/directives/grupo-principal.directive';
+import { UploadComponent } from '@navegador/componentes/upload.component';
+import { TOKEN_PATH_IMAGEKIT } from '@navegador/common/tokens';
+import { ImagemComponent } from '@navegador/componentes/imagem.component';
 
 @NgModule({
   declarations: [PratoComponent, PratosFormComponent],
@@ -29,7 +32,7 @@ import { GrupoPrincipalDirective } from '@navegador/directives/grupo-principal.d
     CorBoardaDirective,
     GrupoPrincipalDirective,
     SelecaoIngredientesComponent,
-    FormsModule, 
+    FormsModule,
 
     MatButtonModule,
     MatCardModule,
@@ -42,6 +45,14 @@ import { GrupoPrincipalDirective } from '@navegador/directives/grupo-principal.d
 
     ContainerCentralComponent,
     AmsDialogModule,
+    ImagemComponent,
+    UploadComponent,
+  ],
+  providers: [
+    {
+      provide: TOKEN_PATH_IMAGEKIT,
+      useValue: '/amsmarmita/pratos',
+    },
   ],
 })
 export class PratosModule {}

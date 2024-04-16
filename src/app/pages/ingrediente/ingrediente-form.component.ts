@@ -1,4 +1,4 @@
-import { Component, inject, input, output } from '@angular/core';
+import { Component, computed, inject, input, output } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -23,6 +23,9 @@ export class IngredienteFormComponent {
   visible = input.required<boolean>();
   visibleChange = output<boolean>();
   data = input.required<Ingrediente>();
+
+
+  loading = computed(() => this.service?.loading() || false);
 
   form: FormGroup<{
     _id: FormControl<string | null>;

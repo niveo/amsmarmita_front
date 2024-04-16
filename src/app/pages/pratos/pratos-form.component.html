@@ -10,6 +10,7 @@
           placeholder="Informe aqui um nome"
           [maxLength]="50"
           [minlength]="5"
+          [tabIndex]="-1"
         />
       </mat-form-field>
 
@@ -75,14 +76,9 @@
         }
       </mat-form-field>
 
-      <mat-form-field class="wf">
-        <mat-label>Imagem *URL</mat-label>
-        <textarea
-          matInput
-          placeholder="Informe aqui uma imagem"
-          formControlName="imagem"
-        ></textarea>
-      </mat-form-field>
+      @if (form.get("_id").value) {
+        <app-upload-component [fileName]="form.get('_id').value" />
+      }
     </form>
   </div>
   <div class="fx-row gap-5" style="justify-content: end">
@@ -93,7 +89,14 @@
       (click)="salvar()"
       [disabled]="!form.valid"
     >
-      Salvar <mat-icon>save</mat-icon>
+      Salvar
+      <mat-icon>
+        @if (!loading()) {
+          save
+        } @else {
+          sync
+        }
+      </mat-icon>
     </button>
   </div>
 </div>

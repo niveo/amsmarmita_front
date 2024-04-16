@@ -22,8 +22,7 @@ export class ModelFormPrato {
   composicoes!: FormControl<string[] | null>;
   observacao!: FormControl<string | null>;
   ingredientes!: FormControl<string[] | null>;
-  icone!: FormControl<string | null>;
-  imagem!: FormControl<string | null>;
+  icone!: FormControl<string | null>; 
 }
 
 @Component({

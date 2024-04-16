@@ -1,9 +1,10 @@
 @use "@angular/material" as mat;
 @use '@angular/material-experimental' as matx;
-@import "@angular/cdk/overlay-prebuilt.css";
+//@import "@angular/cdk/overlay-prebuilt.css";
 @import "ams-variables";
 
-$theme: matx.define-theme((
+//Quando carrega o pratos a view fica instavel no celular
+/* $theme: matx.define-theme((
   color: (
     theme-type: light,
     primary: matx.$m3-azure-palette,
@@ -16,7 +17,7 @@ $theme: matx.define-theme((
 
 :root {
   @include mat.all-component-themes($theme);
-}
+} */
 
 
  .elevation-2 {
@@ -43,7 +44,8 @@ $theme: matx.define-theme((
   align-items: center;
 }
 
-/* @include mat.core();
+
+@include mat.core();
 
 $primary: mat.define-palette($mat-custom-primary);
 
@@ -63,4 +65,3 @@ $theme: mat.define-light-theme(
 :root {
   @include mat.all-component-themes($theme);
 }
- */

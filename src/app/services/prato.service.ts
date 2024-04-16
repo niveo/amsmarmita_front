@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Prato } from '../model';
-import { map } from 'rxjs';
+import { finalize, map } from 'rxjs';
 import { BaseService } from './base.service';
 import { ExposeServiceRest } from '@navegador/common/expose-service-rest.utils';
 
@@ -11,7 +11,6 @@ import { ExposeServiceRest } from '@navegador/common/expose-service-rest.utils';
   path: '/pratos',
 })
 export class PratoService extends BaseService<Prato> {
- 
   override apiRequest$ = this.http
     .get<Prato[]>('/pratos')
     .pipe(map((m) => m.sort(this.sortNome)));
@@ -45,15 +44,18 @@ export class PratoService extends BaseService<Prato> {
     icone?: string | null;
     imagem?: string | null;
   }) {
-    return this.http.put<Prato>('/pratos/' + id, {
-      nome,
-      grupo: grupoId,
-      composicoes,
-      observacao,
-      ingredientes,
-      icone,
-      imagem,
-    });
+    this.iniciarLoading();
+    return this.http
+      .put<Prato>('/pratos/' + id, {
+        nome,
+        grupo: grupoId,
+        composicoes,
+        observacao,
+        ingredientes,
+        icone,
+        imagem,
+      })
+      .pipe(finalize(() => this.finalizarLoading()));
   }
 
   inlcluir({
@@ -73,22 +75,28 @@ export class PratoService extends BaseService<Prato> {
     icone?: string | null;
     imagem?: string | null;
   }) {
-    return this.http.post<Prato>('/pratos', {
-      nome,
-      grupo: grupoId,
-      composicoes,
-      observacao,
-      ingredientes,
-      icone,
-      imagem,
-    });
+    this.iniciarLoading();
+    return this.http
+      .post<Prato>('/pratos', {
+        nome,
+        grupo: grupoId,
+        composicoes,
+        observacao,
+        ingredientes,
+        icone,
+        imagem,
+      })
+      .pipe(finalize(() => this.finalizarLoading()));
   }
 
   duplicar(id: string) {
-    return this.http.get<any>('/pratos/duplicar', {
-      params: {
-        id: id,
-      },
-    });
+    this.iniciarLoading();
+    return this.http
+      .get<any>('/pratos/duplicar', {
+        params: {
+          id: id,
+        },
+      })
+      .pipe(finalize(() => this.finalizarLoading()));
   }
 }

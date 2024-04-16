@@ -25,6 +25,7 @@ import { Comedor } from '@navegador/model';
       @for (item of data$ | async; track item._id) {
         <mat-list-option (click)="comedorTipoSelecao(item._id)">
           <app-imagem-component
+          borderRadius
             matListItemAvatar
             [fileName]="item._id"
             [queryParameters]="

@@ -32,7 +32,14 @@
       (click)="salvar()"
       [disabled]="!form.valid"
     >
-      Salvar <mat-icon>save</mat-icon>
+    Salvar
+    <mat-icon>
+      @if (!loading()) {
+        save
+      } @else {
+        sync
+      }
+    </mat-icon>
     </button>
   </div>
 </div>

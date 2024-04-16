@@ -1,13 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject, signal } from '@angular/core';
-import {
-  BehaviorSubject,
-  Observable,
-  finalize,
-  mergeMap,
-  shareReplay,
-  tap,
-} from 'rxjs';
+import { inject, signal } from '@angular/core';
+import { BehaviorSubject, finalize, mergeMap, shareReplay, tap } from 'rxjs';
 
 const CACHE_SIZE = 1;
 
@@ -32,5 +25,14 @@ export abstract class BaseService<T> {
 
   updateData() {
     this._resourceData$.next();
+    this.finalizarLoading();
+  }
+
+  iniciarLoading() {
+    this.loading.set(true);
+  }
+
+  finalizarLoading() {
+    this.loading.set(false);
   }
 }
