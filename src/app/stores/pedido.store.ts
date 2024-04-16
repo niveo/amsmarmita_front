@@ -1,7 +1,7 @@
 import { MSG_ERRO_PROCSSAMENTO } from './../common/constantes';
 import { Injectable, inject, signal } from '@angular/core';
 import { PedidoService } from '../services/pedido.service';
-import { BehaviorSubject, EMPTY, catchError, finalize } from 'rxjs';
+import { BehaviorSubject, EMPTY, Subject, catchError, finalize } from 'rxjs';
 import { PratoStore } from './prato.store';
 import { PedidoItemService } from '../services/pedido-prato.service';
 import { BaseStore } from './base.store';
@@ -23,6 +23,8 @@ export class PedidoStore extends BaseStore {
 
   readonly quantidadeItens = signal(0);
   readonly quantidadeRegistros = signal(0);
+
+  subSucess = new Subject<void>();
 
   constructor() {
     super();
@@ -123,8 +125,6 @@ export class PedidoStore extends BaseStore {
       .pipe(finalize(() => this.finalizarLoading()))
       .subscribe({
         next: (response) => {
-          console.log(response);
-
           const pedidoIndex = this._dataSource.value.findIndex(
             (f: any) => f._id === value.pedidoItemId,
           );
@@ -136,6 +136,8 @@ export class PedidoStore extends BaseStore {
           pedido.observacao = response.observacao;
 
           this.calcularQuantidade();
+
+          this.subSucess.next();
         },
       });
   }
@@ -166,13 +168,13 @@ export class PedidoStore extends BaseStore {
       .pipe(finalize(() => this.finalizarLoading()))
       .subscribe({
         next: (response) => {
-          console.log(response);
-
           this._dataSource.value.push(response);
 
           this.calcularQuantidade();
 
           this.pratoStore.vincularPedidoItemPratoId(value.pratoId);
+
+          this.subSucess.next();
         },
       });
   }
