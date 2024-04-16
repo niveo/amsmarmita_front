@@ -71,6 +71,10 @@ export class PedidosComponent implements OnInit, OnDestroy {
     for (let i = 1; i <= 20; i++) {
       this.listaQuantidadePedido.push(i);
     }
+
+    this.pedidoStore.subSucess.subscribe(() => {
+      this.limparCamposAlteracaoPedido();
+    });
   }
 
   ngOnInit() {
@@ -141,7 +145,7 @@ export class PedidosComponent implements OnInit, OnDestroy {
     observacao?: string;
   }) {
     this.carregarModalQuantidade(nome, quantidade, acompanhamentos, observacao);
-    const sub = this.subjectAlteracaoPedido.subscribe(
+    this.subjectAlteracaoPedido.subscribe(
       ({ quantidade, acompanhamentos, observacao }) => {
         if (pedidoItemId) {
           this.pedidoStore.atualizarPedidoItem({
@@ -161,8 +165,6 @@ export class PedidosComponent implements OnInit, OnDestroy {
             observacao,
           });
         }
-
-        sub.unsubscribe();
       },
     );
   }
@@ -200,8 +202,6 @@ export class PedidosComponent implements OnInit, OnDestroy {
       observacao:
         this.alteracaoPedidoForm.get('observacao')?.value || undefined,
     });
-
-    this.limparCamposAlteracaoPedido();
   }
 
   private limparCamposAlteracaoPedido() {
