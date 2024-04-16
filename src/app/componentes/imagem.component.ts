@@ -1,5 +1,5 @@
 import { NgOptimizedImage, NgStyle } from '@angular/common';
-import { Component, input, inject } from '@angular/core';
+import { Component, input, inject, HostBinding } from '@angular/core';
 import {
   TOKEN_PATH_IMAGEKIT,
   TOKEN_PATH_IMAGEKIT_END_POINT,
@@ -16,10 +16,16 @@ import { isBooleanTransform, objectToUrl } from '@navegador/common/util';
     <img
       [width]="width()"
       [height]="heightInside"
-      style="width: 100%;"
+      style="width: 100%;visibility: hidden;"
       [id]="id"
       [ngStyle]="{ 'border-radius': borderRadius() ? '50px' : 'none' }"
     />
+  `,
+  styles: `
+    :host {
+      visibility: hidden;
+      margin: 10px;
+    }
   `,
   standalone: true,
   imports: [NgOptimizedImage, NgStyle],
@@ -38,7 +44,12 @@ export class ImagemComponent {
 
   queryParameters = input<any>();
 
+  @HostBinding('style.height')
   heightInside = '0';
+
+  @HostBinding('style.visibility')
+  visibilityInside = 'hidden';
+
   width = input('40');
   height = input('40');
 
@@ -62,8 +73,11 @@ export class ImagemComponent {
 
         image.onload = () => {
           if (this.animation()) image.style.transition = 'height 1s';
+          image.style.visibility = 'visible';
+          image.style.height = this.height() ? `${this.height()}px` : '100%';
 
-          image.style.height = `${this.height()}px`;
+          this.heightInside = image.style.height;
+          this.visibilityInside = 'visible';
         };
 
         // Removing the observer
