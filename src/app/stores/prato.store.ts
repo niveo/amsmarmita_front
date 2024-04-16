@@ -52,11 +52,11 @@ export class PratoStore extends BaseStore {
     this.service.delete(registroId).subscribe({
       error: (error) => {
         console.error(error);
-        this._snackBar.open(MSG_ERRO_PROCSSAMENTO, 'OK');
+        super.errorMessage(MSG_ERRO_PROCSSAMENTO, error);
       },
       next: (value) => {
         if (value) {
-          this._snackBar.open(MSG_EXCLUIR_SUCESSO, 'OK', { duration: 300 });
+          super.sucessMessage(MSG_EXCLUIR_SUCESSO);
 
           this._dataSource.value.forEach((g) => {
             g.pratos?.findIndex((p) => p._id === registroId);
@@ -90,13 +90,13 @@ export class PratoStore extends BaseStore {
       .pipe(
         catchError((error: any) => {
           console.error(error);
-          this._snackBar.open(MSG_ERRO_PROCSSAMENTO, 'OK');
+          super.errorMessage(MSG_ERRO_PROCSSAMENTO, error);
           return EMPTY;
         }),
       )
       .subscribe({
         next: () => {
-          this._snackBar.open(MSG_ATUALIZADO_SUCESSO, 'OK', { duration: 300 });
+          super.sucessMessage(MSG_ATUALIZADO_SUCESSO);
           //  this.carregar();
         },
       });

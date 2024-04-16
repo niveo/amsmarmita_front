@@ -9,7 +9,7 @@ import { EMPTY, catchError, finalize } from 'rxjs';
 import { MSG_ERRO_PROCSSAMENTO } from '@navegador/common/constantes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { NotificationService } from 'amslib';
 
 @Component({
   selector: 'app-pratos-form-component',
@@ -18,7 +18,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class PratosFormComponent implements OnInit {
   private readonly grupoService = inject(GrupoService);
   private readonly formBuilder = inject(FormBuilder);
-  private readonly _snackBar = inject(MatSnackBar);
+  private readonly _messageService = inject(NotificationService);
   readonly pratoStore = inject(PratoStore);
 
   grupos?: Grupo[];
@@ -27,7 +27,6 @@ export class PratosFormComponent implements OnInit {
 
   visible = input.required<boolean>();
   visibleChange = output<boolean>();
-  isConfirmLoading = false;
   data = input.required<Prato | null>();
 
   form: FormGroup<ModelFormPrato> = this.formBuilder.group({
@@ -56,7 +55,7 @@ export class PratosFormComponent implements OnInit {
       observacao: data.observacao || '',
       ingredientes: data.ingredientes || [],
       icone: data.icone || '',
-      imagem: data.imagem || ''
+      imagem: data.imagem || '',
     });
   }
 
@@ -76,13 +75,12 @@ export class PratosFormComponent implements OnInit {
         grupo: data.grupo!,
         ingredientes: data.ingredientes,
         observacao: data.observacao,
-        icone: data.icone
+        icone: data.icone,
       })
       .pipe(
         catchError((error: any) => {
           console.error(error);
-          this._snackBar.open(MSG_ERRO_PROCSSAMENTO, 'OK');
-          this.isConfirmLoading = false;
+          this._messageService.error(MSG_ERRO_PROCSSAMENTO, JSON.parse(error));
           return EMPTY;
         }),
         finalize(() => {
@@ -94,9 +92,8 @@ export class PratosFormComponent implements OnInit {
             observacao: '',
             ingredientes: [],
             icone: '',
-            imagem: ''
+            imagem: '',
           });
-          this.isConfirmLoading = false;
         }),
       )
       .subscribe({

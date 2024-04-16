@@ -1,9 +1,9 @@
 import { DestroyRef, inject, signal } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { NotificationService } from 'amslib';
 
 export abstract class BaseStore {
   protected readonly destroyRef = inject(DestroyRef);
-  protected readonly _snackBar = inject(MatSnackBar);
+  private readonly _messageService = inject(NotificationService);
 
   loading = signal(false);
 
@@ -13,5 +13,13 @@ export abstract class BaseStore {
 
   finalizarLoading() {
     this.loading.set(false);
+  }
+
+  sucessMessage(message: string) {
+    this._messageService.success(message);
+  }
+
+  errorMessage(titulo: string, mensagem: any) {
+    this._messageService.error(titulo, JSON.parse(mensagem));
   }
 }

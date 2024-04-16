@@ -12,8 +12,7 @@ import { map } from 'rxjs';
 import { isBooleanTransform } from '@navegador/common/util';
 import { Prato } from '@navegador/model';
 import { PratoStore } from '@navegador/stores/prato.store';
-import { BaseViewComponent } from '@navegador/componentes/base-view.component';
-import { BaseService } from '@navegador/services/base.service';
+import { BaseViewComponent } from '@navegador/componentes/base-view.component'; 
 import { PratoService } from '@navegador/services/prato.service';
 
 export class ModelFormPrato {

@@ -9,7 +9,7 @@ import { EMPTY, catchError, finalize, iif, mergeMap, of } from 'rxjs';
 import { MSG_ERRO_PROCSSAMENTO } from '@navegador/common/constantes';
 import { Marmita } from '@navegador/model';
 import { MarmitaService } from '@navegador/services/marmita.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { NotificationService } from 'amslib';
 
 @Component({
   selector: 'app-marmitas-form-component',
@@ -18,7 +18,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class MarmitasFormComponent {
   private readonly service = inject(MarmitaService);
   private readonly formBuilder = inject(FormBuilder);
-  private readonly _snackBar = inject(MatSnackBar);
+  private readonly _messageService = inject(NotificationService);
 
   visible = input.required<boolean>();
   visibleChange = output<boolean>();
@@ -61,7 +61,7 @@ export class MarmitasFormComponent {
         ),
         catchError((error: any) => {
           console.error(error);
-          this._snackBar.open(MSG_ERRO_PROCSSAMENTO, 'OK');
+          this._messageService.error(MSG_ERRO_PROCSSAMENTO, JSON.parse(error));
           this.isConfirmLoading = false;
           return EMPTY;
         }),

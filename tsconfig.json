@@ -42,6 +42,9 @@
       "@navegador": [
         "src/app"
       ],
+      "amslib": [
+        "projects/amslib/src/public-api.ts"
+      ],
       "imagekit-angular": [
         "projects/imagekit-angular/src/public_api.ts"
       ],

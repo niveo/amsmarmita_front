@@ -1,13 +1,12 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { AmsDialogService } from '@navegador/common/confirmacao-dialog';
 import {
   MSG_CONFIRMAR_EXCLUSAO,
   MSG_ERRO_PROCSSAMENTO,
   MSG_EXCLUIR_SUCESSO,
 } from '@navegador/common/constantes';
+import { NotificationService } from 'amslib';
 import { BaseService } from '@navegador/services/base.service';
-import { MessageSnackBarService } from './message-snackbar.component';
 
 @Component({
   selector: '',
@@ -19,8 +18,7 @@ export abstract class BaseViewComponent<T> {
 
   loading = computed(() => this.service?.loading() || false);
 
-  protected readonly _snackBar = inject(MatSnackBar);
-  private readonly messageSnackBarService = inject(MessageSnackBarService);
+  private readonly _messageService = inject(NotificationService);
   protected readonly confirmacaoDialog = inject(AmsDialogService);
 
   abstract service: BaseService<T>;
@@ -52,15 +50,10 @@ export abstract class BaseViewComponent<T> {
     this.service?.delete(registroId).subscribe({
       error: (error: any) => {
         console.error(error);
-        this.messageSnackBarService.create({
-          titulo: MSG_ERRO_PROCSSAMENTO,
-          mensagem: error,
-        });
+        this._messageService.error(MSG_ERRO_PROCSSAMENTO, error);
       },
       next: () => {
-        this._snackBar.open(MSG_EXCLUIR_SUCESSO, 'OK', {
-          duration: 3000,
-        });
+        this._messageService.info(MSG_EXCLUIR_SUCESSO);
       },
     });
   }

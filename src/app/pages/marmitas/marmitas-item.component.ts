@@ -3,8 +3,7 @@ import { Component, inject, input, output } from '@angular/core';
 import { Marmita } from '@navegador/model';
 import { SelecaoComedoresComponent } from '@navegador/componentes/selecao-comedores.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { NotificationService } from 'amslib';
 @Component({
   selector: 'app-marmitas-item-component',
   templateUrl: './marmitas-item.component.html',
@@ -19,7 +18,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class MarmitasItemComponent {
   private readonly _bottomSheet = inject(MatBottomSheet);
-  private readonly _snackBar = inject(MatSnackBar);
+  private readonly _messageService = inject(NotificationService);
 
   item = input.required<Marmita>();
 
@@ -28,10 +27,8 @@ export class MarmitasItemComponent {
 
   visualizarComedores(marmita: Marmita) {
     if (isAfter(new Date(), parseJSON(marmita.lancamento!))) {
-      this._snackBar.open(
+      this._messageService.warning(
         `Essa marmita fechou dia ${format(parseJSON(marmita.lancamento!), 'dd/MM/yyyy')}!`,
-        'OK',
-        { duration: 3000 },
       );
       return;
     }

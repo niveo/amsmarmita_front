@@ -43,7 +43,7 @@ export class PedidoStore extends BaseStore {
           catchError((response: HttpErrorResponse) => {
             console.error(response.error);
             if (response.error.tipo === 0)
-              this._snackBar.open(MSG_ERRO_PROCSSAMENTO, 'OK');
+              this.errorMessage(MSG_ERRO_PROCSSAMENTO, response.error);
 
             this.pratoStore.vincularPedidoItem([]);
             this._dataSource.next([]);
@@ -74,7 +74,7 @@ export class PedidoStore extends BaseStore {
       .pipe(
         catchError((error: any) => {
           console.error(error);
-          this._snackBar.open(MSG_ERRO_PROCSSAMENTO, 'OK');
+          this.errorMessage(MSG_ERRO_PROCSSAMENTO, error);
           return EMPTY;
         }),
       )
@@ -116,7 +116,7 @@ export class PedidoStore extends BaseStore {
       .pipe(
         catchError((error: any) => {
           console.error(error);
-          this._snackBar.open(MSG_ERRO_PROCSSAMENTO, 'OK');
+          this.errorMessage(MSG_ERRO_PROCSSAMENTO, error);
           return EMPTY;
         }),
       )
@@ -159,7 +159,7 @@ export class PedidoStore extends BaseStore {
       .pipe(
         catchError((error: any) => {
           console.error(error);
-          this._snackBar.open(MSG_ERRO_PROCSSAMENTO, 'OK');
+          this.errorMessage(MSG_ERRO_PROCSSAMENTO, error);
           return EMPTY;
         }),
       )

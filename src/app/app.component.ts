@@ -1,4 +1,3 @@
-import { MessageSnackBarService } from './componentes/message-snackbar.component';
 import {
   Component,
   OnDestroy,
@@ -28,6 +27,7 @@ export class AppComponent implements OnDestroy {
   private readonly route = inject(Router);
   private readonly _authService = inject(AuthService);
   private readonly sessionTimerService = inject(SessionTimerService);
+  
 
   usuarioLogado: Signal<boolean> = computed(() =>
     this._authService.isAuthenticatedUser(),
