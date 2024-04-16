@@ -83,7 +83,7 @@ export class UploadComponent implements OnInit {
     try {
       const response = await lastValueFrom(
         this.http.get<{ signature: string; expire: string; token: string }>(
-          '/auth/authimagekit2',
+          '/auth/authimagekit',
         ),
       );
 
