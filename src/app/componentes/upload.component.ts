@@ -126,7 +126,7 @@ export class UploadComponent implements OnInit {
     this.loading.set(false);
     this.messageSnackBarService.create({
       titulo: MSG_ERRO_PROCSSAMENTO,
-      mensagem: err,
+      mensagem: JSON.stringify(err),
     });
   }
 }
