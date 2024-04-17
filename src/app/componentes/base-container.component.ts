@@ -34,9 +34,7 @@ export abstract class BaseContainerComponent<T> {
     } else {
       this.editarFormData.set({} as T);
     }
-    this.editarForm.set(true);
-    console.log('AAAA');
-    
+    this.editarForm.set(true);    
   }
 
   removerRegistro(registroId: string) {
