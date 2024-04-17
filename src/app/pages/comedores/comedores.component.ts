@@ -3,14 +3,14 @@ import { Observable } from 'rxjs';
 import { ComedoresService } from '@navegador/services/comedores.service';
 import { Comedor } from '@navegador/model/comedor';
 import { isBooleanTransform } from '@navegador/common/util';
-import { BaseViewComponent } from '@navegador/componentes/base-view.component';
+import { BaseContainerComponent } from '@navegador/componentes/base-container.component';
 
 @Component({
   selector: 'app-comedores-component',
   templateUrl: './comedores.component.html',
   styleUrl: './comedores.component.scss', 
 })
-export class ComedoresComponent extends BaseViewComponent<Comedor> {
+export class ComedoresComponent extends BaseContainerComponent<Comedor> {
   override readonly service = inject(ComedoresService);
   data$: Observable<Comedor[]> = this.service!.data$;
 

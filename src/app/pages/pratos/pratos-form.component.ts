@@ -1,40 +1,27 @@
-import {
-  Component,
-  OnInit,
-  computed,
-  inject,
-  input,
-  output,
-} from '@angular/core';
+import { Component, OnInit, computed, inject } from '@angular/core';
 import { Grupo, Prato } from '@navegador/model';
 import { GrupoService } from '@navegador/services/grupo.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import { ModelFormPrato } from './pratos.component';
 import { validarFormulario } from '@navegador/common/util';
 import { PratoStore } from '@navegador/stores/prato.store';
 import { EMPTY, catchError, finalize } from 'rxjs';
 import { MSG_ERRO_PROCSSAMENTO } from '@navegador/common/constantes';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { NotificationService } from 'amslib';
+import { BaseFormComponent } from '@navegador/componentes/base-form.component';
 
 @Component({
   selector: 'app-pratos-form-component',
   templateUrl: './pratos-form.component.html',
 })
-export class PratosFormComponent implements OnInit {
+export class PratosFormComponent
+  extends BaseFormComponent<Prato>
+  implements OnInit
+{
   private readonly grupoService = inject(GrupoService);
-  private readonly formBuilder = inject(FormBuilder);
-  private readonly _messageService = inject(NotificationService);
   readonly pratoStore = inject(PratoStore);
 
   grupos?: Grupo[];
-
-  announcer = inject(LiveAnnouncer);
-
-  visible = input.required<boolean>();
-  visibleChange = output<boolean>();
-  data = input.required<Prato | null>();
 
   form: FormGroup<ModelFormPrato> = this.formBuilder.group({
     _id: [''],
@@ -98,7 +85,7 @@ export class PratosFormComponent implements OnInit {
             composicoes: [],
             observacao: '',
             ingredientes: [],
-            icone: '', 
+            icone: '',
           });
         }),
       )
@@ -113,8 +100,6 @@ export class PratosFormComponent implements OnInit {
     const index = this.form.value.composicoes!.indexOf(keyword);
     if (index >= 0) {
       this.form.value.composicoes!.splice(index, 1);
-
-      this.announcer.announce(`removed ${keyword}`);
     }
   }
 

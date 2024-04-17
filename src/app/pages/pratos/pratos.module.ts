@@ -6,7 +6,7 @@ import { PratosFormComponent } from './pratos-form.component';
 import { PratoComponent } from './pratos.component';
 import { CorBoardaDirective } from '@navegador/directives/cor-borda.directive';
 import { SelecaoIngredientesComponent } from '@navegador/componentes/selecao-ingredientes.component';
-import { ContainerCentralComponent } from '@navegador/componentes/container-central.component';
+import { CentralContainerComponent } from '@navegador/componentes/central-container.component';
 import { AmsDialogModule } from '@navegador/common/confirmacao-dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -20,6 +20,7 @@ import { GrupoPrincipalDirective } from '@navegador/directives/grupo-principal.d
 import { UploadComponent } from '@navegador/componentes/upload.component';
 import { TOKEN_PATH_IMAGEKIT } from '@navegador/common/tokens';
 import { ImagemComponent } from '@navegador/componentes/imagem.component';
+import { CentralFormComponent } from '@navegador/componentes/central-form.component';
 
 @NgModule({
   declarations: [PratoComponent, PratosFormComponent],
@@ -43,7 +44,8 @@ import { ImagemComponent } from '@navegador/componentes/imagem.component';
     MatChipsModule,
     MatSelectModule,
 
-    ContainerCentralComponent,
+    CentralContainerComponent,
+    CentralFormComponent,
     AmsDialogModule,
     ImagemComponent,
     UploadComponent,

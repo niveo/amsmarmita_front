@@ -4,7 +4,7 @@ import { ComedoresModule } from '../comedores/comedores.module';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { MarmitasRoutingModule } from './marmitas-routing.module';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
-import { ContainerCentralComponent } from '@navegador/componentes/container-central.component';
+import { CentralContainerComponent } from '@navegador/componentes/central-container.component';
 import { AmsDialogModule } from '@navegador/common/confirmacao-dialog';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,6 +18,7 @@ import { MatInputModule } from '@angular/material/input';
 import { provideDateFnsAdapter } from '@angular/material-date-fns-adapter';
 import { ptBR } from 'date-fns/locale';
 import { MarmitasItemComponent } from './marmitas-item.component';
+import { CentralFormComponent } from '@navegador/componentes/central-form.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { MarmitasItemComponent } from './marmitas-item.component';
     MatFormFieldModule,
 
     AmsDialogModule,
-    ContainerCentralComponent,
+    CentralContainerComponent,
+    CentralFormComponent,
 
     //Manter modulo no final para não entrar como rota
     ComedoresModule,

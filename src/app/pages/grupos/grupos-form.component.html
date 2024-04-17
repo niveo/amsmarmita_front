@@ -1,61 +1,46 @@
-<div class="ova hf fx-column pd-5">
-  <div class="fx-flex">
-    <form [formGroup]="form" class="fx-column gap-5">
-      <mat-form-field class="wf">
-        <mat-label>Nome</mat-label>
-        <input
-          matInput
-          placeholder="Nome"
-          formControlName="nome"
-          placeholder="Informe aqui um nome"
-          [maxLength]="25"
-          [minlength]="5"
-          [tabIndex]="-1"
-        />
-      </mat-form-field>
+<central-form
+  [form]="form"
+  [loading]="loading()"
+  (close)="visibleChange.emit(false)"
+  (save)="salvar()"
+>
+  <form [formGroup]="form" class="form-form">
+    <mat-form-field class="wf">
+      <mat-label>Nome</mat-label>
+      <input
+        matInput
+        placeholder="Nome"
+        formControlName="nome"
+        placeholder="Informe aqui um nome"
+        [maxLength]="25"
+        [minlength]="5"
+        [tabIndex]="-1"
+      />
+    </mat-form-field>
 
-      <mat-slide-toggle formControlName="principal">Principal</mat-slide-toggle>
+    <mat-slide-toggle formControlName="principal">Principal</mat-slide-toggle>
 
-      <mat-slide-toggle formControlName="multiplo"
-        >Seleção (Simples)</mat-slide-toggle
-      >
-
-      <ngx-colors
-        ngx-colors-trigger
-        style="display: inline-block; margin: 5px"
-        formControlName="cor"
-      ></ngx-colors>
-
-      <mat-form-field class="wf">
-        <mat-label>Observação</mat-label>
-        <textarea
-          matInput
-          placeholder="Informe aqui uma observação"
-          #txtObservacao
-          [maxLength]="100"
-          formControlName="observacao"
-          [tabIndex]="-1"
-        ></textarea>
-        <mat-hint align="end">{{ txtObservacao.value.length }} / 100</mat-hint>
-      </mat-form-field>
-    </form>
-  </div>
-  <div class="fx-row gap-5" style="justify-content: end">
-    <button mat-button (click)="visibleChange.emit(false)">Sair</button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="salvar()"
-      [disabled]="!form.valid"
+    <mat-slide-toggle formControlName="multiplo"
+      >Seleção (Simples)</mat-slide-toggle
     >
-    Salvar
-    <mat-icon>
-      @if (!loading()) {
-        save
-      } @else {
-        sync
-      }
-    </mat-icon>
-    </button>
-  </div>
-</div>
+
+    <ngx-colors
+      ngx-colors-trigger
+      style="display: inline-block; margin: 5px"
+      formControlName="cor"
+    ></ngx-colors>
+
+    <mat-form-field class="wf">
+      <mat-label>Observação</mat-label>
+      <textarea
+        matInput
+        placeholder="Informe aqui uma observação"
+        #txtObservacao
+        [maxLength]="100"
+        formControlName="observacao"
+        [tabIndex]="-1"
+      ></textarea>
+      <mat-hint align="end">{{ txtObservacao.value.length }} / 100</mat-hint>
+    </mat-form-field>
+  </form>
+</central-form>

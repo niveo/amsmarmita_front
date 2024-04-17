@@ -1,28 +1,17 @@
-import { Component, computed, inject, input, output } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { Component, computed, inject } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EMPTY, catchError, finalize, iif, mergeMap, of } from 'rxjs';
 import { MSG_ERRO_PROCSSAMENTO } from '@navegador/common/constantes';
 import { Marmita } from '@navegador/model';
 import { MarmitaService } from '@navegador/services/marmita.service';
-import { NotificationService } from 'amslib';
+import { BaseFormComponent } from '@navegador/componentes/base-form.component';
 
 @Component({
   selector: 'app-marmitas-form-component',
   templateUrl: './marmitas-form.component.html',
 })
-export class MarmitasFormComponent {
+export class MarmitasFormComponent extends BaseFormComponent<Marmita> {
   private readonly service = inject(MarmitaService);
-  private readonly formBuilder = inject(FormBuilder);
-  private readonly _messageService = inject(NotificationService);
-
-  visible = input.required<boolean>();
-  visibleChange = output<boolean>();
-  data = input.required<Marmita>();
 
   loading = computed(() => this.service?.loading() || false);
 

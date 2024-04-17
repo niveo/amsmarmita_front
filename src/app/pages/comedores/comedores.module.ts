@@ -13,13 +13,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { AmsDialogModule } from '@navegador/common/confirmacao-dialog';
-import { ContainerCentralComponent } from '@navegador/componentes/container-central.component';
+import { CentralContainerComponent } from '@navegador/componentes/central-container.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { LongPressDirective } from '@navegador/directives/long-press.directive'; 
 import { MatRippleModule } from '@angular/material/core';
 import { UploadComponent } from '@navegador/componentes/upload.component';
 import { ImagemComponent } from '@navegador/componentes/imagem.component';
 import { TOKEN_PATH_IMAGEKIT } from '@navegador/common/tokens';
+import { CentralFormComponent } from '@navegador/componentes/central-form.component';
 
 @NgModule({
   declarations: [ComedoresComponent, ComedoresFormComponent],
@@ -32,7 +33,8 @@ import { TOKEN_PATH_IMAGEKIT } from '@navegador/common/tokens';
     ReactiveFormsModule,
     ComedoresRoutingModule,
     AmsDialogModule,
-    ContainerCentralComponent,
+    CentralContainerComponent,
+    CentralFormComponent,
     LongPressDirective,
 
     MatListModule,

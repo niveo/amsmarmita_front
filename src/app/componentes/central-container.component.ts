@@ -3,12 +3,12 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
 @Component({
-  selector: 'container-central',
-  templateUrl: './container-central.component.html',
+  selector: 'central-container',
+  templateUrl: './central-container.component.html',
   standalone: true,
   imports: [MatSidenavModule, MatProgressBarModule],
 })
-export class ContainerCentralComponent {
+export class CentralContainerComponent {
   loading = input(false);
   drawer = input(false);
   drawerChange = output<boolean>();

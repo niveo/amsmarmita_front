@@ -9,7 +9,7 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-@import "style-variables";
+@import "ams-variables";
 
 /* You can add global styles to this file, and also import other style files */
 @mixin fx-border-box {
@@ -149,7 +149,7 @@ body {
 mat-drawer {
   min-width: 350px;
 }
-
+ 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 600px) {
   .comp-body {
@@ -175,4 +175,32 @@ mat-drawer {
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
+}
+
+.form-footer-buttons { 
+  @extend .fx-row;
+  @extend .gap-5;
+  justify-content: end; 
+  align-items: center;
+}
+
+.form-content {
+  @extend .ovh;
+  @extend .hf;
+  @extend .fx-column;
+  //@extend .pd-5;
+}
+
+.form-inner { 
+  @extend .hf;
+  @extend .fx-flex;
+  @extend .ova;
+}
+
+.form-form{ 
+  @extend .fx-column;
+  @extend .gap-5;
+  //@extend .ova;
+  //@extend .hf;
+  @extend .pd-10;
 }

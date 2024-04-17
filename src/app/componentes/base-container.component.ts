@@ -12,7 +12,7 @@ import { BaseService } from '@navegador/services/base.service';
   selector: '',
   template: ``,
 })
-export abstract class BaseViewComponent<T> {
+export abstract class BaseContainerComponent<T> {
   editarFormData = signal<T>({} as T);
   editarForm = signal(false);
 
@@ -35,6 +35,8 @@ export abstract class BaseViewComponent<T> {
       this.editarFormData.set({} as T);
     }
     this.editarForm.set(true);
+    console.log('AAAA');
+    
   }
 
   removerRegistro(registroId: string) {

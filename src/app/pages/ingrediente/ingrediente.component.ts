@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { IngredienteService } from '@navegador/services/ingrediente.service';
 import { Ingrediente } from '@navegador/model';
-import { BaseViewComponent } from '@navegador/componentes/base-view.component';
+import { BaseContainerComponent } from '@navegador/componentes/base-container.component';
 
 @Component({
   selector: 'app-ingrediente-component',
@@ -15,7 +15,7 @@ import { BaseViewComponent } from '@navegador/componentes/base-view.component';
     `,
   ],
 })
-export class IngredienteComponent extends BaseViewComponent<Ingrediente> {
+export class IngredienteComponent extends BaseContainerComponent<Ingrediente> {
   override readonly service = inject(IngredienteService);
   data$ = this.service!.data$;
 }

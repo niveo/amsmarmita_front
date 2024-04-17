@@ -1,29 +1,17 @@
-import { Component, computed, inject, input, output } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { Component, computed, inject } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EMPTY, catchError, finalize, iif, mergeMap, of } from 'rxjs';
 import { MSG_ERRO_PROCSSAMENTO } from '@navegador/common/constantes';
 import { Ingrediente } from '@navegador/model';
 import { IngredienteService } from '@navegador/services/ingrediente.service';
-import { NotificationService } from 'amslib';
+import { BaseFormComponent } from '@navegador/componentes/base-form.component';
 
 @Component({
   selector: 'app-ingrediente-form-component',
   templateUrl: './ingrediente-form.component.html',
 })
-export class IngredienteFormComponent {
+export class IngredienteFormComponent extends BaseFormComponent<Ingrediente> {
   private readonly service = inject(IngredienteService);
-  private readonly formBuilder = inject(FormBuilder);
-  private readonly _messageService = inject(NotificationService);
-
-  visible = input.required<boolean>();
-  visibleChange = output<boolean>();
-  data = input.required<Ingrediente>();
-
 
   loading = computed(() => this.service?.loading() || false);
 

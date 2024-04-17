@@ -1,4 +1,4 @@
-<container-central [(drawer)]="editarForm" [loading]="loading()">
+<central-container [(drawer)]="editarForm" [loading]="loading()">
   <div drawer class="ovh hf">
     @if (editarForm()) {
       <app-pratos-form-component
@@ -49,6 +49,9 @@
                     [ngStyle]="{ cursor: tipoSelecao() ? 'pointer' : 'none' }"
                   >
                     <mat-card-header>
+                      @if (item.icone) {
+                        <mat-icon mat-card-avatar class="material-symbols-outlined">{{ item.icone }}</mat-icon>
+                      }
                       <mat-card-title>{{ item.nome }}</mat-card-title>
                       @if (item.observacao) {
                         <mat-card-subtitle>
@@ -104,4 +107,4 @@
       }
     </mat-accordion>
   </div>
-</container-central>
+</central-container>
