@@ -1,23 +1,15 @@
-<central-container [(drawer)]="editarForm" [loading]="loading()">
+<central-container
+  [(drawer)]="editarForm"
+  [loading]="loading()"
+  [hideHeader]="!loading()"
+  (incluir)="incluir()"
+>
   <div drawer class="ovh hf">
     @if (editarForm()) {
       <app-marmitas-form-component
         [(visible)]="editarForm"
         [data]="editarFormData()"
       />
-    }
-  </div>
-
-  <div header>
-    @if (!loading()) {
-      <button
-        mat-raised-button
-        color="primary"
-        style="margin-bottom: 10px"
-        (click)="incluir()"
-      >
-        Novo
-      </button>
     }
   </div>
 
