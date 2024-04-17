@@ -8,9 +8,18 @@
   <div class="fx-row gap-5" style="align-items: center">
     <ng-container *ngTemplateOutlet="extraTemplate"></ng-container>
     <div class="fx-flex"></div>
-    <button mat-button (click)="closeAlteracaoPedido()">Sair</button>
     <button mat-raised-button color="primary" (click)="salvarAlteracaoPedido()">
-      Salvar <mat-icon>save</mat-icon>
+      Salvar
+      <mat-icon>
+        @if (!loading()) {
+          save
+        } @else {
+          sync
+        }
+      </mat-icon>
+    </button>
+    <button mat-icon-button (click)="closeAlteracaoPedido()">
+      <mat-icon class="material-symbols-outlined">left_panel_open</mat-icon>
     </button>
   </div>
 </ng-template>
