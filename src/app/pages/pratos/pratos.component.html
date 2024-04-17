@@ -1,23 +1,15 @@
-<central-container [(drawer)]="editarForm" [loading]="loading()">
+<central-container
+  [(drawer)]="editarForm"
+  [loading]="loading()"
+  [hideHeader]="!loading() && !tipoSelecao()"
+  (incluir)="incluir()"
+>
   <div drawer class="ovh hf">
     @if (editarForm()) {
       <app-pratos-form-component
         [(visible)]="editarForm"
         [data]="editarFormData()"
       />
-    }
-  </div>
-
-  <div header>
-    @if (!loading() && !tipoSelecao()) {
-      <button
-        mat-raised-button
-        color="primary"
-        style="margin-bottom: 10px"
-        (click)="incluir()"
-      >
-        Novo
-      </button>
     }
   </div>
 
@@ -50,7 +42,11 @@
                   >
                     <mat-card-header>
                       @if (item.icone) {
-                        <mat-icon mat-card-avatar class="material-symbols-outlined">{{ item.icone }}</mat-icon>
+                        <mat-icon
+                          mat-card-avatar
+                          class="material-symbols-outlined"
+                          >{{ item.icone }}</mat-icon
+                        >
                       }
                       <mat-card-title>{{ item.nome }}</mat-card-title>
                       @if (item.observacao) {

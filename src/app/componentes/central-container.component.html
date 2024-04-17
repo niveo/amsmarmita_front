@@ -9,13 +9,17 @@
   </mat-drawer>
   <mat-drawer-content class="ovh hf">
     <div class="comp-body">
-      <div class="comp-head">
-        <ng-content select="[header]"></ng-content>
-      </div>
       <div class="comp-content">
         <div class="comp-inner">
           <ng-content select="[content]"></ng-content>
         </div>
+      </div>
+      <div class="comp-head">
+        @if (hideHeader()) {
+          <button mat-fab color="primary" (click)="incluir.emit()">
+            <mat-icon>add</mat-icon>
+          </button>
+        }
       </div>
       @if (loading()) {
         <mat-progress-bar
