@@ -23,8 +23,7 @@ import { isBooleanTransform, objectToUrl } from '@navegador/common/util';
   `,
   styles: `
     :host {
-      visibility: hidden;
-      margin: 10px;
+      visibility: hidden; 
     }
   `,
   standalone: true,

@@ -10,6 +10,7 @@
           placeholder="Informe aqui um nome"
           [maxLength]="25"
           [minlength]="5"
+          [tabIndex]="-1"
         />
       </mat-form-field>
 
@@ -33,6 +34,7 @@
           #txtObservacao
           [maxLength]="100"
           formControlName="observacao"
+          [tabIndex]="-1"
         ></textarea>
         <mat-hint align="end">{{ txtObservacao.value.length }} / 100</mat-hint>
       </mat-form-field>
