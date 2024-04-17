@@ -3,7 +3,7 @@
     <form [formGroup]="form" class="fx-column gap-5">
       <mat-form-field class="wf">
         <mat-label>Lançamento</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="lancamento" />
+        <input matInput [matDatepicker]="picker" formControlName="lancamento" [tabIndex]="-1" readonly/>
         <mat-datepicker-toggle
           matIconSuffix
           [for]="picker"
@@ -19,6 +19,7 @@
           #txtObservacao
           [maxLength]="100"
           formControlName="observacao"
+          [tabIndex]="-1"
         ></textarea>
         <mat-hint align="end">{{ txtObservacao.value.length }} / 100</mat-hint>
       </mat-form-field>
