@@ -15,7 +15,7 @@ export class GrupoPrincipalDirective {
 
   ngOnInit() {
     if (this.value())
-      this.el.nativeElement.style.setProperty('border-left', '1px solid red');
+      this.el.nativeElement.style.setProperty('border-left', '1px solid gray');
     this.el.nativeElement.style.setProperty('padding-left', '5px');
   }
 }

@@ -1,40 +1,25 @@
-<div class="ova hf fx-column pd-5">
-  <div class="fx-flex">
-    <form [formGroup]="form">
-      @if (form.get("_id").value) {
-        <app-upload-component [fileName]="form.get('_id').value" />
-      }
+<central-form
+  [form]="form"
+  [loading]="loading()"
+  (close)="visibleChange.emit(false)"
+  (save)="salvar()"
+>
+  <form [formGroup]="form" class="form-form">
+    @if (form.get("_id").value) {
+      <app-upload-component [fileName]="form.get('_id').value" />
+    }
 
-      <mat-form-field class="wf">
-        <mat-label>Nome</mat-label>
-        <input
-          matInput
-          placeholder="Nome"
-          formControlName="nome"
-          placeholder="Informe aqui um nome"
-          [maxLength]="25"
-          [minlength]="5"
-          [tabIndex]="-1"
-        />
-      </mat-form-field>
-    </form>
-  </div>
-  <div class="fx-row gap-5" style="justify-content: end">
-    <button mat-button (click)="visibleChange.emit(false)">Sair</button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="salvar()"
-      [disabled]="!form.valid"
-    >
-    Salvar
-    <mat-icon>
-      @if (!loading()) {
-        save
-      } @else {
-        sync
-      }
-    </mat-icon>
-    </button>
-  </div>
-</div>
+    <mat-form-field class="wf">
+      <mat-label>Nome</mat-label>
+      <input
+        matInput
+        placeholder="Nome"
+        formControlName="nome"
+        placeholder="Informe aqui um nome"
+        [maxLength]="25"
+        [minlength]="5"
+        [tabIndex]="-1"
+      />
+    </mat-form-field>
+  </form>
+</central-form>

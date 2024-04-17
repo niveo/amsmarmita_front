@@ -12,7 +12,7 @@ import { map } from 'rxjs';
 import { isBooleanTransform } from '@navegador/common/util';
 import { Prato } from '@navegador/model';
 import { PratoStore } from '@navegador/stores/prato.store';
-import { BaseViewComponent } from '@navegador/componentes/base-view.component'; 
+import { BaseContainerComponent } from '@navegador/componentes/base-container.component'; 
 import { PratoService } from '@navegador/services/prato.service';
 
 export class ModelFormPrato {
@@ -30,7 +30,7 @@ export class ModelFormPrato {
   templateUrl: './pratos.component.html',
   styleUrl: './pratos.component.scss',
 })
-export class PratoComponent extends BaseViewComponent<Prato> {
+export class PratoComponent extends BaseContainerComponent<Prato> {
 
   override readonly service = inject(PratoService);
   

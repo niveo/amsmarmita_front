@@ -1,11 +1,11 @@
-import { Component, computed, inject, input, output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, computed, inject } from '@angular/core';
+import { Validators } from '@angular/forms';
 import { EMPTY, catchError, finalize, iif, mergeMap, of } from 'rxjs';
 import { MSG_ERRO_PROCSSAMENTO } from '@navegador/common/constantes';
 import { Grupo } from '@navegador/model';
 import { GrupoService } from '@navegador/services/grupo.service';
 import { validarFormulario } from '@navegador/common/util';
-import { NotificationService } from 'amslib';
+import { BaseFormComponent } from '@navegador/componentes/base-form.component';
 
 @Component({
   selector: 'app-grupos-form-component',
@@ -17,14 +17,8 @@ import { NotificationService } from 'amslib';
     }
   `,
 })
-export class GrupoFormComponent {
+export class GrupoFormComponent extends BaseFormComponent<Grupo> {
   private readonly service = inject(GrupoService);
-  private readonly formBuilder = inject(FormBuilder);
-  private readonly _messageService = inject(NotificationService);
-
-  visible = input.required<boolean>();
-  visibleChange = output<boolean>(); 
-  data = input.required<Grupo>();
 
   loading = computed(() => this.service?.loading() || false);
 
@@ -58,7 +52,6 @@ export class GrupoFormComponent {
     }
 
     const data = this.form.value;
- 
 
     of(this.form.value._id)
       .pipe(
@@ -84,7 +77,7 @@ export class GrupoFormComponent {
         ),
         catchError((error: any) => {
           console.error(error);
-          this._messageService.error(MSG_ERRO_PROCSSAMENTO, JSON.parse(error)); 
+          this._messageService.error(MSG_ERRO_PROCSSAMENTO, JSON.parse(error));
           return EMPTY;
         }),
         finalize(() => {
@@ -95,7 +88,7 @@ export class GrupoFormComponent {
             multiplo: false,
             observacao: '',
             cor: '',
-          }); 
+          });
         }),
       )
       .subscribe({
