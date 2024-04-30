@@ -28,7 +28,7 @@ import { NotificationService } from 'amslib';
   templateUrl: './pedidos.component.html',
   styleUrl: './pedidos.component.scss',
 })
-export class PedidosComponent implements OnInit, OnDestroy {
+export class PedidosComponent implements OnInit {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly pedidoStore = inject(PedidoStore);
   private readonly formBuilder = inject(FormBuilder);
@@ -42,6 +42,9 @@ export class PedidosComponent implements OnInit, OnDestroy {
   alteracaoPedidoTitulo = '';
   alteracaoPedidoQuantidade?: number;
   alteracaoPedidoAcompanhamentos: string[] = [];
+  alteracaoPratoId?: string;
+  alteracaoGrupoId?: string;
+  alteracaoPedidoItemId?: string;
 
   alteracaoPedidoForm: FormGroup<{
     observacao: FormControl<string | null>;
@@ -50,12 +53,6 @@ export class PedidosComponent implements OnInit, OnDestroy {
   });
 
   listaQuantidadePedido: number[] = [];
-
-  subjectAlteracaoPedido = new Subject<{
-    quantidade: number;
-    acompanhamentos: string[];
-    observacao?: string;
-  }>();
 
   quantidadeItens: Signal<number> = computed(() =>
     this.pedidoStore.quantidadeItens(),
@@ -87,10 +84,6 @@ export class PedidosComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  ngOnDestroy() {
-    this.subjectAlteracaoPedido.unsubscribe();
-  }
-
   removerPedidoItem(pratoId: string) {
     this._confirmacaoDialog
       .confirmacao({ mensagem: MSG_CONFIRMAR_EXCLUSAO })
@@ -105,7 +98,10 @@ export class PedidosComponent implements OnInit, OnDestroy {
     pratoId: string;
     grupoId: string;
   }) {
+    console.log('incluirPratoPedido: ', value);
+
     this.atualizarIncluirPrato({
+      pedidoItemId: null,
       nome: value.nome,
       pratoId: value.pratoId,
       grupoId: value.grupoId,
@@ -116,6 +112,7 @@ export class PedidosComponent implements OnInit, OnDestroy {
 
   editarPedidoItem(pratoId: string) {
     const pedidoItem = this.pedidoStore.obterPedidoItem(pratoId);
+    console.log('editarPedidoItem: ', pedidoItem);
     this.atualizarIncluirPrato({
       pedidoItemId: pedidoItem!._id!,
       nome: pedidoItem!.prato!.nome!,
@@ -144,28 +141,14 @@ export class PedidosComponent implements OnInit, OnDestroy {
     acompanhamentos: Prato[];
     observacao?: string;
   }) {
-    this.carregarModalQuantidade(nome, quantidade, acompanhamentos, observacao);
-    this.subjectAlteracaoPedido.subscribe(
-      ({ quantidade, acompanhamentos, observacao }) => {
-        if (pedidoItemId) {
-          this.pedidoStore.atualizarPedidoItem({
-            pedidoItemId,
-            pratoId,
-            grupoId,
-            quantidade,
-            acompanhamentos,
-            observacao,
-          });
-        } else {
-          this.pedidoStore.incluirPedidoItem({
-            pratoId: pratoId,
-            grupoId: grupoId,
-            quantidade: quantidade,
-            acompanhamentos: acompanhamentos,
-            observacao,
-          });
-        }
-      },
+    this.carregarModalQuantidade(
+      nome,
+      quantidade,
+      acompanhamentos,
+      observacao,
+      pratoId,
+      grupoId,
+      pedidoItemId,
     );
   }
 
@@ -174,11 +157,17 @@ export class PedidosComponent implements OnInit, OnDestroy {
     quantidade: number,
     acompanhamentos: Prato[] = [],
     observacao?: string,
+    pratoId?: string,
+    grupoId?: string,
+    pedidoItemId?: string,
   ) {
     this.alteracaoPedidoTitulo = titulo;
     this.alteracaoPedidoAcompanhamentos = acompanhamentos.map((m) => m._id!);
     this.alteracaoPedidoQuantidade = quantidade;
     this.alteracaoPedidoForm.get('observacao')?.setValue(observacao || '');
+    this.alteracaoPratoId = pratoId;
+    this.alteracaoGrupoId = grupoId;
+    this.alteracaoPedidoItemId = pedidoItemId;
 
     this.drawer.open();
   }
@@ -196,12 +185,27 @@ export class PedidosComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.subjectAlteracaoPedido.next({
-      quantidade: this.alteracaoPedidoQuantidade!,
-      acompanhamentos: this.alteracaoPedidoAcompanhamentos,
-      observacao:
-        this.alteracaoPedidoForm.get('observacao')?.value || undefined,
-    });
+    const observacao =
+      this.alteracaoPedidoForm.get('observacao')?.value || undefined;
+
+    if (this.alteracaoPedidoItemId) {
+      this.pedidoStore.atualizarPedidoItem({
+        pedidoItemId: this.alteracaoPedidoItemId,
+        pratoId: this.alteracaoPratoId,
+        grupoId: this.alteracaoGrupoId,
+        quantidade: this.alteracaoPedidoQuantidade,
+        acompanhamentos: this.alteracaoPedidoAcompanhamentos,
+        observacao: observacao,
+      });
+    } else {
+      this.pedidoStore.incluirPedidoItem({
+        pratoId: this.alteracaoPratoId,
+        grupoId: this.alteracaoGrupoId,
+        quantidade: this.alteracaoPedidoQuantidade,
+        acompanhamentos: this.alteracaoPedidoAcompanhamentos,
+        observacao: observacao,
+      });
+    }
   }
 
   private limparCamposAlteracaoPedido() {
@@ -210,5 +214,8 @@ export class PedidosComponent implements OnInit, OnDestroy {
     this.alteracaoPedidoAcompanhamentos = [];
     this.alteracaoPedidoQuantidade = undefined;
     this.alteracaoPedidoForm.get('observacao')?.setValue('');
+    this.alteracaoPratoId = undefined;
+    this.alteracaoGrupoId = undefined;
+    this.alteracaoPedidoItemId = undefined;
   }
 }
