@@ -4,26 +4,6 @@
   >
 </ng-template>
 
-<ng-template #tplFooter>
-  <div class="fx-row gap-5" style="align-items: center">
-    <ng-container *ngTemplateOutlet="extraTemplate"></ng-container>
-    <div class="fx-flex"></div>
-    <button mat-raised-button color="primary" (click)="salvarAlteracaoPedido()">
-      Salvar
-      <mat-icon>
-        @if (!loading()) {
-          save
-        } @else {
-          sync
-        }
-      </mat-icon>
-    </button>
-    <button mat-icon-button (click)="closeAlteracaoPedido()">
-      <mat-icon class="material-symbols-outlined">left_panel_open</mat-icon>
-    </button>
-  </div>
-</ng-template>
-
 <mat-sidenav-container class="hf ovh fx-column">
   <mat-sidenav
     #drawer
@@ -118,5 +98,25 @@
     </div>
 
     <ng-container [ngTemplateOutlet]="tplFooter"></ng-container>
+  </div>
+</ng-template>
+
+<ng-template #tplFooter>
+  <div class="fx-row gap-5" style="align-items: center">
+    <ng-container *ngTemplateOutlet="extraTemplate"></ng-container>
+    <div class="fx-flex"></div>
+    <button mat-raised-button color="primary" (click)="salvarAlteracaoPedido()">
+      Salvar
+      <mat-icon>
+        @if (!loading()) {
+          save
+        } @else {
+          sync
+        }
+      </mat-icon>
+    </button>
+    <button mat-icon-button (click)="closeAlteracaoPedido()">
+      <mat-icon class="material-symbols-outlined">left_panel_open</mat-icon>
+    </button>
   </div>
 </ng-template>
