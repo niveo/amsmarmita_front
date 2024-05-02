@@ -12,7 +12,11 @@
     "build:dev": " npm run prebuild.prod && ng build --configuration development",
     "analyze": "webpack-bundle-analyzer dist/stats.json",
     "build:stats": "ng build --configuration production --stats-json",
-    "analyzeb": "yarn build:stats && yarn analyze"
+    "analyzeb": "yarn build:stats && yarn analyze",
+    "compodoc:build": "npx compodoc -p tsconfig.doc.json",
+    "compodoc:build-and-serve": "npx compodoc -p tsconfig.doc.json -s",
+    "compodoc:serve": "npx compodoc -s",
+    "compodoc": "npx compodoc -p tsconfig.doc.json"
   },
   "private": true,
   "dependencies": {
