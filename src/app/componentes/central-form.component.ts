@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'central-form',
   templateUrl: './central-form.component.html',
+  styleUrl: './central-form.component.scss',
   standalone: true,
   imports:[
     FormsModule,
