@@ -3,7 +3,11 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-selecao-numeros-component',
-  template: `<div style="justify-content: center">
+  template: `<div
+    style="display: flex;
+  place-content: center;
+  flex-wrap: wrap;"
+  >
     @for (i of numeros(); track i) {
       @if (selecionado() === i) {
         <button mat-flat-button color="primary">{{ i }}</button>
