@@ -1,0 +1,23 @@
+@import '../../styles';
+
+.form-footer-buttons {
+  @extend .fx-row;
+  @extend .gap-5;
+  justify-content: end;
+  align-items: center;
+  margin-right: 10px;
+  margin-bottom: 5px;
+}
+
+.form-content {
+  @extend .ovh;
+  @extend .hf;
+  @extend .fx-column;
+  //@extend .pd-5;
+}
+
+.form-inner {
+  @extend .hf;
+  @extend .fx-flex;
+  @extend .ova;
+}

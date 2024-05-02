@@ -179,27 +179,6 @@ mat-drawer {
 @media only screen and (min-width: 1200px) {
 }
 
-.form-footer-buttons { 
-  @extend .fx-row;
-  @extend .gap-5;
-  justify-content: end; 
-  align-items: center;
-  margin-right: 10px
-}
-
-.form-content {
-  @extend .ovh;
-  @extend .hf;
-  @extend .fx-column;
-  //@extend .pd-5;
-}
-
-.form-inner { 
-  @extend .hf;
-  @extend .fx-flex;
-  @extend .ova;
-}
-
 .form-form{ 
   @extend .fx-column;
   @extend .gap-5;
