@@ -4,6 +4,7 @@ import { Marmita } from '@navegador/model';
 import { SelecaoComedoresComponent } from '@navegador/componentes/selecao-comedores.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { NotificationService } from 'amslib';
+import { RelatorioService } from '@navegador/services/relatorio.service';
 @Component({
   selector: 'app-marmitas-item-component',
   templateUrl: './marmitas-item.component.html',
@@ -19,6 +20,7 @@ import { NotificationService } from 'amslib';
 export class MarmitasItemComponent {
   private readonly _bottomSheet = inject(MatBottomSheet);
   private readonly _messageService = inject(NotificationService);
+  private readonly _relatorioService = inject(RelatorioService);
 
   item = input.required<Marmita>();
 
@@ -38,5 +40,9 @@ export class MarmitasItemComponent {
         marmitaId: marmita._id,
       },
     });
+  }
+
+  carregarRelatorioPdf(marmitaId: string) {
+    this._relatorioService.carregarRelatorioPdf(marmitaId);
   }
 }
