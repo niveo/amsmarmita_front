@@ -1,5 +1,5 @@
 @use "@angular/material" as mat;
-@use "@angular/material-experimental" as matx;
+//@use "@angular/material-experimental" as matx;
 //@import "@angular/cdk/overlay-prebuilt.css";
 @import "ams-variables";
 
@@ -29,7 +29,7 @@
   align-items: center;
 }
 
-/* $theme: mat.define-light-theme(
+$theme: mat.define-light-theme(
   (
     color: (
       primary: mat.define-palette($mat-custom-primary),
@@ -37,11 +37,10 @@
       warn: mat.define-palette($mat-custom-warn),
     ),
   )
-); */
+);
 
 
-//Quando carrega o pratos a view fica instavel no celular
-$theme: matx.define-theme((
+/* $theme: matx.define-theme((
   color: (
     theme-type: light,
     primary: matx.$m3-azure-palette,
@@ -50,7 +49,7 @@ $theme: matx.define-theme((
 ));
 
 @include matx.color-variants-back-compat($theme);
-
+ */
 
 
 :root {
