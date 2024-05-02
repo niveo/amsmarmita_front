@@ -13,11 +13,11 @@ body {
 
 /* You can add global styles to this file, and also import other style files */
 @mixin fx-border-box {
-  box-sizing: border-box !important;;
+  box-sizing: border-box !important;
 }
 
 .fx-border-box {
-  box-sizing: border-box !important;;
+  box-sizing: border-box !important;
 }
 
 .fx-d-flex {
@@ -27,8 +27,8 @@ body {
 
 @mixin fx-flex($percentual) {
   @include fx-border-box;
-  flex: 1 1 $percentual !important;;
-  max-width: $percentual !important;;
+  flex: 1 1 $percentual !important;
+  max-width: $percentual !important;
 }
 
 .fx-flex30 {
@@ -42,13 +42,13 @@ body {
 
 .fx-column {
   @extend .fx-d-flex;
-  flex-direction: column !important;;
+  flex-direction: column !important;
 }
 
 .fx-flex {
   @include fx-border-box;
   //flex: 1 1 0%;
-  flex: 1 1 1e-9px !important;;
+  flex: 1 1 1e-9px !important;
 }
 
 .fx-aic {
@@ -93,25 +93,17 @@ body {
 
 .ovh {
   overflow: hidden !important;
- }
+}
 
 .ova {
   overflow-y: auto !important;
   overflow-x: hidden !important;
 }
 
-.cblue {
-  color: #2196f3 !important;
-}
-
 .cred {
-  color: #EF5350 !important;
+  color: #ef5350 !important;
 }
 
-.cgreen {
-  color: #4caf50 !important;
-}
- 
 .comp-body {
   height: 100%;
   overflow: hidden;
@@ -122,7 +114,7 @@ body {
 
 .comp-head {
   margin-bottom: 10px;
-  margin-right:  10px;
+  margin-right: 10px;
   direction: rtl;
 }
 
@@ -151,7 +143,7 @@ body {
 mat-drawer {
   min-width: 350px;
 }
- 
+
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 600px) {
   .comp-body {
@@ -165,16 +157,4 @@ mat-drawer {
     //material-default
     //min-width: 90%;
   }
-}
-
-/* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (min-width: 768px) {
-}
-
-/* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {
-}
-
-/* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {
 }
