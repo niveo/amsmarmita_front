@@ -4,7 +4,7 @@
   (close)="visibleChange.emit(false)"
   (save)="salvar()"
 >
-<form [formGroup]="form" class="form-form">
+<form [formGroup]="form">
   <mat-form-field class="wf">
     <mat-label>Lançamento</mat-label>
     <input matInput [matDatepicker]="picker" formControlName="lancamento" [tabIndex]="-1" readonly/>
