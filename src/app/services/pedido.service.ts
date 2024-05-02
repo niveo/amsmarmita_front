@@ -36,10 +36,4 @@ export class PedidoService {
       params: { comedorId, marmitaId },
     });
   }
-
-  carregarRelatorio(marmitaId: string) {
-    return this.http.get<any>('/pedidos/relatorio', {
-      params: { marmitaId },
-    });
-  }
 }

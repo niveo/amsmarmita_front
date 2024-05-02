@@ -32,6 +32,7 @@ export class GrupoFormComponent extends BaseFormComponent<Grupo> {
     multiplo: [false, Validators.required],
     observacao: ['', Validators.maxLength(100)],
     cor: [''],
+    somarRelatorio: [false],
   });
 
   ngOnInit() {
@@ -42,6 +43,7 @@ export class GrupoFormComponent extends BaseFormComponent<Grupo> {
       multiplo: this.data().multiplo || false,
       observacao: this.data().observacao || '',
       cor: this.data().cor || '',
+      somarRelatorio: this.data().somarRelatorio || false,
     });
   }
 
@@ -72,6 +74,7 @@ export class GrupoFormComponent extends BaseFormComponent<Grupo> {
               multiplo: data.multiplo!,
               observacao: data.observacao || '',
               cor: data.cor || '',
+              somarRelatorio: data.somarRelatorio,
             }),
           ),
         ),
@@ -88,6 +91,7 @@ export class GrupoFormComponent extends BaseFormComponent<Grupo> {
             multiplo: false,
             observacao: '',
             cor: '',
+            somarRelatorio: false,
           });
         }),
       )

@@ -35,6 +35,12 @@
       >
         <mat-icon>description</mat-icon>
       </button>
+      <button
+        mat-button
+         (click)="carregarRelatorioPdf(item()._id)"
+      >
+        <mat-icon>print</mat-icon>
+      </button>
       <button mat-button (click)="editar.emit(item())">
         <mat-icon>edit</mat-icon>
       </button>

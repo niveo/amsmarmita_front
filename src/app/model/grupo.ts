@@ -10,4 +10,5 @@ export class Grupo {
   cor?: string;
 
   pratoSelecionado?: string;
+  somarRelatorio = false;
 }

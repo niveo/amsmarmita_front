@@ -47,6 +47,7 @@ export class GrupoService extends BaseService<Grupo> {
     multiplo,
     observacao,
     cor,
+    somarRelatorio,
   }: {
     id: string;
     nome: string;
@@ -54,6 +55,7 @@ export class GrupoService extends BaseService<Grupo> {
     multiplo: boolean;
     observacao?: string;
     cor?: string;
+    somarRelatorio?: boolean;
   }) {
     this.iniciarLoading();
     return this.http
@@ -63,6 +65,7 @@ export class GrupoService extends BaseService<Grupo> {
         multiplo: multiplo,
         observacao: observacao || null,
         cor: cor || null,
+        somarRelatorio,
       })
       .pipe(finalize(() => this.updateData()));
   }
@@ -73,12 +76,14 @@ export class GrupoService extends BaseService<Grupo> {
     multiplo,
     observacao,
     cor,
+    somarRelatorio,
   }: {
     nome: string;
     principal: boolean;
     multiplo: boolean;
     observacao?: string;
     cor?: string;
+    somarRelatorio?: boolean;
   }) {
     this.iniciarLoading();
     return this.http
@@ -88,6 +93,7 @@ export class GrupoService extends BaseService<Grupo> {
         multiplo: multiplo,
         observacao: observacao || null,
         cor: cor || null,
+        somarRelatorio
       })
       .pipe(finalize(() => this.updateData()));
   }

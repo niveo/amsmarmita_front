@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { finalize, map } from 'rxjs';
-import { PedidoService } from '@navegador/services/pedido.service';
+import { RelatorioService } from '@navegador/services/relatorio.service';
 
 @Component({
   selector: 'app-relatorio-component',
@@ -10,7 +10,8 @@ import { PedidoService } from '@navegador/services/pedido.service';
 })
 export class RelatorioComponent {
   private readonly activatedRoute = inject(ActivatedRoute);
-  private readonly pedidoService = inject(PedidoService);
+  private readonly relatorioService = inject(RelatorioService);
+
   loading = signal(true);
 
   pratos: any[] = [];
@@ -28,9 +29,9 @@ export class RelatorioComponent {
       .pipe(
         map(({ marmitaId }) => {
           this.loading.set(true);
-          
-          this.pedidoService
-            .carregarRelatorio(marmitaId)
+
+          this.relatorioService
+            .carregarRelatorioView(marmitaId)
             .pipe(finalize(() => this.loading.set(false)))
             .subscribe((response) => {
               this.pratos = response.pratos;
