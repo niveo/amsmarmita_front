@@ -1,4 +1,4 @@
-@import '../../styles';
+@import "../../styles";
 
 .form-footer-buttons {
   @extend .fx-row;
@@ -20,4 +20,13 @@
   @extend .hf;
   @extend .fx-flex;
   @extend .ova;
+}
+::ng-deep {
+  form {
+    @extend .fx-column;
+    @extend .gap-5;
+    //@extend .ova;
+    //@extend .hf;
+    @extend .pd-10;
+  }
 }

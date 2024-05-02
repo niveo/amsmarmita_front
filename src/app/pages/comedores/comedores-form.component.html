@@ -4,7 +4,7 @@
   (close)="visibleChange.emit(false)"
   (save)="salvar()"
 >
-  <form [formGroup]="form" class="form-form">
+  <form [formGroup]="form">
     @if (form.get("_id").value) {
       <app-upload-component [fileName]="form.get('_id').value" />
     }
