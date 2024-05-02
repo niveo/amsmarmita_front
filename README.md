@@ -1,27 +1,15 @@
-# AmsmarmitaFront
+# Sistema de Estudo Portfolio Marmitas
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.0.
+!["01.png"](https://ik.imagekit.io/aspofp9v1/amsmarmita/apresenta/01.png?updatedAt=1714670218299)
+!["02.png"](https://ik.imagekit.io/aspofp9v1/amsmarmita/apresenta/02.png?updatedAt=1714670217493)
 
-## Development server
+!["03.png"](https://ik.imagekit.io/aspofp9v1/amsmarmita/apresenta/03.png?updatedAt=1714670217503)
+!["04.png"](https://ik.imagekit.io/aspofp9v1/amsmarmita/apresenta/04.png?updatedAt=1714670217475)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+!["05.png"](https://ik.imagekit.io/aspofp9v1/amsmarmita/apresenta/05.png?updatedAt=1714670217399)
+!["06.png"](https://ik.imagekit.io/aspofp9v1/amsmarmita/apresenta/06.png?updatedAt=1714670217511)
 
-## Code scaffolding
+!["07.png"](https://ik.imagekit.io/aspofp9v1/amsmarmita/apresenta/07.png?updatedAt=1714670217599)
+!["08.png"](https://ik.imagekit.io/aspofp9v1/amsmarmita/apresenta/08.png?updatedAt=1714670217481)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+!["09.png"](https://ik.imagekit.io/aspofp9v1/amsmarmita/apresenta/09.png?updatedAt=1714670218251)
