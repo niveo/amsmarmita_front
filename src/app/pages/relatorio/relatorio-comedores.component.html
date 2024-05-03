@@ -1,0 +1,8 @@
+<mat-list>
+  @for (item of registros(); track item) {
+    <mat-list-item>
+      <h2 matListItemTitle>{{ item.nome }}</h2>
+      <h3 matListItemMeta>{{ item.quantidade }}</h3>
+    </mat-list-item>
+  }
+</mat-list>

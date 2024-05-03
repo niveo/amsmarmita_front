@@ -15,6 +15,7 @@ export class RelatorioComponent {
   loading = signal(true);
 
   pratos: any[] = [];
+  comedores: any[] = [];
   acompanhamentos: any[] = [];
   ingredientes: any[] = [];
 
@@ -36,11 +37,17 @@ export class RelatorioComponent {
             .subscribe((response) => {
               this.pratos = response.pratos;
               this.acompanhamentos = response.acompanhamentos;
+              this.comedores = response.comedores;
 
               this.totalAcompanhamentosRegistros = this.acompanhamentos.length;
               this.totalAcompanhamentos = this.acompanhamentos.reduce(
                 (previousValue: any, currentValue: any) => {
-                  return previousValue + currentValue.quantidade;
+                  return (
+                    previousValue +
+                    (currentValue.grupo.naoSomarRelatorioView
+                      ? 0
+                      : currentValue.quantidade)
+                  );
                 },
                 0,
               );
@@ -48,7 +55,12 @@ export class RelatorioComponent {
               this.totalPratosRegistros = this.pratos.length;
               this.totalPratos = this.pratos.reduce(
                 (previousValue: any, currentValue: any) => {
-                  return previousValue + currentValue.quantidade;
+                  return (
+                    previousValue +
+                    (currentValue.grupo.naoSomarRelatorioView
+                      ? 0
+                      : currentValue.quantidade)
+                  );
                 },
                 0,
               );

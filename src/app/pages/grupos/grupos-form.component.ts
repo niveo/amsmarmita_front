@@ -33,6 +33,7 @@ export class GrupoFormComponent extends BaseFormComponent<Grupo> {
     observacao: ['', Validators.maxLength(100)],
     cor: [''],
     somarRelatorio: [false],
+    naoSomarRelatorioView: [false],
   });
 
   ngOnInit() {
@@ -44,6 +45,7 @@ export class GrupoFormComponent extends BaseFormComponent<Grupo> {
       observacao: this.data().observacao || '',
       cor: this.data().cor || '',
       somarRelatorio: this.data().somarRelatorio || false,
+      naoSomarRelatorioView: this.data().naoSomarRelatorioView || false,
     });
   }
 
@@ -66,6 +68,8 @@ export class GrupoFormComponent extends BaseFormComponent<Grupo> {
               multiplo: data.multiplo!,
               observacao: data.observacao || '',
               cor: data.cor || '',
+              somarRelatorio: data.somarRelatorio,
+              naoSomarRelatorioView: data.naoSomarRelatorioView,
             }),
             this.service.atualizar({
               id: value!,
@@ -75,6 +79,7 @@ export class GrupoFormComponent extends BaseFormComponent<Grupo> {
               observacao: data.observacao || '',
               cor: data.cor || '',
               somarRelatorio: data.somarRelatorio,
+              naoSomarRelatorioView: data.naoSomarRelatorioView,
             }),
           ),
         ),
@@ -92,6 +97,7 @@ export class GrupoFormComponent extends BaseFormComponent<Grupo> {
             observacao: '',
             cor: '',
             somarRelatorio: false,
+            naoSomarRelatorioView: false
           });
         }),
       )

@@ -4,7 +4,7 @@
   (close)="visibleChange.emit(false)"
   (save)="salvar()"
 >
-  <form [formGroup]="form" >
+  <form [formGroup]="form">
     <mat-form-field class="wf">
       <mat-label>Nome</mat-label>
       <input
@@ -25,7 +25,11 @@
     >
 
     <mat-slide-toggle formControlName="somarRelatorio"
-      >Somar no Relatório</mat-slide-toggle
+      >Somar no Relatório *PDF</mat-slide-toggle
+    >
+
+    <mat-slide-toggle formControlName="naoSomarRelatorioView"
+      >Não Somar no Relatório *Interfaces</mat-slide-toggle
     >
 
     <ngx-colors

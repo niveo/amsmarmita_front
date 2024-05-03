@@ -11,4 +11,5 @@ export class Grupo {
 
   pratoSelecionado?: string;
   somarRelatorio = false;
+  naoSomarRelatorioView = false;
 }

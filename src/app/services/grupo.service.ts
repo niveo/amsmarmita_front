@@ -48,6 +48,7 @@ export class GrupoService extends BaseService<Grupo> {
     observacao,
     cor,
     somarRelatorio,
+    naoSomarRelatorioView,
   }: {
     id: string;
     nome: string;
@@ -56,6 +57,7 @@ export class GrupoService extends BaseService<Grupo> {
     observacao?: string;
     cor?: string;
     somarRelatorio?: boolean;
+    naoSomarRelatorioView?: boolean;
   }) {
     this.iniciarLoading();
     return this.http
@@ -66,6 +68,7 @@ export class GrupoService extends BaseService<Grupo> {
         observacao: observacao || null,
         cor: cor || null,
         somarRelatorio,
+        naoSomarRelatorioView,
       })
       .pipe(finalize(() => this.updateData()));
   }
@@ -77,6 +80,7 @@ export class GrupoService extends BaseService<Grupo> {
     observacao,
     cor,
     somarRelatorio,
+    naoSomarRelatorioView,
   }: {
     nome: string;
     principal: boolean;
@@ -84,6 +88,7 @@ export class GrupoService extends BaseService<Grupo> {
     observacao?: string;
     cor?: string;
     somarRelatorio?: boolean;
+    naoSomarRelatorioView?: boolean;
   }) {
     this.iniciarLoading();
     return this.http
@@ -93,7 +98,8 @@ export class GrupoService extends BaseService<Grupo> {
         multiplo: multiplo,
         observacao: observacao || null,
         cor: cor || null,
-        somarRelatorio
+        somarRelatorio,
+        naoSomarRelatorioView,
       })
       .pipe(finalize(() => this.updateData()));
   }

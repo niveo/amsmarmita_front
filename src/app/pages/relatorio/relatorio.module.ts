@@ -4,12 +4,14 @@ import { RelatorioItemComponent } from './relatorio-item.component';
 import { RelatorioComponent } from './relatorio.component';
 import { RelatorioIngredienteComponent } from './relatorio-ingredientes.component';
 import { SharedModule } from '@navegador/shared.module';
+import { RelatorioComedoresComponent } from './relatorio-comedores.component';
 
 @NgModule({
   declarations: [
     RelatorioComponent,
     RelatorioItemComponent,
     RelatorioIngredienteComponent,
+    RelatorioComedoresComponent,
   ],
   imports: [RelatorioRoutingModule, SharedModule],
 })
