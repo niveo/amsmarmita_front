@@ -25,6 +25,9 @@ export class RelatorioComponent {
   totalPratosRegistros = 0;
   totalAcompanhamentosRegistros = 0;
 
+  totalComedoresRegistros = 0;
+  totalComedoresMarmitas = 0;
+
   ngOnInit() {
     this.activatedRoute.params
       .pipe(
@@ -38,6 +41,14 @@ export class RelatorioComponent {
               this.pratos = response.pratos;
               this.acompanhamentos = response.acompanhamentos;
               this.comedores = response.comedores;
+
+              this.totalComedoresRegistros = this.comedores.length;
+              this.totalComedoresMarmitas = this.comedores.reduce(
+                (pre: any, cur: any) => {
+                  return pre + cur.quantidade;
+                },
+                0,
+              );
 
               this.totalAcompanhamentosRegistros = this.acompanhamentos.length;
               this.totalAcompanhamentos = this.acompanhamentos.reduce(
