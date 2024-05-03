@@ -13,6 +13,7 @@ import {
 import { MatDividerModule } from '@angular/material/divider';
 import { ImagemComponent } from './imagem.component';
 import { Comedor } from '@navegador/model';
+import { TOKEN_PATH_IMAGEKIT } from '@navegador/common/tokens';
 
 @Component({
   selector: 'app-selecao-comedores-component',
@@ -25,7 +26,7 @@ import { Comedor } from '@navegador/model';
       @for (item of data$ | async; track item._id) {
         <mat-list-option (click)="comedorTipoSelecao(item._id)">
           <app-imagem-component
-          borderRadius
+            borderRadius
             matListItemAvatar
             [fileName]="item._id"
             [queryParameters]="
@@ -58,6 +59,12 @@ import { Comedor } from '@navegador/model';
     MatProgressBarModule,
     MatDividerModule,
     ImagemComponent,
+  ],
+  providers: [
+    {
+      provide: TOKEN_PATH_IMAGEKIT,
+      useValue: '/amsmarmita/comedores',
+    },
   ],
 })
 export class SelecaoComedoresComponent {
