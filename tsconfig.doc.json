@@ -1,1 +1,9 @@
-{"include":["src/**/*.ts"],"exclude":["src/**/*.spec.ts", "projects/imagekit-angular"]}
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+      "outDir": "./out-tsc/app",
+      "types": []
+    },
+    "include":["src/**/*.ts"],
+    "exclude":["src/**/*.spec.ts", "projects/imagekit-angular"]
+}
