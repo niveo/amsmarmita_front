@@ -1,9 +1,0 @@
-{
-  "shortSHA": "600d5a6",
-  "SHA": "600d5a6e837d561edc0e592e420cd3ab06488a91",
-  "branch": "develop",
-  "lastCommitAuthor": "amsraimar",
-  "lastCommitTime": "Mon Apr 15 17:14:27 2024 -0300",
-  "lastCommitMessage": "Carregar env com dotenv",
-  "lastCommitNumber": "164"
-}
