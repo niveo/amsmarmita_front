@@ -1,52 +1,49 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { MarmitasComponent } from './pages/marmitas/marmitas.component';
+import { RouterModule, Routes } from '@angular/router'; 
 import { LoginComponent } from './pages/login/login.component';
-import { canActivateTeam } from './auth/auth.service';
-import { PedidosComponent } from './pages/pedidos/pedidos.component';
-import { RelatorioComponent } from './pages/relatorio/relatorio.component';
+import { canActivateTeam } from './auth/auth.service'; 
 
-const routes: Routes = [
+const APP_ROUTES: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'marmitas',
+    redirectTo: 'marmitas'
   },
   {
     path: 'login',
-    component: LoginComponent,
+    component: LoginComponent
   },
   {
     path: 'comedores',
     loadChildren: () =>
       import('./pages/comedores/comedores.module').then(
-        (m) => m.ComedoresModule,
+        (m) => m.ComedoresModule
       ),
-    canActivate: [canActivateTeam],
+    canActivate: [canActivateTeam]
   },
   {
     path: 'marmitas',
     loadChildren: () =>
       import('./pages/marmitas/marmitas.module').then((m) => m.MarmitasModule),
-    canActivate: [canActivateTeam],
+    canActivate: [canActivateTeam]
   },
   {
     path: 'grupos',
     loadChildren: () =>
       import('./pages/grupos/grupos.module').then((m) => m.GruposModule),
-    canActivate: [canActivateTeam],
+    canActivate: [canActivateTeam]
   },
   {
     path: 'pratos',
     loadChildren: () =>
       import('./pages/pratos/pratos.module').then((m) => m.PratosModule),
-    canActivate: [canActivateTeam],
+    canActivate: [canActivateTeam]
   },
   {
     path: 'pedido',
     loadChildren: () =>
       import('./pages/pedidos/pedidos.module').then((m) => m.PedidosModule),
-    canActivate: [canActivateTeam],
+    canActivate: [canActivateTeam]
   },
   {
     path: 'ingredientes',
@@ -54,7 +51,7 @@ const routes: Routes = [
       import('./pages/ingrediente/ingrediente.module').then(
         (m) => m.IngredienteModule,
       ),
-    canActivate: [canActivateTeam],
+    canActivate: [canActivateTeam]
   },
   {
     path: 'relatorio',
@@ -62,12 +59,12 @@ const routes: Routes = [
     import('./pages/relatorio/relatorio.module').then(
       (m) => m.RelatorioModule,
     ),
-    canActivate: [canActivateTeam],
-  },
+    canActivate: [canActivateTeam]
+  }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+  imports: [RouterModule.forRoot(APP_ROUTES)],
+  exports: [RouterModule]
 })
 export class AppRoutingModule {}

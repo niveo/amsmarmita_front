@@ -1,11 +1,10 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { AmsDialogService } from '@navegador/common/confirmacao-dialog';
 import {
   MSG_CONFIRMAR_EXCLUSAO,
   MSG_ERRO_PROCSSAMENTO,
   MSG_EXCLUIR_SUCESSO,
 } from '@navegador/common/constantes';
-import { NotificationService } from 'amslib';
+import { NotificationDialogService, NotificationService } from 'amslib';
 import { BaseService } from '@navegador/services/base.service';
 
 @Component({
@@ -19,7 +18,9 @@ export abstract class BaseContainerComponent<T> {
   loading = computed(() => this.service?.loading() || false);
 
   private readonly _messageService = inject(NotificationService);
-  protected readonly confirmacaoDialog = inject(AmsDialogService);
+  protected readonly _notificationDialogService = inject(
+    NotificationDialogService,
+  );
 
   abstract service: BaseService<T>;
 
@@ -34,12 +35,12 @@ export abstract class BaseContainerComponent<T> {
     } else {
       this.editarFormData.set({} as T);
     }
-    this.editarForm.set(true);    
+    this.editarForm.set(true);
   }
 
   removerRegistro(registroId: string) {
-    this.confirmacaoDialog
-      .confirmacao({ mensagem: MSG_CONFIRMAR_EXCLUSAO })
+    this._notificationDialogService
+      .confirmation({ mensagem: MSG_CONFIRMAR_EXCLUSAO })
       .afterClosed()
       .subscribe((response: boolean) => {
         if (response) this.remover(registroId);

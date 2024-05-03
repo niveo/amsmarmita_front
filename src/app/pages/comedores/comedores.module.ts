@@ -1,51 +1,19 @@
 import { NgModule } from '@angular/core';
-
-import { AsyncPipe, DatePipe, NgOptimizedImage, NgStyle } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
-
 import { ComedoresComponent } from './comedores.component';
 import { ComedoresRoutingModule } from './comedores-routing.module';
 import { ComedoresFormComponent } from './comedores-form.component';
-import { MatListModule } from '@angular/material/list';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon';
-import { AmsDialogModule } from '@navegador/common/confirmacao-dialog';
-import { CentralContainerComponent } from '@navegador/componentes/central-container.component';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { LongPressDirective } from '@navegador/directives/long-press.directive'; 
-import { MatRippleModule } from '@angular/material/core';
 import { UploadComponent } from '@navegador/componentes/upload.component';
 import { ImagemComponent } from '@navegador/componentes/imagem.component';
 import { TOKEN_PATH_IMAGEKIT } from '@navegador/common/tokens';
-import { CentralFormComponent } from '@navegador/componentes/central-form.component';
+import { SharedModule } from '@navegador/shared.module';
 
 @NgModule({
   declarations: [ComedoresComponent, ComedoresFormComponent],
   exports: [ComedoresComponent],
   imports: [
-    NgStyle,
-    AsyncPipe,
-    DatePipe,
-
-    ReactiveFormsModule,
     ComedoresRoutingModule,
-    AmsDialogModule,
-    CentralContainerComponent,
-    CentralFormComponent,
-    LongPressDirective,
 
-    MatListModule,
-    MatButtonModule,
-    MatDividerModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatSnackBarModule,
-    NgOptimizedImage,
-    MatRippleModule,
+    SharedModule,
 
     ImagemComponent,
     UploadComponent,

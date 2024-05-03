@@ -1,9 +1,7 @@
-import { AmsDialogService } from 'src/app/common/confirmacao-dialog';
 import {
   Component,
   computed,
   inject,
-  OnDestroy,
   OnInit,
   Signal,
   ViewChild,
@@ -21,7 +19,7 @@ import {
 } from '@angular/forms';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MSG_CONFIRMAR_EXCLUSAO } from '@navegador/common/constantes';
-import { NotificationService } from 'amslib';
+import { NotificationDialogService, NotificationService } from 'amslib';
 
 @Component({
   selector: 'app-pedidos-component',
@@ -32,7 +30,9 @@ export class PedidosComponent implements OnInit {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly pedidoStore = inject(PedidoStore);
   private readonly formBuilder = inject(FormBuilder);
-  private readonly _confirmacaoDialog = inject(AmsDialogService);
+  private readonly _notificationDialogService = inject(
+    NotificationDialogService,
+  );
   private readonly _messageService = inject(NotificationService);
 
   @ViewChild('drawer', { static: true }) drawer!: MatSidenav;
@@ -85,8 +85,8 @@ export class PedidosComponent implements OnInit {
   }
 
   removerPedidoItem(pratoId: string) {
-    this._confirmacaoDialog
-      .confirmacao({ mensagem: MSG_CONFIRMAR_EXCLUSAO })
+    this._notificationDialogService
+      .confirmation({ mensagem: MSG_CONFIRMAR_EXCLUSAO })
       .afterClosed()
       .subscribe((response) =>
         response ? this.pedidoStore.removerPedidoItem(pratoId) : '',

@@ -1,27 +1,22 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgTemplateOutlet, registerLocaleData } from '@angular/common';
-import pt from '@angular/common/locales/pt';
+import { registerLocaleData } from '@angular/common';
 import { Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { environment } from '../environments/environment'; 
+import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
 import { VersaoSistemaDirective } from './directives/versao-sistema.directive';
 import { CoreModule } from './core.module';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatRippleModule } from '@angular/material/core';
 import { FooterComponent } from './componentes/footer.component';
-import { MatListModule } from '@angular/material/list';
 import { provideImageKitLoader } from '@angular/common';
 import { ImagekitioAngularModule } from 'imagekit-angular';
 import { AppRoutingModule } from './app-routing';
+import { SharedModule } from './shared.module';
 
+import pt from '@angular/common/locales/pt';
 registerLocaleData(pt);
 
 @NgModule({
@@ -32,20 +27,12 @@ registerLocaleData(pt);
     BrowserAnimationsModule,
     VersaoSistemaDirective,
 
-    NgTemplateOutlet,
-
-    MatSnackBarModule,
-
     LoginComponent,
     FooterComponent,
 
-    MatSidenavModule,
     MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    MatRippleModule,
-    MatListModule,
 
+    SharedModule,
     CoreModule,
 
     ImagekitioAngularModule.forRoot({

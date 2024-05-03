@@ -5,3 +5,11 @@ export class NotificationMessageData {
   message?: string;
   tipo?: MessageType;
 }
+
+export class NotificationMessageDialogData {
+  titulo: string;
+  mensagem: string;
+  okButtonTitle?: string = 'Ok';
+  noButtonTitle?: string = 'No';
+  showNoButton?: boolean = false;
+}

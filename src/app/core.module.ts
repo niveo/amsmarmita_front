@@ -1,4 +1,4 @@
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { NgModule, LOCALE_ID, Optional, SkipSelf } from '@angular/core';
 
 import { registerLocaleData } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -29,4 +29,10 @@ registerLocaleData(pt, 'pt', localeExtraPT);
     { provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true },
   ],
 })
-export class CoreModule {}
+export class CoreModule {
+  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
+    if (parentModule) {
+      throw new Error('CoreModule is already loaded. Import only in AppModule');
+    }
+  }
+}

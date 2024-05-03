@@ -2,15 +2,15 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PratoComponent } from './pratos.component';
 
-const routes: Routes = [
+const PRATOS_ROUTES: Routes = [
   {
     path: '',
-    component: PratoComponent,
-  },
+    component: PratoComponent
+  }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild(PRATOS_ROUTES)],
   exports: [RouterModule],
 })
 export class PratosRoutingModule {}

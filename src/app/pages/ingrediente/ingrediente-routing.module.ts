@@ -2,15 +2,15 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router'; 
 import { IngredienteComponent } from './ingrediente.component';
 
-const routes: Routes = [
+const INGREDIENTES_ROUTES: Routes = [
   {
     path: '',
-    component: IngredienteComponent,
-  },
+    component: IngredienteComponent
+  }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild(INGREDIENTES_ROUTES)],
   exports: [RouterModule],
 })
 export class IngredienteRoutingModule {}
