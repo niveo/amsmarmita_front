@@ -1,9 +1,12 @@
 import { NgModule, LOCALE_ID, Optional, SkipSelf } from '@angular/core';
 
 import { registerLocaleData } from '@angular/common';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import pt from '@angular/common/locales/pt';
-import { HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
 
 import { HttpsRequestInterceptor } from './common/requests.interceptor';
@@ -14,12 +17,10 @@ import localeExtraPT from '@angular/common/locales/extra/pt';
 registerLocaleData(pt, 'pt', localeExtraPT);
 
 @NgModule({
-  imports: [HttpClientModule],
-  exports: [HttpClientModule],
+  imports: [],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt' },
     { provide: TOKEN_APP_CONFIG, useValue: environment },
-
     { provide: DEFAULT_TIMEOUT, useValue: 30000 },
     {
       provide: HTTP_INTERCEPTORS,
@@ -27,6 +28,7 @@ registerLocaleData(pt, 'pt', localeExtraPT);
       multi: true,
     },
     { provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true },
+    provideHttpClient(withInterceptorsFromDi()),
   ],
 })
 export class CoreModule {
