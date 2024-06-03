@@ -27,19 +27,23 @@ export class MarmitasItemComponent {
   editar = output<Marmita>();
   remover = output<string>();
 
-  visualizarComedores(marmita: Marmita) {
-    if (isAfter(new Date(), parseJSON(marmita.lancamento!))) {
+  visualizarComedores() {
+    if (this.validarLancamento()) {
       this._messageService.warning(
-        `Essa marmita fechou dia ${format(parseJSON(marmita.lancamento!), 'dd/MM/yyyy')}!`,
+        `Essa marmita fechou dia ${format(parseJSON(this.item().lancamento!), 'dd/MM/yyyy')}!`,
       );
       return;
     }
 
     this._bottomSheet.open(SelecaoComedoresComponent, {
       data: {
-        marmitaId: marmita._id,
+        marmitaId: this.item()._id,
       },
     });
+  }
+
+  validarLancamento(){
+    return isAfter(new Date(), parseJSON(this.item().lancamento!))
   }
 
   carregarRelatorioPdf(marmitaId: string) {
