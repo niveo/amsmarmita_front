@@ -11,6 +11,7 @@ import { SharedModule } from '@navegador/shared.module';
     MarmitasItemComponent,
     MarmitasFormComponent,
   ],
+  exports: [MarmitasFormComponent],
   imports: [MarmitasRoutingModule, SharedModule],
 })
 export class MarmitasModule {}

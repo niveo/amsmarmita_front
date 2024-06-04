@@ -1,0 +1,29 @@
+<central-container
+  [(drawer)]="editarForm"
+  [loading]="loading()"
+  [hideHeader]="!loading()"
+  (incluir)="incluir()"
+>
+  <div drawer class="ovh hf">
+    @if (editarForm()) {
+      <app-marmitas-form-component
+        [(visible)]="editarForm"
+        [data]="editarFormData()"
+        (registroAtualizadoSuccess)="registroAtualizadoSuccess($event)"
+      />
+    }
+  </div>
+
+  <div content class="wf ovh">
+    <mat-card class="content-calendar">
+ 
+        <mat-calendar
+          #calendar
+          (selectedChange)="select($event)"
+          [dateClass]="isSelected"
+          [dateFilter]="myFilter"
+        ></mat-calendar>
+    
+    </mat-card>
+  </div>
+</central-container>

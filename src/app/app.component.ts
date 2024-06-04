@@ -33,9 +33,14 @@ export class AppComponent implements OnDestroy {
     this._authService.isAuthenticatedUser(),
   );
 
-  listaMenu = [
+  listaMenu = [    
     {
       rota: '',
+      titulo: 'Eventos',
+      icone: 'calendar_month',
+    },
+    {
+      rota: 'marmitas',
       titulo: 'Marmitas',
       icone: 'soup_kitchen',
     },

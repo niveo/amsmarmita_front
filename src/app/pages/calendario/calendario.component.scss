@@ -1,0 +1,22 @@
+.content-calendar {
+    width: 300px;
+    padding: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+    .content-calendar {
+        width: 100%;
+    }
+}
+
+.mat-calendar-body-cell.selected > .mat-calendar-body-cell-content.mat-focus-indicator
+{
+  background-color:#105b63!important; 
+  color: #FFFFFF;
+  border-radius: 50%
+}
+
+.drop-calendar
+{
+  width:30rem
+}

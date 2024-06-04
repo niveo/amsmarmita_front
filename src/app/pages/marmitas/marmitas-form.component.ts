@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EMPTY, catchError, finalize, iif, mergeMap, of } from 'rxjs';
 import { MSG_ERRO_PROCSSAMENTO } from '@navegador/common/constantes';
@@ -14,6 +14,8 @@ export class MarmitasFormComponent extends BaseFormComponent<Marmita> {
   private readonly service = inject(MarmitaService);
 
   loading = computed(() => this.service?.loading() || false);
+
+  registroAtualizadoSuccess = output<Marmita>();
 
   form: FormGroup<{
     _id: FormControl<string | null>;
@@ -61,8 +63,9 @@ export class MarmitasFormComponent extends BaseFormComponent<Marmita> {
         }),
       )
       .subscribe({
-        next: () => {
+        next: (response) => {
           this.visibleChange.emit(false);
+          this.registroAtualizadoSuccess.emit(response);
         },
       });
   }

@@ -41,4 +41,11 @@ export class MarmitaService extends BaseService<Marmita> {
       })
       .pipe(finalize(() => this.updateData()));
   }
+
+  listarDatas() {
+    this.iniciarLoading();
+    return this.http
+      .get<Marmita[]>('/marmitas/listardatas')
+      .pipe(finalize(() => this.finalizarLoading()));
+  }
 }

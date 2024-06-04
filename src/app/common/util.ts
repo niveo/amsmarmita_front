@@ -1,3 +1,4 @@
+import { isAfter, parseJSON, format } from 'date-fns';
 import { Validators } from '@angular/forms';
 
 export const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -28,3 +29,9 @@ export const objectToUrl = (value: Object) => {
   }
   return str;
 };
+
+export const isMarmitaExpirada = (lancamento: any) =>
+  isAfter(new Date(), parseJSON(lancamento));
+
+export const msgTextMarmitaExpirada = (lancamento: any) =>
+  `Essa marmita fechou dia ${format(parseJSON(lancamento), 'dd/MM/yyyy')}!`;
