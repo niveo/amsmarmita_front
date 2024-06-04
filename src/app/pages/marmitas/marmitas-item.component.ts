@@ -5,6 +5,10 @@ import { SelecaoComedoresComponent } from '@navegador/componentes/selecao-comedo
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { NotificationService } from 'amslib';
 import { RelatorioService } from '@navegador/services/relatorio.service';
+import {
+  isMarmitaExpirada,
+  msgTextMarmitaExpirada,
+} from '@navegador/common/util';
 @Component({
   selector: 'app-marmitas-item-component',
   templateUrl: './marmitas-item.component.html',
@@ -28,9 +32,9 @@ export class MarmitasItemComponent {
   remover = output<string>();
 
   visualizarComedores() {
-    if (this.validarLancamento()) {
+    if (isMarmitaExpirada(this.item().lancamento)) {
       this._messageService.warning(
-        `Essa marmita fechou dia ${format(parseJSON(this.item().lancamento!), 'dd/MM/yyyy')}!`,
+        msgTextMarmitaExpirada(this.item().lancamento),
       );
       return;
     }
@@ -42,11 +46,11 @@ export class MarmitasItemComponent {
     });
   }
 
-  validarLancamento(){
-    return isAfter(new Date(), parseJSON(this.item().lancamento!))
-  }
-
   carregarRelatorioPdf(marmitaId: string) {
     this._relatorioService.carregarRelatorioPdf(marmitaId);
+  }
+
+  validarLancamento() {
+    return isMarmitaExpirada(this.item().lancamento);
   }
 }

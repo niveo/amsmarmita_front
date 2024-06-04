@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, output, signal } from '@angular/core';
 import {
   MSG_CONFIRMAR_EXCLUSAO,
   MSG_ERRO_PROCSSAMENTO,
@@ -14,10 +14,11 @@ import { BaseService } from '@navegador/services/base.service';
 export abstract class BaseContainerComponent<T> {
   editarFormData = signal<T>({} as T);
   editarForm = signal(false);
-
   loading = computed(() => this.service?.loading() || false);
 
-  private readonly _messageService = inject(NotificationService);
+  registroRemovidoSuccess = output<String>();
+
+  protected readonly _messageService = inject(NotificationService);
   protected readonly _notificationDialogService = inject(
     NotificationDialogService,
   );
@@ -54,6 +55,7 @@ export abstract class BaseContainerComponent<T> {
         this._messageService.error(MSG_ERRO_PROCSSAMENTO, error);
       },
       next: () => {
+        this.registroRemovidoSuccess.emit(registroId);
         this._messageService.info(MSG_EXCLUIR_SUCESSO);
       },
     });
