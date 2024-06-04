@@ -2,16 +2,22 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router'; 
 import { LoginComponent } from './pages/login/login.component';
 import { canActivateTeam } from './auth/auth.service'; 
+import { CalendarioComponent } from './pages/calendario/calendario.component';
 
 const APP_ROUTES: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'marmitas'
+    redirectTo: 'eventos'
   },
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'eventos',
+    component: CalendarioComponent,
+    canActivate: [canActivateTeam]
   },
   {
     path: 'comedores',
