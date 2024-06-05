@@ -6,6 +6,7 @@ import {
 } from '@navegador/common/constantes';
 import { NotificationDialogService, NotificationService } from 'amslib';
 import { BaseService } from '@navegador/services/base.service';
+import { parseErroResponse } from '@navegador/common/util';
 
 @Component({
   selector: '',
@@ -52,7 +53,7 @@ export abstract class BaseContainerComponent<T> {
     this.service?.delete(registroId).subscribe({
       error: (error: any) => {
         console.error(error);
-        this._messageService.error(MSG_ERRO_PROCSSAMENTO, error);
+        this._messageService.error(MSG_ERRO_PROCSSAMENTO, parseErroResponse(error));
       },
       next: () => {
         this.registroRemovidoSuccess.emit(registroId);

@@ -4,11 +4,8 @@ import {
   ViewChild,
   ViewEncapsulation,
   inject,
-  input,
 } from '@angular/core';
-import { MatCardModule } from '@angular/material/card';
-import { MatCalendar, MatDatepickerModule } from '@angular/material/datepicker';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatCalendar } from '@angular/material/datepicker';
 import { BaseContainerComponent } from '@navegador/componentes/base-container.component';
 import { Marmita } from '@navegador/model';
 import { MarmitaService } from '@navegador/services/marmita.service';
@@ -20,6 +17,8 @@ import {
   isMarmitaExpirada,
   msgTextMarmitaExpirada,
 } from '@navegador/common/util';
+import { SelecaoComedoresComponent } from '@navegador/componentes/selecao-comedores.component';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-calendario-component',
@@ -34,7 +33,7 @@ export class CalendarioComponent
   implements OnInit
 {
   override readonly service = inject(MarmitaService);
-  daysSelected: any[] = [];
+  private readonly _bottomSheet = inject(MatBottomSheet);
 
   private registros: Marmita[] = [];
 
@@ -44,27 +43,6 @@ export class CalendarioComponent
     return isAfter(d, new Date());
   };
 
-  constructor() {
-    super();
-    this.registroRemovidoSuccess.subscribe((registroId) => {
-      const registroIndex = this.registros.findIndex(
-        (f) => f._id === registroId,
-      );
-      const index = this.daysSelected.findIndex(
-        (x) => x == this.formatarData(this.registros[registroIndex].lancamento),
-      );
-      this.daysSelected.splice(index, 1);
-      this.registros.splice(registroIndex, 1);
-      this.calendar.updateTodaysDate();
-    });
-  }
-
-  registroAtualizadoSuccess(registro: Marmita) {
-    this.registros.push(registro);
-    this.daysSelected.push(this.formatarData(registro.lancamento));
-    this.calendar.updateTodaysDate();
-  }
-
   ngOnInit(): void {
     this.service
       .listarDatas()
@@ -72,9 +50,6 @@ export class CalendarioComponent
       .subscribe({
         next: (response) => {
           this.registros = response;
-          this.daysSelected = response.map((m) =>
-            this.formatarData(m.lancamento),
-          );
         },
       });
   }
@@ -86,7 +61,9 @@ export class CalendarioComponent
       ('00' + (event.getMonth() + 1)).slice(-2) +
       '-' +
       ('00' + event.getDate()).slice(-2);
-    return this.daysSelected.find((x) => x == date) ? 'selected' : null;
+    return this.registros.find((x) => this.formatarData(x.lancamento) == date)
+      ? 'selected'
+      : null;
   };
 
   select(event: any) {
@@ -97,24 +74,20 @@ export class CalendarioComponent
       '-' +
       ('00' + event.getDate()).slice(-2);
 
-    const index = this.daysSelected.findIndex((x) => x == date);
+    const registro = this.registros.find(
+      (x) => this.formatarData(x.lancamento) == date,
+    );
 
-    if (index < 0) {
-      const m = new Marmita();
-      m.lancamento = event;
-      this.editar(m);
-    } else {
-      const registro = this.registros.find(
-        (f) => this.formatarData(f.lancamento) === date,
-      );
-      if (isMarmitaExpirada(registro.lancamento)) {
-        this._messageService.warning(
-          msgTextMarmitaExpirada(registro.lancamento),
-        );
-        return;
-      }
-      super.removerRegistro(registro._id);
+    if (isMarmitaExpirada(registro.lancamento)) {
+      this._messageService.warning(msgTextMarmitaExpirada(registro.lancamento));
+      return;
     }
+
+    this._bottomSheet.open(SelecaoComedoresComponent, {
+      data: {
+        marmitaId: registro._id,
+      },
+    });
   }
 
   private formatarData(lancamento: any) {

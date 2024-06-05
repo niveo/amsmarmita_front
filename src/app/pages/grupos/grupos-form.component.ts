@@ -4,7 +4,7 @@ import { EMPTY, catchError, finalize, iif, mergeMap, of } from 'rxjs';
 import { MSG_ERRO_PROCSSAMENTO } from '@navegador/common/constantes';
 import { Grupo } from '@navegador/model';
 import { GrupoService } from '@navegador/services/grupo.service';
-import { validarFormulario } from '@navegador/common/util';
+import { parseErroResponse, validarFormulario } from '@navegador/common/util';
 import { BaseFormComponent } from '@navegador/componentes/base-form.component';
 
 @Component({
@@ -85,7 +85,10 @@ export class GrupoFormComponent extends BaseFormComponent<Grupo> {
         ),
         catchError((error: any) => {
           console.error(error);
-          this._messageService.error(MSG_ERRO_PROCSSAMENTO, JSON.parse(error));
+          this._messageService.error(
+            MSG_ERRO_PROCSSAMENTO,
+            parseErroResponse(error),
+          );
           return EMPTY;
         }),
         finalize(() => {
@@ -97,7 +100,7 @@ export class GrupoFormComponent extends BaseFormComponent<Grupo> {
             observacao: '',
             cor: '',
             somarRelatorio: false,
-            naoSomarRelatorioView: false
+            naoSomarRelatorioView: false,
           });
         }),
       )

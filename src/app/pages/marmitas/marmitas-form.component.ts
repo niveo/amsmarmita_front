@@ -5,6 +5,7 @@ import { MSG_ERRO_PROCSSAMENTO } from '@navegador/common/constantes';
 import { Marmita } from '@navegador/model';
 import { MarmitaService } from '@navegador/services/marmita.service';
 import { BaseFormComponent } from '@navegador/componentes/base-form.component';
+import { parseErroResponse } from '@navegador/common/util';
 
 @Component({
   selector: 'app-marmitas-form-component',
@@ -51,7 +52,7 @@ export class MarmitasFormComponent extends BaseFormComponent<Marmita> {
         ),
         catchError((error: any) => {
           console.error(error);
-          this._messageService.error(MSG_ERRO_PROCSSAMENTO, JSON.parse(error));
+          this._messageService.error(MSG_ERRO_PROCSSAMENTO, parseErroResponse(error));
           return EMPTY;
         }),
         finalize(() => {

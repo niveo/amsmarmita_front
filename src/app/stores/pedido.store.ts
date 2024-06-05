@@ -45,7 +45,7 @@ export class PedidoStore extends BaseStore {
           catchError((response: HttpErrorResponse) => {
             console.error(response.error);
             if (response.error.tipo === 0)
-              this.errorMessage(MSG_ERRO_PROCSSAMENTO, response.error);
+              this.errorMessage(MSG_ERRO_PROCSSAMENTO, response);
 
             this.pratoStore.vincularPedidoItem([]);
             this._dataSource.next([]);
