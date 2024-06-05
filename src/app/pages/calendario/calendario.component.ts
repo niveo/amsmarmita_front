@@ -78,6 +78,8 @@ export class CalendarioComponent
       (x) => this.formatarData(x.lancamento) == date,
     );
 
+    if(!registro)return;
+
     if (isMarmitaExpirada(registro.lancamento)) {
       this._messageService.warning(msgTextMarmitaExpirada(registro.lancamento));
       return;
