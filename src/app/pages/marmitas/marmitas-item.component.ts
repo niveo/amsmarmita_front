@@ -1,4 +1,4 @@
-import { isAfter, parseJSON, format } from 'date-fns';
+import { isSameMonth, isSameYear, parseISO } from 'date-fns';
 import { Component, inject, input, output } from '@angular/core';
 import { Marmita } from '@navegador/model';
 import { SelecaoComedoresComponent } from '@navegador/componentes/selecao-comedores.component';
@@ -52,5 +52,11 @@ export class MarmitasItemComponent {
 
   validarLancamento() {
     return isMarmitaExpirada(this.item().lancamento);
+  }
+
+  isSameMonthisSameYeaLancamento() {
+    const date = new Date();
+    const lancamento = parseISO(String(this.item().lancamento));
+    return isSameMonth(lancamento, date) && isSameYear(lancamento, date);
   }
 }

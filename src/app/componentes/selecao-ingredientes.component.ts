@@ -20,41 +20,54 @@ import {
   MatAutocompleteModule,
   MatAutocompleteTrigger,
 } from '@angular/material/autocomplete';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { IngredienteModule } from '@navegador/pages/ingrediente/ingrediente.module';
+import { IngredienteFormDialogComponent } from '@navegador/pages/ingrediente/ingrediente-form-dialog.component';
 
 @Component({
   selector: 'app-selecao-ingredientes-component',
-  template: `<mat-form-field class="wf">
-    <mat-label>Ingredientes</mat-label>
-    <mat-chip-grid #chipGrid>
-      @for (ingrediente of dataFilter$ | async; track ingrediente._id) {
-        <mat-chip-row (removed)="remove(ingrediente)">
-          {{ ingrediente.nome }}
-          <button matChipRemove>
-            <mat-icon>cancel</mat-icon>
-          </button>
-        </mat-chip-row>
-      }
-    </mat-chip-grid>
-    <input
-      placeholder="Novo Ingrediente"
-      #dataInput
-      [formControl]="ingredienteCtrl"
-      [matChipInputFor]="chipGrid"
-      [matAutocomplete]="auto"
-      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-      (matChipInputTokenEnd)="add($event); trigger.closePanel()"
-    />
-    <mat-autocomplete
-      #auto="matAutocomplete"
-      (optionSelected)="selected($event.option.value)"
+  template: `<div class="wf fx-row">
+    <mat-form-field class="wf fx-flex">
+      <mat-label>Ingredientes</mat-label>
+      <mat-chip-grid #chipGrid>
+        @for (ingrediente of dataFilter$ | async; track ingrediente._id) {
+          <mat-chip-row (removed)="remove(ingrediente)">
+            {{ ingrediente.nome }}
+            <button matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip-row>
+        }
+      </mat-chip-grid>
+      <input
+        #dataInput
+        [formControl]="ingredienteCtrl"
+        [matChipInputFor]="chipGrid"
+        [matAutocomplete]="auto"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        (matChipInputTokenEnd)="trigger.closePanel()"
+      />
+      <mat-autocomplete
+        #auto="matAutocomplete"
+        (optionSelected)="selected($event.option.value)"
+      >
+        @for (ingrediente of data$ | async; track ingrediente._id) {
+          <mat-option [value]="ingrediente._id">{{
+            ingrediente.nome
+          }}</mat-option>
+        }
+      </mat-autocomplete>
+    </mat-form-field>
+    <button
+      style="top: 5px;"
+      matSuffix
+      mat-icon-button
+      (click)="lancarNovoIngrediente()"
     >
-      @for (ingrediente of data$ | async; track ingrediente._id) {
-        <mat-option [value]="ingrediente._id">{{
-          ingrediente.nome
-        }}</mat-option>
-      }
-    </mat-autocomplete>
-  </mat-form-field>`,
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>`,
   standalone: true,
   imports: [
     FormsModule,
@@ -64,12 +77,16 @@ import {
     MatAutocompleteModule,
     ReactiveFormsModule,
     AsyncPipe,
+    MatButtonModule,
+    MatDialogModule,
+    IngredienteModule,
   ],
 })
 export class SelecaoIngredientesComponent {
   selecionados = input<string[]>([]);
   selecionadosChange = output<string[]>();
   private readonly service = inject(IngredienteService);
+  private readonly modal = inject(MatDialog);
 
   separatorKeysCodes: number[] = [ENTER, COMMA];
   ingredienteCtrl = new FormControl('');
@@ -88,8 +105,7 @@ export class SelecaoIngredientesComponent {
   allIngredientes: Ingrediente[] = [];
 
   constructor() {
-    //take para limitar o carregamento caso tenha atualização no serviço que usa cache
-    this.service.data$.pipe(take(1)).subscribe((response) => {
+    this.service.data$.subscribe((response) => {
       this.allIngredientes = response;
       this.carregarIngredienteSelecionados(this.selecionados());
     });
@@ -147,5 +163,9 @@ export class SelecaoIngredientesComponent {
 
     this.dataInput.nativeElement.value = '';
     this.ingredienteCtrl.setValue(null);
+  }
+
+  lancarNovoIngrediente() {
+    this.modal.open(IngredienteFormDialogComponent);
   }
 }

@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { DestroyRef, inject, signal } from '@angular/core';
+import { parseErroResponse } from '@navegador/common/util';
 import { NotificationService } from 'amslib';
 
 export abstract class BaseStore {
@@ -20,10 +21,7 @@ export abstract class BaseStore {
     this._messageService.success(message);
   }
 
-  errorMessage(titulo: string, mensagem: any) {
-    if (mensagem instanceof HttpErrorResponse) {
-      mensagem = JSON.stringify(mensagem.error);
-    }
-    this._messageService.error(titulo, mensagem);
+  errorMessage(titulo: string, error: any) {
+    this._messageService.error(titulo, parseErroResponse(error));
   }
 }

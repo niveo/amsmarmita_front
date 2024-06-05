@@ -3,7 +3,7 @@ import { Grupo, Prato } from '@navegador/model';
 import { GrupoService } from '@navegador/services/grupo.service';
 import { FormGroup, Validators } from '@angular/forms';
 import { ModelFormPrato } from './pratos.component';
-import { validarFormulario } from '@navegador/common/util';
+import { parseErroResponse, validarFormulario } from '@navegador/common/util';
 import { PratoStore } from '@navegador/stores/prato.store';
 import { EMPTY, catchError, finalize } from 'rxjs';
 import { MSG_ERRO_PROCSSAMENTO } from '@navegador/common/constantes';
@@ -74,7 +74,7 @@ export class PratosFormComponent
       .pipe(
         catchError((error: any) => {
           console.error(error);
-          this._messageService.error(MSG_ERRO_PROCSSAMENTO, JSON.parse(error));
+          this._messageService.error(MSG_ERRO_PROCSSAMENTO, parseErroResponse(error));
           return EMPTY;
         }),
         finalize(() => {

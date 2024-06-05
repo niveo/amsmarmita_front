@@ -1,5 +1,9 @@
 <div style="padding: 5px">
-  <mat-card>
+  <mat-card
+    [ngStyle]="{
+      'border-left': '5px solid '+ (isSameMonthisSameYeaLancamento() ? 'rgb(16, 91, 99)' : 'gray')
+    }"
+  >
     <mat-card-header>
       <mat-card-title>{{
         item().lancamento | date: "dd/MM/yyyy"
@@ -35,16 +39,21 @@
       >
         <mat-icon>description</mat-icon>
       </button>
-      <button
-        mat-button
-         (click)="carregarRelatorioPdf(item()._id)"
-      >
+      <button mat-button (click)="carregarRelatorioPdf(item()._id)">
         <mat-icon>print</mat-icon>
       </button>
-      <button mat-button (click)="editar.emit(item())" [disabled]="validarLancamento()">
+      <button
+        mat-button
+        (click)="editar.emit(item())"
+        [disabled]="validarLancamento()"
+      >
         <mat-icon>edit</mat-icon>
       </button>
-      <button mat-button (click)="remover.emit(item()._id!)" [disabled]="validarLancamento()">
+      <button
+        mat-button
+        (click)="remover.emit(item()._id!)"
+        [disabled]="validarLancamento()"
+      >
         <mat-icon class="cred">delete</mat-icon>
       </button>
     </mat-card-actions>

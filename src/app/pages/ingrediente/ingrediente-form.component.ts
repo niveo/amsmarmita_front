@@ -1,3 +1,4 @@
+import { MSG_ATUALIZADO_SUCESSO } from './../../common/constantes';
 import { Component, computed, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EMPTY, catchError, finalize, iif, mergeMap, of } from 'rxjs';
@@ -5,6 +6,7 @@ import { MSG_ERRO_PROCSSAMENTO } from '@navegador/common/constantes';
 import { Ingrediente } from '@navegador/model';
 import { IngredienteService } from '@navegador/services/ingrediente.service';
 import { BaseFormComponent } from '@navegador/componentes/base-form.component';
+import { parseErroResponse } from '@navegador/common/util';
 
 @Component({
   selector: 'app-ingrediente-form-component',
@@ -52,7 +54,7 @@ export class IngredienteFormComponent extends BaseFormComponent<Ingrediente> {
         ),
         catchError((error: any) => {
           console.error(error);
-          this._messageService.error(MSG_ERRO_PROCSSAMENTO, JSON.parse(error));
+          this._messageService.error(MSG_ERRO_PROCSSAMENTO, parseErroResponse(error));
           return EMPTY;
         }),
         finalize(() => {
@@ -66,6 +68,7 @@ export class IngredienteFormComponent extends BaseFormComponent<Ingrediente> {
       .subscribe({
         next: () => {
           this.visibleChange.emit(false);
+          this._messageService.info(MSG_ATUALIZADO_SUCESSO);
         },
       });
   }
