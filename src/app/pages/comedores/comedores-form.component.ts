@@ -29,7 +29,7 @@ export class ComedoresFormComponent extends BaseFormComponent<Comedor> {
     _id: [''],
     nome: [
       '',
-      [Validators.required, Validators.minLength(5), Validators.maxLength(25)],
+      [Validators.required, Validators.minLength(3), Validators.maxLength(25)],
     ],
   });
 
