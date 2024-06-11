@@ -35,6 +35,10 @@ body {
   @include fx-flex(30%);
 }
 
+.fx-flex50 {
+  @include fx-flex(50%);
+}
+
 .fx-row {
   @extend .fx-d-flex;
   flex-direction: row;

@@ -1,4 +1,4 @@
-import { isAfter, parseJSON, format } from 'date-fns';
+import { isAfter, parseJSON, format, isSameMonth, parseISO, isSameYear } from 'date-fns';
 import { Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MSG_ERRO_PROCSSAMENTO } from './constantes';
@@ -46,3 +46,10 @@ export const parseErroResponse = (erro) => {
   }
   return MSG_ERRO_PROCSSAMENTO;
 };
+
+
+export const isSameMonthisSameYeaLancamento = (pLancamento: any) => {
+  const date = new Date();
+  const lancamento = parseISO(String(pLancamento));
+  return isSameMonth(lancamento, date) && isSameYear(lancamento, date);
+}
