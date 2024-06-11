@@ -1,10 +1,36 @@
-<mat-card class="content-calendar">
- 
-  <mat-calendar
-    #calendar
-    (selectedChange)="select($event)"
-    [dateClass]="isSelected"
-    [dateFilter]="myFilter"
-  ></mat-calendar>
-
-</mat-card>
+<div class="root-calendar">
+  <mat-card class="content-calendar">
+    <mat-card-content>
+      <mat-calendar
+        #calendar
+        (selectedChange)="select($event)"
+        [dateClass]="isSelected"
+        [dateFilter]="myFilter"
+      ></mat-calendar
+    ></mat-card-content>
+    <mat-card-footer style="padding: 5px; text-align: center;">
+      <app-marmita-dias-componet [registro]="registro()" />
+    </mat-card-footer>
+  </mat-card>
+  <div class="fx-column content-datas fx-flex">
+    @for (item of registros; track item._id) {
+      <div
+        class="fx-row"
+        style="gap: 5px; align-items: center"
+        [ngStyle]="{
+          'border-left':
+            '3px solid ' +
+            (isSameMonthisSameYeaLancamento(item.lancamento)
+              ? 'rgb(16, 91, 99)'
+              : 'gray')
+        }"
+      >
+        <span style="font-weight: bold; padding-left: 2px">
+          {{ item.lancamento | date: "dd/MM/yyyy" }}</span
+        >
+        <app-marmita-dias-componet class="fx-flex" [registro]="item" />
+      </div>
+      <mat-divider></mat-divider>
+    }
+  </div>
+</div>

@@ -7,6 +7,7 @@ import { NotificationService } from 'amslib';
 import { RelatorioService } from '@navegador/services/relatorio.service';
 import {
   isMarmitaExpirada,
+  isSameMonthisSameYeaLancamento,
   msgTextMarmitaExpirada,
 } from '@navegador/common/util';
 @Component({
@@ -54,9 +55,6 @@ export class MarmitasItemComponent {
     return isMarmitaExpirada(this.item().lancamento);
   }
 
-  isSameMonthisSameYeaLancamento() {
-    const date = new Date();
-    const lancamento = parseISO(String(this.item().lancamento));
-    return isSameMonth(lancamento, date) && isSameYear(lancamento, date);
-  }
+  isSameMonthisSameYeaLancamento = () =>
+    isSameMonthisSameYeaLancamento(this.item().lancamento);
 }
