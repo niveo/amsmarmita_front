@@ -6,7 +6,6 @@ export class Ingrediente {
   nome!: string;
   observacao?: string;
   tempero? = false;
-  medida?: TipoMedida;
   tipo?: TipoIngrediente;
 
   embalagemQuantidade?: number;

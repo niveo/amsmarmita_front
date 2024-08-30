@@ -1,0 +1,35 @@
+<div class="fx-column">
+    <form [formGroup]="form" class="fx-column">
+        <mat-form-field class="wf fx-flex">
+            <mat-label>Ingrediente</mat-label>
+            <mat-select formControlName="ingrediente">
+                @for (ing of allIngredientes; track ing._id) {
+                <mat-option [value]="ing._id">{{ing.nome}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="wf fx-flex">
+            <mat-label>Medida</mat-label>
+            <mat-select formControlName="medida">
+                @for (medida of medidas; track medida) {
+                <mat-option [value]="medida">{{medida | medidanome}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="wf fx-flex">
+            <mat-label>Quantidade</mat-label>
+            <input matInput placeholder="Quantidade" formControlName="quantidade"
+                placeholder="Informe aqui uma quantidade" [tabIndex]="-1" type="number" />
+        </mat-form-field>
+    </form>
+    <div class="fx-column" style="align-items: end;">
+        <button mat-raised-button color="primary" (click)="salvar()"   [disabled]="!form.valid">
+            Salvar
+            <mat-icon>
+                save
+            </mat-icon>
+        </button>
+    </div>
+</div>

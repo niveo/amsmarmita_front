@@ -7,11 +7,13 @@ export class Prato {
   composicoes?: string[] = [];
   observacao?: string;
 
-  icone?: string; 
+  icone?: string;
 
   ingredientes?: string[] = [];
 
   createdAt?: number;
-  updatedAt?: number; 
+  updatedAt?: number;
+
+  pratoIngredientes?: { ingrediente: any; quantidade: number; medida: string }[];
 }
 

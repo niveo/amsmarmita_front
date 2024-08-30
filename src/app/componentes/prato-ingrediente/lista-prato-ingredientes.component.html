@@ -1,0 +1,19 @@
+<div class="fx-row wf">
+    <div class="wf fx-flex">
+        <mat-chip-set>
+            @for (item of registros(); track item._id) {
+            <mat-chip (click)="editar(item)">
+                <span>{{item.ingrediente.nome}} {{item.quantidade}}{{item.medida}}</span>
+                <button matChipRemove (click)="removerRegistro(item)">
+                    <mat-icon class="cred">delete</mat-icon>
+                </button>
+            </mat-chip>
+            }
+        </mat-chip-set>
+    </div>
+    <div>
+        <button mat-icon-button (click)="incluir()">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+</div>

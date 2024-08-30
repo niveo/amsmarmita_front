@@ -29,10 +29,8 @@
       }
     </mat-select>
   </mat-form-field>
-
-  <app-selecao-ingredientes-component
-    [(selecionados)]="form.value.ingredientes!"
-  />
+ 
+  <app-lista-prato-ingredientes-component [registros]="form.value.pratoIngredientes"/>
 
   <mat-form-field class="wf">
     <mat-label>Observação</mat-label>

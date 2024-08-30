@@ -20,6 +20,8 @@ export const getFormValidacoes = (max: number) => [
 ];
 
 export const isEmpty = (value: any) => value === undefined || value === null;
+export const isEmptyStr = (value: any) => value === undefined || value === null || value === '';
+
 
 export const isBooleanTransform = (v: boolean | string) =>
   typeof v === 'string' ? v === '' : v;

@@ -34,6 +34,7 @@ export class PratoService extends BaseService<Prato> {
     ingredientes,
     icone,
     imagem,
+    pratoIngredientes
   }: {
     id: string;
     nome: string;
@@ -43,6 +44,7 @@ export class PratoService extends BaseService<Prato> {
     ingredientes?: string[] | null;
     icone?: string | null;
     imagem?: string | null;
+    pratoIngredientes?: any[] | null;
   }) {
     this.iniciarLoading();
     return this.http
@@ -54,6 +56,7 @@ export class PratoService extends BaseService<Prato> {
         ingredientes,
         icone,
         imagem,
+        pratoIngredientes
       })
       .pipe(finalize(() => this.finalizarLoading()));
   }
@@ -66,6 +69,7 @@ export class PratoService extends BaseService<Prato> {
     ingredientes,
     icone,
     imagem,
+    pratoIngredientes
   }: {
     nome: string;
     grupoId: string;
@@ -74,6 +78,7 @@ export class PratoService extends BaseService<Prato> {
     ingredientes?: string[] | null;
     icone?: string | null;
     imagem?: string | null;
+    pratoIngredientes?: any[] | null;
   }) {
     this.iniciarLoading();
     return this.http
@@ -85,6 +90,7 @@ export class PratoService extends BaseService<Prato> {
         ingredientes,
         icone,
         imagem,
+        pratoIngredientes
       })
       .pipe(finalize(() => this.finalizarLoading()));
   }

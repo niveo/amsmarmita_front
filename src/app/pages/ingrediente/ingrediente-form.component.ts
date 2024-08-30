@@ -27,7 +27,6 @@ export class IngredienteFormComponent extends BaseFormComponent<Ingrediente> {
     nome: FormControl<string | null>;
     observacao: FormControl<string | null>;
     tipo: FormControl<string | null>;
-    medida: FormControl<string | null>;
     embalagemQuantidade: FormControl<number | null>;
     embalagemMedida: FormControl<string | null>;
   }> = this.formBuilder.group({
@@ -38,7 +37,6 @@ export class IngredienteFormComponent extends BaseFormComponent<Ingrediente> {
     ],
     observacao: ['', Validators.maxLength(100)],
     tipo: [''],
-    medida: [''],
     embalagemQuantidade: [],
     embalagemMedida: [''],
   });
@@ -49,7 +47,6 @@ export class IngredienteFormComponent extends BaseFormComponent<Ingrediente> {
       nome: this.data().nome || '',
       observacao: this.data().observacao || '',
       tipo: this.data().tipo || null,
-      medida: this.data().medida || null,
       embalagemQuantidade: this.data().embalagemQuantidade || null,
       embalagemMedida: this.data().embalagemMedida || null,
     });
@@ -65,8 +62,8 @@ export class IngredienteFormComponent extends BaseFormComponent<Ingrediente> {
         mergeMap((value) =>
           iif(
             () => !value,
-            this.service.inlcluir(data.nome, data.observacao, data.tipo, data.medida, data.embalagemQuantidade, data.embalagemMedida),
-            this.service.atualizar(value!, data.nome, data.observacao, data.tipo, data.medida, data.embalagemQuantidade, data.embalagemMedida),
+            this.service.inlcluir(data.nome, data.observacao, data.tipo,data.embalagemQuantidade, data.embalagemMedida),
+            this.service.atualizar(value!, data.nome, data.observacao, data.tipo, data.embalagemQuantidade, data.embalagemMedida),
           ),
         ),
         catchError((error: any) => {
@@ -80,7 +77,6 @@ export class IngredienteFormComponent extends BaseFormComponent<Ingrediente> {
             nome: null,
             observacao: null,
             tipo: null,
-            medida: null,
             embalagemQuantidade: null,
             embalagemMedida: null,
           });

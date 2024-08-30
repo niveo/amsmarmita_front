@@ -22,7 +22,8 @@ export class ModelFormPrato {
   composicoes!: FormControl<string[] | null>;
   observacao!: FormControl<string | null>;
   ingredientes!: FormControl<string[] | null>;
-  icone!: FormControl<string | null>; 
+  icone!: FormControl<string | null>;
+  pratoIngredientes!: FormControl<any[] | null>;
 }
 
 @Component({
@@ -33,7 +34,6 @@ export class ModelFormPrato {
 export class PratoComponent extends BaseContainerComponent<Prato> {
 
   override readonly service = inject(PratoService);
-  
   readonly pratoStore = inject(PratoStore);
 
   eventIncluirPratoPedido = output<{

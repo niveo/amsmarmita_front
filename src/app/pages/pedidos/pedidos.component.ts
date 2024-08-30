@@ -98,8 +98,6 @@ export class PedidosComponent implements OnInit {
     pratoId: string;
     grupoId: string;
   }) {
-    console.log('incluirPratoPedido: ', value);
-
     this.atualizarIncluirPrato({
       pedidoItemId: null,
       nome: value.nome,
@@ -112,7 +110,6 @@ export class PedidosComponent implements OnInit {
 
   editarPedidoItem(pratoId: string) {
     const pedidoItem = this.pedidoStore.obterPedidoItem(pratoId);
-    console.log('editarPedidoItem: ', pedidoItem);
     this.atualizarIncluirPrato({
       pedidoItemId: pedidoItem!._id!,
       nome: pedidoItem!.prato!.nome!,

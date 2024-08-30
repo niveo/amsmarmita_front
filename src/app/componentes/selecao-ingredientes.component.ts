@@ -27,47 +27,7 @@ import { IngredienteFormDialogComponent } from '@navegador/pages/ingrediente/ing
 
 @Component({
   selector: 'app-selecao-ingredientes-component',
-  template: `<div class="wf fx-row">
-    <mat-form-field class="wf fx-flex">
-      <mat-label>Ingredientes</mat-label>
-      <mat-chip-grid #chipGrid>
-        @for (ingrediente of dataFilter$ | async; track ingrediente._id) {
-          <mat-chip-row (removed)="remove(ingrediente)">
-            {{ ingrediente.nome }}
-            <button matChipRemove>
-              <mat-icon>cancel</mat-icon>
-            </button>
-          </mat-chip-row>
-        }
-      </mat-chip-grid>
-      <input
-        #dataInput
-        [formControl]="ingredienteCtrl"
-        [matChipInputFor]="chipGrid"
-        [matAutocomplete]="auto"
-        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-        (matChipInputTokenEnd)="trigger.closePanel()"
-      />
-      <mat-autocomplete
-        #auto="matAutocomplete"
-        (optionSelected)="selected($event.option.value)"
-      >
-        @for (ingrediente of data$ | async; track ingrediente._id) {
-          <mat-option [value]="ingrediente._id">{{
-            ingrediente.nome
-          }}</mat-option>
-        }
-      </mat-autocomplete>
-    </mat-form-field>
-    <button
-      style="top: 5px;"
-      matSuffix
-      mat-icon-button
-      (click)="lancarNovoIngrediente()"
-    >
-      <mat-icon>add</mat-icon>
-    </button>
-  </div>`,
+  templateUrl: './selecao-ingredientes.component.html',
   standalone: true,
   imports: [
     FormsModule,

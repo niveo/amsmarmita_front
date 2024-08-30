@@ -9,6 +9,7 @@ import { UploadComponent } from '@navegador/componentes/upload.component';
 import { TOKEN_PATH_IMAGEKIT } from '@navegador/common/tokens';
 import { ImagemComponent } from '@navegador/componentes/imagem.component';
 import { SharedModule } from '@navegador/shared.module';
+import { ListaPratoIngredientesComponent } from '@navegador/componentes/prato-ingrediente/lista-prato-ingredientes.component';
 
 @NgModule({
   declarations: [PratoComponent, PratosFormComponent],
@@ -19,6 +20,7 @@ import { SharedModule } from '@navegador/shared.module';
     CorBoardaDirective,
     GrupoPrincipalDirective,
     SelecaoIngredientesComponent,
+    ListaPratoIngredientesComponent,
 
     SharedModule,
 

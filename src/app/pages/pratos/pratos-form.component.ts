@@ -16,8 +16,7 @@ import { BaseFormComponent } from '@navegador/componentes/base-form.component';
 })
 export class PratosFormComponent
   extends BaseFormComponent<Prato>
-  implements OnInit
-{
+  implements OnInit {
   private readonly grupoService = inject(GrupoService);
   readonly pratoStore = inject(PratoStore);
 
@@ -34,6 +33,7 @@ export class PratosFormComponent
     observacao: ['', Validators.maxLength(100)],
     ingredientes: [['']],
     icone: ['', Validators.maxLength(50)],
+    pratoIngredientes: []
   });
 
   loading = computed(() => this.pratoStore?.loading() || false);
@@ -50,6 +50,7 @@ export class PratosFormComponent
       observacao: data.observacao || '',
       ingredientes: data.ingredientes || [],
       icone: data.icone || '',
+      pratoIngredientes: data.pratoIngredientes
     });
   }
 
@@ -70,6 +71,7 @@ export class PratosFormComponent
         ingredientes: data.ingredientes,
         observacao: data.observacao,
         icone: data.icone,
+        pratoIngredientes: data.pratoIngredientes
       })
       .pipe(
         catchError((error: any) => {
@@ -86,6 +88,7 @@ export class PratosFormComponent
             observacao: '',
             ingredientes: [],
             icone: '',
+            pratoIngredientes: []
           });
         }),
       )

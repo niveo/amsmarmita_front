@@ -15,35 +15,25 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field class="wf">
-      <mat-label>Medida</mat-label>
-      <mat-select formControlName="medida">
-        @for (medida of medidas; track medida) {
-        <mat-option [value]="medida">{{medida}}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
 
-    <mat-divider></mat-divider>
+    <div class="fx-row wf">
 
-
-  <div class="fx-row wf">
       <mat-form-field class="wf fx-flex">
         <mat-label>Medida Embalagem</mat-label>
         <mat-select formControlName="embalagemMedida">
           @for (medida of medidas; track medida) {
-          <mat-option [value]="medida">{{medida}}</mat-option>
+          <mat-option [value]="medida">{{medida | medidanome}}</mat-option>
           }
         </mat-select>
       </mat-form-field>
-      
+
       <mat-form-field class="wf fx-flex">
         <mat-label>Quantidade Embalagem</mat-label>
         <input matInput placeholder="Quantidade Embalagem" formControlName="embalagemQuantidade"
           placeholder="Informe aqui uma quantidade" [tabIndex]="-1" type="number" />
       </mat-form-field>
 
-  </div>
+    </div>
 
     <mat-form-field class="wf">
       <mat-label>Observação</mat-label>
