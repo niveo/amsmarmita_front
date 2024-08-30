@@ -3,6 +3,8 @@ import { Ingrediente } from '../model';
 import { finalize } from 'rxjs';
 import { BaseService } from './base.service';
 import { ExposeServiceRest } from '@navegador/common/expose-service-rest.utils';
+import { TipoMedida } from '@navegador/enuns/tipomedida.enum';
+import { TipoIngrediente } from '@navegador/enuns/tipoingrediente.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -22,22 +24,30 @@ export class IngredienteService extends BaseService<Ingrediente> {
       .pipe(finalize(() => this.updateData()));
   }
 
-  atualizar(id: string, nome: string, observacao?: string) {
+  atualizar(id: string, nome: string, observacao?: string, tipo?: TipoIngrediente | string, medida?: TipoMedida | string, embalagemQuantidade?: number, embalagemMedida?: TipoMedida | string) {
     this.iniciarLoading();
     return this.http
       .put<any>('/ingredientes/' + id, {
         nome,
         observacao: observacao || null,
+        tipo: tipo || null,
+        medida: medida || null,
+        embalagemQuantidade: embalagemQuantidade || null,
+        embalagemMedida: embalagemMedida || null
       })
       .pipe(finalize(() => this.updateData()));
   }
 
-  inlcluir(nome: string, observacao?: string) {
+  inlcluir(nome: string, observacao?: string, tipo?: TipoIngrediente | string, medida?: TipoMedida | string, embalagemQuantidade?: number, embalagemMedida?: TipoMedida | string) {
     this.iniciarLoading();
     return this.http
       .post<any>('/ingredientes', {
         nome,
         observacao: observacao || null,
+        tipo: tipo || null,
+        medida: medida || null,
+        embalagemQuantidade: embalagemQuantidade || null,
+        embalagemMedida: embalagemMedida || null
       })
       .pipe(finalize(() => this.updateData()));
   }

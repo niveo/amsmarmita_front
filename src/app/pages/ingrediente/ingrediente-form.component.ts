@@ -7,6 +7,8 @@ import { Ingrediente } from '@navegador/model';
 import { IngredienteService } from '@navegador/services/ingrediente.service';
 import { BaseFormComponent } from '@navegador/componentes/base-form.component';
 import { parseErroResponse } from '@navegador/common/util';
+import { TipoMedida } from '@navegador/enuns/tipomedida.enum';
+import { TipoIngrediente } from '@navegador/enuns/tipoingrediente.enum';
 
 @Component({
   selector: 'app-ingrediente-form-component',
@@ -17,10 +19,17 @@ export class IngredienteFormComponent extends BaseFormComponent<Ingrediente> {
 
   loading = computed(() => this.service?.loading() || false);
 
+  tipos = Object.values(TipoIngrediente)
+  medidas = Object.values(TipoMedida)
+
   form: FormGroup<{
     _id: FormControl<string | null>;
     nome: FormControl<string | null>;
     observacao: FormControl<string | null>;
+    tipo: FormControl<string | null>;
+    medida: FormControl<string | null>;
+    embalagemQuantidade: FormControl<number | null>;
+    embalagemMedida: FormControl<string | null>;
   }> = this.formBuilder.group({
     _id: [''],
     nome: [
@@ -28,6 +37,10 @@ export class IngredienteFormComponent extends BaseFormComponent<Ingrediente> {
       [Validators.required, Validators.minLength(2), Validators.maxLength(50)],
     ],
     observacao: ['', Validators.maxLength(100)],
+    tipo: [''],
+    medida: [''],
+    embalagemQuantidade: [],
+    embalagemMedida: [''],
   });
 
   ngOnInit() {
@@ -35,6 +48,10 @@ export class IngredienteFormComponent extends BaseFormComponent<Ingrediente> {
       _id: this.data()._id || '',
       nome: this.data().nome || '',
       observacao: this.data().observacao || '',
+      tipo: this.data().tipo || null,
+      medida: this.data().medida || null,
+      embalagemQuantidade: this.data().embalagemQuantidade || null,
+      embalagemMedida: this.data().embalagemMedida || null,
     });
   }
 
@@ -48,8 +65,8 @@ export class IngredienteFormComponent extends BaseFormComponent<Ingrediente> {
         mergeMap((value) =>
           iif(
             () => !value,
-            this.service.inlcluir(data.nome!, data.observacao!),
-            this.service.atualizar(value!, data.nome!, data.observacao!),
+            this.service.inlcluir(data.nome, data.observacao, data.tipo, data.medida, data.embalagemQuantidade, data.embalagemMedida),
+            this.service.atualizar(value!, data.nome, data.observacao, data.tipo, data.medida, data.embalagemQuantidade, data.embalagemMedida),
           ),
         ),
         catchError((error: any) => {
@@ -62,6 +79,10 @@ export class IngredienteFormComponent extends BaseFormComponent<Ingrediente> {
             _id: null,
             nome: null,
             observacao: null,
+            tipo: null,
+            medida: null,
+            embalagemQuantidade: null,
+            embalagemMedida: null,
           });
         }),
       )
