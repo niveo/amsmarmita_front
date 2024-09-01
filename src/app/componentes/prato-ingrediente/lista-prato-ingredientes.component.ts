@@ -9,6 +9,7 @@ import { MatBottomSheet } from "@angular/material/bottom-sheet";
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { v4 } from "uuid";
 import { isEmptyStr } from "@navegador/common/util";
+import { MedidaNomePipe } from "@navegador/pipes/medidanome.pipe";
 
 @Component({
     selector: 'app-lista-prato-ingredientes-component',
@@ -18,7 +19,8 @@ import { isEmptyStr } from "@navegador/common/util";
         IngredienteModule,
         EditPratoIngredienteComponent,
         SharedModule,
-        MatBottomSheetModule
+        MatBottomSheetModule,
+        MedidaNomePipe
     ], styles: [
         `
       :host {

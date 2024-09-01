@@ -14,6 +14,6 @@ export class Prato {
   createdAt?: number;
   updatedAt?: number;
 
-  pratoIngredientes?: { ingrediente: any; quantidade: number; medida: string }[];
+  pratoIngredientes?: {_id: any; ingrediente: any; quantidade: number; medida: string }[];
 }
 

@@ -1,38 +1,45 @@
-<central-container
-  [(drawer)]="editarForm"
-  [loading]="loading()"
-  [hideHeader]="!loading()"
-  (incluir)="incluir()"
->
+<central-container [(drawer)]="editarForm" [loading]="loading()" [hideHeader]="!loading()" (incluir)="incluir()">
   <div drawer class="ovh hf">
     @if (editarForm()) {
-      <app-ingrediente-form-component
-        [(visible)]="editarForm"
-        [data]="editarFormData()"
-      />
+    <app-ingrediente-form-component [(visible)]="editarForm" [data]="editarFormData()" />
     }
   </div>
 
   <div content>
-    <mat-selection-list
-      role="list"
-      hideSingleSelectionIndicator
-      [multiple]="false"
-    >
+    <mat-selection-list role="list" hideSingleSelectionIndicator [multiple]="false">
       @for (item of data$ | async; track item._id) {
-        <mat-list-option
-          role="listitem"
-          (longPress)="removerRegistro(item._id)"
-          (click)="editar(item)"
-        >
-          <h3 matListItemTitle>{{ item.nome }}</h3>
-          @if (item.observacao) {
-            <p matListItemLine>
-              <span>{{ item.observacao }}</span>
-            </p>
+      <mat-list-option role="listitem" (longPress)="removerRegistro(item._id)" (click)="editar(item)"
+      [corBoarda]="corTipoIngrediente(item.tipo)">
+        <h3 matListItemTitle>{{ item.nome }}</h3>
+        @if (item.observacao) {
+        <p matListItemLine>
+          <span>{{ item.observacao }}</span>
+        </p>
+        }
+
+        <div class="fx-row" style="justify-content: space-between;">
+          @if(item.quantidade || item.medida){
+          <p matListItemLine>
+            Marmita:
+            @if(item.quantidade){
+            <span>{{item.quantidade}}</span>}
+            @if(item.medida){
+            <span>{{ item.medida }}</span>}
+          </p>
           }
-        </mat-list-option>
-        <mat-divider></mat-divider>
+          
+          @if(item.embalagemQuantidade || item.embalagemMedida){
+          <p matListItemLine>
+            Embalagem:
+            @if(item.embalagemQuantidade){
+            <span>{{item.embalagemQuantidade}}</span>}
+            @if(item.embalagemMedida){
+            <span>{{ item.embalagemMedida }}</span>}
+          </p>
+          }
+        </div>
+      </mat-list-option>
+      <mat-divider></mat-divider>
       }
     </mat-selection-list>
   </div>

@@ -27,6 +27,10 @@ export class IngredienteFormComponent extends BaseFormComponent<Ingrediente> {
     nome: FormControl<string | null>;
     observacao: FormControl<string | null>;
     tipo: FormControl<string | null>;
+
+    quantidade: FormControl<number | null>;
+    medida: FormControl<string | null>;
+
     embalagemQuantidade: FormControl<number | null>;
     embalagemMedida: FormControl<string | null>;
   }> = this.formBuilder.group({
@@ -37,6 +41,8 @@ export class IngredienteFormComponent extends BaseFormComponent<Ingrediente> {
     ],
     observacao: ['', Validators.maxLength(100)],
     tipo: [''],
+    quantidade: [],
+    medida: [''],
     embalagemQuantidade: [],
     embalagemMedida: [''],
   });
@@ -47,6 +53,8 @@ export class IngredienteFormComponent extends BaseFormComponent<Ingrediente> {
       nome: this.data().nome || '',
       observacao: this.data().observacao || '',
       tipo: this.data().tipo || null,
+      quantidade: this.data().quantidade || null,
+      medida: this.data().medida || null,
       embalagemQuantidade: this.data().embalagemQuantidade || null,
       embalagemMedida: this.data().embalagemMedida || null,
     });
@@ -62,8 +70,12 @@ export class IngredienteFormComponent extends BaseFormComponent<Ingrediente> {
         mergeMap((value) =>
           iif(
             () => !value,
-            this.service.inlcluir(data.nome, data.observacao, data.tipo,data.embalagemQuantidade, data.embalagemMedida),
-            this.service.atualizar(value!, data.nome, data.observacao, data.tipo, data.embalagemQuantidade, data.embalagemMedida),
+            this.service.inlcluir(data.nome, data.observacao, data.tipo,
+              data.embalagemQuantidade, data.embalagemMedida,
+              data.quantidade, data.medida),
+            this.service.atualizar(value!, data.nome, data.observacao, data.tipo,
+              data.embalagemQuantidade, data.embalagemMedida,
+              data.quantidade, data.medida),
           ),
         ),
         catchError((error: any) => {
@@ -77,6 +89,8 @@ export class IngredienteFormComponent extends BaseFormComponent<Ingrediente> {
             nome: null,
             observacao: null,
             tipo: null,
+            quantidade: null,
+            medida: null,
             embalagemQuantidade: null,
             embalagemMedida: null,
           });

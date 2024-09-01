@@ -18,8 +18,10 @@ export class MedidaNomePipe implements PipeTransform {
                 return `${value} - Unidade(s)`;
             case TipoMedida.dz:
                 return `${value} - Duzia(s)`;
+            case TipoMedida.undiv:
+                return ` 1/2`;
             default:
-                return "Outros";
+                return "";
         }
 
     }
