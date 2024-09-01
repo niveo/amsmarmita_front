@@ -24,7 +24,9 @@ export class IngredienteService extends BaseService<Ingrediente> {
       .pipe(finalize(() => this.updateData()));
   }
 
-  atualizar(id: string, nome: string, observacao?: string, tipo?: TipoIngrediente | string, embalagemQuantidade?: number, embalagemMedida?: TipoMedida | string) {
+  atualizar(id: string, nome: string, observacao?: string, tipo?: TipoIngrediente | string, 
+    embalagemQuantidade?: number, embalagemMedida?: TipoMedida | string,
+    quantidade?: number, medida?: TipoMedida | string) {
     this.iniciarLoading();
     return this.http
       .put<any>('/ingredientes/' + id, {
@@ -32,12 +34,16 @@ export class IngredienteService extends BaseService<Ingrediente> {
         observacao: observacao || null,
         tipo: tipo || null,
         embalagemQuantidade: embalagemQuantidade || null,
-        embalagemMedida: embalagemMedida || null
+        embalagemMedida: embalagemMedida || null,
+        quantidade: quantidade || null,
+        medida: medida || null
       })
       .pipe(finalize(() => this.updateData()));
   }
 
-  inlcluir(nome: string, observacao?: string, tipo?: TipoIngrediente | string, embalagemQuantidade?: number, embalagemMedida?: TipoMedida | string) {
+  inlcluir(nome: string, observacao?: string, tipo?: TipoIngrediente | string, 
+    embalagemQuantidade?: number, embalagemMedida?: TipoMedida | string,
+    quantidade?: number, medida?: TipoMedida | string) {
     this.iniciarLoading();
     return this.http
       .post<any>('/ingredientes', {
@@ -45,7 +51,9 @@ export class IngredienteService extends BaseService<Ingrediente> {
         observacao: observacao || null,
         tipo: tipo || null,
         embalagemQuantidade: embalagemQuantidade || null,
-        embalagemMedida: embalagemMedida || null
+        embalagemMedida: embalagemMedida || null,
+        quantidade: quantidade || null,
+        medida: medida || null
       })
       .pipe(finalize(() => this.updateData()));
   }

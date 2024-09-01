@@ -5,8 +5,10 @@ export class Ingrediente {
   _id!: string;
   nome!: string;
   observacao?: string;
-  tempero? = false;
   tipo?: TipoIngrediente;
+
+  quantidade?: number;
+  medida?: TipoMedida;
 
   embalagemQuantidade?: number;
   embalagemMedida?: TipoMedida;

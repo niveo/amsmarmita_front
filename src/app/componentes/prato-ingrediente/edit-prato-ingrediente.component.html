@@ -16,19 +16,29 @@
                 <mat-option [value]="medida">{{medida | medidanome}}</mat-option>
                 }
             </mat-select>
+            @if(form.get('medida').value) {
+            <button matSuffix mat-icon-button aria-label="Clear" (click)="form.get('medida').setValue(null)">
+                <mat-icon>close</mat-icon>
+            </button>
+            }
         </mat-form-field>
 
         <mat-form-field class="wf fx-flex">
             <mat-label>Quantidade</mat-label>
             <input matInput placeholder="Quantidade" formControlName="quantidade"
                 placeholder="Informe aqui uma quantidade" [tabIndex]="-1" type="number" />
+                @if(form.get('quantidade').value) {
+                <button matSuffix mat-icon-button aria-label="Clear" (click)="form.get('quantidade').setValue(null)">
+                    <mat-icon>close</mat-icon>
+                </button>
+                }
         </mat-form-field>
     </form>
     <div class="fx-column" style="align-items: end;">
-        <button mat-raised-button color="primary" (click)="salvar()"   [disabled]="!form.valid">
-            Salvar
+        <button mat-raised-button color="primary" (click)="salvar()" [disabled]="!form.valid">
+            Registrar
             <mat-icon>
-                save
+                done_outline
             </mat-icon>
         </button>
     </div>

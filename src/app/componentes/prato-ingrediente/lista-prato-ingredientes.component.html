@@ -3,7 +3,7 @@
         <mat-chip-set>
             @for (item of registros(); track item._id) {
             <mat-chip (click)="editar(item)">
-                <span>{{item.ingrediente.nome}} {{item.quantidade}}{{item.medida}}</span>
+                <span>{{item.ingrediente.nome}} {{item.quantidade}}{{item.medida | medidanome}}</span>
                 <button matChipRemove (click)="removerRegistro(item)">
                     <mat-icon class="cred">delete</mat-icon>
                 </button>
