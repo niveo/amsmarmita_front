@@ -75,14 +75,9 @@ export class RelatorioIngredienteComponent implements OnInit {
 
   calMedida(medida: TipoMedida, quantidade: number) {
     if (medida === TipoMedida.OUTROS) return ''
-    if (medida !== TipoMedida.un) {
-      return (quantidade.toFixed(3)) + medida.toString()
-    } else {
-      if (medida === TipoMedida.un) {
-        return (quantidade.toFixed(2)) + medida.toString()
-      } else {
-        return (quantidade) + medida
-      }
+    if (medida === TipoMedida.g) {
+      return ((quantidade / 1000).toFixed(3)) + medida.toString()
     }
+    return (quantidade) + medida
   }
 }
