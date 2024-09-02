@@ -5,6 +5,7 @@ import { RelatorioComponent } from './relatorio.component';
 import { RelatorioIngredienteComponent } from './relatorio-ingredientes.component';
 import { SharedModule } from '@navegador/shared.module';
 import { RelatorioComedoresComponent } from './relatorio-comedores.component';
+import { NgClass } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,6 @@ import { RelatorioComedoresComponent } from './relatorio-comedores.component';
     RelatorioIngredienteComponent,
     RelatorioComedoresComponent,
   ],
-  imports: [RelatorioRoutingModule, SharedModule],
+  imports: [RelatorioRoutingModule, SharedModule, NgClass],
 })
-export class RelatorioModule {}
+export class RelatorioModule { }

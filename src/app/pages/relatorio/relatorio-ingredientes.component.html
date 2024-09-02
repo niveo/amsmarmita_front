@@ -1,29 +1,53 @@
-<mat-accordion class="expansion-headers-align">
-  @for (item of registros(); track item) {
+<mat-accordion>
+  @for(item of globalRegistros(); track item.titulo) {
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title> {{item.titulo}} </mat-panel-title>
+    </mat-expansion-panel-header>
+    <ng-container [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{ registros: item.registros}"></ng-container>
+  </mat-expansion-panel>
+  }
+</mat-accordion>
+
+<ng-template #template let-registros="registros">
+  <mat-accordion class="expansion-headers-align">
+    @for (item of registros; track item) {
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>
           <div class="fx-row wf">
-            <span class="fx-flex"> {{ item.nome }}</span>
+            <div class="fx-flex fx-column">
+              <span [ngClass]="{'cred': item.alerta}">{{ item.nome }}</span>
+              <span>{{calMedida(item.medida, item.medidaQuantidade)}}</span>
+            </div>
             <span class="item-inner-quantidade"> {{ item.quantidade }}</span>
             {{ item.pratos?.length }}
           </div>
         </mat-panel-title>
       </mat-expansion-panel-header>
       @if (item.pratos) {
-        @for (prato of item.pratos; track prato) {
-          <div class="item-inner">
-            <div class="fx-row" style="align-items: center">
-              <span class="item-inner-quantidade">
-                {{ prato.quantidade }}
-              </span>
-              <span>
-                {{ prato.nome }}
-              </span>
-            </div>
+      @for (prato of item.pratos; track prato) {
+      <div class="item-inner">
+        <div class="fx-row" style="align-items: center">
+          <span class="item-inner-quantidade">
+            {{ prato.quantidade }}
+          </span>
+          <span>
+            {{ prato.nome }}
+          </span>
+        </div>
+        <div class="fx-row">
+          <div class="fx-flex">
+            <span>{{calMedida(prato.medidaOrigem.medida, prato.medidaOrigem.quantidade)}}</span>
           </div>
-        }
+          <div class="fx-flex">
+            <span>{{calMedida(prato.medidaCalculo.medida, prato.medidaCalculo.quantidade)}}</span>
+          </div>
+        </div>
+      </div>
+      }
       }
     </mat-expansion-panel>
-  }
-</mat-accordion>
+    }
+  </mat-accordion>
+</ng-template>

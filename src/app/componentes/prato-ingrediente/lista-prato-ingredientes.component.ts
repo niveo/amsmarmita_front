@@ -21,13 +21,6 @@ import { MedidaNomePipe } from "@navegador/pipes/medidanome.pipe";
         SharedModule,
         MatBottomSheetModule,
         MedidaNomePipe
-    ], styles: [
-        `
-      :host {
-        height: 100px;
-        background-color: white;
-      }
-    `,
     ],
 })
 export class ListaPratoIngredientesComponent {
