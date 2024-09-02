@@ -1,4 +1,7 @@
-import { Component, input } from '@angular/core';
+import { Component, input, computed, OnInit } from '@angular/core';
+import { isEmpty } from '@navegador/common/util';
+import { TipoIngrediente } from '@navegador/enuns/tipoingrediente.enum';
+import { TipoMedida } from '@navegador/enuns/tipomedida.enum';
 
 @Component({
   selector: 'app-relatorio-ingredientes-component',
@@ -38,6 +41,48 @@ import { Component, input } from '@angular/core';
     `,
   ],
 })
-export class RelatorioIngredienteComponent {
-  registros = input.required<any[]>(); 
+export class RelatorioIngredienteComponent implements OnInit {
+
+  registros = input.required<any[]>();
+
+  ngOnInit(): void {
+  }
+
+  globalRegistros = computed(() => {
+    return [
+      {
+        "titulo": "Mercado",
+        "registros": this.registros().filter(m => m.tipo === TipoIngrediente.MERCADO)
+      },
+      {
+        "titulo": "Feira / Legumes / Verduras",
+        "registros": this.registros().filter(m => m.tipo === TipoIngrediente.LEGUME_VERDURA)
+      },
+      {
+        "titulo": "Frios / Carnes",
+        "registros": this.registros().filter(m => m.tipo === TipoIngrediente.CARNE_FRIOS)
+      },
+      {
+        "titulo": "Tempero",
+        "registros": this.registros().filter(m => m.tipo === TipoIngrediente.TEMPERO)
+      },
+      {
+        "titulo": "Outros",
+        "registros": this.registros().filter(m => m.tipo === TipoIngrediente.OUTROS)
+      }
+    ]
+  });
+
+  calMedida(medida: TipoMedida, quantidade: number) {
+    if (medida === TipoMedida.OUTROS) return ''
+    if (medida !== TipoMedida.un) {
+      return (quantidade.toFixed(3)) + medida.toString()
+    } else {
+      if (medida === TipoMedida.un) {
+        return (quantidade.toFixed(2)) + medida.toString()
+      } else {
+        return (quantidade) + medida
+      }
+    }
+  }
 }
