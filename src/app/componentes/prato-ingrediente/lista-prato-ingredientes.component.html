@@ -2,12 +2,12 @@
     <div class="wf">
         <mat-chip-set>
             @for (item of registros(); track item._id) {
-            <mat-chip (click)="editar(item)">
-                <span>{{item.ingrediente.nome}} {{item.quantidade}}{{item.medida | medidanome}}</span>
-                <button matChipRemove (click)="removerRegistro(item)">
-                    <mat-icon class="cred">delete</mat-icon>
-                </button>
-            </mat-chip>
+                @if(item?.ingrediente && item?.ingrediente?.nome){<mat-chip (click)="editar(item)">
+                    <span>{{item.ingrediente.nome}} {{item.quantidade}}{{item.medida | medidanome}}</span>
+                    <button matChipRemove (click)="removerRegistro(item)">
+                        <mat-icon class="cred">delete</mat-icon>
+                    </button>
+                </mat-chip>}
             }
         </mat-chip-set>
     </div>

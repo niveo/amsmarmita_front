@@ -8,37 +8,45 @@
   <div content>
     <mat-selection-list role="list" hideSingleSelectionIndicator [multiple]="false">
       @for (item of data$ | async; track item._id) {
-      <mat-list-option role="listitem" (longPress)="removerRegistro(item._id)" (click)="editar(item)"
-      [corBoarda]="corTipoIngrediente(item.tipo)">
-        <h3 matListItemTitle>{{ item.nome }}</h3>
-        @if (item.observacao) {
-        <p matListItemLine>
-          <span>{{ item.observacao }}</span>
-        </p>
-        }
+      <div class="fx-row">
+        <div class="fx-flex">
+          <mat-list-option role="listitem" (click)="editar(item)" [corBoarda]="corTipoIngrediente(item.tipo)">
+            <h3 matListItemTitle>{{ item.nome }}</h3>
+            @if (item.observacao) {
+            <p matListItemLine>
+              <span>{{ item.observacao }}</span>
+            </p>
+            }
 
-        <div class="fx-row" style="justify-content: space-between;">
-          @if(item.quantidade || item.medida){
-          <p matListItemLine>
-            Marmita:
-            @if(item.quantidade){
-            <span>{{item.quantidade}}</span>}
-            @if(item.medida){
-            <span>{{ item.medida }}</span>}
-          </p>
-          }
-          
-          @if(item.embalagemQuantidade || item.embalagemMedida){
-          <p matListItemLine>
-            Embalagem:
-            @if(item.embalagemQuantidade){
-            <span>{{item.embalagemQuantidade}}</span>}
-            @if(item.embalagemMedida){
-            <span>{{ item.embalagemMedida }}</span>}
-          </p>
-          }
+            <div class="fx-row" style="justify-content: space-between;">
+              @if(item.quantidade || item.medida){
+              <p matListItemLine>
+                Marmita:
+                @if(item.quantidade){
+                <span>{{item.quantidade}}</span>}
+                @if(item.medida){
+                <span>{{ item.medida }}</span>}
+              </p>
+              }
+
+              @if(item.embalagemQuantidade || item.embalagemMedida){
+              <p matListItemLine>
+                Embalagem:
+                @if(item.embalagemQuantidade){
+                <span>{{item.embalagemQuantidade}}</span>}
+                @if(item.embalagemMedida){
+                <span>{{ item.embalagemMedida }}</span>}
+              </p>
+              }
+            </div>
+          </mat-list-option>
         </div>
-      </mat-list-option>
+        <div style="align-content: center;">
+          <button mat-icon-button (click)="removerRegistro(item._id!)">
+            <mat-icon class="cred">delete</mat-icon>
+          </button>
+        </div>
+      </div>
       <mat-divider></mat-divider>
       }
     </mat-selection-list>
