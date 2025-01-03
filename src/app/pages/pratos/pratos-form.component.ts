@@ -90,7 +90,7 @@ export class PratosFormComponent
       });
   }
 
-  removeKeyword(keyword: string) {
+  /*removeKeyword(keyword: string) {
     const index = this.form.value.composicoes!.indexOf(keyword);
     if (index >= 0) {
       this.form.value.composicoes!.splice(index, 1);
@@ -107,5 +107,5 @@ export class PratosFormComponent
 
     // Clear the input value
     event.chipInput!.clear();
-  }
+  }*/
 }

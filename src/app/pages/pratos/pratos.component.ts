@@ -19,10 +19,10 @@ export class ModelFormPrato {
   _id!: FormControl<string | null>;
   nome!: FormControl<string | null>;
   grupo!: FormControl<string | null>;
-  composicoes!: FormControl<string[] | null>;
+  //composicoes!: FormControl<string[] | null>;
   observacao!: FormControl<string | null>;
-  ingredientes!: FormControl<string[] | null>;
-  icone!: FormControl<string | null>;
+  //ingredientes!: FormControl<string[] | null>;
+  //icone!: FormControl<string | null>;
   pratoIngredientes!: FormControl<any[] | null>;
 }
 
