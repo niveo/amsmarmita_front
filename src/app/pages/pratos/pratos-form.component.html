@@ -44,7 +44,7 @@
     <mat-hint align="end">{{ txtObservacao.value.length }} / 100</mat-hint>
   </mat-form-field>
 
-  <mat-form-field class="wf">
+  <!--mat-form-field class="wf">
     <mat-label> <mat-icon>label</mat-icon> Tags </mat-label>
     <mat-chip-grid #chipGrid formControlName="composicoes">
       @for (composicao of form.value.composicoes; track composicao) {
@@ -61,9 +61,9 @@
       [matChipInputFor]="chipGrid"
       (matChipInputTokenEnd)="add($event)"
     />
-  </mat-form-field>
+  </mat-form-field-->
 
-  <mat-form-field class="wf">
+  <!--mat-form-field class="wf">
     <mat-label>Icone</mat-label>
     <input
       matInput
@@ -76,7 +76,7 @@
     @if (txtIcone.value) {
       <mat-icon matSuffix class="material-symbols-outlined">{{ txtIcone.value }}</mat-icon>
     }
-  </mat-form-field>
+  </mat-form-field-->
 
   @if (form.get("_id").value) {
     <app-upload-component [fileName]="form.get('_id').value" />

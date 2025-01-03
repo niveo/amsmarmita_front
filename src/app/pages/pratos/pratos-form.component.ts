@@ -29,10 +29,7 @@ export class PratosFormComponent
       [Validators.required, Validators.minLength(5), Validators.maxLength(50)],
     ],
     grupo: ['', [Validators.required]],
-    composicoes: [['']],
     observacao: ['', Validators.maxLength(100)],
-    ingredientes: [['']],
-    icone: ['', Validators.maxLength(50)],
     pratoIngredientes: []
   });
 
@@ -46,10 +43,7 @@ export class PratosFormComponent
       _id: data._id || '',
       grupo: data.grupo?._id || '',
       nome: data.nome || '',
-      composicoes: data.composicoes || [],
       observacao: data.observacao || '',
-      ingredientes: data.ingredientes || [],
-      icone: data.icone || '',
       pratoIngredientes: data.pratoIngredientes
     });
   }
@@ -66,11 +60,11 @@ export class PratosFormComponent
       .salvar({
         _id: data._id,
         nome: data.nome!,
-        composicoes: data.composicoes,
+        composicoes: [],
         grupo: data.grupo!,
-        ingredientes: data.ingredientes,
+        ingredientes: [],
         observacao: data.observacao,
-        icone: data.icone,
+        icone: null,
         pratoIngredientes: data.pratoIngredientes
       })
       .pipe(
@@ -84,10 +78,7 @@ export class PratosFormComponent
             _id: '',
             nome: '',
             grupo: '',
-            composicoes: [],
             observacao: '',
-            ingredientes: [],
-            icone: '',
             pratoIngredientes: []
           });
         }),
